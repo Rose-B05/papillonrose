@@ -486,22 +486,329 @@ const PRODUCTS: Product[] = [
       "Jenga géant en bois massif pour animer cocktails et réceptions.",
     couleur: "Bois naturel",
   },
+  // ── Nouveaux produits du catalogue ──
+  {
+    id: "bou-007",
+    nom: "Lanterne Argentée",
+    categorie: "Bougeoirs & Lanternes",
+    stock: 6,
+    dimensions: "H 40 × Ø 18 cm",
+    prix: 14,
+    image: "/products/lanterne-argent.png",
+    description: "Lanterne en métal argenté au design élégant. Parfaite pour une ambiance lumineuse raffinée.",
+    couleur: "Argenté",
+  },
+  {
+    id: "bou-008",
+    nom: "Lanterne Noire",
+    categorie: "Bougeoirs & Lanternes",
+    stock: 6,
+    dimensions: "H 40 × Ø 18 cm",
+    prix: 14,
+    image: "/products/lanterne-noir.png",
+    description: "Lanterne en métal noir mat. Style moderne et sobre pour vos décorations.",
+    couleur: "Noir",
+  },
+  {
+    id: "bou-009",
+    nom: "Bougeoir Étincelle Doré",
+    categorie: "Bougeoirs & Lanternes",
+    stock: 8,
+    dimensions: "H 25 × Ø 10 cm",
+    prix: 10,
+    image: "/products/bougeoire-etincelle.png",
+    description: "Bougeoir doré aux reflets étincelants. Illumine vos tables avec élégance.",
+    couleur: "Or",
+  },
+  {
+    id: "dec-010",
+    nom: "Boa Plume décoratif",
+    categorie: "Décoration",
+    stock: 5,
+    dimensions: "150 cm",
+    prix: 12,
+    image: "/products/boa.png",
+    description: "Boa en plumes blanches. Accessoire décoratif pour chaises, arches ou espaces photo.",
+    couleur: "Blanc",
+  },
+  {
+    id: "dec-011",
+    nom: "Candy Bar",
+    categorie: "Décoration",
+    stock: 3,
+    dimensions: "80 × 40 × H 90 cm",
+    prix: 35,
+    image: "/products/candy-bar.png",
+    description: "Présentoir candy bar pour buffets sucrés, anniversaires et goûters d'enfants.",
+    couleur: "Multicolore",
+  },
+  {
+    id: "dec-012",
+    nom: "Feuille d'Or Décorative",
+    categorie: "Décoration",
+    stock: 10,
+    dimensions: "H 45 cm",
+    prix: 8,
+    image: "/products/feuille-or.png",
+    description: "Feuille décorative dorée. Idéale pour compositions florales et centres de table.",
+    couleur: "Or",
+  },
+  {
+    id: "dec-013",
+    nom: "Fontaine à Agrumes",
+    categorie: "Décoration",
+    stock: 2,
+    dimensions: "H 50 × Ø 25 cm",
+    prix: 28,
+    image: "/products/fontaine-agrume.png",
+    description: "Fontaine décorative à agrumes. Originale et rafraîchissante pour vos réceptions.",
+    couleur: "Transparent",
+  },
+  {
+    id: "dec-014",
+    nom: "Gazon Artificiel à Suspendre",
+    categorie: "Décoration",
+    stock: 8,
+    dimensions: "100 × 100 cm",
+    prix: 15,
+    image: "/products/gazon-artificiel.png",
+    description: "Panneau de gazon artificiel à suspendre. Crée un mur végétal pour vos événements.",
+    couleur: "Vert",
+  },
+  {
+    id: "dec-015",
+    nom: "Horloge Décorative",
+    categorie: "Décoration",
+    stock: 3,
+    dimensions: "Ø 40 cm",
+    prix: 18,
+    image: "/products/horloge.png",
+    description: "Horloge décorative sur pied. Pièce unique pour habiller vos espaces réception.",
+    couleur: "Noir & Or",
+  },
+  {
+    id: "dec-016",
+    nom: "Ours Blanc Décoratif",
+    categorie: "Décoration",
+    stock: 3,
+    dimensions: "H 70 cm",
+    prix: 22,
+    image: "/products/ours-blanc.png",
+    description: "Ours blanc décoratif en résine. Parfait pour les baptêmes et événements hivernaux.",
+    couleur: "Blanc",
+  },
+  {
+    id: "mob-007",
+    nom: "Coussins Velours pour Chaises (paire)",
+    categorie: "Mobilier",
+    stock: 12,
+    dimensions: "40 × 40 cm",
+    prix: 10,
+    image: "/products/coussins-velour.png",
+    description: "Paire de coussins en velours pour chaises. Confort et élégance pour vos invités.",
+    couleur: "Velours",
+  },
+  {
+    id: "art-003",
+    nom: "Nappe Papillon Rectangle",
+    categorie: "Art de la Table",
+    stock: 10,
+    dimensions: "150 × 250 cm",
+    prix: 18,
+    image: "/products/nappe-papillon.png",
+    description: "Nappe rectangulaire motif papillon. Douce et raffinée pour vos tables de réception.",
+    couleur: "Rose",
+  },
+  {
+    id: "art-004",
+    nom: "Pack Candy Bar en Verre",
+    categorie: "Art de la Table",
+    stock: 4,
+    dimensions: "Set de 6 pièces",
+    prix: 25,
+    image: "/products/pack-candy-bar-verre.png",
+    description: "Set de verreries pour candy bar. Pots et coupes en verre pour buffets sucrés.",
+    couleur: "Transparent",
+  },
+  {
+    id: "ver-003",
+    nom: "Pack Soupières en Verre",
+    categorie: "Verreries",
+    stock: 6,
+    dimensions: "Set de 4 · H 12 cm",
+    prix: 20,
+    image: "/products/pack-sou-verre.png",
+    description: "Lot de soupières en verre. Idéales pour entrées et soupes lors de vos réceptions.",
+    couleur: "Transparent",
+  },
+  {
+    id: "art-005",
+    nom: "Panier à Pain",
+    categorie: "Art de la Table",
+    stock: 8,
+    dimensions: "25 × 15 × H 10 cm",
+    prix: 8,
+    image: "/products/panier-pain.png",
+    description: "Panier à pain en osier. Pour servir le pain avec style sur vos tables.",
+    couleur: "Naturel",
+  },
+  {
+    id: "dec-017",
+    nom: "Porte-Alliance Prisme",
+    categorie: "Décoration",
+    stock: 4,
+    dimensions: "H 8 × 6 cm",
+    prix: 12,
+    image: "/products/porte-alliance-prisme.png",
+    description: "Porte-alliance en forme de prisme en cristal. Écrin parfait pour les alliances.",
+    couleur: "Cristal",
+  },
+  {
+    id: "dec-018",
+    nom: "Porte-Alliance Rectangle",
+    categorie: "Décoration",
+    stock: 4,
+    dimensions: "H 6 × 8 cm",
+    prix: 10,
+    image: "/products/porte-alliance-rectangle-1.png",
+    description: "Porte-alliance rectangulaire en cristal. Présentez vos alliances avec élégance.",
+    couleur: "Cristal",
+  },
+  {
+    id: "pre-003",
+    nom: "Porte-Carte Or",
+    categorie: "Présentoirs",
+    stock: 10,
+    dimensions: "H 12 × 8 cm",
+    prix: 6,
+    image: "/products/porte-carte-or.png",
+    description: "Porte-carte doré pour plans de table, menus ou marque-places. Raffinement garanti.",
+    couleur: "Or",
+  },
+  {
+    id: "art-006",
+    nom: "Porte-Serviettes Doré",
+    categorie: "Art de la Table",
+    stock: 15,
+    dimensions: "H 8 cm",
+    prix: 5,
+    image: "/products/porte-serviettes.png",
+    description: "Porte-serviettes doré. Pour une présentation élégante de vos serviettes de table.",
+    couleur: "Or",
+  },
+  {
+    id: "dec-019",
+    nom: "Prisme Décoratif Cristal",
+    categorie: "Décoration",
+    stock: 6,
+    dimensions: "H 10 × 5 cm",
+    prix: 8,
+    image: "/products/prisme.png",
+    description: "Prisme en cristal décoratif. Capte la lumière et crée des reflets sur vos tables.",
+    couleur: "Cristal",
+  },
+  {
+    id: "art-007",
+    nom: "Salière et Poivrière",
+    categorie: "Art de la Table",
+    stock: 10,
+    dimensions: "H 8 cm (paire)",
+    prix: 6,
+    image: "/products/saliere-poivriere.png",
+    description: "Paire de salière et poivrière en verre. Indispensables pour vos tables dressées.",
+    couleur: "Transparent",
+  },
+  {
+    id: "art-008",
+    nom: "Saucière",
+    categorie: "Art de la Table",
+    stock: 8,
+    dimensions: "H 10 × 15 cm",
+    prix: 8,
+    image: "/products/sauciere.png",
+    description: "Saucière en porcelaine blanche. Pour servir sauces et accompaniments avec élégance.",
+    couleur: "Blanc",
+  },
+  {
+    id: "art-009",
+    nom: "Serviette de Table Émeraude",
+    categorie: "Art de la Table",
+    stock: 30,
+    dimensions: "45 × 45 cm",
+    prix: 3,
+    image: "/products/serviette-emeraude.png",
+    description: "Serviette de table en lin vert émeraude. Touche de couleur pour vos tables habillées.",
+    couleur: "Émeraude",
+  },
+  {
+    id: "dec-020",
+    nom: "Sonnette de Comptoir",
+    categorie: "Décoration",
+    stock: 5,
+    dimensions: "H 8 × Ø 5 cm",
+    prix: 7,
+    image: "/products/sonnette-comptoir.png",
+    description: "Sonnette de comptoir en laiton doré. Pour appeler vos convives ou servir le bar.",
+    couleur: "Or",
+  },
+  {
+    id: "dec-021",
+    nom: "Sous-Assiettes Or (lot de 6)",
+    categorie: "Art de la Table",
+    stock: 10,
+    dimensions: "Ø 30 cm · lot de 6",
+    prix: 15,
+    image: "/products/sous-assiettes-or.png",
+    description: "Lot de 6 sous-assiettes dorées. Rehaussez votre table avec une touche précieuse.",
+    couleur: "Or",
+  },
+  {
+    id: "dec-022",
+    nom: "Top Cake Diamant",
+    categorie: "Décoration",
+    stock: 5,
+    dimensions: "H 12 cm",
+    prix: 9,
+    image: "/products/top-cake-diamand.png",
+    description: "Décoration de gâteau en forme de diamant doré. Sublime votre pièce montée.",
+    couleur: "Or",
+  },
+  {
+    id: "dec-023",
+    nom: "Ombrelle Décorative",
+    categorie: "Décoration",
+    stock: 4,
+    dimensions: "H 80 cm",
+    prix: 16,
+    image: "/products/umbrella.png",
+    description: "Ombrelle décorative en dentelle. Idéale pour séances photo et décoration bohème.",
+    couleur: "Blanc",
+  },
+  {
+    id: "dec-024",
+    nom: "Oiseau Décoratif Scotch",
+    categorie: "Décoration",
+    stock: 3,
+    dimensions: "H 25 cm",
+    prix: 10,
+    image: "/products/bird-scoth.png",
+    description: "Oiseau décoratif en métal. Duo d'oiseaux tropicaux pour une déco colorée.",
+    couleur: "Multicolore",
+  },
 ]
 
 const CATEGORY_IMAGES: Record<string, string> = {
   Mobilier: "/products/prod004.png",
   "Figurines & Jeux": "/products/prod007.png",
-  "Bougeoirs & Lanternes": "/products/prod014.png",
+  "Bougeoirs & Lanternes": "/products/lanterne-argent.png",
   Verreries: "/products/vase-oval.png",
-  Cadres:
-    "https://images.unsplash.com/photo-1578926375605-eaf7559b1458?w=500&h=375&fit=crop&auto=format",
+  Cadres: "/products/porte-carte-or.png",
   Présentoirs: "/products/presentoir-gateau-1.png",
   Urnes: "/products/urne-cage.png",
   "Art de la Table": "/products/chemin-table-rose.png",
   Vases: "/products/vase-geometrique-blanc.png",
   Décoration: "/products/prod006.png",
-  "Fleurs & Feuillages":
-    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=500&h=375&fit=crop&auto=format",
+  "Fleurs & Feuillages": "/products/prod003.png",
 }
 
 const DP = { fontFamily: "var(--font-playfair), serif" } as const
@@ -936,82 +1243,31 @@ export default function PapillonRoseSite() {
         {/* ─── HOME ─── */}
         {page === "home" && (
           <div>
-            {/* Hero Concept — Table dressée */}
-            <section
-              className="relative mx-3 md:mx-6 mt-4 overflow-visible"
-              style={{ perspective: "1200px" }}
-            >
-              <div className="relative overflow-hidden rounded-3xl bg-[#2E2E2E]" style={{ minHeight: "78vh" }}>
-                {/* Fond */}
-                <img
-                  src="/products/prod005.png"
-                  alt=""
-                  aria-hidden
-                  className="absolute inset-0 w-full h-full object-cover opacity-40"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70" />
-
-                {/* Chemin de table */}
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-[18%] w-[85%] md:w-[70%] h-32 md:h-40 opacity-80">
-                  <img
-                    src="/products/chemin-table-rose.png"
-                    alt=""
-                    aria-hidden
-                    className="w-full h-full object-cover rounded-2xl"
-                  />
-                </div>
-
-                {/* Sous-assiettes */}
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-[20%] flex gap-6 md:gap-12 items-center">
-                  <img src="/products/sous-assiettes-or.png" alt="" aria-hidden className="w-14 h-14 md:w-20 md:h-20 object-contain drop-shadow-lg" />
-                  <img src="/products/sous-assiettes-or.png" alt="" aria-hidden className="w-14 h-14 md:w-20 md:h-20 object-contain drop-shadow-lg" />
-                  <img src="/products/sous-assiettes-or.png" alt="" aria-hidden className="w-14 h-14 md:w-20 md:h-20 object-contain drop-shadow-lg" />
-                </div>
-
-                {/* Fleurs / décor */}
-                <div className="absolute right-[8%] bottom-[30%] w-24 md:w-36 opacity-80">
-                  <img src="/products/prod003.png" alt="" aria-hidden className="w-full h-full object-contain" />
-                </div>
-                <div className="absolute left-[8%] bottom-[35%] w-20 md:w-28 opacity-70">
-                  <img src="/products/prod010.png" alt="" aria-hidden className="w-full h-full object-contain" />
-                </div>
-
-                {/* Texte */}
-                <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14" style={{ minHeight: "78vh" }}>
-                  <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-3 font-medium">
-                    Location décoration événement
-                  </p>
-                  <h1 style={DP} className="text-white text-5xl md:text-7xl font-semibold leading-[1.1] mb-4">
-                    Art de la
-                    <br />
-                    <em className="font-normal italic">Table &amp; Décor</em>
-                  </h1>
-                  <p className="text-white/60 text-base md:text-lg max-w-md mb-8 leading-relaxed">
-                    Mobilier, vaisselle et accessoires pour vos plus beaux événements.
-                  </p>
-                  <button
-                    onClick={() => goToCatalogue("Art de la Table")}
-                    className="w-fit flex items-center gap-2.5 bg-[#C8A97E] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-white hover:text-[#2E2E2E] transition-colors shadow-lg"
-                  >
-                    Voir la sélection <ArrowRight size={15} />
-                  </button>
-                </div>
-              </div>
-
-              {/* 4 Bougeoirs qui sortent du cadre */}
-              <div className="absolute -bottom-8 md:-bottom-12 left-1/2 -translate-x-1/2 flex gap-3 md:gap-6 z-20" style={{ transform: "translateX(-50%) translateZ(80px)" }}>
-                <div className="relative" style={{ transform: "scale(1.15) rotate(-2deg)", filter: "drop-shadow(0 25px 30px rgba(0,0,0,0.5))" }}>
-                  <img src="/products/bougeoir-or.png" alt="Bougeoir or" className="h-28 md:h-44 w-auto object-contain" />
-                </div>
-                <div className="relative" style={{ transform: "scale(1.25) translateY(-10px)", filter: "drop-shadow(0 30px 35px rgba(0,0,0,0.55))" }}>
-                  <img src="/products/prod011.png" alt="Bougeoir argenté" className="h-32 md:h-52 w-auto object-contain" />
-                </div>
-                <div className="relative" style={{ transform: "scale(1.2) rotate(1deg)", filter: "drop-shadow(0 28px 32px rgba(0,0,0,0.5))" }}>
-                  <img src="/products/bougeoire-etincelle.png" alt="Bougeoir étincelle" className="h-28 md:h-44 w-auto object-contain" />
-                </div>
-                <div className="relative" style={{ transform: "scale(1.3) translateY(-5px)", filter: "drop-shadow(0 32px 38px rgba(0,0,0,0.6))" }}>
-                  <img src="/products/prod014.png" alt="Bougeoirs piliers" className="h-32 md:h-48 w-auto object-contain" />
-                </div>
+            {/* Hero */}
+            <section className="relative mx-3 md:mx-6 mt-4 overflow-hidden rounded-3xl" style={{ minHeight: "78vh" }}>
+              <img
+                src="/products/chemin-table-rose.png"
+                alt=""
+                aria-hidden
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              <div className="relative z-10 h-full flex flex-col justify-end pb-14 px-8 md:px-14" style={{ minHeight: "78vh" }}>
+                <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-3 font-medium">
+                  LOCATION DÉCORATION ÉVÉNEMENT
+                </p>
+                <h1 style={DP} className="text-white text-5xl md:text-7xl font-semibold leading-[1.1] mb-6">
+                  Papillon
+                  <br />
+                  <em className="font-normal italic">Rose</em>
+                </h1>
+                <button
+                  onClick={() => goToCatalogue()}
+                  className="w-fit flex items-center gap-2.5 bg-white text-[#2E2E2E] px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-[#C8A97E] hover:text-white transition-colors shadow-lg"
+                >
+                  Voir le catalogue <ArrowRight size={15} />
+                </button>
               </div>
             </section>
 
