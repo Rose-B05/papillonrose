@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo } from "react"
 import {
   Search,
   ShoppingBag,
@@ -15,8 +15,7 @@ import {
   Mail,
   MapPin,
   Trash2,
-  ChevronLeft,
-  ChevronRight,
+
 } from "lucide-react"
 
 const LOGO = "/papillon-rose-logo.png"
@@ -38,14 +37,6 @@ interface QuoteItem {
   product: Product
   qty: number
 }
-interface Slide {
-  title: string
-  em: string
-  sub: string
-  img: string
-  cat?: string
-}
-
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const CATEGORIES = [
   "Tous",
@@ -60,29 +51,6 @@ const CATEGORIES = [
   "Vases",
   "Décoration",
   "Fleurs & Feuillages",
-]
-
-const SLIDES: Slide[] = [
-  {
-    title: "Catalogue de",
-    em: "Location",
-    sub: "MOBILIER & DÉCORATION D'ÉVÉNEMENT",
-    img: "/products/prod005.png",
-  },
-  {
-    title: "Mobilier",
-    em: "d'Exception",
-    sub: "CHEVALETS · CHAISES · ARCHES",
-    img: "/products/prod001.png",
-    cat: "Mobilier",
-  },
-  {
-    title: "Décor &",
-    em: "Atmosphère",
-    sub: "BALLONS · TULLE · COMPOSITIONS",
-    img: "/products/prod003.png",
-    cat: "Décoration",
-  },
 ]
 
 const PRODUCTS: Product[] = [
@@ -764,12 +732,6 @@ export default function PapillonRoseSite() {
   const [showMenu, setShowMenu] = useState(false)
   const [priceMax, setPriceMax] = useState(200)
   const [inStockOnly, setInStockOnly] = useState(false)
-  const [slide, setSlide] = useState(0)
-
-  useEffect(() => {
-    const t = setInterval(() => setSlide((s) => (s + 1) % SLIDES.length), 5000)
-    return () => clearInterval(t)
-  }, [])
 
   const filtered = useMemo(
     () =>
@@ -974,81 +936,82 @@ export default function PapillonRoseSite() {
         {/* ─── HOME ─── */}
         {page === "home" && (
           <div>
-            {/* Hero Carousel */}
+            {/* Hero Concept — Table dressée */}
             <section
-              className="relative mx-3 md:mx-6 mt-4 overflow-hidden rounded-3xl"
-              style={{ minHeight: "78vh" }}
+              className="relative mx-3 md:mx-6 mt-4 overflow-visible"
+              style={{ perspective: "1200px" }}
             >
-              {SLIDES.map((s, i) => (
-                <div
-                  key={i}
-                  className={`absolute inset-0 transition-opacity duration-700 ${
-                    i === slide ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  <img
-                    src={s.img || "/placeholder.svg"}
-                    alt={s.em}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                </div>
-              ))}
+              <div className="relative overflow-hidden rounded-3xl bg-[#2E2E2E]" style={{ minHeight: "78vh" }}>
+                {/* Fond */}
+                <img
+                  src="/products/prod005.png"
+                  alt=""
+                  aria-hidden
+                  className="absolute inset-0 w-full h-full object-cover opacity-40"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70" />
 
-              <div
-                className="relative z-10 h-full flex flex-col justify-end pb-14 px-8 md:px-14"
-                style={{ minHeight: "78vh" }}
-              >
-                <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-3 font-medium">
-                  {SLIDES[slide].sub}
-                </p>
-                <h1
-                  style={DP}
-                  className="text-white text-5xl md:text-7xl font-semibold leading-[1.1] mb-6"
-                >
-                  {SLIDES[slide].title}
-                  <br />
-                  <em className="font-normal italic">{SLIDES[slide].em}</em>
-                </h1>
-                <button
-                  onClick={() => goToCatalogue(SLIDES[slide].cat)}
-                  className="w-fit flex items-center gap-2.5 bg-white text-[#2E2E2E] px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-[#C8A97E] hover:text-white transition-colors shadow-lg"
-                >
-                  Voir la sélection <ArrowRight size={15} />
-                </button>
+                {/* Chemin de table */}
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-[18%] w-[85%] md:w-[70%] h-32 md:h-40 opacity-80">
+                  <img
+                    src="/products/chemin-table-rose.png"
+                    alt=""
+                    aria-hidden
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
+                </div>
+
+                {/* Sous-assiettes */}
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-[20%] flex gap-6 md:gap-12 items-center">
+                  <img src="/products/sous-assiettes-or.png" alt="" aria-hidden className="w-14 h-14 md:w-20 md:h-20 object-contain drop-shadow-lg" />
+                  <img src="/products/sous-assiettes-or.png" alt="" aria-hidden className="w-14 h-14 md:w-20 md:h-20 object-contain drop-shadow-lg" />
+                  <img src="/products/sous-assiettes-or.png" alt="" aria-hidden className="w-14 h-14 md:w-20 md:h-20 object-contain drop-shadow-lg" />
+                </div>
+
+                {/* Fleurs / décor */}
+                <div className="absolute right-[8%] bottom-[30%] w-24 md:w-36 opacity-80">
+                  <img src="/products/prod003.png" alt="" aria-hidden className="w-full h-full object-contain" />
+                </div>
+                <div className="absolute left-[8%] bottom-[35%] w-20 md:w-28 opacity-70">
+                  <img src="/products/prod010.png" alt="" aria-hidden className="w-full h-full object-contain" />
+                </div>
+
+                {/* Texte */}
+                <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14" style={{ minHeight: "78vh" }}>
+                  <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-3 font-medium">
+                    Location décoration événement
+                  </p>
+                  <h1 style={DP} className="text-white text-5xl md:text-7xl font-semibold leading-[1.1] mb-4">
+                    Art de la
+                    <br />
+                    <em className="font-normal italic">Table &amp; Décor</em>
+                  </h1>
+                  <p className="text-white/60 text-base md:text-lg max-w-md mb-8 leading-relaxed">
+                    Mobilier, vaisselle et accessoires pour vos plus beaux événements.
+                  </p>
+                  <button
+                    onClick={() => goToCatalogue("Art de la Table")}
+                    className="w-fit flex items-center gap-2.5 bg-[#C8A97E] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-white hover:text-[#2E2E2E] transition-colors shadow-lg"
+                  >
+                    Voir la sélection <ArrowRight size={15} />
+                  </button>
+                </div>
               </div>
 
-              <button
-                onClick={() =>
-                  setSlide((s) => (s - 1 + SLIDES.length) % SLIDES.length)
-                }
-                aria-label="Slide précédente"
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/40 transition-colors"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                onClick={() => setSlide((s) => (s + 1) % SLIDES.length)}
-                aria-label="Slide suivante"
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/40 transition-colors"
-              >
-                <ChevronRight size={18} />
-              </button>
-
-              <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
-                {SLIDES.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setSlide(i)}
-                    aria-label={`Aller à la slide ${i + 1}`}
-                    className={`rounded-full transition-all ${
-                      i === slide
-                        ? "w-6 h-2 bg-white"
-                        : "w-2 h-2 bg-white/40 hover:bg-white/70"
-                    }`}
-                  />
-                ))}
+              {/* 4 Bougeoirs qui sortent du cadre */}
+              <div className="absolute -bottom-8 md:-bottom-12 left-1/2 -translate-x-1/2 flex gap-3 md:gap-6 z-20" style={{ transform: "translateX(-50%) translateZ(80px)" }}>
+                <div className="relative" style={{ transform: "scale(1.15) rotate(-2deg)", filter: "drop-shadow(0 25px 30px rgba(0,0,0,0.5))" }}>
+                  <img src="/products/bougeoir-or.png" alt="Bougeoir or" className="h-28 md:h-44 w-auto object-contain" />
+                </div>
+                <div className="relative" style={{ transform: "scale(1.25) translateY(-10px)", filter: "drop-shadow(0 30px 35px rgba(0,0,0,0.55))" }}>
+                  <img src="/products/prod011.png" alt="Bougeoir argenté" className="h-32 md:h-52 w-auto object-contain" />
+                </div>
+                <div className="relative" style={{ transform: "scale(1.2) rotate(1deg)", filter: "drop-shadow(0 28px 32px rgba(0,0,0,0.5))" }}>
+                  <img src="/products/bougeoire-etincelle.png" alt="Bougeoir étincelle" className="h-28 md:h-44 w-auto object-contain" />
+                </div>
+                <div className="relative" style={{ transform: "scale(1.3) translateY(-5px)", filter: "drop-shadow(0 32px 38px rgba(0,0,0,0.6))" }}>
+                  <img src="/products/prod014.png" alt="Bougeoirs piliers" className="h-32 md:h-48 w-auto object-contain" />
+                </div>
               </div>
             </section>
 
