@@ -274,7 +274,7 @@ const PRODUCTS: Product[] = [
     stock: 4,
     dimensions: "H 12 × 10 cm",
     prix: 14,
-    image: "/products/prod016.png",
+    image: "/products/coffret-verre-laiton.png",
     description:
       "Paire de boîtes géométriques en verre et laiton doré. Parfaites comme porte-alliances, écrins à bijoux ou mini terrariums décoratifs.",
     couleur: "Or & Verre",
@@ -313,8 +313,7 @@ const PRODUCTS: Product[] = [
     stock: 8,
     dimensions: "H 45 × Ø 20 cm",
     prix: 12,
-    image:
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=600&h=600&fit=crop&auto=format",
+    image: "/products/lanterne-blanche.png",
     description:
       "Lanterne en métal ajouré doré de style oriental. Crée une ambiance lumineuse et envoûtante.",
     couleur: "Or",
@@ -326,8 +325,7 @@ const PRODUCTS: Product[] = [
     stock: 12,
     dimensions: "H 30 × Ø 8 cm",
     prix: 8,
-    image:
-      "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=600&fit=crop&auto=format",
+    image: "/products/bougeoir-or.png",
     description:
       "Chandelier en cristal soufflé d'une finesse rare. Mille reflets sur vos tables.",
     couleur: "Cristal",
@@ -339,8 +337,7 @@ const PRODUCTS: Product[] = [
     stock: 30,
     dimensions: "H 10 × Ø 8 cm",
     prix: 5,
-    image:
-      "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=600&h=600&fit=crop&auto=format",
+    image: "/products/photophore-transparent.png",
     description: "Photophore en verre texturé doré pour bougies chauffe-plat.",
     couleur: "Or",
   },
@@ -403,8 +400,7 @@ const PRODUCTS: Product[] = [
     stock: 3,
     dimensions: "H 60 cm · plateaux Ø 20/30/40 cm",
     prix: 45,
-    image:
-      "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?w=600&h=600&fit=crop&auto=format",
+    image: "/products/presentoir-gateau-1.png",
     description:
       "Présentoir à gâteau en métal blanc 3 étages avec plateaux miroir.",
     couleur: "Blanc & Or",
@@ -416,8 +412,7 @@ const PRODUCTS: Product[] = [
     stock: 3,
     dimensions: "H 30 × 20 × 20 cm",
     prix: 25,
-    image:
-      "https://images.unsplash.com/photo-1525678964484-56bac6d64a22?w=600&h=600&fit=crop&auto=format",
+    image: "/products/urne-cage.png",
     description:
       "Urne en bois massif avec fente pour enveloppes. Sobre et élégante.",
     couleur: "Bois naturel",
@@ -442,8 +437,7 @@ const PRODUCTS: Product[] = [
     stock: 20,
     dimensions: "30 × 300 cm",
     prix: 15,
-    image:
-      "https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?w=600&h=600&fit=crop&auto=format",
+    image: "/products/chemin-table-rose.png",
     description:
       "Chemin de table en lin lavé naturel, bords effilochés. Touche rustique et poétique.",
     couleur: "Beige",
@@ -455,8 +449,7 @@ const PRODUCTS: Product[] = [
     stock: 6,
     dimensions: "H 45 × Ø 22 cm",
     prix: 20,
-    image:
-      "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=600&h=600&fit=crop&auto=format",
+    image: "/products/vase-geometrique-blanc.png",
     description:
       "Grand vase en céramique blanche à l'émail mat. Pour pampa, branches ou fleurs séchées.",
     couleur: "Blanc",
@@ -468,8 +461,7 @@ const PRODUCTS: Product[] = [
     stock: 4,
     dimensions: "H 55 × Ø 30 cm",
     prix: 25,
-    image:
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=600&h=600&fit=crop&auto=format",
+    image: "/products/vase-oval.png",
     description:
       "Vase amphore en terracotta naturelle. Idéal pour une décoration bohème ou méditerranéenne.",
     couleur: "Terracotta",
@@ -532,17 +524,13 @@ const CATEGORY_IMAGES: Record<string, string> = {
   Mobilier: "/products/prod004.png",
   "Figurines & Jeux": "/products/prod007.png",
   "Bougeoirs & Lanternes": "/products/prod014.png",
-  Verreries:
-    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=375&fit=crop&auto=format",
+  Verreries: "/products/vase-oval.png",
   Cadres:
     "https://images.unsplash.com/photo-1578926375605-eaf7559b1458?w=500&h=375&fit=crop&auto=format",
-  Présentoirs: "/products/prod015.png",
-  Urnes:
-    "https://images.unsplash.com/photo-1525678964484-56bac6d64a22?w=500&h=375&fit=crop&auto=format",
-  "Art de la Table":
-    "https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?w=500&h=375&fit=crop&auto=format",
-  Vases:
-    "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=500&h=375&fit=crop&auto=format",
+  Présentoirs: "/products/presentoir-gateau-1.png",
+  Urnes: "/products/urne-cage.png",
+  "Art de la Table": "/products/chemin-table-rose.png",
+  Vases: "/products/vase-geometrique-blanc.png",
   Décoration: "/products/prod006.png",
   "Fleurs & Feuillages":
     "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=500&h=375&fit=crop&auto=format",
