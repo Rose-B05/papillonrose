@@ -1,3 +1,4 @@
 allowBuilds:
-  msw: set this to true or false
-  sharp: set this to true or false
+  msw: false
+  sharp: false
+onlyBuiltDependencies: "'[msw,sharp]'"

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import {
   Search,
   ShoppingBag,
@@ -88,7 +88,7 @@ const PRODUCTS: Product[] = [
     categorie: "Mobilier",
     stock: 24,
     dimensions: "45 × 45 × H 95 cm",
-    prix: 12,
+    prix: 40,
     image: "/products/prod004.png",
     description:
       "Paire de chaises médaillon en bois patiné blanc, assise et dossier capitonnés en lin. Charme romantique et confort pour vos réceptions.",
@@ -100,8 +100,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 2,
     dimensions: "200 × 200 cm",
-    prix: 35,
-    image: "/products/prod002.png",
+    prix: 60,
+    image: "/products/prod040.png",
     description:
       "Panneau grillagé sur pied en métal blanc. Support idéal pour fleurs, feuillages, photos ou plan de table suspendu.",
     couleur: "Blanc",
@@ -137,7 +137,7 @@ const PRODUCTS: Product[] = [
     stock: 1,
     dimensions: "Set de 14 pièces",
     prix: 22,
-    image: "/products/prod007.png",
+    image: "/products/prod056.png",
     description:
       "Collection de figurines d'animaux de la jungle et personnages emblématiques. Idéale pour scénographier une table d'anniversaire enfant sur le thème de la savane.",
     couleur: "Multicolore",
@@ -149,7 +149,7 @@ const PRODUCTS: Product[] = [
     stock: 4,
     dimensions: "Set de 4 · H 5 cm",
     prix: 10,
-    image: "/products/prod008.png",
+    image: "/products/prod047.png",
     description:
       "Lot de mini figurines super-héros métallisées. Parfait pour personnaliser un gâteau ou animer une fête d'enfants pleine d'énergie.",
     couleur: "Multicolore",
@@ -172,7 +172,7 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 2,
     dimensions: "H 65 cm",
-    prix: 18,
+    prix: 5,
     image: "/products/prod010.png",
     description:
       "Duo d'oiseaux exotiques en métal peint à la main — un perroquet ara et un toucan — montés sur pieds. Décor coloré et dépaysant pour soirées tropicales et événements à thème.",
@@ -184,7 +184,7 @@ const PRODUCTS: Product[] = [
     categorie: "Bougeoirs & Lanternes",
     stock: 6,
     dimensions: "H 28 × Ø 14 cm",
-    prix: 9,
+    prix: 4,
     image: "/products/prod011.png",
     description:
       "Bougeoir sur pied en métal argenté au galbe travaillé. Présente une bougie pilier avec élégance sur vos tables et buffets.",
@@ -197,7 +197,7 @@ const PRODUCTS: Product[] = [
     stock: 3,
     dimensions: "Ø 45 × H 35 cm",
     prix: 22,
-    image: "/products/prod012.png",
+    image: "/products/prod030-2.png",
     description:
       "Pouf rond en velours noir aux fines pieds dorés en épingle. Assise d'appoint chic ou sellette décorative pour vos espaces lounge.",
     couleur: "Noir & Or",
@@ -209,7 +209,7 @@ const PRODUCTS: Product[] = [
     stock: 4,
     dimensions: "H 22 × 8 cm",
     prix: 11,
-    image: "/products/prod013.png",
+    image: "/products/prod025-2.png",
     description:
       "Paire de bougeoirs en laiton patiné en forme de feuille nervurée. Touche vintage et raffinée pour une décoration de table végétale.",
     couleur: "Laiton",
@@ -220,8 +220,8 @@ const PRODUCTS: Product[] = [
     categorie: "Bougeoirs & Lanternes",
     stock: 6,
     dimensions: "H 18 / 24 / 30 cm",
-    prix: 16,
-    image: "/products/prod014.png",
+    prix: 4,
+    image: "/products/prod022.png",
     description:
       "Trio de bougeoirs piliers en laiton doré de hauteurs graduées. Composez un centre de table lumineux et sophistiqué.",
     couleur: "Or",
@@ -233,7 +233,7 @@ const PRODUCTS: Product[] = [
     stock: 5,
     dimensions: "40 × 22 × H 8 cm",
     prix: 12,
-    image: "/products/prod015.png",
+    image: "/products/prod042.png",
     description:
       "Plateau rectangulaire à structure laiton doré et fond miroir. Idéal pour présenter parfums, bougies ou la verrerie du bar.",
     couleur: "Or & Miroir",
@@ -244,35 +244,21 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 4,
     dimensions: "H 12 × 10 cm",
-    prix: 14,
-    image: "/products/coffret-verre-laiton.png",
+    prix: 10,
+    image: "/products/prod030.png",
     description:
       "Paire de boîtes géométriques en verre et laiton doré. Parfaites comme porte-alliances, écrins à bijoux ou mini terrariums décoratifs.",
     couleur: "Or & Verre",
   },
   // ── Catalogue complémentaire ──
   {
-    id: "mob-003",
-    nom: "Table Ronde 180 cm",
-    categorie: "Mobilier",
-    stock: 5,
-    dimensions: "Ø 180 × H 75 cm",
-    prix: 80,
-    image:
-      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=600&fit=crop&auto=format",
-    description:
-      "Table ronde pouvant accueillir 10 à 12 convives. Idéale pour réceptions et mariages.",
-    couleur: "Blanc",
-  },
-
-  {
     id: "bou-001",
     nom: "Lanterne Marocaine Dorée",
     categorie: "Bougeoirs & Lanternes",
     stock: 8,
     dimensions: "H 45 × Ø 20 cm",
-    prix: 12,
-    image: "/products/lanterne-blanche.png",
+    prix: 5,
+    image: "/products/prod023.png",
     description:
       "Lanterne en métal ajouré doré de style oriental. Crée une ambiance lumineuse et envoûtante.",
     couleur: "Or",
@@ -284,7 +270,7 @@ const PRODUCTS: Product[] = [
     stock: 12,
     dimensions: "H 30 × Ø 8 cm",
     prix: 8,
-    image: "/products/bougeoir-or.png",
+    image: "/products/prod022.png",
     description:
       "Chandelier en cristal soufflé d'une finesse rare. Mille reflets sur vos tables.",
     couleur: "Cristal",
@@ -295,8 +281,8 @@ const PRODUCTS: Product[] = [
     categorie: "Bougeoirs & Lanternes",
     stock: 30,
     dimensions: "H 10 × Ø 8 cm",
-    prix: 5,
-    image: "/products/photophore-transparent.png",
+    prix: 0.50,
+    image: "/products/prod034.png",
     description: "Photophore en verre texturé doré pour bougies chauffe-plat.",
     couleur: "Or",
   },
@@ -307,8 +293,7 @@ const PRODUCTS: Product[] = [
     stock: 15,
     dimensions: "H 40 × Ø 15 cm",
     prix: 10,
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=600&fit=crop&auto=format",
+    image: "/products/prod072.png",
     description:
       "Vase cylindrique en verre soufflé. Polyvalent pour compositions florales ou bougies flottantes.",
     couleur: "Transparent",
@@ -319,38 +304,11 @@ const PRODUCTS: Product[] = [
     categorie: "Verreries",
     stock: 10,
     dimensions: "H 30 × Ø 12 cm",
-    prix: 15,
-    image:
-      "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&h=600&fit=crop&auto=format",
+    prix: 4,
+    image: "/products/prod036.png",
     description:
       "Carafe en cristal biseauté de style vintage. Pour l'eau, limonades ou cocktails signature.",
     couleur: "Transparent",
-  },
-  {
-    id: "cad-001",
-    nom: "Cadre Doré Baroque",
-    categorie: "Cadres",
-    stock: 4,
-    dimensions: "50 × 70 cm",
-    prix: 20,
-    image:
-      "https://images.unsplash.com/photo-1578926375605-eaf7559b1458?w=600&h=600&fit=crop&auto=format",
-    description:
-      "Cadre baroque en résine dorée. Idéal pour plans de table ou menus calligraphiés.",
-    couleur: "Or",
-  },
-  {
-    id: "cad-002",
-    nom: "Tableau Ardoise Plan de Table",
-    categorie: "Cadres",
-    stock: 2,
-    dimensions: "80 × 120 cm",
-    prix: 35,
-    image:
-      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=600&fit=crop&auto=format",
-    description:
-      "Grand tableau ardoise sur pied, inscriptions à la craie liquide.",
-    couleur: "Noir",
   },
   {
     id: "pre-001",
@@ -358,8 +316,8 @@ const PRODUCTS: Product[] = [
     categorie: "Présentoirs",
     stock: 3,
     dimensions: "H 60 cm · plateaux Ø 20/30/40 cm",
-    prix: 45,
-    image: "/products/presentoir-gateau-1.png",
+    prix: 6,
+    image: "/products/prod048.png",
     description:
       "Présentoir à gâteau en métal blanc 3 étages avec plateaux miroir.",
     couleur: "Blanc & Or",
@@ -370,24 +328,11 @@ const PRODUCTS: Product[] = [
     categorie: "Urnes",
     stock: 3,
     dimensions: "H 30 × 20 × 20 cm",
-    prix: 25,
-    image: "/products/urne-cage.png",
+    prix: 8,
+    image: "/products/prod049.png",
     description:
       "Urne en bois massif avec fente pour enveloppes. Sobre et élégante.",
     couleur: "Bois naturel",
-  },
-  {
-    id: "art-001",
-    nom: "Assiette Porcelaine Blanche",
-    categorie: "Art de la Table",
-    stock: 100,
-    dimensions: "Ø 27 cm",
-    prix: 3,
-    image:
-      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=600&fit=crop&auto=format",
-    description:
-      "Assiette plate en porcelaine blanche fine, bord légèrement guilloché.",
-    couleur: "Blanc",
   },
   {
     id: "art-002",
@@ -395,8 +340,8 @@ const PRODUCTS: Product[] = [
     categorie: "Art de la Table",
     stock: 20,
     dimensions: "30 × 300 cm",
-    prix: 15,
-    image: "/products/chemin-table-rose.png",
+    prix: 2,
+    image: "/products/prod057.png",
     description:
       "Chemin de table en lin lavé naturel, bords effilochés. Touche rustique et poétique.",
     couleur: "Beige",
@@ -407,8 +352,8 @@ const PRODUCTS: Product[] = [
     categorie: "Vases",
     stock: 6,
     dimensions: "H 45 × Ø 22 cm",
-    prix: 20,
-    image: "/products/vase-geometrique-blanc.png",
+    prix: 0.90,
+    image: "/products/prod072.png",
     description:
       "Grand vase en céramique blanche à l'émail mat. Pour pampa, branches ou fleurs séchées.",
     couleur: "Blanc",
@@ -419,8 +364,8 @@ const PRODUCTS: Product[] = [
     categorie: "Vases",
     stock: 4,
     dimensions: "H 55 × Ø 30 cm",
-    prix: 25,
-    image: "/products/vase-oval.png",
+    prix: 1.50,
+    image: "/products/prod071.png",
     description:
       "Vase amphore en terracotta naturelle. Idéal pour une décoration bohème ou méditerranéenne.",
     couleur: "Terracotta",
@@ -431,25 +376,11 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 15,
     dimensions: "10 m · 100 LED blanc chaud",
-    prix: 20,
-    image:
-      "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=600&h=600&fit=crop&auto=format",
+    prix: 10,
+    image: "/products/prod019.png",
     description:
-      "Guirlande 10 mètres avec 100 LED blanc chaud. Intérieur ou extérieur.",
+      "Guirlande lumineuse avec 100 LED blanc chaud. Intérieur ou extérieur.",
     couleur: "Blanc chaud",
-  },
-  {
-    id: "fle-001",
-    nom: "Branche Eucalyptus Artificielle",
-    categorie: "Fleurs & Feuillages",
-    stock: 25,
-    dimensions: "90 cm",
-    prix: 15,
-    image:
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=600&fit=crop&auto=format",
-    description:
-      "Branche d'eucalyptus artificielle haute fidélité. Pour compositions, arches ou centres de table.",
-    couleur: "Vert argenté",
   },
   {
     id: "fle-002",
@@ -457,26 +388,13 @@ const PRODUCTS: Product[] = [
     categorie: "Fleurs & Feuillages",
     stock: 10,
     dimensions: "Tige 50 cm · Tête Ø 6 cm",
-    prix: 18,
-    image:
-      "https://images.unsplash.com/photo-1490750967868-88df5691cc8e?w=600&h=600&fit=crop&auto=format",
+    prix: 15,
+    image: "/products/prod080.png",
     description:
       "Lot de 12 roses artificielles blanches premium. Réutilisables à l'infini.",
     couleur: "Blanc",
   },
-  {
-    id: "fig-001",
-    nom: "Jenga Géant",
-    categorie: "Figurines & Jeux",
-    stock: 2,
-    dimensions: "Empilé 50 cm · Max 150 cm",
-    prix: 25,
-    image:
-      "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=600&h=600&fit=crop&auto=format",
-    description:
-      "Jenga géant en bois massif pour animer cocktails et réceptions.",
-    couleur: "Bois naturel",
-  },
+
   // ── Nouveaux produits du catalogue ──
   {
     id: "bou-007",
@@ -484,8 +402,8 @@ const PRODUCTS: Product[] = [
     categorie: "Bougeoirs & Lanternes",
     stock: 6,
     dimensions: "H 40 × Ø 18 cm",
-    prix: 14,
-    image: "/products/lanterne-argent.png",
+    prix: 12,
+    image: "/products/prod020.png",
     description: "Lanterne en métal argenté au design élégant. Parfaite pour une ambiance lumineuse raffinée.",
     couleur: "Argenté",
   },
@@ -495,8 +413,8 @@ const PRODUCTS: Product[] = [
     categorie: "Bougeoirs & Lanternes",
     stock: 6,
     dimensions: "H 40 × Ø 18 cm",
-    prix: 14,
-    image: "/products/lanterne-noir.png",
+    prix: 5,
+    image: "/products/prod021.png",
     description: "Lanterne en métal noir mat. Style moderne et sobre pour vos décorations.",
     couleur: "Noir",
   },
@@ -506,8 +424,8 @@ const PRODUCTS: Product[] = [
     categorie: "Bougeoirs & Lanternes",
     stock: 8,
     dimensions: "H 25 × Ø 10 cm",
-    prix: 10,
-    image: "/products/bougeoire-etincelle.png",
+    prix: 9,
+    image: "/products/prod025.png",
     description: "Bougeoir doré aux reflets étincelants. Illumine vos tables avec élégance.",
     couleur: "Or",
   },
@@ -517,8 +435,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 5,
     dimensions: "150 cm",
-    prix: 12,
-    image: "/products/boa.png",
+    prix: 0.50,
+    image: "/products/prod076.png",
     description: "Boa en plumes blanches. Accessoire décoratif pour chaises, arches ou espaces photo.",
     couleur: "Blanc",
   },
@@ -528,8 +446,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 3,
     dimensions: "80 × 40 × H 90 cm",
-    prix: 35,
-    image: "/products/candy-bar.png",
+    prix: 20,
+    image: "/products/prod032.png",
     description: "Présentoir candy bar pour buffets sucrés, anniversaires et goûters d'enfants.",
     couleur: "Multicolore",
   },
@@ -539,8 +457,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 10,
     dimensions: "H 45 cm",
-    prix: 8,
-    image: "/products/feuille-or.png",
+    prix: 1.50,
+    image: "/products/prod046.png",
     description: "Feuille décorative dorée. Idéale pour compositions florales et centres de table.",
     couleur: "Or",
   },
@@ -550,8 +468,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 2,
     dimensions: "H 50 × Ø 25 cm",
-    prix: 28,
-    image: "/products/fontaine-agrume.png",
+    prix: 8,
+    image: "/products/prod036.png",
     description: "Fontaine décorative à agrumes. Originale et rafraîchissante pour vos réceptions.",
     couleur: "Transparent",
   },
@@ -561,8 +479,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 8,
     dimensions: "100 × 100 cm",
-    prix: 15,
-    image: "/products/gazon-artificiel.png",
+    prix: 10,
+    image: "/products/prod084.png",
     description: "Panneau de gazon artificiel à suspendre. Crée un mur végétal pour vos événements.",
     couleur: "Vert",
   },
@@ -572,8 +490,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 3,
     dimensions: "Ø 40 cm",
-    prix: 18,
-    image: "/products/horloge.png",
+    prix: 7,
+    image: "/products/prod074.png",
     description: "Horloge décorative sur pied. Pièce unique pour habiller vos espaces réception.",
     couleur: "Noir & Or",
   },
@@ -583,8 +501,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 3,
     dimensions: "H 70 cm",
-    prix: 22,
-    image: "/products/ours-blanc.png",
+    prix: 5,
+    image: "/products/prod011.png",
     description: "Ours blanc décoratif en résine. Parfait pour les baptêmes et événements hivernaux.",
     couleur: "Blanc",
   },
@@ -594,8 +512,8 @@ const PRODUCTS: Product[] = [
     categorie: "Mobilier",
     stock: 12,
     dimensions: "40 × 40 cm",
-    prix: 10,
-    image: "/products/coussins-velour.png",
+    prix: 1,
+    image: "/products/prod061.png",
     description: "Paire de coussins en velours pour chaises. Confort et élégance pour vos invités.",
     couleur: "Velours",
   },
@@ -605,8 +523,8 @@ const PRODUCTS: Product[] = [
     categorie: "Art de la Table",
     stock: 10,
     dimensions: "150 × 250 cm",
-    prix: 18,
-    image: "/products/nappe-papillon.png",
+    prix: 2,
+    image: "/products/prod058.png",
     description: "Nappe rectangulaire motif papillon. Douce et raffinée pour vos tables de réception.",
     couleur: "Rose",
   },
@@ -616,8 +534,8 @@ const PRODUCTS: Product[] = [
     categorie: "Art de la Table",
     stock: 4,
     dimensions: "Set de 6 pièces",
-    prix: 25,
-    image: "/products/pack-candy-bar-verre.png",
+    prix: 20,
+    image: "/products/prod032.png",
     description: "Set de verreries pour candy bar. Pots et coupes en verre pour buffets sucrés.",
     couleur: "Transparent",
   },
@@ -628,7 +546,7 @@ const PRODUCTS: Product[] = [
     stock: 6,
     dimensions: "Set de 4 · H 12 cm",
     prix: 20,
-    image: "/products/pack-sou-verre.png",
+    image: "/products/prod066.png",
     description: "Lot de soupières en verre. Idéales pour entrées et soupes lors de vos réceptions.",
     couleur: "Transparent",
   },
@@ -638,8 +556,8 @@ const PRODUCTS: Product[] = [
     categorie: "Art de la Table",
     stock: 8,
     dimensions: "25 × 15 × H 10 cm",
-    prix: 8,
-    image: "/products/panier-pain.png",
+    prix: 2,
+    image: "/products/prod065.png",
     description: "Panier à pain en osier. Pour servir le pain avec style sur vos tables.",
     couleur: "Naturel",
   },
@@ -649,8 +567,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 4,
     dimensions: "H 8 × 6 cm",
-    prix: 12,
-    image: "/products/porte-alliance-prisme.png",
+    prix: 7,
+    image: "/products/prod029.png",
     description: "Porte-alliance en forme de prisme en cristal. Écrin parfait pour les alliances.",
     couleur: "Cristal",
   },
@@ -660,8 +578,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 4,
     dimensions: "H 6 × 8 cm",
-    prix: 10,
-    image: "/products/porte-alliance-rectangle-1.png",
+    prix: 7,
+    image: "/products/prod031.png",
     description: "Porte-alliance rectangulaire en cristal. Présentez vos alliances avec élégance.",
     couleur: "Cristal",
   },
@@ -671,8 +589,8 @@ const PRODUCTS: Product[] = [
     categorie: "Présentoirs",
     stock: 10,
     dimensions: "H 12 × 8 cm",
-    prix: 6,
-    image: "/products/porte-carte-or.png",
+    prix: 0.90,
+    image: "/products/prod060.png",
     description: "Porte-carte doré pour plans de table, menus ou marque-places. Raffinement garanti.",
     couleur: "Or",
   },
@@ -682,8 +600,8 @@ const PRODUCTS: Product[] = [
     categorie: "Art de la Table",
     stock: 15,
     dimensions: "H 8 cm",
-    prix: 5,
-    image: "/products/porte-serviettes.png",
+    prix: 4,
+    image: "/products/prod052.png",
     description: "Porte-serviettes doré. Pour une présentation élégante de vos serviettes de table.",
     couleur: "Or",
   },
@@ -693,8 +611,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 6,
     dimensions: "H 10 × 5 cm",
-    prix: 8,
-    image: "/products/prisme.png",
+    prix: 6,
+    image: "/products/prod026.png",
     description: "Prisme en cristal décoratif. Capte la lumière et crée des reflets sur vos tables.",
     couleur: "Cristal",
   },
@@ -704,8 +622,8 @@ const PRODUCTS: Product[] = [
     categorie: "Art de la Table",
     stock: 10,
     dimensions: "H 8 cm (paire)",
-    prix: 6,
-    image: "/products/saliere-poivriere.png",
+    prix: 2,
+    image: "/products/prod063.png",
     description: "Paire de salière et poivrière en verre. Indispensables pour vos tables dressées.",
     couleur: "Transparent",
   },
@@ -715,8 +633,8 @@ const PRODUCTS: Product[] = [
     categorie: "Art de la Table",
     stock: 8,
     dimensions: "H 10 × 15 cm",
-    prix: 8,
-    image: "/products/sauciere.png",
+    prix: 13,
+    image: "/products/prod054.png",
     description: "Saucière en porcelaine blanche. Pour servir sauces et accompaniments avec élégance.",
     couleur: "Blanc",
   },
@@ -726,8 +644,8 @@ const PRODUCTS: Product[] = [
     categorie: "Art de la Table",
     stock: 30,
     dimensions: "45 × 45 cm",
-    prix: 3,
-    image: "/products/serviette-emeraude.png",
+    prix: 0.50,
+    image: "/products/prod055.png",
     description: "Serviette de table en lin vert émeraude. Touche de couleur pour vos tables habillées.",
     couleur: "Émeraude",
   },
@@ -737,30 +655,30 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 5,
     dimensions: "H 8 × Ø 5 cm",
-    prix: 7,
-    image: "/products/sonnette-comptoir.png",
+    prix: 5,
+    image: "/products/prod075.png",
     description: "Sonnette de comptoir en laiton doré. Pour appeler vos convives ou servir le bar.",
     couleur: "Or",
   },
   {
     id: "dec-021",
-    nom: "Sous-Assiettes Or (lot de 6)",
+    nom: "Sous-Assiette Or (lot de 6)",
     categorie: "Art de la Table",
     stock: 10,
     dimensions: "Ø 30 cm · lot de 6",
-    prix: 15,
-    image: "/products/sous-assiettes-or.png",
+    prix: 6,
+    image: "/products/prod053.png",
     description: "Lot de 6 sous-assiettes dorées. Rehaussez votre table avec une touche précieuse.",
     couleur: "Or",
   },
   {
     id: "dec-022",
-    nom: "Top Cake Diamant",
+    nom: "Top Cake Diamant®",
     categorie: "Décoration",
     stock: 5,
     dimensions: "H 12 cm",
     prix: 9,
-    image: "/products/top-cake-diamand.png",
+    image: "/products/prod064.png",
     description: "Décoration de gâteau en forme de diamant doré. Sublime votre pièce montée.",
     couleur: "Or",
   },
@@ -770,8 +688,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 4,
     dimensions: "H 80 cm",
-    prix: 16,
-    image: "/products/umbrella.png",
+    prix: 4,
+    image: "/products/prod078.png",
     description: "Ombrelle décorative en dentelle. Idéale pour séances photo et décoration bohème.",
     couleur: "Blanc",
   },
@@ -781,8 +699,8 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 3,
     dimensions: "H 25 cm",
-    prix: 10,
-    image: "/products/bird-scoth.png",
+    prix: 7,
+    image: "/products/prod050.png",
     description: "Oiseau décoratif en métal. Duo d'oiseaux tropicaux pour une déco colorée.",
     couleur: "Multicolore",
   },
@@ -792,7 +710,7 @@ const PRODUCTS: Product[] = [
     categorie: "Bougeoirs & Lanternes",
     stock: 1,
     dimensions: "H 80 × Ø 60 cm",
-    prix: 45,
+    prix: 80,
     image: "/products/lustre-12-branches.png",
     description: "Lustre à 12 branches en métal doré. Pièce maîtresse pour vos réceptions et mariages.",
     couleur: "Or",
@@ -803,7 +721,7 @@ const PRODUCTS: Product[] = [
     categorie: "Décoration",
     stock: 2,
     dimensions: "60 × 30 cm",
-    prix: 25,
+    prix: 30,
     image: "/products/bride-to-be-led.png",
     description: "Enseigne lumineuse LED 'Bride to Be' blanc chaud. Parfaite pour EVJF et enterrements de vie de jeune fille.",
     couleur: "Blanc chaud",
@@ -834,14 +752,14 @@ const PRODUCTS: Product[] = [
 
 let CATEGORY_IMAGES: Record<string, string> = {
   Mobilier: "/products/prod004.png",
-  "Figurines & Jeux": "/products/prod007.png",
-  "Bougeoirs & Lanternes": "/products/lanterne-argent.png",
-  Verreries: "/products/vase-oval.png",
-  Cadres: "/products/porte-carte-or.png",
-  Présentoirs: "/products/presentoir-gateau-1.png",
-  Urnes: "/products/urne-cage.png",
-  "Art de la Table": "/products/chemin-table-rose.png",
-  Vases: "/products/vase-geometrique-blanc.png",
+  "Figurines & Jeux": "/products/prod056.png",
+  "Bougeoirs & Lanternes": "/products/prod020.png",
+  Verreries: "/products/prod071.png",
+  Cadres: "/products/prod060.png",
+  Présentoirs: "/products/prod048.png",
+  Urnes: "/products/prod049.png",
+  "Art de la Table": "/products/prod057.png",
+  Vases: "/products/prod072.png",
   Décoration: "/products/prod006.png",
   "Fleurs & Feuillages": "/products/prod003.png",
 }
@@ -866,16 +784,16 @@ function ProductCard({
   onAdd: () => void
 }) {
   return (
-    <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group">
+    <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group">
       <div
-        className="relative m-2.5 overflow-hidden rounded-2xl bg-[#F8F5F0] cursor-pointer"
+        className="relative m-2.5 overflow-hidden rounded-lg bg-[#F8F5F0] cursor-pointer"
         style={{ aspectRatio: "1 / 1" }}
         onClick={onView}
       >
         <img
           src={product.image ? img(product.image) : PLACEHOLDER}
           alt={product.nom}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
         />
         {product.stock === 0 && (
           <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
@@ -919,7 +837,7 @@ function ProductCard({
         <div className="flex items-center justify-between mt-auto pt-2">
           <span style={DP} className="text-base font-bold text-[#2E2E2E]">
             {product.prix}{" "}
-            <span className="text-sm font-normal text-gray-400">€</span>
+            <span className="text-sm font-normal text-gray-400">€<span className="text-xs">/jour</span></span>
           </span>
           <button
             onClick={onAdd}
@@ -1076,6 +994,19 @@ export default function PapillonRoseSite() {
   const [showMenu, setShowMenu] = useState(false)
   const [priceMax, setPriceMax] = useState(200)
   const [inStockOnly, setInStockOnly] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [showQuoteSent, setShowQuoteSent] = useState(false)
+
+  useEffect(() => {
+    const check = () => setScrolled(window.scrollY > window.innerHeight)
+    check()
+    window.addEventListener("scroll", check)
+    window.addEventListener("resize", check)
+    return () => {
+      window.removeEventListener("scroll", check)
+      window.removeEventListener("resize", check)
+    }
+  }, [])
 
   const filtered = useMemo(
     () =>
@@ -1144,7 +1075,7 @@ export default function PapillonRoseSite() {
   return (
     <div className="min-h-screen bg-[#F8F5F0] font-sans text-[#2E2E2E]">
       {/* ── Navbar ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm">
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white/80 backdrop-blur-xl shadow-sm" : "opacity-0 pointer-events-none"}`}>
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16">
           <button onClick={() => navTo("home")} aria-label="Accueil Papillon Rose">
             <img
@@ -1154,7 +1085,7 @@ export default function PapillonRoseSite() {
             />
           </button>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-8 mr-8">
             {(["home", "catalogue", "favorites", "contact"] as Page[]).map(
                 (p) => (
                   <button
@@ -1164,8 +1095,12 @@ export default function PapillonRoseSite() {
                     }
                     className={`text-sm transition-colors ${
                       page === p || p === "home"
-                        ? "text-[#C8A97E] font-bold"
-                        : "text-[#2E2E2E]/60 hover:text-[#C8A97E]"
+                        ? scrolled
+                          ? "text-[#C8A97E] font-bold"
+                          : "text-white"
+                        : scrolled
+                          ? "text-[#2E2E2E]/60 hover:text-[#C8A97E]"
+                          : "text-white/70 hover:text-white"
                     }`}
                   >
                   {p === "home"
@@ -1190,7 +1125,11 @@ export default function PapillonRoseSite() {
                 size={19}
                 fill={favorites.size > 0 ? GOLD : "none"}
                 className={
-                  favorites.size > 0 ? "text-[#C8A97E]" : "text-[#2E2E2E]/40"
+                  favorites.size > 0
+                    ? "text-[#C8A97E]"
+                    : scrolled
+                      ? "text-[#2E2E2E]/40"
+                      : "text-white/70"
                 }
               />
               {favorites.size > 0 && (
@@ -1214,7 +1153,7 @@ export default function PapillonRoseSite() {
             <button
               onClick={() => setShowMenu(true)}
               aria-label="Menu"
-              className="md:hidden p-2 text-[#2E2E2E]/60"
+              className={`md:hidden p-2 ${scrolled ? "text-[#2E2E2E]/60" : "text-white/70"}`}
             >
               <Menu size={20} />
             </button>
@@ -1281,7 +1220,7 @@ export default function PapillonRoseSite() {
         {page === "home" && (
           <div>
             {/* Hero */}
-            <section className="relative flex items-center justify-center" style={{ height: "100vh", maxHeight: "100vh" }}>
+            <section className="relative" style={{ height: "100vh", maxHeight: "100vh" }}>
               <video
                 src="https://raw.githubusercontent.com/Rose-B05/papillonrose/master/public/products/hero.mp4"
                 autoPlay
@@ -1290,23 +1229,18 @@ export default function PapillonRoseSite() {
                 playsInline
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/60" />
-              <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
-                <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-4 font-medium">
-                  LOCATION DÉCORATION ÉVÉNEMENT
-                </p>
-                <h1 style={DP} className="text-white text-5xl md:text-7xl font-semibold leading-[1.1] mb-6">
-                  Papillon
-                  <br />
-                  <em className="font-normal italic">Rose</em>
-                </h1>
-                <button
-                  onClick={() => goToCatalogue()}
-                  className="flex items-center gap-2.5 bg-[#C8A97E] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-[#B8926E] transition-colors shadow-lg mx-auto"
-                >
-                  Voir le catalogue <ArrowRight size={15} />
-                </button>
-              </div>
+            </section>
+
+            {/* Hero text */}
+            <section className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
+              <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-3 font-medium">
+                LOCATION DÉCORATION ÉVÉNEMENT
+              </p>
+              <h1 style={DP} className="text-[#2E2E2E] text-5xl md:text-7xl font-semibold leading-[1.1] mb-6">
+                Papillon
+                <br />
+                <em className="font-normal italic">Rose</em>
+              </h1>
             </section>
 
             {/* Stats strip */}
@@ -1794,13 +1728,13 @@ export default function PapillonRoseSite() {
           >
             <div className="grid md:grid-cols-2">
               <div
-                className="relative bg-[#F8F5F0] rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none overflow-hidden"
+                className="relative bg-white rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none overflow-hidden"
                 style={{ aspectRatio: "1 / 1" }}
               >
                 <img
                   src={modalProduct.image ? img(modalProduct.image) : PLACEHOLDER}
                   alt={modalProduct.nom}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain p-4"
                 />
                 <button
                   onClick={() => setModalProduct(null)}
@@ -1872,7 +1806,7 @@ export default function PapillonRoseSite() {
                   >
                     {modalProduct.prix} €
                     <span className="text-sm font-normal text-gray-400 ml-1">
-                      / unité
+                      / jour
                     </span>
                   </p>
                   <div className="flex gap-3">
@@ -1979,7 +1913,7 @@ export default function PapillonRoseSite() {
                           {p.nom}
                         </p>
                         <p className="text-[11px] text-gray-400 mt-0.5">
-                          {p.prix} € / u.
+                          {p.prix} € / jour
                         </p>
                         <div className="flex items-center gap-2 mt-2">
                           <button
@@ -2031,6 +1965,8 @@ export default function PapillonRoseSite() {
                   <button
                     onClick={() => {
                       setShowQuote(false)
+                      setShowQuoteSent(true)
+                      setTimeout(() => setShowQuoteSent(false), 3000)
                       navTo("contact")
                     }}
                     className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors mb-2.5"
@@ -2050,6 +1986,13 @@ export default function PapillonRoseSite() {
               </>
             )}
           </div>
+        </div>
+      )}
+
+      {showQuoteSent && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#2E2E2E] text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 animate-[fade-in-up_0.3s_ease-out]">
+          <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+          <span className="text-sm font-medium">Demande de devis envoyée avec succès</span>
         </div>
       )}
     </div>
