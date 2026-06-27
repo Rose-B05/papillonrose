@@ -1276,7 +1276,7 @@ export default function PapillonRoseSite() {
         {page === "home" && (
           <div>
             {/* Hero */}
-            <section className="relative mt-4" style={{ minHeight: "78vh" }}>
+            <section className="relative" style={{ height: "100vh", maxHeight: "100vh" }}>
               <video
                 src="/videos/hero.mp4"
                 autoPlay
@@ -1287,7 +1287,7 @@ export default function PapillonRoseSite() {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-              <div className="relative z-10 h-full flex flex-col justify-end pb-14 px-8 md:px-14" style={{ minHeight: "78vh" }}>
+              <div className="relative z-10 h-full flex flex-col justify-end pb-14 px-8 md:px-14" style={{ minHeight: "100vh" }}>
                 <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-3 font-medium">
                   LOCATION DÉCORATION ÉVÉNEMENT
                 </p>
