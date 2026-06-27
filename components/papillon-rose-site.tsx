@@ -1139,7 +1139,7 @@ export default function PapillonRoseSite() {
   return (
     <div className="min-h-screen bg-[#F8F5F0] font-sans text-[#2E2E2E]">
       {/* ── Navbar ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-black/[0.06]">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16">
           <button onClick={() => navTo("home")} aria-label="Accueil Papillon Rose">
             <img
@@ -1151,18 +1151,18 @@ export default function PapillonRoseSite() {
 
           <div className="hidden md:flex items-center gap-8">
             {(["home", "catalogue", "favorites", "contact"] as Page[]).map(
-              (p) => (
-                <button
-                  key={p}
-                  onClick={() =>
-                    p === "catalogue" ? goToCatalogue() : navTo(p)
-                  }
-                  className={`text-sm transition-colors ${
-                    page === p
-                      ? "text-[#C8A97E] font-medium"
-                      : "text-[#2E2E2E]/55 hover:text-[#C8A97E]"
-                  }`}
-                >
+                (p) => (
+                  <button
+                    key={p}
+                    onClick={() =>
+                      p === "catalogue" ? goToCatalogue() : navTo(p)
+                    }
+                    className={`text-sm transition-colors ${
+                      page === p
+                        ? "text-[#C8A97E] font-medium"
+                        : "text-white/70 hover:text-white"
+                    }`}
+                  >
                   {p === "home"
                     ? "Accueil"
                     : p === "catalogue"
@@ -1185,7 +1185,7 @@ export default function PapillonRoseSite() {
                 size={19}
                 fill={favorites.size > 0 ? GOLD : "none"}
                 className={
-                  favorites.size > 0 ? "text-[#C8A97E]" : "text-[#2E2E2E]/60"
+                  favorites.size > 0 ? "text-[#C8A97E]" : "text-white/70"
                 }
               />
               {favorites.size > 0 && (
@@ -1196,7 +1196,7 @@ export default function PapillonRoseSite() {
             </button>
             <button
               onClick={() => setShowQuote(true)}
-              className="relative flex items-center gap-2 bg-[#2E2E2E] text-white px-4 py-2 rounded-full text-sm hover:bg-[#C8A97E] transition-colors"
+              className="relative flex items-center gap-2 bg-black/30 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm hover:bg-[#C8A97E] transition-colors"
             >
               <ShoppingBag size={15} />
               <span className="hidden md:inline font-medium">Devis</span>
@@ -1209,7 +1209,7 @@ export default function PapillonRoseSite() {
             <button
               onClick={() => setShowMenu(true)}
               aria-label="Menu"
-              className="md:hidden p-2 text-[#2E2E2E]/70"
+              className="md:hidden p-2 text-white/70"
             >
               <Menu size={20} />
             </button>
@@ -1271,7 +1271,7 @@ export default function PapillonRoseSite() {
         </div>
       )}
 
-      <div className="pt-16">
+      <div>
         {/* ─── HOME ─── */}
         {page === "home" && (
           <div>
@@ -1285,24 +1285,24 @@ export default function PapillonRoseSite() {
                 playsInline
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-              <div className="relative z-10 h-full flex flex-col justify-end pb-14 px-8 md:px-14" style={{ minHeight: "100vh" }}>
-                <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-3 font-medium">
-                  LOCATION DÉCORATION ÉVÉNEMENT
-                </p>
-                <h1 style={DP} className="text-white text-5xl md:text-7xl font-semibold leading-[1.1] mb-6">
-                  Papillon
-                  <br />
-                  <em className="font-normal italic">Rose</em>
-                </h1>
-                <button
-                  onClick={() => goToCatalogue()}
-                  className="w-fit flex items-center gap-2.5 bg-white text-[#2E2E2E] px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-[#C8A97E] hover:text-white transition-colors shadow-lg"
-                >
-                  Voir le catalogue <ArrowRight size={15} />
-                </button>
-              </div>
+            </section>
+
+            {/* Hero text */}
+            <section className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
+              <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-3 font-medium">
+                LOCATION DÉCORATION ÉVÉNEMENT
+              </p>
+              <h1 style={DP} className="text-[#2E2E2E] text-5xl md:text-7xl font-semibold leading-[1.1] mb-6">
+                Papillon
+                <br />
+                <em className="font-normal italic">Rose</em>
+              </h1>
+              <button
+                onClick={() => goToCatalogue()}
+                className="flex items-center gap-2.5 bg-[#2E2E2E] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-[#C8A97E] transition-colors shadow-lg"
+              >
+                Voir le catalogue <ArrowRight size={15} />
+              </button>
             </section>
 
             {/* Stats strip */}
@@ -1484,7 +1484,7 @@ export default function PapillonRoseSite() {
 
         {/* ─── CATALOGUE ─── */}
         {page === "catalogue" && (
-          <div className="max-w-7xl mx-auto px-5 md:px-10 py-8">
+          <div className="max-w-7xl mx-auto px-5 md:px-10 pt-24 pb-8">
             <div className="mb-7">
               <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                 Explorer
@@ -1606,7 +1606,7 @@ export default function PapillonRoseSite() {
 
         {/* ─── FAVORITES ─── */}
         {page === "favorites" && (
-          <div className="max-w-7xl mx-auto px-5 md:px-10 py-8 min-h-[60vh]">
+          <div className="max-w-7xl mx-auto px-5 md:px-10 pt-24 pb-8 min-h-[60vh]">
             <div className="mb-8">
               <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                 Mes préférences
@@ -1654,7 +1654,7 @@ export default function PapillonRoseSite() {
         {/* ─── CONTACT ─── */}
         {page === "contact" && (
           <div>
-            <div className="max-w-4xl mx-auto px-5 md:px-10 py-12">
+            <div className="max-w-4xl mx-auto px-5 md:px-10 pt-24 pb-12">
               <div className="text-center mb-14">
                 <p className="text-[#C8A97E] text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
                   Parlons de votre projet
