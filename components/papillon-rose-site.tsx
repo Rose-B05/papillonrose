@@ -1144,7 +1144,7 @@ export default function PapillonRoseSite() {
   return (
     <div className="min-h-screen bg-[#F8F5F0] font-sans text-[#2E2E2E]">
       {/* ── Navbar ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm">
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16">
           <button onClick={() => navTo("home")} aria-label="Accueil Papillon Rose">
             <img
@@ -1165,7 +1165,7 @@ export default function PapillonRoseSite() {
                     className={`text-sm transition-colors ${
                       page === p || p === "home"
                         ? "text-[#C8A97E] font-bold"
-                        : "text-white/70 hover:text-white"
+                        : "text-[#2E2E2E]/60 hover:text-[#C8A97E]"
                     }`}
                   >
                   {p === "home"
@@ -1190,7 +1190,7 @@ export default function PapillonRoseSite() {
                 size={19}
                 fill={favorites.size > 0 ? GOLD : "none"}
                 className={
-                  favorites.size > 0 ? "text-[#C8A97E]" : "text-white/70"
+                  favorites.size > 0 ? "text-[#C8A97E]" : "text-[#2E2E2E]/40"
                 }
               />
               {favorites.size > 0 && (
@@ -1201,12 +1201,12 @@ export default function PapillonRoseSite() {
             </button>
             <button
               onClick={() => setShowQuote(true)}
-              className="relative flex items-center gap-2 bg-black/30 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm hover:bg-[#C8A97E] transition-colors"
+              className="relative flex items-center gap-2 bg-[#C8A97E] text-white px-4 py-2 rounded-full text-sm hover:bg-[#B8926E] transition-colors"
             >
               <ShoppingBag size={15} />
               <span className="hidden md:inline font-medium">Devis</span>
               {quoteCount > 0 && (
-                <span className="w-5 h-5 bg-[#C8A97E] text-white text-[10px] rounded-full flex items-center justify-center font-bold">
+                <span className="w-5 h-5 bg-white text-[#C8A97E] text-[10px] rounded-full flex items-center justify-center font-bold">
                   {quoteCount}
                 </span>
               )}
@@ -1214,7 +1214,7 @@ export default function PapillonRoseSite() {
             <button
               onClick={() => setShowMenu(true)}
               aria-label="Menu"
-              className="md:hidden p-2 text-white/70"
+              className="md:hidden p-2 text-[#2E2E2E]/60"
             >
               <Menu size={20} />
             </button>
@@ -1281,7 +1281,7 @@ export default function PapillonRoseSite() {
         {page === "home" && (
           <div>
             {/* Hero */}
-            <section className="relative" style={{ height: "100vh", maxHeight: "100vh" }}>
+            <section className="relative flex items-center justify-center" style={{ height: "100vh", maxHeight: "100vh" }}>
               <video
                 src="https://raw.githubusercontent.com/Rose-B05/papillonrose/master/public/products/hero.mp4"
                 autoPlay
@@ -1290,24 +1290,23 @@ export default function PapillonRoseSite() {
                 playsInline
                 className="absolute inset-0 w-full h-full object-cover"
               />
-            </section>
-
-            {/* Hero text */}
-            <section className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
-              <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-3 font-medium">
-                LOCATION DÉCORATION ÉVÉNEMENT
-              </p>
-              <h1 style={DP} className="text-[#2E2E2E] text-5xl md:text-7xl font-semibold leading-[1.1] mb-6">
-                Papillon
-                <br />
-                <em className="font-normal italic">Rose</em>
-              </h1>
-              <button
-                onClick={() => goToCatalogue()}
-                className="flex items-center gap-2.5 bg-[#2E2E2E] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-[#C8A97E] transition-colors shadow-lg"
-              >
-                Voir le catalogue <ArrowRight size={15} />
-              </button>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/60" />
+              <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
+                <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-4 font-medium">
+                  LOCATION DÉCORATION ÉVÉNEMENT
+                </p>
+                <h1 style={DP} className="text-white text-5xl md:text-7xl font-semibold leading-[1.1] mb-6">
+                  Papillon
+                  <br />
+                  <em className="font-normal italic">Rose</em>
+                </h1>
+                <button
+                  onClick={() => goToCatalogue()}
+                  className="flex items-center gap-2.5 bg-[#C8A97E] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:bg-[#B8926E] transition-colors shadow-lg mx-auto"
+                >
+                  Voir le catalogue <ArrowRight size={15} />
+                </button>
+              </div>
             </section>
 
             {/* Stats strip */}
