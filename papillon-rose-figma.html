@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Papillon Rose — Figma Import</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: #F8F5F0; color: #2E2E2E; }
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+    .dp { font-family: 'Playfair Display', serif; }
+    .gold { color: #C8A97E; }
+    .bg-gold { background: #C8A97E; }
+    .frame {
+      width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    }
+
+    /* ===== SECTION: Hero ===== */
+    .hero {
+      margin: 16px 24px; border-radius: 24px; overflow: hidden;
+      min-height: 78vh; position: relative; background: #2E2E2E;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.55), rgba(0,0,0,0.15), transparent),
+                  linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+    }
+    .hero-content {
+      position: relative; z-index: 10; min-height: 78vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 56px 56px; color: white;
+    }
+    .hero-sub {
+      font-size: 12px; letter-spacing: 0.5em; text-transform: uppercase;
+      color: #C8A97E; margin-bottom: 12px; font-weight: 500;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px; font-weight: 600; line-height: 1.1; margin-bottom: 24px;
+    }
+    .hero-title em { font-style: italic; font-weight: 400; }
+    .btn-white {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: white; color: #2E2E2E; padding: 14px 28px;
+      border-radius: 999px; font-size: 14px; font-weight: 600;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    /* ===== SECTION: Stats ===== */
+    .stats { padding: 40px 24px; max-width: 768px; margin: 0 auto; }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700; color: #C8A97E;
+    }
+    .stat-label {
+      font-size: 12px; color: rgba(46,46,46,0.45);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;
+    }
+
+    /* ===== SECTION: Section header ===== */
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .section-label {
+      font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+      color: #C8A97E; font-weight: 500; margin-bottom: 4px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px; font-weight: 600; color: #2E2E2E;
+    }
+    .section-link {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 14px; color: #C8A97E; font-weight: 500;
+      text-decoration: none;
+    }
+
+    /* ===== SECTION: Category pills ===== */
+    .pills {
+      display: flex; gap: 8px; overflow-x: auto;
+      margin-bottom: 24px;
+    }
+    .pill {
+      white-space: nowrap; padding: 6px 16px; border-radius: 999px;
+      font-size: 12px; font-weight: 500; border: none; cursor: pointer;
+      background: #F0EBE3; color: rgba(46,46,46,0.6);
+    }
+    .pill.active { background: #C8A97E; color: white; }
+
+    /* ===== SECTION: Product grid ===== */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); gap: 16px;
+    }
+    .product-card {
+      background: white; border-radius: 24px; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .product-img-wrap {
+      position: relative; margin: 10px; border-radius: 16px;
+      overflow: hidden; background: #F8F5F0; cursor: pointer;
+    }
+    .product-img-wrap .aspect { aspect-ratio: 1 / 1; }
+    .product-img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .product-fav {
+      position: absolute; top: 10px; right: 10px;
+      width: 28px; height: 28px; background: white;
+      border-radius: 50%; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #ccc;
+    }
+    .product-badge {
+      position: absolute; top: 10px; left: 10px;
+      background: #fbbf24; color: white; font-size: 9px;
+      padding: 2px 8px; border-radius: 999px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .product-info { padding: 2px 14px 16px; display: flex; flex-direction: column; flex: 1; }
+    .product-cat {
+      font-size: 10px; font-weight: 500; color: #C8A97E;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px; font-weight: 600; color: #2E2E2E;
+      margin-top: 2px; cursor: pointer;
+    }
+    .product-dims {
+      font-size: 11px; color: #9ca3af; margin-top: 2px;
+    }
+    .product-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto; padding-top: 8px;
+    }
+    .product-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; font-weight: 700; color: #2E2E2E;
+    }
+    .product-price small {
+      font-size: 14px; font-weight: 400; color: #9ca3af;
+    }
+    .btn-add {
+      width: 32px; height: 32px; border-radius: 50%; border: none;
+      background: #C8A97E; color: white; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ===== SECTION: Categories ===== */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .cat-card {
+      position: relative; overflow: hidden; border-radius: 24px;
+      aspect-ratio: 4 / 3; cursor: pointer; background: #EDE8DF;
+    }
+    .cat-card img {
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.75;
+    }
+    .cat-card .gradient {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(46,46,46,0.8), rgba(46,46,46,0.1), transparent);
+    }
+    .cat-card .info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 16px; text-align: left;
+    }
+    .cat-card .info h3 {
+      font-family: 'Playfair Display', serif;
+      color: white; font-size: 14px; font-weight: 600;
+    }
+    .cat-card .info span {
+      color: #C8A97E; font-size: 11px;
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    /* ===== SECTION: CTA ===== */
+    .cta {
+      background: #2E2E2E; border-radius: 24px; overflow: hidden;
+      padding: 64px 40px; text-align: center; position: relative;
+    }
+    .cta-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.15;
+    }
+    .cta-content {
+      position: relative; z-index: 10; max-width: 576px; margin: 0 auto;
+    }
+    .cta-label {
+      font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase;
+      color: #C8A97E; font-weight: 500; margin-bottom: 16px;
+    }
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      color: white; font-size: 36px; font-weight: 600;
+      margin-bottom: 20px; line-height: 1.3;
+    }
+    .cta-desc {
+      color: rgba(255,255,255,0.55); font-size: 16px;
+      margin-bottom: 32px; line-height: 1.6;
+    }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; }
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #C8A97E; color: white; padding: 14px 32px;
+      border-radius: 999px; font-size: 14px; font-weight: 600;
+      text-decoration: none; border: none; cursor: pointer;
+    }
+    .btn-border {
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid rgba(255,255,255,0.3); color: white;
+      padding: 14px 32px; border-radius: 999px; font-size: 14px;
+      font-weight: 600; text-decoration: none; background: none; cursor: pointer;
+    }
+
+    /* ===== SECTION: Catalogue page header ===== */
+    .cat-header { padding: 32px 0; }
+    .cat-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 600; color: #2E2E2E;
+    }
+    .search-bar {
+      display: flex; align-items: center; gap: 12px; margin: 20px 0;
+    }
+    .search-input {
+      flex: 1; position: relative;
+    }
+    .search-input input {
+      width: 100%; background: white; padding: 12px 16px 12px 44px;
+      border-radius: 16px; border: 1px solid rgba(0,0,0,0.07);
+      font-size: 14px; outline: none;
+    }
+    .stock-toggle {
+      display: flex; align-items: center; gap: 8px;
+      background: white; padding: 12px 16px; border-radius: 16px;
+      border: 1px solid rgba(0,0,0,0.07); font-size: 14px; cursor: pointer;
+    }
+    .price-slider {
+      display: flex; align-items: center; gap: 16px;
+      background: white; padding: 14px 20px; border-radius: 16px;
+      border: 1px solid rgba(0,0,0,0.07); margin-bottom: 24px;
+    }
+
+    /* ===== SECTION: Modal ===== */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal {
+      background: white; border-radius: 32px; max-width: 800px;
+      width: 90%; overflow: hidden; display: flex;
+    }
+    .modal-img {
+      width: 50%; aspect-ratio: 1; object-fit: cover;
+    }
+    .modal-body { padding: 32px; width: 50%; }
+    .modal-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 600; margin-top: 4px;
+    }
+    .modal-desc { font-size: 14px; color: #6b7280; margin: 16px 0; line-height: 1.6; }
+    .modal-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .modal-tag {
+      background: #F8F5F0; padding: 4px 12px; border-radius: 999px;
+      font-size: 12px; color: #2E2E2E;
+    }
+
+    /* ===== SECTION: Quote drawer ===== */
+    .quote-drawer {
+      position: fixed; right: 0; top: 0; bottom: 0; z-index: 100;
+      width: 400px; background: white; box-shadow: -8px 0 30px rgba(0,0,0,0.1);
+      display: flex; flex-direction: column; padding: 24px;
+    }
+    .quote-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px;
+    }
+    .quote-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 600;
+    }
+    .quote-item {
+      display: flex; gap: 12px; padding: 12px 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .quote-item img {
+      width: 64px; height: 64px; border-radius: 12px; object-fit: cover;
+    }
+    .qty-btn {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid #e5e7eb; background: none;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .quote-total {
+      margin-top: auto; padding-top: 16px; border-top: 2px solid #2E2E2E;
+      display: flex; justify-content: space-between;
+      font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700;
+    }
+
+    /* ===== SECTION: Contact ===== */
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      padding: 48px 0;
+    }
+    .contact-info h2, .contact-form h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 600; margin-bottom: 16px;
+    }
+    .contact-detail {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px; color: rgba(46,46,46,0.55); font-size: 14px;
+    }
+    .contact-detail .icon { color: #C8A97E; }
+    .form-input, .form-textarea {
+      width: 100%; padding: 12px 16px; border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.1); background: white;
+      font-size: 14px; outline: none; margin-bottom: 12px;
+    }
+    .form-textarea { min-height: 120px; resize: vertical; }
+
+    /* ===== SECTION: Footer ===== */
+    .footer {
+      background: #2E2E2E; color: white; padding: 56px 0 32px;
+      border-radius: 40px 40px 0 0; margin-top: 64px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 48px;
+    }
+    .footer-brand p { color: rgba(255,255,255,0.45); font-size: 14px; line-height: 1.6; }
+    .footer h4 {
+      color: #C8A97E; font-size: 10px; letter-spacing: 0.3em;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .footer ul { list-style: none; }
+    .footer li { margin-bottom: 8px; }
+    .footer a {
+      color: rgba(255,255,255,0.55); font-size: 14px;
+      text-decoration: none;
+    }
+    .footer-divider {
+      border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px;
+    }
+    .footer-copy {
+      color: rgba(255,255,255,0.25); font-size: 12px; text-align: center;
+    }
+
+    /* ===== Favorites Empty ===== */
+    .empty-state {
+      text-align: center; padding: 96px 0;
+    }
+    .empty-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: rgba(200,169,126,0.1); display: flex;
+      align-items: center; justify-content: center; margin: 0 auto 20px;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 40px; }
+      .hero-content { padding: 0 24px 40px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; }
+      .modal { flex-direction: column; }
+      .modal-img, .modal-body { width: 100%; }
+      .quote-drawer { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <img class="hero-bg" src="public/products/chemin-table-rose.png" alt="" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-sub">Location décoration événement</p>
+      <h1 class="hero-title">Papillon<br /><em>Rose</em></h1>
+      <button class="btn-white">
+        Voir le catalogue
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ==================== STATS ==================== -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <p class="stat-num">+200</p>
+        <p class="stat-label">références</p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-num">11</p>
+        <p class="stat-label">catégories</p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-num">Stock</p>
+        <p class="stat-label">mis à jour</p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-num">Devis</p>
+        <p class="stat-label">en 24h</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION HEADER ==================== -->
+  <section class="frame">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Sélection du moment</p>
+        <h2 class="section-title">Articles en vedette</h2>
+      </div>
+      <a href="#" class="section-link">
+        Tout voir
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Category pills -->
+    <div class="pills">
+      <button class="pill active">Tous</button>
+      <button class="pill">Mobilier</button>
+      <button class="pill">Figurines & Jeux</button>
+      <button class="pill">Bougeoirs & Lanternes</button>
+      <button class="pill">Verreries</button>
+      <button class="pill">Cadres</button>
+      <button class="pill">Présentoirs</button>
+      <button class="pill">Urnes</button>
+    </div>
+
+    <!-- Product grid -->
+    <div class="product-grid">
+      <!-- Card 1 -->
+      <div class="product-card">
+        <div class="product-img-wrap"><div class="aspect">
+          <img class="product-img" src="public/products/prod001.png" alt="Chevalet Fer Forgé Noir" />
+        </div></div>
+        <div class="product-info">
+          <p class="product-cat">Mobilier</p>
+          <h3 class="product-name">Chevalet Fer Forgé Noir</h3>
+          <p class="product-dims">175 × 54 cm</p>
+          <div class="product-footer">
+            <span class="product-price">30 <small>€</small></span>
+            <button class="btn-add">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="product-card">
+        <div class="product-img-wrap"><div class="aspect">
+          <img class="product-img" src="public/products/prod005.png" alt="Arche Triangle Bois" />
+          <span class="product-badge">Dernière</span>
+        </div></div>
+        <div class="product-info">
+          <p class="product-cat">Mobilier</p>
+          <h3 class="product-name">Arche Triangle Bois Naturel</h3>
+          <p class="product-dims">H 230 × 200 cm</p>
+          <div class="product-footer">
+            <span class="product-price">40 <small>€</small></span>
+            <button class="btn-add">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="product-card">
+        <div class="product-img-wrap"><div class="aspect">
+          <img class="product-img" src="public/products/prod004.png" alt="Chaises Médaillon" />
+        </div></div>
+        <div class="product-info">
+          <p class="product-cat">Mobilier</p>
+          <h3 class="product-name">Chaises Médaillon Blanches (paire)</h3>
+          <p class="product-dims">45 × 45 × H 95 cm</p>
+          <div class="product-footer">
+            <span class="product-price">12 <small>€</small></span>
+            <button class="btn-add">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="product-card">
+        <div class="product-img-wrap"><div class="aspect">
+          <img class="product-img" src="public/products/prod002.png" alt="Arche Grillagée" />
+        </div></div>
+        <div class="product-info">
+          <p class="product-cat">Décoration</p>
+          <h3 class="product-name">Arche Grillagée Blanche</h3>
+          <p class="product-dims">200 × 200 cm</p>
+          <div class="product-footer">
+            <span class="product-price">35 <small>€</small></span>
+            <button class="btn-add">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="product-card">
+        <div class="product-img-wrap"><div class="aspect">
+          <img class="product-img" src="public/products/prod003.png" alt="Pompon Tulle" />
+        </div></div>
+        <div class="product-info">
+          <p class="product-cat">Décoration</p>
+          <h3 class="product-name">Pompon Tulle Rose Poudré</h3>
+          <p class="product-dims">Ø 30 cm</p>
+          <div class="product-footer">
+            <span class="product-price">6 <small>€</small></span>
+            <button class="btn-add">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:32px;">
+      <button style="background:#2E2E2E; color:white; padding:14px 32px; border-radius:999px; border:none; font-size:14px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+        Voir tout le catalogue
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ==================== CATEGORIES ==================== -->
+  <section class="frame" style="margin-top:64px;">
+    <div class="section-header" style="margin-bottom:24px;">
+      <div>
+        <p class="section-label">Explorer par thème</p>
+        <h2 class="section-title">Nos Catégories</h2>
+      </div>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <img src="public/products/prod004.png" alt="" />
+        <div class="gradient"></div>
+        <div class="info">
+          <h3>Mobilier</h3>
+          <span>4 articles →</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <img src="public/products/prod007.png" alt="" />
+        <div class="gradient"></div>
+        <div class="info">
+          <h3>Figurines & Jeux</h3>
+          <span>3 articles →</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <img src="public/products/lanterne-argent.png" alt="" />
+        <div class="gradient"></div>
+        <div class="info">
+          <h3>Bougeoirs & Lanternes</h3>
+          <span>8 articles →</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <img src="public/products/vase-oval.png" alt="" />
+        <div class="gradient"></div>
+        <div class="info">
+          <h3>Verreries</h3>
+          <span>3 articles →</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <img src="public/products/porte-carte-or.png" alt="" />
+        <div class="gradient"></div>
+        <div class="info">
+          <h3>Cadres</h3>
+          <span>2 articles →</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <img src="public/products/presentoir-gateau-1.png" alt="" />
+        <div class="gradient"></div>
+        <div class="info">
+          <h3>Présentoirs</h3>
+          <span>3 articles →</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <img src="public/products/urne-cage.png" alt="" />
+        <div class="gradient"></div>
+        <div class="info">
+          <h3>Urnes</h3>
+          <span>1 article →</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <img src="public/products/chemin-table-rose.png" alt="" />
+        <div class="gradient"></div>
+        <div class="info">
+          <h3>Art de la Table</h3>
+          <span>10 articles →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="frame" style="margin-top:64px;">
+    <div class="cta">
+      <img class="cta-bg" src="public/products/prod005.png" alt="" />
+      <div class="cta-content">
+        <p class="cta-label">Votre événement, notre passion</p>
+        <h2 class="cta-title">Un projet en tête&nbsp;?</h2>
+        <p class="cta-desc">
+          Constituez votre sélection et envoyez-nous votre demande de devis.<br />Réponse sous 24h.
+        </p>
+        <div class="cta-btns">
+          <button class="btn-gold">Parcourir le catalogue</button>
+          <button class="btn-border">Nous contacter</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CATALOGUE PAGE ==================== -->
+  <section class="frame" style="margin-top:80px; border-top:2px solid rgba(0,0,0,0.06); padding-top:48px;">
+    <div class="cat-header">
+      <p class="section-label">Explorer</p>
+      <h1 class="cat-title">Catalogue de Location</h1>
+    </div>
+
+    <div class="search-bar">
+      <div class="search-input">
+        <svg style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#9ca3af;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher un article…" />
+      </div>
+      <label class="stock-toggle">
+        <input type="checkbox" style="accent-color:#C8A97E;" />
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M14.5 3.5 3.5 14.5"/><path d="M17.5 6.5 6.5 17.5"/><path d="M20.5 9.5 9.5 20.5"/></svg>
+        En stock
+      </label>
+    </div>
+
+    <div class="price-slider">
+      <span style="font-size:11px;color:#9ca3af;text-transform:uppercase;letter-spacing:0.05em;">Prix max</span>
+      <input type="range" min="0" max="200" value="200" style="flex:1;accent-color:#C8A97E;" />
+      <span class="product-price" style="font-size:16px;width:64px;text-align:right;">200 €</span>
+    </div>
+
+    <div class="pills">
+      <button class="pill active">Tous</button>
+      <button class="pill">Mobilier</button>
+      <button class="pill">Figurines & Jeux</button>
+      <button class="pill">Bougeoirs & Lanternes</button>
+      <button class="pill">Verreries</button>
+      <button class="pill">Cadres</button>
+      <button class="pill">Présentoirs</button>
+      <button class="pill">Urnes</button>
+      <button class="pill">Art de la Table</button>
+      <button class="pill">Vases</button>
+      <button class="pill">Décoration</button>
+      <button class="pill">Fleurs & Feuillages</button>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <p style="font-size:14px;color:#9ca3af;"><strong style="color:#2E2E2E;">64</strong> résultats</p>
+      <a href="#" style="font-size:12px;color:#9ca3af;">Réinitialiser</a>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img-wrap"><div class="aspect">
+          <img class="product-img" src="public/products/prod001.png" alt="" />
+        </div></div>
+        <div class="product-info">
+          <p class="product-cat">Mobilier</p>
+          <h3 class="product-name">Chevalet Fer Forgé Noir</h3>
+          <p class="product-dims">175 × 54 cm</p>
+          <div class="product-footer">
+            <span class="product-price">30 <small>€</small></span>
+            <button class="btn-add">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><div class="aspect">
+          <img class="product-img" src="public/products/lanterne-argent.png" alt="" />
+        </div></div>
+        <div class="product-info">
+          <p class="product-cat">Bougeoirs & Lanternes</p>
+          <h3 class="product-name">Lanterne Argentée</h3>
+          <p class="product-dims">H 40 × Ø 18 cm</p>
+          <div class="product-footer">
+            <span class="product-price">14 <small>€</small></span>
+            <button class="btn-add">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><div class="aspect">
+          <img class="product-img" src="public/products/sous-assiettes-or.png" alt="" />
+        </div></div>
+        <div class="product-info">
+          <p class="product-cat">Art de la Table</p>
+          <h3 class="product-name">Sous-Assiettes Or (lot de 6)</h3>
+          <p class="product-dims">Ø 30 cm · lot de 6</p>
+          <div class="product-footer">
+            <span class="product-price">15 <small>€</small></span>
+            <button class="btn-add">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><div class="aspect">
+          <img class="product-img" src="public/products/lustre-12-branches.png" alt="" />
+        </div></div>
+        <div class="product-info">
+          <p class="product-cat">Bougeoirs & Lanternes</p>
+          <h3 class="product-name">Lustre 12 Branches</h3>
+          <p class="product-dims">H 80 × Ø 60 cm</p>
+          <div class="product-footer">
+            <span class="product-price">45 <small>€</small></span>
+            <button class="btn-add">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><div class="aspect">
+          <img class="product-img" src="public/products/coffret-verre-laiton.png" alt="" />
+        </div></div>
+        <div class="product-info">
+          <p class="product-cat">Décoration</p>
+          <h3 class="product-name">Boîtes Géométriques Verre & Laiton</h3>
+          <p class="product-dims">H 12 × 10 cm</p>
+          <div class="product-footer">
+            <span class="product-price">14 <small>€</small></span>
+            <button class="btn-add">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MODAL ==================== -->
+  <div class="modal-overlay">
+    <div class="modal">
+      <img class="modal-img" src="public/products/prod001.png" alt="Chevalet Fer Forgé Noir" />
+      <div class="modal-body">
+        <p class="product-cat">Mobilier</p>
+        <h2>Chevalet Fer Forgé Noir</h2>
+        <p class="modal-desc">
+          Élégant chevalet en fer forgé noir mat aux volutes raffinées. Idéal pour présenter votre plan de table, menu ou tableau de bienvenue lors de vos événements les plus précieux.
+        </p>
+        <div class="modal-meta">
+          <span class="modal-tag"><strong>Dimensions :</strong> 175 × 54 cm</span>
+          <span class="modal-tag"><strong>Couleur :</strong> Noir</span>
+          <span class="modal-tag"><strong>Stock :</strong> Disponible</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:16px;">
+          <span class="product-price" style="font-size:28px;">30 <small>€</small></span>
+          <button class="btn-gold" style="padding:12px 24px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            Ajouter au devis
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== QUOTE DRAWER ==================== -->
+  <div class="quote-drawer">
+    <div class="quote-header">
+      <h2>Votre devis</h2>
+      <button style="background:none;border:none;cursor:pointer;color:#9ca3af;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="quote-item">
+      <img src="public/products/prod001.png" alt="" />
+      <div style="flex:1;">
+        <p style="font-size:11px;color:#C8A97E;text-transform:uppercase;letter-spacing:0.05em;">Mobilier</p>
+        <p style="font-size:13px;font-weight:600;">Chevalet Fer Forgé Noir</p>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+          <button class="qty-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>
+          </button>
+          <span style="font-size:14px;font-weight:600;">1</span>
+          <button class="qty-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </button>
+          <span style="margin-left:auto;font-size:14px;font-weight:600;">30 €</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-item">
+      <img src="public/products/lanterne-argent.png" alt="" />
+      <div style="flex:1;">
+        <p style="font-size:11px;color:#C8A97E;text-transform:uppercase;letter-spacing:0.05em;">Bougeoirs & Lanternes</p>
+        <p style="font-size:13px;font-weight:600;">Lanterne Argentée</p>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+          <button class="qty-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>
+          </button>
+          <span style="font-size:14px;font-weight:600;">3</span>
+          <button class="qty-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </button>
+          <span style="margin-left:auto;font-size:14px;font-weight:600;">42 €</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-total">
+      <span>Total</span>
+      <span>72 €</span>
+    </div>
+
+    <button class="btn-gold" style="width:100%;justify-content:center;margin-top:16px;">
+      Envoyer la demande
+    </button>
+  </div>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section class="frame" style="margin-top:80px;">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>Contactez-nous</h2>
+        <p style="color:rgba(46,46,46,0.55);margin-bottom:24px;font-size:14px;line-height:1.6;">
+          Vous avez un projet, une question ou souhaitez obtenir un devis ? Notre équipe vous répond sous 24h.
+        </p>
+        <div class="contact-detail">
+          <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          06 12 34 56 78
+        </div>
+        <div class="contact-detail">
+          <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          contact@papillonrose.fr
+        </div>
+        <div class="contact-detail" style="align-items:flex-start;">
+          <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top:2px;"><path d="M12 22c-4-4-6-7.5-6-11a6 6 0 0 1 12 0c0 3.5-2 7-6 11z"/><circle cx="12" cy="9" r="2"/></svg>
+          <span>Île-de-France<br />Livraison nationale</span>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h2>Envoyez-nous un message</h2>
+        <input class="form-input" type="text" placeholder="Votre nom" />
+        <input class="form-input" type="email" placeholder="Votre email" />
+        <input class="form-input" type="text" placeholder="Sujet" />
+        <textarea class="form-textarea" placeholder="Votre message…"></textarea>
+        <button class="btn-gold" style="width:100%;justify-content:center;">
+          Envoyer
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="frame">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <p class="section-label" style="margin-bottom:4px;">Location décoration</p>
+          <p style="font-family:'Playfair Display',serif;color:white;font-size:24px;font-weight:600;margin-bottom:16px;">Papillon Rose</p>
+          <p>Location de mobilier et décoration pour événements, mariages et réceptions.</p>
+        </div>
+        <div>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#">Accueil</a></li>
+            <li><a href="#">Catalogue</a></li>
+            <li><a href="#">Favoris</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Catégories</h4>
+          <ul>
+            <li><a href="#">Mobilier</a></li>
+            <li><a href="#">Figurines & Jeux</a></li>
+            <li><a href="#">Bougeoirs & Lanternes</a></li>
+            <li><a href="#">Verreries</a></li>
+            <li><a href="#">Cadres</a></li>
+            <li><a href="#">Présentoirs</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.55);font-size:14px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              06 12 34 56 78
+            </li>
+            <li style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.55);font-size:14px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              contact@papillonrose.fr
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:10px;color:rgba(255,255,255,0.55);font-size:14px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2" style="margin-top:2px;"><path d="M12 22c-4-4-6-7.5-6-11a6 6 0 0 1 12 0c0 3.5-2 7-6 11z"/><circle cx="12" cy="9" r="2"/></svg>
+              <span>Île-de-France<br />Livraison nationale</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-divider">
+        <p class="footer-copy">© 2025 Papillon Rose — Location décoration événements · Tous droits réservés</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== FAVORITES EMPTY ==================== -->
+  <section class="frame" style="margin-top:80px; border-top:2px solid rgba(0,0,0,0.06); padding-top:48px;">
+    <p class="section-label">Mes préférences</p>
+    <h1 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:600;margin-bottom:48px;">Favoris</h1>
+    <div class="empty-state">
+      <div class="empty-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="rgba(200,169,126,0.4)" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <p style="color:#9ca3af;font-size:16px;margin-bottom:24px;">Vous n'avez pas encore de favoris.</p>
+      <button class="btn-gold">Parcourir le catalogue</button>
+    </div>
+  </section>
+
+</body>
+</html>
