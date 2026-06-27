@@ -1278,7 +1278,7 @@ export default function PapillonRoseSite() {
             {/* Hero */}
             <section className="relative" style={{ height: "100vh", maxHeight: "100vh" }}>
               <video
-                src="/products/hero.mp4"
+                src="https://raw.githubusercontent.com/Rose-B05/papillonrose/master/public/products/hero.mp4"
                 autoPlay
                 loop
                 muted
