@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useMemo } from "react"
 import {
   Search,
@@ -15,7 +13,6 @@ import {
   Mail,
   MapPin,
   Trash2,
-
 } from "lucide-react"
 
 const LOGO = "/papillon-rose-logo.png"
@@ -54,7 +51,6 @@ const CATEGORIES = [
 ]
 
 const PRODUCTS: Product[] = [
-  // ── Real catalogue photos ──
   {
     id: "mob-001",
     nom: "Chevalet Fer Forgé Noir",
@@ -1276,13 +1272,11 @@ export default function PapillonRoseSite() {
         {page === "home" && (
           <div>
             {/* Hero */}
-            <section className="relative mt-4" style={{ minHeight: "78vh" }}>
-              <video
-                src="/videos/hero.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
+            <section className="relative mx-3 md:mx-6 mt-4 overflow-hidden rounded-3xl" style={{ minHeight: "78vh" }}>
+              <img
+                src="/products/chemin-table-rose.png"
+                alt=""
+                aria-hidden
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />

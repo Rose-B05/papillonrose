@@ -1,0 +1,1289 @@
+<!-- ============================================================
+  Papillon Rose — Version Shopify (Online Store 2.0)
+  Intégration : Copie ce contenu dans un fichier .liquid
+  (ex: templates/page.papillon-rose.liquid) ou dans une
+  section personnalisée (Custom HTML).
+============================================================ -->
+<style>
+  /* ─── Reset & Base ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #F8F5F0; color: #2E2E2E; }
+  img { max-width: 100%; display: block; }
+  button { cursor: pointer; font-family: inherit; }
+  input, textarea { font-family: inherit; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ─── Variables ─── */
+  :root {
+    --gold: #C8A97E;
+    --gold-dark: #B8926E;
+    --bg: #F8F5F0;
+    --text: #2E2E2E;
+    --font-serif: Georgia, "Times New Roman", serif;
+  }
+
+  .pr-container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+  @media (min-width: 768px) { .pr-container { padding: 0 40px; } }
+
+  /* ─── Navbar ─── */
+  .pr-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .pr-nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; max-width: 1280px; margin: 0 auto; padding: 0 20px;
+  }
+  @media (min-width: 768px) { .pr-nav-inner { padding: 0 40px; } }
+  .pr-logo { height: 40px; width: auto; }
+  .pr-nav-links { display: none; align-items: center; gap: 32px; }
+  @media (min-width: 768px) { .pr-nav-links { display: flex; } }
+  .pr-nav-link {
+    font-size: 14px; background: none; border: none;
+    color: rgba(46,46,46,0.55); transition: color 0.2s;
+  }
+  .pr-nav-link:hover, .pr-nav-link.active { color: var(--gold); }
+  .pr-nav-link.active { font-weight: 500; }
+  .pr-nav-actions { display: flex; align-items: center; gap: 6px; }
+  .pr-nav-btn {
+    position: relative; background: none; border: none; padding: 8px;
+    color: rgba(46,46,46,0.6); transition: color 0.2s;
+  }
+  .pr-nav-btn:hover { color: var(--gold); }
+  .pr-badge {
+    position: absolute; top: 4px; right: 4px; width: 14px; height: 14px;
+    background: var(--gold); color: #fff; font-size: 9px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: bold;
+  }
+  .pr-quote-btn {
+    display: flex; align-items: center; gap: 8px;
+    background: #2E2E2E; color: #fff; border: none;
+    padding: 8px 16px; border-radius: 999px; font-size: 14px; transition: background 0.2s;
+  }
+  .pr-quote-btn:hover { background: var(--gold); }
+  .pr-quote-count {
+    width: 20px; height: 20px; background: var(--gold);
+    color: #fff; font-size: 10px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: bold;
+  }
+  .pr-menu-btn { display: block; background: none; border: none; padding: 8px; color: rgba(46,46,46,0.7); }
+  @media (min-width: 768px) { .pr-menu-btn { display: none; } }
+
+  /* ─── Mobile Menu ─── */
+  .pr-mobile-overlay {
+    position: fixed; inset: 0; z-index: 50; background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px); display: none;
+  }
+  .pr-mobile-overlay.open { display: block; }
+  .pr-mobile-panel {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 288px;
+    background: #fff; border-radius: 24px 0 0 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    padding: 32px; display: flex; flex-direction: column;
+  }
+  .pr-mobile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+  .pr-mobile-logo { height: 36px; width: auto; }
+  .pr-close-btn {
+    width: 32px; height: 32px; background: #f3f4f6; border: none;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .pr-close-btn:hover { background: #e5e7eb; }
+  .pr-mobile-links { display: flex; flex-direction: column; gap: 20px; }
+  .pr-mobile-link {
+    text-align: left; background: none; border: none; font-size: 18px;
+    font-family: var(--font-serif); color: rgba(46,46,46,0.7);
+    transition: color 0.2s;
+  }
+  .pr-mobile-link:hover { color: var(--gold); }
+  .pr-mobile-footer { margin-top: auto; font-size: 14px; color: rgba(46,46,46,0.35); line-height: 1.8; }
+
+  /* ─── Hero ─── */
+  .pr-hero {
+    position: relative; margin: 16px 12px 0; overflow: hidden; border-radius: 24px;
+    min-height: 78vh;
+  }
+  @media (min-width: 768px) { .pr-hero { margin: 16px 24px 0; } }
+  .pr-hero-img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  }
+  .pr-hero-overlay-r { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.55), rgba(0,0,0,0.25), transparent); }
+  .pr-hero-overlay-t { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.4), transparent); }
+  .pr-hero-content {
+    position: relative; z-index: 10; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 0 32px 56px; min-height: 78vh;
+  }
+  @media (min-width: 768px) { .pr-hero-content { padding: 0 56px 56px; } }
+  .pr-hero-tag {
+    color: var(--gold); font-size: 12px; letter-spacing: 0.5em;
+    text-transform: uppercase; margin-bottom: 12px; font-weight: 500;
+  }
+  .pr-hero-title {
+    color: #fff; font-size: 48px; font-family: var(--font-serif);
+    font-weight: 600; line-height: 1.1; margin-bottom: 24px;
+  }
+  @media (min-width: 768px) { .pr-hero-title { font-size: 72px; } }
+  .pr-hero-title em { font-style: italic; font-weight: 400; }
+  .pr-hero-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #fff; color: #2E2E2E; border: none;
+    padding: 14px 28px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    transition: all 0.2s; width: fit-content; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+  }
+  .pr-hero-btn:hover { background: var(--gold); color: #fff; }
+
+  /* ─── Stats ─── */
+  .pr-stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    max-width: 768px; margin: 0 auto; padding: 40px 24px;
+  }
+  @media (min-width: 768px) { .pr-stats { grid-template-columns: repeat(4, 1fr); } }
+  .pr-stat { text-align: center; }
+  .pr-stat-val { font-size: 24px; font-family: var(--font-serif); font-weight: bold; color: var(--gold); }
+  .pr-stat-label { font-size: 12px; color: rgba(46,46,46,0.45); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+  /* ─── Section Headers ─── */
+  .pr-section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 20px; }
+  .pr-section-tag { color: var(--gold); font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; font-weight: 500; margin-bottom: 4px; }
+  .pr-section-title { font-size: 24px; font-family: var(--font-serif); font-weight: 600; color: #2E2E2E; }
+  @media (min-width: 768px) { .pr-section-title { font-size: 30px; } }
+
+  /* ─── Category Pills ─── */
+  .pr-pills { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 24px; }
+  .pr-pills::-webkit-scrollbar { display: none; }
+  .pr-pill {
+    white-space: nowrap; padding: 6px 16px; border-radius: 999px;
+    font-size: 12px; font-weight: 500; border: none; background: #F0EBE3;
+    color: rgba(46,46,46,0.6); transition: all 0.2s;
+  }
+  .pr-pill:hover { background: rgba(200,169,126,0.2); color: var(--gold); }
+  .pr-pill.active { background: var(--gold); color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  /* ─── Product Grid ─── */
+  .pr-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+  }
+  @media (min-width: 540px) { .pr-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1024px) { .pr-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 1280px) { .pr-grid { grid-template-columns: repeat(5, 1fr); } }
+
+  /* ─── Product Card ─── */
+  .pr-card {
+    background: #fff; border-radius: 24px; overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: all 0.3s;
+    display: flex; flex-direction: column;
+  }
+  .pr-card:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+  .pr-card-img-wrap {
+    position: relative; margin: 10px; overflow: hidden; border-radius: 16px;
+    background: #F8F5F0; aspect-ratio: 1 / 1; cursor: pointer;
+  }
+  .pr-card-img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .pr-card:hover .pr-card-img { transform: scale(1.05); }
+  .pr-card-badge {
+    position: absolute; top: 10px; left: 10px;
+    background: #fbbf24; color: #fff; font-size: 9px;
+    padding: 2px 8px; border-radius: 999px; font-weight: 600; text-transform: uppercase;
+  }
+  .pr-card-fav {
+    position: absolute; top: 10px; right: 10px;
+    width: 28px; height: 28px; background: #fff; border: none;
+    border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.2s;
+  }
+  .pr-card-fav svg { width: 13px; height: 13px; }
+  .pr-card-body { padding: 2px 14px 16px; display: flex; flex-direction: column; flex: 1; }
+  .pr-card-cat { font-size: 10px; font-weight: 500; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pr-card-name {
+    font-size: 13px; font-weight: 600; color: #2E2E2E; margin-top: 2px;
+    line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden; cursor: pointer; transition: color 0.2s;
+  }
+  .pr-card-name:hover { color: var(--gold); }
+  .pr-card-dim { font-size: 11px; color: #9ca3af; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pr-card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 8px; }
+  .pr-card-price { font-size: 16px; font-family: var(--font-serif); font-weight: bold; color: #2E2E2E; }
+  .pr-card-price small { font-size: 14px; font-weight: 400; color: #9ca3af; }
+  .pr-card-add {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--gold);
+    color: #fff; border: none; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .pr-card-add:hover { background: var(--gold-dark); }
+  .pr-card-add:disabled { opacity: 0.3; cursor: not-allowed; }
+  .pr-card-soldout {
+    position: absolute; inset: 0; background: rgba(255,255,255,0.7);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pr-card-soldout span { font-size: 12px; color: #9ca3af; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
+
+  /* ─── Categories Grid ─── */
+  .pr-cat-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+  }
+  @media (min-width: 768px) { .pr-cat-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1024px) { .pr-cat-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  /* ─── Category Card ─── */
+  .pr-cat-card {
+    position: relative; overflow: hidden; border-radius: 24px; background: #EDE8DF;
+    aspect-ratio: 4/3; border: none; text-align: left;
+  }
+  .pr-cat-card img {
+    width: 100%; height: 100%; object-fit: cover; opacity: 0.75;
+    transition: all 0.5s;
+  }
+  .pr-cat-card:hover img { opacity: 0.6; transform: scale(1.05); }
+  .pr-cat-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(46,46,46,0.8), rgba(46,46,46,0.1));
+    border-radius: 24px;
+  }
+  .pr-cat-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; }
+  .pr-cat-name { color: #fff; font-size: 14px; font-family: var(--font-serif); font-weight: 600; }
+  .pr-cat-count { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+  .pr-cat-count span { color: var(--gold); font-size: 11px; }
+  .pr-cat-arrow { color: var(--gold); font-size: 11px; transition: transform 0.2s; }
+  .pr-cat-card:hover .pr-cat-arrow { transform: translateX(4px); }
+
+  /* ─── CTA ─── */
+  .pr-cta {
+    position: relative; overflow: hidden; border-radius: 24px;
+    background: #2E2E2E; padding: 40px 24px; text-align: center;
+  }
+  @media (min-width: 768px) { .pr-cta { padding: 64px 40px; } }
+  .pr-cta-bg {
+    position: absolute; inset: 0;
+  }
+  .pr-cta-bg img {
+    width: 100%; height: 100%; object-fit: cover; opacity: 0.15;
+  }
+  .pr-cta-content { position: relative; z-index: 10; max-width: 576px; margin: 0 auto; }
+  .pr-cta-tag { color: var(--gold); font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase; margin-bottom: 16px; font-weight: 500; }
+  .pr-cta-title { font-size: 30px; font-family: var(--font-serif); color: #fff; font-weight: 600; margin-bottom: 20px; }
+  @media (min-width: 768px) { .pr-cta-title { font-size: 36px; } }
+  .pr-cta-text { color: rgba(255,255,255,0.55); font-size: 16px; margin-bottom: 32px; line-height: 1.6; }
+  .pr-cta-btns { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  @media (min-width: 540px) { .pr-cta-btns { flex-direction: row; justify-content: center; } }
+  .pr-cta-btn { background: var(--gold); color: #fff; border: none; padding: 14px 32px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+  .pr-cta-btn:hover { background: var(--gold-dark); }
+  .pr-cta-btn-outline { background: none; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 14px 32px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+  .pr-cta-btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+  /* ─── Catalogue Page ─── */
+  .pr-catalogue { max-width: 1280px; margin: 0 auto; padding: 32px 20px; }
+  @media (min-width: 768px) { .pr-catalogue { padding: 32px 40px; } }
+  .pr-search-wrap { display: flex; gap: 12px; margin-bottom: 20px; }
+  .pr-search { position: relative; flex: 1; }
+  .pr-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+  .pr-search input {
+    width: 100%; background: #fff; padding: 12px 16px 12px 44px;
+    border-radius: 16px; border: 1px solid rgba(0,0,0,0.07); font-size: 14px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .pr-search input:focus { border-color: rgba(200,169,126,0.5); }
+  .pr-stock-toggle {
+    display: flex; align-items: center; gap: 8px; background: #fff;
+    padding: 12px 16px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.07);
+    cursor: pointer; font-size: 14px; white-space: nowrap; transition: border-color 0.2s;
+    user-select: none;
+  }
+  .pr-stock-toggle:hover { border-color: rgba(200,169,126,0.4); }
+  .pr-stock-toggle input { accent-color: var(--gold); width: 14px; height: 14px; }
+  .pr-price-bar {
+    display: flex; align-items: center; gap: 16px; background: #fff;
+    padding: 14px 20px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+  }
+  .pr-price-bar label { font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .pr-price-bar input[type=range] { flex: 1; accent-color: var(--gold); height: 4px; }
+  .pr-price-val { font-family: var(--font-serif); color: var(--gold); font-weight: bold; font-size: 16px; width: 64px; text-align: right; }
+  .pr-results { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .pr-results span { font-size: 14px; color: #9ca3af; }
+  .pr-results strong { color: #2E2E2E; }
+  .pr-results em { color: var(--gold); font-style: normal; }
+  .pr-reset { font-size: 12px; color: #9ca3af; background: none; border: none; text-decoration: underline; transition: color 0.2s; }
+  .pr-reset:hover { color: var(--gold); }
+  .pr-empty { padding: 96px 0; text-align: center; }
+  .pr-empty p { color: #9ca3af; font-size: 16px; margin-bottom: 20px; }
+  .pr-empty button { background: var(--gold); color: #fff; border: none; padding: 12px 32px; border-radius: 999px; font-size: 14px; font-weight: 500; transition: background 0.2s; }
+  .pr-empty button:hover { background: var(--gold-dark); }
+
+  /* ─── Footer ─── */
+  .pr-footer {
+    background: #2E2E2E; color: #fff; padding: 56px 0 32px; margin-top: 64px;
+    border-radius: 40px 40px 0 0;
+  }
+  .pr-footer-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px;
+    max-width: 1280px; margin: 0 auto; padding: 0 24px; margin-bottom: 48px;
+  }
+  @media (min-width: 768px) { .pr-footer-grid { grid-template-columns: repeat(4, 1fr); } }
+  .pr-footer-brand { grid-column: span 2; }
+  @media (min-width: 768px) { .pr-footer-brand { grid-column: span 1; } }
+  .pr-footer-tag { color: var(--gold); font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; font-weight: 300; }
+  .pr-footer-name { font-size: 24px; font-family: var(--font-serif); font-weight: 600; margin-top: 4px; margin-bottom: 16px; }
+  .pr-footer-desc { color: rgba(255,255,255,0.45); font-size: 14px; line-height: 1.6; }
+  .pr-footer-title { color: var(--gold); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; }
+  .pr-footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .pr-footer-links button { background: none; border: none; color: rgba(255,255,255,0.55); font-size: 14px; text-align: left; transition: color 0.2s; padding: 0; }
+  .pr-footer-links button:hover { color: var(--gold); }
+  .pr-footer-contact { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .pr-footer-contact li { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.55); font-size: 14px; }
+  .pr-footer-contact svg { width: 13px; height: 13px; color: var(--gold); flex-shrink: 0; }
+  .pr-footer-bottom {
+    max-width: 1280px; margin: 0 auto; padding: 24px 24px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .pr-footer-copy { color: rgba(255,255,255,0.25); font-size: 12px; text-align: center; }
+
+  /* ─── Favorites Page ─── */
+  .pr-page { max-width: 1280px; margin: 0 auto; padding: 32px 20px; }
+  @media (min-width: 768px) { .pr-page { padding: 32px 40px; } }
+  .pr-page h1 { font-size: 30px; font-family: var(--font-serif); font-weight: 600; }
+  @media (min-width: 768px) { .pr-page h1 { font-size: 36px; } }
+  .pr-page-tag { color: var(--gold); font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; font-weight: 500; margin-bottom: 4px; }
+  .pr-page-empty { padding: 96px 0; text-align: center; }
+  .pr-page-empty-icon { width: 80px; height: 80px; background: rgba(200,169,126,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+  .pr-page-empty p { color: #9ca3af; font-size: 16px; margin-bottom: 24px; }
+  .pr-page-empty button { background: var(--gold); color: #fff; border: none; padding: 14px 40px; border-radius: 999px; font-size: 14px; font-weight: 500; transition: background 0.2s; }
+  .pr-page-empty button:hover { background: var(--gold-dark); }
+
+  /* ─── Contact Page ─── */
+  .pr-contact { max-width: 896px; margin: 0 auto; padding: 48px 20px; }
+  @media (min-width: 768px) { .pr-contact { padding: 48px 40px; } }
+  .pr-contact-header { text-align: center; margin-bottom: 56px; }
+  .pr-contact-header h1 { font-size: 36px; font-family: var(--font-serif); font-weight: 600; }
+  @media (min-width: 768px) { .pr-contact-header h1 { font-size: 48px; } }
+  .pr-contact-grid { display: grid; gap: 48px; }
+  @media (min-width: 768px) { .pr-contact-grid { grid-template-columns: 1fr 1fr; } }
+  .pr-contact-info { display: flex; flex-direction: column; gap: 28px; }
+  .pr-contact-item { display: flex; align-items: flex-start; gap: 16px; }
+  .pr-contact-icon { width: 44px; height: 44px; background: rgba(200,169,126,0.12); border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .pr-contact-icon svg { width: 17px; height: 17px; color: var(--gold); }
+  .pr-contact-item-label { font-size: 10px; color: #9ca3af; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2px; }
+  .pr-contact-item-val { font-size: 14px; font-weight: 500; white-space: pre-line; }
+  .pr-hours { background: #2E2E2E; border-radius: 24px; padding: 24px; color: #fff; margin-top: 40px; }
+  .pr-hours h3 { font-size: 18px; font-family: var(--font-serif); font-weight: 600; margin-bottom: 12px; }
+  .pr-hours-row { display: flex; justify-content: space-between; font-size: 14px; color: rgba(255,255,255,0.6); padding: 4px 0; }
+  .pr-hours-row span:last-child { color: rgba(255,255,255,0.9); }
+  .pr-hours-row .closed { color: rgba(255,255,255,0.35); }
+  .pr-form { display: flex; flex-direction: column; gap: 16px; }
+  .pr-form label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #9ca3af; margin-bottom: 6px; }
+  .pr-form input, .pr-form textarea {
+    width: 100%; background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 16px;
+    padding: 12px 16px; font-size: 14px; outline: none; transition: border-color 0.2s;
+  }
+  .pr-form input:focus, .pr-form textarea:focus { border-color: rgba(200,169,126,0.6); }
+  .pr-form textarea { resize: none; }
+  .pr-form button {
+    width: 100%; background: var(--gold); color: #fff; border: none;
+    padding: 16px; border-radius: 16px; font-size: 14px; font-weight: 600;
+    transition: background 0.2s;
+  }
+  .pr-form button:hover { background: var(--gold-dark); }
+
+  /* ─── Product Modal ─── */
+  .pr-modal {
+    position: fixed; inset: 0; z-index: 50; display: none;
+    align-items: flex-end; justify-content: center; background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px); padding: 0;
+  }
+  @media (min-width: 768px) { .pr-modal { align-items: center; padding: 16px; } }
+  .pr-modal.open { display: flex; }
+  .pr-modal-content {
+    background: #fff; width: 100%; max-height: 95vh; overflow-y: auto;
+    border-radius: 24px 24px 0 0; max-width: 672px;
+  }
+  @media (min-width: 768px) { .pr-modal-content { border-radius: 24px; } }
+  .pr-modal-grid { display: grid; }
+  @media (min-width: 768px) { .pr-modal-grid { grid-template-columns: 1fr 1fr; } }
+  .pr-modal-img {
+    position: relative; background: #F8F5F0; border-radius: 24px 24px 0 0;
+    aspect-ratio: 1/1; overflow: hidden;
+  }
+  @media (min-width: 768px) { .pr-modal-img { border-radius: 24px 0 0 24px; } }
+  .pr-modal-img img { width: 100%; height: 100%; object-fit: cover; }
+  .pr-modal-close {
+    position: absolute; top: 16px; right: 16px; width: 36px; height: 36px;
+    background: #fff; border: none; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex; align-items: center; justify-content: center; transition: color 0.2s;
+  }
+  .pr-modal-close:hover { color: #f87171; }
+  .pr-modal-body { padding: 28px; display: flex; flex-direction: column; }
+  .pr-modal-cat { color: var(--gold); font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; font-weight: 500; margin-bottom: 8px; }
+  .pr-modal-name { font-size: 24px; font-family: var(--font-serif); font-weight: 600; margin-bottom: 12px; }
+  .pr-modal-desc { font-size: 14px; color: #6b7280; line-height: 1.6; margin-bottom: 20px; }
+  .pr-modal-specs { background: #F8F5F0; border-radius: 16px; padding: 16px; margin-bottom: 20px; }
+  .pr-modal-spec { display: flex; justify-content: space-between; font-size: 14px; padding: 5px 0; }
+  .pr-modal-spec-label { color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .pr-modal-spec-val { font-weight: 500; max-width: 55%; text-align: right; }
+  .pr-modal-spec-val.out { color: #f87171; }
+  .pr-modal-spec-val.warn { color: #f59e0b; }
+  .pr-modal-spec-val.ok { color: #10b981; }
+  .pr-modal-price { font-size: 30px; font-family: var(--font-serif); font-weight: bold; margin-bottom: 20px; }
+  .pr-modal-price small { font-size: 14px; font-weight: 400; color: #9ca3af; }
+  .pr-modal-actions { display: flex; gap: 12px; }
+  .pr-modal-add {
+    flex: 1; background: #2E2E2E; color: #fff; border: none;
+    padding: 14px; border-radius: 16px; font-size: 14px; font-weight: 600;
+    transition: background 0.2s;
+  }
+  .pr-modal-add:hover { background: var(--gold); }
+  .pr-modal-add:disabled { opacity: 0.3; cursor: not-allowed; }
+  .pr-modal-fav {
+    width: 48px; height: 48px; border-radius: 16px; border: 2px solid #e5e7eb;
+    background: none; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .pr-modal-fav:hover { border-color: var(--gold); color: var(--gold); }
+  .pr-modal-fav.active { border-color: var(--gold); background: rgba(200,169,126,0.1); color: var(--gold); }
+
+  /* ─── Quote Sidebar ─── */
+  .pr-quote-overlay {
+    position: fixed; inset: 0; z-index: 50; display: none;
+    justify-content: flex-end; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+  }
+  .pr-quote-overlay.open { display: flex; }
+  .pr-quote-panel {
+    background: #fff; width: 100%; max-width: 384px; height: 100%;
+    display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    border-radius: 24px 0 0 24px;
+  }
+  .pr-quote-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 24px; border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+  .pr-quote-header h3 { font-size: 20px; font-family: var(--font-serif); font-weight: 600; }
+  .pr-quote-header p { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+  .pr-quote-body { flex: 1; overflow-y: auto; padding: 20px; }
+  .pr-quote-empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%; padding: 40px; text-align: center;
+  }
+  .pr-quote-empty-icon { width: 64px; height: 64px; background: rgba(200,169,126,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .pr-quote-empty p { color: #9ca3af; margin-bottom: 20px; font-size: 14px; }
+  .pr-quote-empty button { background: var(--gold); color: #fff; border: none; padding: 10px 28px; border-radius: 999px; font-size: 14px; font-weight: 500; transition: background 0.2s; }
+  .pr-quote-empty button:hover { background: var(--gold-dark); }
+  .pr-quote-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #F8F5F0; border-radius: 16px; padding: 12px; margin-bottom: 16px;
+  }
+  .pr-quote-item-img { width: 56px; height: 56px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+  .pr-quote-item-info { flex: 1; min-width: 0; }
+  .pr-quote-item-name { font-size: 12px; font-weight: 600; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .pr-quote-item-price { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+  .pr-quote-qty { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .pr-quote-qty button {
+    width: 24px; height: 24px; background: #fff; border: none; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 11px;
+    transition: all 0.2s;
+  }
+  .pr-quote-qty button:hover { background: var(--gold); color: #fff; }
+  .pr-quote-qty span { font-size: 14px; font-weight: bold; width: 16px; text-align: center; }
+  .pr-quote-item-total { text-align: right; flex-shrink: 0; }
+  .pr-quote-item-total p { font-size: 14px; font-weight: bold; }
+  .pr-quote-item-total button {
+    background: none; border: none; color: #d1d5db; margin-top: 6px;
+    transition: color 0.2s;
+  }
+  .pr-quote-item-total button:hover { color: #f87171; }
+  .pr-quote-footer {
+    border-top: 1px solid rgba(0,0,0,0.07); padding: 20px 24px;
+  }
+  .pr-quote-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .pr-quote-total span:first-child { font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; }
+  .pr-quote-total strong { font-size: 24px; font-family: var(--font-serif); font-weight: bold; }
+  .pr-quote-submit {
+    width: 100%; background: var(--gold); color: #fff; border: none;
+    padding: 14px; border-radius: 16px; font-size: 14px; font-weight: 600;
+    transition: background 0.2s; margin-bottom: 10px;
+  }
+  .pr-quote-submit:hover { background: var(--gold-dark); }
+  .pr-quote-continue {
+    width: 100%; background: #F0EBE3; color: rgba(46,46,46,0.7); border: none;
+    padding: 12px; border-radius: 16px; font-size: 14px; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .pr-quote-continue:hover { background: #E8E0D5; }
+
+  /* ─── SVG icons inline ─── */
+  .pr-icon { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ─── Utilities ─── */
+  .pr-hidden { display: none !important; }
+  .pr-mt-16 { margin-top: 64px !important; }
+</style>
+
+<!-- ============================================================
+     HTML
+============================================================ -->
+<div id="papillon-rose-app">
+  <!-- ─── Navbar ─── -->
+  <nav class="pr-nav">
+    <div class="pr-nav-inner">
+      <button onclick="PR.nav('home')" aria-label="Accueil">
+        <img src="/papillon-rose-logo.png" alt="Papillon Rose" class="pr-logo" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 50%22><text y=%2235%22 font-size=%2224%22 font-family=%22serif%22 fill=%22%23C8A97E%22>Papillon Rose</text></svg>'">
+      </button>
+      <div class="pr-nav-links">
+        <button class="pr-nav-link" data-page="home" onclick="PR.nav('home')">Accueil</button>
+        <button class="pr-nav-link" data-page="catalogue" onclick="PR.nav('catalogue')">Catalogue</button>
+        <button class="pr-nav-link" data-page="favorites" onclick="PR.nav('favorites')">Favoris</button>
+        <button class="pr-nav-link" data-page="contact" onclick="PR.nav('contact')">Contact</button>
+      </div>
+      <div class="pr-nav-actions">
+        <button onclick="PR.nav('favorites')" aria-label="Favoris" class="pr-nav-btn">
+          <svg class="pr-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="pr-badge" id="fav-badge" style="display:none">0</span>
+        </button>
+        <button onclick="PR.openQuote()" class="pr-quote-btn">
+          <svg class="pr-icon" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="pr-hidden md:inline" style="font-weight:500;display:inline">Devis</span>
+          <span class="pr-quote-count" id="quote-badge" style="display:none">0</span>
+        </button>
+        <button onclick="PR.toggleMenu()" aria-label="Menu" class="pr-menu-btn">
+          <svg class="pr-icon" viewBox="0 0 24 24" style="width:20px;height:20px"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── Mobile Menu ─── -->
+  <div class="pr-mobile-overlay" id="mobile-menu">
+    <div class="pr-mobile-panel" onclick="event.stopPropagation()">
+      <div class="pr-mobile-header">
+        <img src="/papillon-rose-logo.png" alt="Papillon Rose" class="pr-mobile-logo" onerror="this.style.display='none'">
+        <button onclick="PR.toggleMenu()" class="pr-close-btn"><svg class="pr-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="pr-mobile-links">
+        <button class="pr-mobile-link" onclick="PR.nav('home');PR.toggleMenu()">Accueil</button>
+        <button class="pr-mobile-link" onclick="PR.nav('catalogue');PR.toggleMenu()">Catalogue</button>
+        <button class="pr-mobile-link" onclick="PR.nav('favorites');PR.toggleMenu()">Favoris</button>
+        <button class="pr-mobile-link" onclick="PR.nav('contact');PR.toggleMenu()">Contact</button>
+      </div>
+      <div class="pr-mobile-footer">
+        <p>contact@papillonrose.fr</p>
+        <p>06 12 34 56 78</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Pages ─── -->
+  <div style="padding-top:64px">
+
+    <!-- HOME -->
+    <div id="page-home">
+      <!-- Hero -->
+      <section class="pr-hero">
+        <img src="/products/chemin-table-rose.png" alt="" aria-hidden="true" class="pr-hero-img" onerror="this.style.background='#2E2E2E'">
+        <div class="pr-hero-overlay-r"></div>
+        <div class="pr-hero-overlay-t"></div>
+        <div class="pr-hero-content">
+          <p class="pr-hero-tag">LOCATION DÉCORATION ÉVÉNEMENT</p>
+          <h1 class="pr-hero-title">Papillon<br><em>Rose</em></h1>
+          <button onclick="PR.nav('catalogue')" class="pr-hero-btn">Voir le catalogue →</button>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="pr-stats">
+        <div class="pr-stat"><p class="pr-stat-val">+200</p><p class="pr-stat-label">références</p></div>
+        <div class="pr-stat"><p class="pr-stat-val">11</p><p class="pr-stat-label">catégories</p></div>
+        <div class="pr-stat"><p class="pr-stat-val">Stock</p><p class="pr-stat-label">mis à jour</p></div>
+        <div class="pr-stat"><p class="pr-stat-val">Devis</p><p class="pr-stat-label">en 24h</p></div>
+      </section>
+
+      <!-- Featured Products -->
+      <section class="pr-container">
+        <div class="pr-section-header">
+          <div>
+            <p class="pr-section-tag">Sélection du moment</p>
+            <h2 class="pr-section-title">Articles en vedette</h2>
+          </div>
+          <button onclick="PR.nav('catalogue')" class="pr-hidden md:flex" style="display:none;align-items:center;gap:6px;font-size:14px;color:var(--gold);font-weight:500;background:none;border:none">Tout voir →</button>
+        </div>
+        <div class="pr-pills" id="home-pills"></div>
+        <div class="pr-grid" id="home-grid"></div>
+        <div style="text-align:center;margin-top:32px">
+          <button onclick="PR.nav('catalogue')" style="display:inline-flex;align-items:center;gap:8px;background:#2E2E2E;color:#fff;padding:14px 32px;border-radius:999px;font-size:14px;font-weight:500;border:none;transition:background 0.2s">Voir tout le catalogue →</button>
+        </div>
+      </section>
+
+      <!-- Categories -->
+      <section class="pr-container pr-mt-16">
+        <div class="pr-section-header">
+          <div>
+            <p class="pr-section-tag">Explorer par thème</p>
+            <h2 class="pr-section-title">Nos Catégories</h2>
+          </div>
+        </div>
+        <div class="pr-cat-grid" id="cat-grid"></div>
+      </section>
+
+      <!-- CTA -->
+      <section class="pr-container pr-mt-16">
+        <div class="pr-cta">
+          <div class="pr-cta-bg"><img src="/products/prod005.png" alt="" onerror="this.style.display='none'"></div>
+          <div class="pr-cta-content">
+            <p class="pr-cta-tag">Votre événement, notre passion</p>
+            <h2 class="pr-cta-title">Un projet en tête ?</h2>
+            <p class="pr-cta-text">Constituez votre sélection et envoyez-nous votre demande de devis.<br>Réponse sous 24h.</p>
+            <div class="pr-cta-btns">
+              <button onclick="PR.nav('catalogue')" class="pr-cta-btn">Parcourir le catalogue</button>
+              <button onclick="PR.nav('contact')" class="pr-cta-btn-outline">Nous contacter</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="home-footer"></div>
+    </div>
+
+    <!-- CATALOGUE -->
+    <div id="page-catalogue" style="display:none">
+      <div class="pr-catalogue">
+        <div style="margin-bottom:28px">
+          <p class="pr-section-tag">Explorer</p>
+          <h1 style="font-size:30px;font-family:var(--font-serif);font-weight:600">Catalogue de Location</h1>
+        </div>
+        <div class="pr-search-wrap">
+          <div class="pr-search">
+            <svg class="pr-search-icon pr-icon" viewBox="0 0 24 24" style="width:15px;height:15px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="search-input" placeholder="Rechercher un article…" oninput="PR.filter()">
+          </div>
+          <label class="pr-stock-toggle">
+            <input type="checkbox" id="stock-toggle" onchange="PR.filter()">
+            En stock
+          </label>
+        </div>
+        <div class="pr-price-bar">
+          <label>Prix max</label>
+          <input type="range" min="0" max="200" value="200" id="price-slider" oninput="PR.filter()">
+          <span class="pr-price-val" id="price-display">200 €</span>
+        </div>
+        <div class="pr-pills" id="cat-pills"></div>
+        <div class="pr-results">
+          <p><strong id="result-count">0</strong> résultats</p>
+          <button class="pr-reset" id="reset-btn" style="display:none" onclick="PR.resetFilters()">Réinitialiser</button>
+        </div>
+        <div class="pr-grid" id="catalogue-grid"></div>
+        <div class="pr-empty" id="catalogue-empty" style="display:none">
+          <p>Aucun produit ne correspond à votre sélection.</p>
+          <button onclick="PR.resetFilters()">Réinitialiser les filtres</button>
+        </div>
+      </div>
+      <div id="catalogue-footer"></div>
+    </div>
+
+    <!-- FAVORITES -->
+    <div id="page-favorites" style="display:none">
+      <div class="pr-page">
+        <p class="pr-page-tag">Mes préférences</p>
+        <h1>Favoris</h1>
+        <div id="fav-content"></div>
+      </div>
+      <div id="favorites-footer"></div>
+    </div>
+
+    <!-- CONTACT -->
+    <div id="page-contact" style="display:none">
+      <div class="pr-contact">
+        <div class="pr-contact-header">
+          <p class="pr-section-tag">Parlons de votre projet</p>
+          <h1>Contactez-nous</h1>
+        </div>
+        <div class="pr-contact-grid">
+          <div>
+            <div class="pr-contact-info" id="contact-info"></div>
+            <div class="pr-hours">
+              <h3>Horaires</h3>
+              <div class="pr-hours-row"><span>Lundi – Vendredi</span><span>9h – 18h</span></div>
+              <div class="pr-hours-row"><span>Samedi</span><span>10h – 16h</span></div>
+              <div class="pr-hours-row"><span>Dimanche</span><span class="closed">Fermé</span></div>
+            </div>
+          </div>
+          <form class="pr-form" onsubmit="event.preventDefault();alert('Merci ! Votre demande a été envoyée.');">
+            <div><label>Nom complet</label><input type="text" placeholder="Marie Dupont"></div>
+            <div><label>Adresse email</label><input type="email" placeholder="marie@exemple.fr"></div>
+            <div><label>Date de l'événement</label><input type="date"></div>
+            <div><label>Votre message</label><textarea rows="5" placeholder="Décrivez votre projet, nombre d'invités, lieu…"></textarea></div>
+            <button type="submit">Envoyer ma demande</button>
+          </form>
+        </div>
+      </div>
+      <div id="contact-footer"></div>
+    </div>
+  </div>
+
+  <!-- ─── Product Modal ─── -->
+  <div class="pr-modal" id="product-modal">
+    <div class="pr-modal-content" onclick="event.stopPropagation()">
+      <div class="pr-modal-grid">
+        <div class="pr-modal-img">
+          <img id="modal-img" src="" alt="">
+          <button class="pr-modal-close" onclick="PR.closeModal()"><svg class="pr-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="pr-modal-body">
+          <p class="pr-modal-cat" id="modal-cat"></p>
+          <h2 class="pr-modal-name" id="modal-name"></h2>
+          <p class="pr-modal-desc" id="modal-desc"></p>
+          <div class="pr-modal-specs">
+            <div class="pr-modal-spec"><span class="pr-modal-spec-label">Dimensions</span><span class="pr-modal-spec-val" id="modal-dim"></span></div>
+            <div class="pr-modal-spec"><span class="pr-modal-spec-label">Couleur</span><span class="pr-modal-spec-val" id="modal-color"></span></div>
+            <div class="pr-modal-spec"><span class="pr-modal-spec-label">Stock</span><span class="pr-modal-spec-val" id="modal-stock"></span></div>
+          </div>
+          <p class="pr-modal-price"><span id="modal-price"></span> <small>/ unité</small></p>
+          <div class="pr-modal-actions">
+            <button class="pr-modal-add" id="modal-add-btn">Ajouter au devis</button>
+            <button class="pr-modal-fav" id="modal-fav-btn"><svg class="pr-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Quote Sidebar ─── -->
+  <div class="pr-quote-overlay" id="quote-overlay">
+    <div class="pr-quote-panel" onclick="event.stopPropagation()">
+      <div class="pr-quote-header">
+        <div>
+          <h3>Demande de devis</h3>
+          <p id="quote-count">0 article</p>
+        </div>
+        <button onclick="PR.closeQuote()" class="pr-close-btn"><svg class="pr-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="pr-quote-body" id="quote-body">
+        <div class="pr-quote-empty">
+          <div class="pr-quote-empty-icon"><svg class="pr-icon" viewBox="0 0 24 24" style="width:24px;height:24px"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+          <p>Votre sélection est vide.</p>
+          <button onclick="PR.closeQuote();PR.nav('catalogue')">Parcourir le catalogue</button>
+        </div>
+      </div>
+      <div class="pr-quote-footer" id="quote-footer" style="display:none">
+        <div class="pr-quote-total"><span>Total estimé</span><strong id="quote-total">0 €</strong></div>
+        <button class="pr-quote-submit" onclick="PR.closeQuote();PR.nav('contact')">Envoyer ma demande</button>
+        <button class="pr-quote-continue" onclick="PR.closeQuote()">Continuer mes choix</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     JavaScript
+============================================================ -->
+<script>
+var PR = (function() {
+  'use strict';
+
+  // ─── Data ──────────────────────────────────────────────────────
+  var CATEGORIES = [
+    "Tous", "Mobilier", "Figurines & Jeux", "Bougeoirs & Lanternes",
+    "Verreries", "Cadres", "Présentoirs", "Urnes",
+    "Art de la Table", "Vases", "Décoration", "Fleurs & Feuillages"
+  ];
+
+  var PRODUCTS = [
+    {id:"mob-001",nom:"Chevalet Fer Forgé Noir",cat:"Mobilier",stock:1,dim:"175 × 54 cm",prix:30,img:"/products/prod001.png",desc:"Élégant chevalet en fer forgé noir mat aux volutes raffinées. Idéal pour présenter votre plan de table, menu ou tableau de bienvenue.",coul:"Noir"},
+    {id:"mob-002",nom:"Arche Triangle Bois Naturel",cat:"Mobilier",stock:1,dim:"H 230 × 200 cm",prix:40,img:"/products/prod005.png",desc:"Arche triangulaire en bois brut aux allures bohèmes. Parfaite pour encadrer la cérémonie.",coul:"Bois naturel"},
+    {id:"mob-004",nom:"Chaises Médaillon Blanches (paire)",cat:"Mobilier",stock:24,dim:"45 × 45 × H 95 cm",prix:12,img:"/products/prod004.png",desc:"Paire de chaises médaillon en bois patiné blanc.",coul:"Blanc"},
+    {id:"dec-003",nom:"Arche Grillagée Blanche",cat:"Décoration",stock:2,dim:"200 × 200 cm",prix:35,img:"/products/prod002.png",desc:"Panneau grillagé sur pied en métal blanc.",coul:"Blanc"},
+    {id:"dec-004",nom:"Pompon Tulle Rose Poudré",cat:"Décoration",stock:30,dim:"Ø 30 cm",prix:6,img:"/products/prod003.png",desc:"Pompon en tulle rose poudré.",coul:"Rose poudré"},
+    {id:"dec-005",nom:"Masques Tiki Décoratifs (trio)",cat:"Décoration",stock:3,dim:"H 60 × 18 cm",prix:28,img:"/products/prod006.png",desc:"Trio de masques Tiki sculptés et peints à la main.",coul:"Multicolore"},
+    {id:"fig-002",nom:"Figurines Animaux & Jungle",cat:"Figurines & Jeux",stock:1,dim:"Set de 14 pièces",prix:22,img:"/products/prod007.png",desc:"Collection de figurines d'animaux de la jungle.",coul:"Multicolore"},
+    {id:"fig-003",nom:"Figurines Super-Héros",cat:"Figurines & Jeux",stock:4,dim:"Set de 4 · H 5 cm",prix:10,img:"/products/prod008.png",desc:"Lot de mini figurines super-héros métallisées.",coul:"Multicolore"},
+    {id:"dec-006",nom:"Sculptures Africaines Bois",cat:"Décoration",stock:3,dim:"H 35 à 45 cm",prix:25,img:"/products/prod009.png",desc:"Trio de sculptures en bois d'ébène.",coul:"Bois foncé"},
+    {id:"dec-007",nom:"Oiseaux Tropicaux sur Pied (paire)",cat:"Décoration",stock:2,dim:"H 65 cm",prix:18,img:"/products/prod010.png",desc:"Duo d'oiseaux exotiques en métal peint.",coul:"Multicolore"},
+    {id:"bou-004",nom:"Bougeoir Pied Argenté",cat:"Bougeoirs & Lanternes",stock:6,dim:"H 28 × Ø 14 cm",prix:9,img:"/products/prod011.png",desc:"Bougeoir sur pied en métal argenté.",coul:"Argenté"},
+    {id:"mob-006",nom:"Pouf Velours Noir Pieds Dorés",cat:"Mobilier",stock:3,dim:"Ø 45 × H 35 cm",prix:22,img:"/products/prod012.png",desc:"Pouf rond en velours noir.",coul:"Noir & Or"},
+    {id:"bou-005",nom:"Bougeoirs Feuille Laiton (paire)",cat:"Bougeoirs & Lanternes",stock:4,dim:"H 22 × 8 cm",prix:11,img:"/products/prod013.png",desc:"Paire de bougeoirs en laiton patiné.",coul:"Laiton"},
+    {id:"bou-006",nom:"Bougeoirs Piliers Dorés (trio)",cat:"Bougeoirs & Lanternes",stock:6,dim:"H 18 / 24 / 30 cm",prix:16,img:"/products/prod014.png",desc:"Trio de bougeoirs piliers en laiton doré.",coul:"Or"},
+    {id:"pre-002",nom:"Plateau Miroir Doré",cat:"Présentoirs",stock:5,dim:"40 × 22 × H 8 cm",prix:12,img:"/products/prod015.png",desc:"Plateau rectangulaire laiton doré et fond miroir.",coul:"Or & Miroir"},
+    {id:"dec-008",nom:"Boîtes Géométriques Verre & Laiton (paire)",cat:"Décoration",stock:4,dim:"H 12 × 10 cm",prix:14,img:"/products/coffret-verre-laiton.png",desc:"Paire de boîtes géométriques en verre et laiton.",coul:"Or & Verre"},
+    {id:"mob-003",nom:"Table Ronde 180 cm",cat:"Mobilier",stock:5,dim:"Ø 180 × H 75 cm",prix:80,img:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=600&fit=crop&auto=format",desc:"Table ronde pouvant accueillir 10 à 12 convives.",coul:"Blanc"},
+    
+    {id:"bou-001",nom:"Lanterne Marocaine Dorée",cat:"Bougeoirs & Lanternes",stock:8,dim:"H 45 × Ø 20 cm",prix:12,img:"/products/lanterne-blanche.png",desc:"Lanterne en métal ajouré doré.",coul:"Or"},
+    {id:"bou-002",nom:"Bougeoir Cristal Haut",cat:"Bougeoirs & Lanternes",stock:12,dim:"H 30 × Ø 8 cm",prix:8,img:"/products/bougeoir-or.png",desc:"Chandelier en cristal soufflé.",coul:"Cristal"},
+    {id:"bou-003",nom:"Photophore Doré",cat:"Bougeoirs & Lanternes",stock:30,dim:"H 10 × Ø 8 cm",prix:5,img:"/products/photophore-transparent.png",desc:"Photophore en verre texturé doré.",coul:"Or"},
+    {id:"ver-001",nom:"Vase Cylindrique Transparent",cat:"Verreries",stock:15,dim:"H 40 × Ø 15 cm",prix:10,img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=600&fit=crop&auto=format",desc:"Vase cylindrique en verre soufflé.",coul:"Transparent"},
+    {id:"ver-002",nom:"Carafe Vintage Biseautée",cat:"Verreries",stock:10,dim:"H 30 × Ø 12 cm",prix:15,img:"https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&h=600&fit=crop&auto=format",desc:"Carafe en cristal biseauté.",coul:"Transparent"},
+    {id:"cad-001",nom:"Cadre Doré Baroque",cat:"Cadres",stock:4,dim:"50 × 70 cm",prix:20,img:"https://images.unsplash.com/photo-1578926375605-eaf7559b1458?w=600&h=600&fit=crop&auto=format",desc:"Cadre baroque en résine dorée.",coul:"Or"},
+    {id:"cad-002",nom:"Tableau Ardoise Plan de Table",cat:"Cadres",stock:2,dim:"80 × 120 cm",prix:35,img:"https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=600&fit=crop&auto=format",desc:"Grand tableau ardoise sur pied.",coul:"Noir"},
+    {id:"pre-001",nom:"Présentoir Gâteau 3 Étages",cat:"Présentoirs",stock:3,dim:"H 60 cm",prix:45,img:"/products/presentoir-gateau-1.png",desc:"Présentoir à gâteau en métal blanc 3 étages.",coul:"Blanc & Or"},
+    {id:"urn-001",nom:"Urne à Enveloppes Bois",cat:"Urnes",stock:3,dim:"H 30 × 20 × 20 cm",prix:25,img:"/products/urne-cage.png",desc:"Urne en bois massif.",coul:"Bois naturel"},
+    {id:"art-001",nom:"Assiette Porcelaine Blanche",cat:"Art de la Table",stock:100,dim:"Ø 27 cm",prix:3,img:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=600&fit=crop&auto=format",desc:"Assiette plate en porcelaine blanche.",coul:"Blanc"},
+    {id:"art-002",nom:"Chemin de Table Lin Naturel",cat:"Art de la Table",stock:20,dim:"30 × 300 cm",prix:15,img:"/products/chemin-table-rose.png",desc:"Chemin de table en lin lavé naturel.",coul:"Beige"},
+    {id:"vas-001",nom:"Vase Pampa Céramique Blanc",cat:"Vases",stock:6,dim:"H 45 × Ø 22 cm",prix:20,img:"/products/vase-geometrique-blanc.png",desc:"Grand vase en céramique blanche.",coul:"Blanc"},
+    {id:"vas-002",nom:"Vase Amphore Terracotta",cat:"Vases",stock:4,dim:"H 55 × Ø 30 cm",prix:25,img:"/products/vase-oval.png",desc:"Vase amphore en terracotta.",coul:"Terracotta"},
+    {id:"dec-001",nom:"Guirlande Lumineuse 10 m",cat:"Décoration",stock:15,dim:"10 m · 100 LED",prix:20,img:"https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=600&h=600&fit=crop&auto=format",desc:"Guirlande 10 mètres avec 100 LED.",coul:"Blanc chaud"},
+    {id:"fle-001",nom:"Branche Eucalyptus Artificielle",cat:"Fleurs & Feuillages",stock:25,dim:"90 cm",prix:15,img:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=600&fit=crop&auto=format",desc:"Branche d'eucalyptus artificielle.",coul:"Vert argenté"},
+    {id:"fle-002",nom:"Roses Artificielles Blanches ×12",cat:"Fleurs & Feuillages",stock:10,dim:"Tige 50 cm",prix:18,img:"https://images.unsplash.com/photo-1490750967868-88df5691cc8e?w=600&h=600&fit=crop&auto=format",desc:"Lot de 12 roses artificielles blanches.",coul:"Blanc"},
+    {id:"fig-001",nom:"Jenga Géant",cat:"Figurines & Jeux",stock:2,dim:"Empilé 50 cm",prix:25,img:"https://images.unsplash.com/photo-1535016120720-40c646be5580?w=600&h=600&fit=crop&auto=format",desc:"Jenga géant en bois massif.",coul:"Bois naturel"},
+    {id:"bou-007",nom:"Lanterne Argentée",cat:"Bougeoirs & Lanternes",stock:6,dim:"H 40 × Ø 18 cm",prix:14,img:"/products/lanterne-argent.png",desc:"Lanterne en métal argenté.",coul:"Argenté"},
+    {id:"bou-008",nom:"Lanterne Noire",cat:"Bougeoirs & Lanternes",stock:6,dim:"H 40 × Ø 18 cm",prix:14,img:"/products/lanterne-noir.png",desc:"Lanterne en métal noir mat.",coul:"Noir"},
+    {id:"bou-009",nom:"Bougeoir Étincelle Doré",cat:"Bougeoirs & Lanternes",stock:8,dim:"H 25 × Ø 10 cm",prix:10,img:"/products/bougeoire-etincelle.png",desc:"Bougeoir doré aux reflets étincelants.",coul:"Or"},
+    {id:"dec-010",nom:"Boa Plume décoratif",cat:"Décoration",stock:5,dim:"150 cm",prix:12,img:"/products/boa.png",desc:"Boa en plumes blanches.",coul:"Blanc"},
+    {id:"dec-011",nom:"Candy Bar",cat:"Décoration",stock:3,dim:"80 × 40 × H 90 cm",prix:35,img:"/products/candy-bar.png",desc:"Présentoir candy bar.",coul:"Multicolore"},
+    {id:"dec-012",nom:"Feuille d'Or Décorative",cat:"Décoration",stock:10,dim:"H 45 cm",prix:8,img:"/products/feuille-or.png",desc:"Feuille décorative dorée.",coul:"Or"},
+    {id:"dec-013",nom:"Fontaine à Agrumes",cat:"Décoration",stock:2,dim:"H 50 × Ø 25 cm",prix:28,img:"/products/fontaine-agrume.png",desc:"Fontaine décorative à agrumes.",coul:"Transparent"},
+    {id:"dec-014",nom:"Gazon Artificiel à Suspendre",cat:"Décoration",stock:8,dim:"100 × 100 cm",prix:15,img:"/products/gazon-artificiel.png",desc:"Panneau de gazon artificiel.",coul:"Vert"},
+    {id:"dec-015",nom:"Horloge Décorative",cat:"Décoration",stock:3,dim:"Ø 40 cm",prix:18,img:"/products/horloge.png",desc:"Horloge décorative sur pied.",coul:"Noir & Or"},
+    {id:"dec-016",nom:"Ours Blanc Décoratif",cat:"Décoration",stock:3,dim:"H 70 cm",prix:22,img:"/products/ours-blanc.png",desc:"Ours blanc décoratif en résine.",coul:"Blanc"},
+    {id:"mob-007",nom:"Coussins Velours pour Chaises (paire)",cat:"Mobilier",stock:12,dim:"40 × 40 cm",prix:10,img:"/products/coussins-velour.png",desc:"Paire de coussins en velours.",coul:"Velours"},
+    {id:"art-003",nom:"Nappe Papillon Rectangle",cat:"Art de la Table",stock:10,dim:"150 × 250 cm",prix:18,img:"/products/nappe-papillon.png",desc:"Nappe rectangulaire motif papillon.",coul:"Rose"},
+    {id:"art-004",nom:"Pack Candy Bar en Verre",cat:"Art de la Table",stock:4,dim:"Set de 6 pièces",prix:25,img:"/products/pack-candy-bar-verre.png",desc:"Set de verreries pour candy bar.",coul:"Transparent"},
+    {id:"ver-003",nom:"Pack Soupières en Verre",cat:"Verreries",stock:6,dim:"Set de 4 · H 12 cm",prix:20,img:"/products/pack-sou-verre.png",desc:"Lot de soupières en verre.",coul:"Transparent"},
+    {id:"art-005",nom:"Panier à Pain",cat:"Art de la Table",stock:8,dim:"25 × 15 × H 10 cm",prix:8,img:"/products/panier-pain.png",desc:"Panier à pain en osier.",coul:"Naturel"},
+    {id:"dec-017",nom:"Porte-Alliance Prisme",cat:"Décoration",stock:4,dim:"H 8 × 6 cm",prix:12,img:"/products/porte-alliance-prisme.png",desc:"Porte-alliance en cristal.",coul:"Cristal"},
+    {id:"dec-018",nom:"Porte-Alliance Rectangle",cat:"Décoration",stock:4,dim:"H 6 × 8 cm",prix:10,img:"/products/porte-alliance-rectangle-1.png",desc:"Porte-alliance rectangulaire.",coul:"Cristal"},
+    {id:"pre-003",nom:"Porte-Carte Or",cat:"Présentoirs",stock:10,dim:"H 12 × 8 cm",prix:6,img:"/products/porte-carte-or.png",desc:"Porte-carte doré.",coul:"Or"},
+    {id:"art-006",nom:"Porte-Serviettes Doré",cat:"Art de la Table",stock:15,dim:"H 8 cm",prix:5,img:"/products/porte-serviettes.png",desc:"Porte-serviettes doré.",coul:"Or"},
+    {id:"dec-019",nom:"Prisme Décoratif Cristal",cat:"Décoration",stock:6,dim:"H 10 × 5 cm",prix:8,img:"/products/prisme.png",desc:"Prisme en cristal décoratif.",coul:"Cristal"},
+    {id:"art-007",nom:"Salière et Poivrière",cat:"Art de la Table",stock:10,dim:"H 8 cm (paire)",prix:6,img:"/products/saliere-poivriere.png",desc:"Paire de salière et poivrière.",coul:"Transparent"},
+    {id:"art-008",nom:"Saucière",cat:"Art de la Table",stock:8,dim:"H 10 × 15 cm",prix:8,img:"/products/sauciere.png",desc:"Saucière en porcelaine blanche.",coul:"Blanc"},
+    {id:"art-009",nom:"Serviette de Table Émeraude",cat:"Art de la Table",stock:30,dim:"45 × 45 cm",prix:3,img:"/products/serviette-emeraude.png",desc:"Serviette de table en lin vert émeraude.",coul:"Émeraude"},
+    {id:"dec-020",nom:"Sonnette de Comptoir",cat:"Décoration",stock:5,dim:"H 8 × Ø 5 cm",prix:7,img:"/products/sonnette-comptoir.png",desc:"Sonnette de comptoir en laiton doré.",coul:"Or"},
+    {id:"dec-021",nom:"Sous-Assiettes Or (lot de 6)",cat:"Art de la Table",stock:10,dim:"Ø 30 cm · lot de 6",prix:15,img:"/products/sous-assiettes-or.png",desc:"Lot de 6 sous-assiettes dorées.",coul:"Or"},
+    {id:"dec-022",nom:"Top Cake Diamant",cat:"Décoration",stock:5,dim:"H 12 cm",prix:9,img:"/products/top-cake-diamand.png",desc:"Décoration de gâteau diamant.",coul:"Or"},
+    {id:"dec-023",nom:"Ombrelle Décorative",cat:"Décoration",stock:4,dim:"H 80 cm",prix:16,img:"/products/umbrella.png",desc:"Ombrelle décorative en dentelle.",coul:"Blanc"},
+    {id:"dec-024",nom:"Oiseau Décoratif Scotch",cat:"Décoration",stock:3,dim:"H 25 cm",prix:10,img:"/products/bird-scoth.png",desc:"Oiseau décoratif en métal.",coul:"Multicolore"},
+    {id:"dec-025",nom:"Lustre 12 Branches",cat:"Bougeoirs & Lanternes",stock:1,dim:"H 80 × Ø 60 cm",prix:45,img:"/products/lustre-12-branches.png",desc:"Lustre à 12 branches en métal doré.",coul:"Or"},
+    {id:"dec-026",nom:"Enseigne LED Bride to Be",cat:"Décoration",stock:2,dim:"60 × 30 cm",prix:25,img:"/products/bride-to-be-led.png",desc:"Enseigne lumineuse LED Bride to Be.",coul:"Blanc chaud"},
+    {id:"dec-027",nom:"Vélo Décoratif Blanc",cat:"Décoration",stock:2,dim:"H 60 × L 40 cm",prix:18,img:"/products/velo.png",desc:"Vélo décoratif blanc en métal.",coul:"Blanc"},
+    {id:"dec-028",nom:"Décoration Numéro 36",cat:"Décoration",stock:3,dim:"H 25 cm",prix:12,img:"/products/36.png",desc:"Chiffre décoratif 36 en métal doré.",coul:"Or"}
+  ];
+
+  var CATEGORY_IMAGES = {
+    "Mobilier":"/products/prod004.png","Figurines & Jeux":"/products/prod007.png",
+    "Bougeoirs & Lanternes":"/products/lanterne-argent.png","Verreries":"/products/vase-oval.png",
+    "Cadres":"/products/porte-carte-or.png","Présentoirs":"/products/presentoir-gateau-1.png",
+    "Urnes":"/products/urne-cage.png","Art de la Table":"/products/chemin-table-rose.png",
+    "Vases":"/products/vase-geometrique-blanc.png","Décoration":"/products/prod006.png",
+    "Fleurs & Feuillages":"/products/prod003.png"
+  };
+
+  // ─── State ─────────────────────────────────────────────────────
+  var state = {
+    page: 'home',
+    category: 'Tous',
+    search: '',
+    priceMax: 200,
+    inStockOnly: false,
+    favorites: {},
+    quote: {},
+    modalProduct: null
+  };
+
+  // ─── Helpers ────────────────────────────────────────────────────
+  function renderPrice(p) { return p + ' <small>€</small>'; }
+
+  function heartSVG(filled) {
+    var fill = filled ? 'currentColor' : 'none';
+    return '<svg class="pr-icon" viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="' + fill + '" stroke="currentColor"/></svg>';
+  }
+
+  function plusSVG() {
+    return '<svg class="pr-icon" viewBox="0 0 24 24" style="width:15px;height:15px;stroke-width:2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+  }
+
+  // ─── Render Product Card ────────────────────────────────────────
+  function renderCard(p) {
+    var isFav = !!state.favorites[p.id];
+    var badge = '';
+    if (p.stock === 0) {
+      badge = '<div class="pr-card-soldout"><span>Indisponible</span></div>';
+    } else if (p.stock <= 2) {
+      badge = '<span class="pr-card-badge">Dernière' + (p.stock > 1 ? 's' : '') + '</span>';
+    }
+    var favColor = isFav ? 'color:var(--gold)' : '';
+    return '<div class="pr-card">' +
+      '<div class="pr-card-img-wrap" onclick="PR.openModal(\'' + p.id + '\')">' +
+        '<img class="pr-card-img" src="' + p.img + '" alt="' + p.nom + '" onerror="this.style.background=\'#F0EBE3\'">' +
+        badge +
+        '<button class="pr-card-fav" style="' + favColor + '" onclick="event.stopPropagation();PR.toggleFav(\'' + p.id + '\')">' + heartSVG(isFav) + '</button>' +
+      '</div>' +
+      '<div class="pr-card-body">' +
+        '<p class="pr-card-cat">' + p.cat + '</p>' +
+        '<h3 class="pr-card-name" onclick="PR.openModal(\'' + p.id + '\')">' + p.nom + '</h3>' +
+        '<p class="pr-card-dim">' + p.dim + '</p>' +
+        '<div class="pr-card-foot">' +
+          '<span class="pr-card-price">' + renderPrice(p.prix) + '</span>' +
+          '<button class="pr-card-add" onclick="event.stopPropagation();PR.addToQuote(\'' + p.id + '\')"' + (p.stock === 0 ? ' disabled' : '') + '>' + plusSVG() + '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // ─── Render Category Card ───────────────────────────────────────
+  function renderCatCard(cat) {
+    var count = PRODUCTS.filter(function(p) { return p.cat === cat; }).length;
+    var img = CATEGORY_IMAGES[cat] || '';
+    return '<button class="pr-cat-card" onclick="PR.navToCat(\'' + cat + '\')">' +
+      '<img src="' + img + '" alt="' + cat + '" onerror="this.style.display=\'none\'">' +
+      '<div class="pr-cat-overlay"></div>' +
+      '<div class="pr-cat-info">' +
+        '<p class="pr-cat-name">' + cat + '</p>' +
+        '<div class="pr-cat-count">' +
+          '<span>' + count + ' article' + (count > 1 ? 's' : '') + '</span>' +
+          '<span class="pr-cat-arrow">→</span>' +
+        '</div>' +
+      '</div>' +
+    '</button>';
+  }
+
+  // ─── Footer ─────────────────────────────────────────────────────
+  function renderFooter() {
+    return '<footer class="pr-footer">' +
+      '<div class="pr-footer-grid">' +
+        '<div class="pr-footer-brand">' +
+          '<p class="pr-footer-tag">Location décoration</p>' +
+          '<p class="pr-footer-name">Papillon Rose</p>' +
+          '<p class="pr-footer-desc">Location de mobilier et décoration pour événements, mariages et réceptions.</p>' +
+        '</div>' +
+        '<div>' +
+          '<p class="pr-footer-title">Navigation</p>' +
+          '<ul class="pr-footer-links">' +
+            '<li><button onclick="PR.nav(\'home\')">Accueil</button></li>' +
+            '<li><button onclick="PR.nav(\'catalogue\')">Catalogue</button></li>' +
+            '<li><button onclick="PR.nav(\'favorites\')">Favoris</button></li>' +
+            '<li><button onclick="PR.nav(\'contact\')">Contact</button></li>' +
+          '</ul>' +
+        '</div>' +
+        '<div>' +
+          '<p class="pr-footer-title">Catégories</p>' +
+          '<ul class="pr-footer-links">' +
+            CATEGORIES.slice(1, 7).map(function(c) {
+              return '<li><button onclick="PR.navToCat(\'' + c + '\')">' + c + '</button></li>';
+            }).join('') +
+          '</ul>' +
+        '</div>' +
+        '<div>' +
+          '<p class="pr-footer-title">Contact</p>' +
+          '<ul class="pr-footer-contact">' +
+            '<li><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>06 12 34 56 78</li>' +
+            '<li><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>contact@papillonrose.fr</li>' +
+            '<li><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Île-de-France<br>Livraison nationale</li>' +
+          '</ul>' +
+        '</div>' +
+      '</div>' +
+      '<div class="pr-footer-bottom">' +
+        '<p class="pr-footer-copy">© 2025 Papillon Rose — Location décoration événements · Tous droits réservés</p>' +
+      '</div>' +
+    '</footer>';
+  }
+
+  // ─── Navigation ─────────────────────────────────────────────────
+  function showPage(page) {
+    ['home','catalogue','favorites','contact'].forEach(function(p) {
+      var el = document.getElementById('page-' + p);
+      if (el) el.style.display = (p === page ? '' : 'none');
+    });
+    // active nav link
+    document.querySelectorAll('.pr-nav-link').forEach(function(el) {
+      el.classList.toggle('active', el.getAttribute('data-page') === page);
+    });
+    state.page = page;
+    window.scrollTo(0, 0);
+  }
+
+  // ─── Home ───────────────────────────────────────────────────────
+  function renderHome() {
+    // Pills
+    var pillsEl = document.getElementById('home-pills');
+    pillsEl.innerHTML = CATEGORIES.map(function(c) {
+      var active = c === state.category ? ' active' : '';
+      return '<button class="pr-pill' + active + '" onclick="PR.setHomeCat(\'' + c + '\')">' + c + '</button>';
+    }).join('');
+
+    // Products
+    var filtered = PRODUCTS.filter(function(p) {
+      return state.category === 'Tous' || p.cat === state.category;
+    }).slice(0, 10);
+    document.getElementById('home-grid').innerHTML = filtered.map(renderCard).join('');
+
+    // Footer
+    document.getElementById('home-footer').innerHTML = renderFooter();
+  }
+
+  // ─── Categories ────────────────────────────────────────────────
+  function renderCategories() {
+    document.getElementById('cat-grid').innerHTML = CATEGORIES.slice(1).map(renderCatCard).join('');
+  }
+
+  // ─── Catalogue ─────────────────────────────────────────────────
+  function renderCatalogue() {
+    // Pills
+    var pillsEl = document.getElementById('cat-pills');
+    pillsEl.innerHTML = CATEGORIES.map(function(c) {
+      var active = c === state.category ? ' active' : '';
+      return '<button class="pr-pill' + active + '" onclick="PR.setCat(\'' + c + '\')">' + c + '</button>';
+    }).join('');
+
+    PR.filter();
+    document.getElementById('catalogue-footer').innerHTML = renderFooter();
+  }
+
+  // ─── Filter ─────────────────────────────────────────────────────
+  function filterProducts() {
+    var searchVal = (document.getElementById('search-input')?.value || '').toLowerCase();
+    var stockOnly = document.getElementById('stock-toggle')?.checked || false;
+    var priceVal = parseInt(document.getElementById('price-slider')?.value || 200);
+    state.search = searchVal;
+    state.inStockOnly = stockOnly;
+    state.priceMax = priceVal;
+    document.getElementById('price-display').textContent = priceVal + ' €';
+
+    var filtered = PRODUCTS.filter(function(p) {
+      if (state.category !== 'Tous' && p.cat !== state.category) return false;
+      if (searchVal && p.nom.toLowerCase().indexOf(searchVal) === -1 && p.cat.toLowerCase().indexOf(searchVal) === -1) return false;
+      if (p.prix > priceVal) return false;
+      if (stockOnly && p.stock === 0) return false;
+      return true;
+    });
+
+    var grid = document.getElementById('catalogue-grid');
+    var empty = document.getElementById('catalogue-empty');
+    var count = document.getElementById('result-count');
+    var reset = document.getElementById('reset-btn');
+
+    count.textContent = filtered.length;
+    if (filtered.length > 0) {
+      grid.innerHTML = filtered.map(renderCard).join('');
+      grid.style.display = '';
+      empty.style.display = 'none';
+    } else {
+      grid.style.display = 'none';
+      empty.style.display = 'block';
+    }
+
+    reset.style.display = (searchVal || state.category !== 'Tous' || priceVal < 200 || stockOnly) ? 'inline' : 'none';
+  }
+
+  // ─── Favorites ─────────────────────────────────────────────────
+  function renderFavorites() {
+    var favIds = Object.keys(state.favorites).filter(function(id) { return state.favorites[id]; });
+    var el = document.getElementById('fav-content');
+    if (favIds.length === 0) {
+      el.innerHTML = '<div class="pr-page-empty"><div class="pr-page-empty-icon">' + heartSVG(false).replace('13px','32px') + '</div><p>Vous n\'avez pas encore de favoris.</p><button onclick="PR.nav(\'catalogue\')">Parcourir le catalogue</button></div>';
+    } else {
+      var items = PRODUCTS.filter(function(p) { return state.favorites[p.id]; });
+      el.innerHTML = '<div class="pr-grid">' + items.map(renderCard).join('') + '</div>';
+    }
+    document.getElementById('favorites-footer').innerHTML = renderFooter();
+    updateBadges();
+  }
+
+  // ─── Contact ────────────────────────────────────────────────────
+  function renderContact() {
+    var el = document.getElementById('contact-info');
+    el.innerHTML = [
+      {icon:'phone',label:'Téléphone',val:'06 12 34 56 78'},
+      {icon:'mail',label:'Email',val:'contact@papillonrose.fr'},
+      {icon:'pin',label:'Zone',val:'Île-de-France\nLivraison nationale'}
+    ].map(function(item) {
+      var svg = '';
+      if (item.icon === 'phone') svg = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+      else if (item.icon === 'mail') svg = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>';
+      else svg = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+      return '<div class="pr-contact-item"><div class="pr-contact-icon">' + svg + '</div><div><p class="pr-contact-item-label">' + item.label + '</p><p class="pr-contact-item-val">' + item.val + '</p></div></div>';
+    }).join('');
+    document.getElementById('contact-footer').innerHTML = renderFooter();
+  }
+
+  // ─── Modal ──────────────────────────────────────────────────────
+  function openModal(id) {
+    var p = PRODUCTS.find(function(x) { return x.id === id; });
+    if (!p) return;
+    state.modalProduct = p;
+    document.getElementById('modal-img').src = p.img;
+    document.getElementById('modal-img').onerror = function() { this.style.background = '#F0EBE3'; };
+    document.getElementById('modal-cat').textContent = p.cat;
+    document.getElementById('modal-name').textContent = p.nom;
+    document.getElementById('modal-desc').textContent = p.desc;
+    document.getElementById('modal-dim').textContent = p.dim;
+    document.getElementById('modal-color').textContent = p.coul;
+    var stockEl = document.getElementById('modal-stock');
+    if (p.stock === 0) { stockEl.textContent = 'Indisponible'; stockEl.className = 'pr-modal-spec-val out'; }
+    else if (p.stock <= 2) { stockEl.textContent = p.stock + ' disponible' + (p.stock > 1 ? 's' : ''); stockEl.className = 'pr-modal-spec-val warn'; }
+    else { stockEl.textContent = p.stock + ' disponible' + (p.stock > 1 ? 's' : ''); stockEl.className = 'pr-modal-spec-val ok'; }
+    document.getElementById('modal-price').textContent = p.prix + ' €';
+    var addBtn = document.getElementById('modal-add-btn');
+    addBtn.disabled = p.stock === 0;
+    addBtn.onclick = function() { PR.addToQuote(p.id); PR.closeModal(); };
+    var favBtn = document.getElementById('modal-fav-btn');
+    var isFav = !!state.favorites[p.id];
+    favBtn.className = 'pr-modal-fav' + (isFav ? ' active' : '');
+    favBtn.onclick = function() { PR.toggleFav(p.id); };
+    document.getElementById('product-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('product-modal').classList.remove('open');
+    state.modalProduct = null;
+  }
+
+  // ─── Quote ──────────────────────────────────────────────────────
+  function addToQuote(id) {
+    if (!state.quote[id]) state.quote[id] = 0;
+    state.quote[id]++;
+    updateQuoteUI();
+    document.getElementById('quote-overlay').classList.add('open');
+  }
+
+  function updateQty(id, delta) {
+    if (!state.quote[id]) return;
+    state.quote[id] = Math.max(0, state.quote[id] + delta);
+    if (state.quote[id] === 0) delete state.quote[id];
+    updateQuoteUI();
+  }
+
+  function removeFromQuote(id) {
+    delete state.quote[id];
+    updateQuoteUI();
+  }
+
+  function updateQuoteUI() {
+    var ids = Object.keys(state.quote);
+    var total = 0;
+    var count = 0;
+    ids.forEach(function(id) {
+      var p = PRODUCTS.find(function(x) { return x.id === id; });
+      if (p) { total += p.prix * state.quote[id]; count += state.quote[id]; }
+    });
+
+    document.getElementById('quote-count').textContent = count + ' article' + (count > 1 ? 's' : '');
+    var badge = document.getElementById('quote-badge');
+    if (count > 0) { badge.textContent = count; badge.style.display = ''; }
+    else { badge.style.display = 'none'; }
+
+    var body = document.getElementById('quote-body');
+    var footer = document.getElementById('quote-footer');
+    if (count === 0) {
+      body.innerHTML = '<div class="pr-quote-empty"><div class="pr-quote-empty-icon"><svg class="pr-icon" viewBox="0 0 24 24" style="width:24px;height:24px"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><p>Votre sélection est vide.</p><button onclick="PR.closeQuote();PR.nav(\'catalogue\')">Parcourir le catalogue</button></div>';
+      footer.style.display = 'none';
+    } else {
+      var items = ids.map(function(id) {
+        var p = PRODUCTS.find(function(x) { return x.id === id; });
+        if (!p) return '';
+        var q = state.quote[id];
+        return '<div class="pr-quote-item">' +
+          '<img src="' + p.img + '" alt="' + p.nom + '" class="pr-quote-item-img" onerror="this.style.background=\'#F0EBE3\'">' +
+          '<div class="pr-quote-item-info">' +
+            '<p class="pr-quote-item-name">' + p.nom + '</p>' +
+            '<p class="pr-quote-item-price">' + p.prix + ' € / u.</p>' +
+            '<div class="pr-quote-qty">' +
+              '<button onclick="PR.updateQty(\'' + id + '\',-1)">−</button>' +
+              '<span>' + q + '</span>' +
+              '<button onclick="PR.updateQty(\'' + id + '\',1)">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="pr-quote-item-total">' +
+            '<p>' + (p.prix * q) + ' €</p>' +
+            '<button onclick="PR.removeFromQuote(\'' + id + '\')"><svg class="pr-icon" viewBox="0 0 24 24" style="width:13px;height:13px"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+      body.innerHTML = items;
+      document.getElementById('quote-total').textContent = total + ' €';
+      footer.style.display = 'block';
+    }
+    updateBadges();
+  }
+
+  function openQuote() {
+    document.getElementById('quote-overlay').classList.add('open');
+  }
+
+  function closeQuote() {
+    document.getElementById('quote-overlay').classList.remove('open');
+  }
+
+  // ─── Favorites ──────────────────────────────────────────────────
+  function toggleFav(id) {
+    if (state.favorites[id]) delete state.favorites[id];
+    else state.favorites[id] = true;
+    updateBadges();
+    // Re-render current view if needed
+    if (state.page === 'favorites') renderFavorites();
+    else if (state.page === 'home') renderHome();
+    else if (state.page === 'catalogue') renderCatalogue();
+    // Update modal button if open
+    var favBtn = document.getElementById('modal-fav-btn');
+    if (favBtn && state.modalProduct && state.modalProduct.id === id) {
+      favBtn.className = 'pr-modal-fav' + (state.favorites[id] ? ' active' : '');
+    }
+  }
+
+  function updateBadges() {
+    var count = Object.keys(state.favorites).filter(function(id) { return state.favorites[id]; }).length;
+    var badge = document.getElementById('fav-badge');
+    if (count > 0) { badge.textContent = count; badge.style.display = ''; }
+    else { badge.style.display = 'none'; }
+  }
+
+  // ─── Public API ─────────────────────────────────────────────────
+  return {
+    nav: function(page) {
+      showPage(page);
+      if (page === 'home') { renderHome(); renderCategories(); }
+      else if (page === 'catalogue') renderCatalogue();
+      else if (page === 'favorites') renderFavorites();
+      else if (page === 'contact') renderContact();
+    },
+    navToCat: function(cat) {
+      state.category = cat;
+      showPage('catalogue');
+      renderCatalogue();
+    },
+    setHomeCat: function(cat) {
+      state.category = cat;
+      renderHome();
+    },
+    setCat: function(cat) {
+      state.category = cat;
+      renderCatalogue();
+    },
+    filter: function() {
+      filterProducts();
+    },
+    resetFilters: function() {
+      state.category = 'Tous';
+      state.search = '';
+      state.priceMax = 200;
+      state.inStockOnly = false;
+      document.getElementById('search-input').value = '';
+      document.getElementById('stock-toggle').checked = false;
+      document.getElementById('price-slider').value = 200;
+      renderCatalogue();
+    },
+    openModal: openModal,
+    closeModal: closeModal,
+    addToQuote: addToQuote,
+    updateQty: updateQty,
+    removeFromQuote: removeFromQuote,
+    openQuote: openQuote,
+    closeQuote: closeQuote,
+    toggleFav: toggleFav,
+    toggleMenu: function() {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    }
+  };
+})();
+
+// ─── Init ──────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  // Close mobile menu on overlay click
+  document.getElementById('mobile-menu').addEventListener('click', function() {
+    this.classList.remove('open');
+  });
+  // Close modal on overlay click
+  document.getElementById('product-modal').addEventListener('click', function() {
+    PR.closeModal();
+  });
+  // Init
+  PR.nav('home');
+});
+</script>
