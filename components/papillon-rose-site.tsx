@@ -18,7 +18,10 @@ import {
 
 } from "lucide-react"
 
-const LOGO = "/papillon-rose-logo.png"
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
+const img = (path: string) => BASE + path
+const PLACEHOLDER = img("/placeholder.svg")
+const LOGO = img("/papillon-rose-logo.png")
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Page = "home" | "catalogue" | "favorites" | "contact"
@@ -829,7 +832,7 @@ const PRODUCTS: Product[] = [
   },
 ]
 
-const CATEGORY_IMAGES: Record<string, string> = {
+let CATEGORY_IMAGES: Record<string, string> = {
   Mobilier: "/products/prod004.png",
   "Figurines & Jeux": "/products/prod007.png",
   "Bougeoirs & Lanternes": "/products/lanterne-argent.png",
@@ -842,6 +845,8 @@ const CATEGORY_IMAGES: Record<string, string> = {
   Décoration: "/products/prod006.png",
   "Fleurs & Feuillages": "/products/prod003.png",
 }
+
+// Images will be prefixed at render time
 
 const DP = { fontFamily: "var(--font-playfair), serif" } as const
 const GOLD = "#C8A97E"
@@ -868,7 +873,7 @@ function ProductCard({
         onClick={onView}
       >
         <img
-          src={product.image || "/placeholder.svg"}
+          src={product.image ? img(product.image) : PLACEHOLDER}
           alt={product.nom}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
@@ -1143,7 +1148,7 @@ export default function PapillonRoseSite() {
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16">
           <button onClick={() => navTo("home")} aria-label="Accueil Papillon Rose">
             <img
-              src={LOGO || "/placeholder.svg"}
+              src={LOGO || PLACEHOLDER}
               alt="Papillon Rose"
               className="h-10 w-auto"
             />
@@ -1158,8 +1163,8 @@ export default function PapillonRoseSite() {
                       p === "catalogue" ? goToCatalogue() : navTo(p)
                     }
                     className={`text-sm transition-colors ${
-                      page === p
-                        ? "text-[#C8A97E] font-medium"
+                      page === p || p === "home"
+                        ? "text-[#C8A97E] font-bold"
                         : "text-white/70 hover:text-white"
                     }`}
                   >
@@ -1229,7 +1234,7 @@ export default function PapillonRoseSite() {
           >
             <div className="flex justify-between items-center mb-10">
               <img
-                src={LOGO || "/placeholder.svg"}
+                src={LOGO || PLACEHOLDER}
                 alt="Papillon Rose"
                 className="h-9 w-auto"
               />
@@ -1405,7 +1410,7 @@ export default function PapillonRoseSite() {
                       style={{ aspectRatio: "4/3" }}
                     >
                       <img
-                        src={CATEGORY_IMAGES[cat] || "/placeholder.svg"}
+                        src={img(CATEGORY_IMAGES[cat] || "/placeholder.svg")}
                         alt={cat}
                         className="w-full h-full object-cover opacity-75 group-hover:opacity-60 group-hover:scale-105 transition-all duration-500"
                       />
@@ -1438,7 +1443,7 @@ export default function PapillonRoseSite() {
               <div className="relative overflow-hidden rounded-3xl bg-[#2E2E2E] px-10 py-16 text-center">
                 <div className="absolute inset-0">
                   <img
-                    src="/products/prod005.png"
+                    src={img("/products/prod005.png")}
                     alt=""
                     aria-hidden
                     className="w-full h-full object-cover opacity-15 rounded-3xl"
@@ -1794,7 +1799,7 @@ export default function PapillonRoseSite() {
                 style={{ aspectRatio: "1 / 1" }}
               >
                 <img
-                  src={modalProduct.image || "/placeholder.svg"}
+                  src={modalProduct.image ? img(modalProduct.image) : PLACEHOLDER}
                   alt={modalProduct.nom}
                   className="w-full h-full object-cover"
                 />
@@ -1966,7 +1971,7 @@ export default function PapillonRoseSite() {
                       className="flex gap-3.5 items-start bg-[#F8F5F0] rounded-2xl p-3"
                     >
                       <img
-                        src={p.image || "/placeholder.svg"}
+                        src={p.image ? img(p.image) : PLACEHOLDER}
                         alt={p.nom}
                         className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
                       />

@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const nextConfig = {
   output: "export",
-  basePath: "/papillonrose",
+  basePath: BASE,
   trailingSlash: true,
   typescript: {
     ignoreBuildErrors: true,
