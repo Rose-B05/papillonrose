@@ -27,15 +27,14 @@ export default function CatalogGallery({ produits, favorites, onFav, onAddCart, 
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 md:gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
         {produits.map((p) => (
           <div
             key={p.id}
             className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
           >
             <div
-              className="relative overflow-hidden cursor-pointer bg-[#F8F5F0]"
-              style={{ aspectRatio: "1/1" }}
+              className="relative overflow-hidden cursor-pointer bg-[#F8F5F0] h-[250px]"
               onClick={() => setLightbox({ product: p, index: 0 })}
             >
               <img
