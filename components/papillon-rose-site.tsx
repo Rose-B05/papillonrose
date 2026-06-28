@@ -281,9 +281,9 @@ function Footer({
         src={img("/images/PROD086.png")}
         alt=""
         aria-hidden
-        className="hidden md:block absolute top-[-80px] left-[20px] w-[280px] h-auto object-contain pointer-events-none z-10"
+        className="hidden md:block absolute top-[-120px] left-[20px] w-[280px] h-full object-contain object-bottom pointer-events-none z-10"
       />
-      <div className="max-w-7xl mx-auto px-6 md:pl-[260px] md:pr-10 grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+      <div className="max-w-7xl mx-auto px-6 md:pl-[340px] md:pr-10 grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
         <div className="col-span-2 md:col-span-1">
           <p className="text-[#C8A97E] text-[10px] tracking-[0.35em] uppercase font-light">
             Location décoration
@@ -371,7 +371,7 @@ function Footer({
           </ul>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-6 md:pl-[260px] md:pr-10 pt-6 border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-6 md:pl-[340px] md:pr-10 pt-6 border-t border-white/10">
         <p className="text-white/25 text-xs text-center">
           © 2026 Papillon Rose — Location décoration événements · Tous droits
           réservés
