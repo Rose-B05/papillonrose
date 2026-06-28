@@ -15,29 +15,28 @@ import {
   Mail,
   MapPin,
   Trash2,
-
 } from "lucide-react"
+import { produits, type Produit } from "@/data/produits"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
 const PLACEHOLDER = img("/placeholder.svg")
 const LOGO = img("/papillon-rose-logo.png")
 
+function formatPrix(prix: number | string): string {
+  if (typeof prix === "number") return `${prix}`
+  return prix
+}
+function parsePrix(prix: number | string): number {
+  if (typeof prix === "number") return prix
+  const m = prix.match(/[\d.]+/)
+  return m ? parseFloat(m[0]) : 0
+}
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Page = "home" | "catalogue" | "favorites" | "contact"
-interface Product {
-  id: string
-  nom: string
-  categorie: string
-  stock: number
-  dimensions: string
-  prix: number
-  image: string
-  description: string
-  couleur: string
-}
 interface QuoteItem {
-  product: Product
+  product: Produit
   qty: number
 }
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -45,723 +44,31 @@ const CATEGORIES = [
   "Tous",
   "Mobilier",
   "Figurines & Jeux",
-  "Bougeoirs & Lanternes",
+  "Bougeoirs & Lustres",
   "Verreries",
   "Cadres",
-  "Présentoirs",
-  "Urnes",
+  "Présentoirs & Plateaux",
+  "Urnes & Accessoires",
   "Art de la Table",
-  "Vases",
+  "Vases & Pots",
   "Décoration",
   "Fleurs & Feuillages",
 ]
 
-const PRODUCTS: Product[] = [
-  // ── Real catalogue photos ──
-  {
-    id: "mob-001",
-    nom: "Chevalet Fer Forgé Noir",
-    categorie: "Mobilier",
-    stock: 1,
-    dimensions: "175 × 54 cm",
-    prix: 30,
-    image: "/products/prod001.png",
-    description:
-      "Élégant chevalet en fer forgé noir mat aux volutes raffinées. Idéal pour présenter votre plan de table, menu ou tableau de bienvenue lors de vos événements les plus précieux.",
-    couleur: "Noir",
-  },
-  {
-    id: "mob-002",
-    nom: "Arche Triangle Bois Naturel",
-    categorie: "Mobilier",
-    stock: 1,
-    dimensions: "H 230 × 200 cm",
-    prix: 40,
-    image: "/products/prod005.png",
-    description:
-      "Arche triangulaire en bois brut aux allures bohèmes. Parfaite pour encadrer la cérémonie ou créer un fond de scène végétal unique pour vos photos.",
-    couleur: "Bois naturel",
-  },
-  {
-    id: "mob-004",
-    nom: "Chaises Médaillon Blanches (paire)",
-    categorie: "Mobilier",
-    stock: 24,
-    dimensions: "45 × 45 × H 95 cm",
-    prix: 40,
-    image: "/products/prod004.png",
-    description:
-      "Paire de chaises médaillon en bois patiné blanc, assise et dossier capitonnés en lin. Charme romantique et confort pour vos réceptions.",
-    couleur: "Blanc",
-  },
-  {
-    id: "dec-003",
-    nom: "Arche Grillagée Blanche",
-    categorie: "Décoration",
-    stock: 2,
-    dimensions: "200 × 200 cm",
-    prix: 60,
-    image: "/products/prod002.png",
-    description:
-      "Panneau grillagé sur pied en métal blanc. Support idéal pour fleurs, feuillages, photos ou plan de table suspendu.",
-    couleur: "Blanc",
-  },
-  {
-    id: "dec-004",
-    nom: "Pompon Tulle Rose Poudré",
-    categorie: "Décoration",
-    stock: 30,
-    dimensions: "Ø 30 cm",
-    prix: 6,
-    image: "/products/prod003.png",
-    description:
-      "Pompon en tulle rose poudré pour habiller chaises, arches ou dossiers de chaise haute. Touche tendre et féérique pour baby showers et baptêmes.",
-    couleur: "Rose poudré",
-  },
-  {
-    id: "dec-005",
-    nom: "Masques Tiki Décoratifs (trio)",
-    categorie: "Décoration",
-    stock: 3,
-    dimensions: "H 60 × 18 cm",
-    prix: 28,
-    image: "/products/prod006.png",
-    description:
-      "Trio de masques Tiki sculptés et peints à la main. Décor exotique parfait pour soirées tropicales, anniversaires à thème et fêtes polynésiennes.",
-    couleur: "Multicolore",
-  },
-  {
-    id: "fig-002",
-    nom: "Figurines Animaux & Jungle",
-    categorie: "Figurines & Jeux",
-    stock: 1,
-    dimensions: "Set de 14 pièces",
-    prix: 22,
-    image: "/products/prod007.png",
-    description:
-      "Collection de figurines d'animaux de la jungle et personnages emblématiques. Idéale pour scénographier une table d'anniversaire enfant sur le thème de la savane.",
-    couleur: "Multicolore",
-  },
-  {
-    id: "fig-003",
-    nom: "Figurines Super-Héros",
-    categorie: "Figurines & Jeux",
-    stock: 4,
-    dimensions: "Set de 4 · H 5 cm",
-    prix: 10,
-    image: "/products/prod008.png",
-    description:
-      "Lot de mini figurines super-héros métallisées. Parfait pour personnaliser un gâteau ou animer une fête d'enfants pleine d'énergie.",
-    couleur: "Multicolore",
-  },
-  {
-    id: "dec-006",
-    nom: "Sculptures Africaines Bois",
-    categorie: "Décoration",
-    stock: 3,
-    dimensions: "H 35 à 45 cm",
-    prix: 25,
-    image: "/products/prod009.png",
-    description:
-      "Trio de sculptures en bois d'ébène sculptées à la main. Pièces d'art ethniques pour une décoration élégante et dépaysante.",
-    couleur: "Bois foncé",
-  },
-  {
-    id: "dec-007",
-    nom: "Oiseaux Tropicaux sur Pied (paire)",
-    categorie: "Décoration",
-    stock: 2,
-    dimensions: "H 65 cm",
-    prix: 5,
-    image: "/products/prod010.png",
-    description:
-      "Duo d'oiseaux exotiques en métal peint à la main — un perroquet ara et un toucan — montés sur pieds. Décor coloré et dépaysant pour soirées tropicales et événements à thème.",
-    couleur: "Multicolore",
-  },
-  {
-    id: "bou-004",
-    nom: "Bougeoir Pied Argenté",
-    categorie: "Bougeoirs & Lanternes",
-    stock: 6,
-    dimensions: "H 28 × Ø 14 cm",
-    prix: 4,
-    image: "/products/prod011.png",
-    description:
-      "Bougeoir sur pied en métal argenté au galbe travaillé. Présente une bougie pilier avec élégance sur vos tables et buffets.",
-    couleur: "Argenté",
-  },
-  {
-    id: "mob-006",
-    nom: "Pouf Velours Noir Pieds Dorés",
-    categorie: "Mobilier",
-    stock: 3,
-    dimensions: "Ø 45 × H 35 cm",
-    prix: 22,
-    image: "/products/prod012.png",
-    description:
-      "Pouf rond en velours noir aux fines pieds dorés en épingle. Assise d'appoint chic ou sellette décorative pour vos espaces lounge.",
-    couleur: "Noir & Or",
-  },
-  {
-    id: "bou-005",
-    nom: "Bougeoirs Feuille Laiton (paire)",
-    categorie: "Bougeoirs & Lanternes",
-    stock: 4,
-    dimensions: "H 22 × 8 cm",
-    prix: 11,
-    image: "/products/prod013.png",
-    description:
-      "Paire de bougeoirs en laiton patiné en forme de feuille nervurée. Touche vintage et raffinée pour une décoration de table végétale.",
-    couleur: "Laiton",
-  },
-  {
-    id: "bou-006",
-    nom: "Bougeoirs Piliers Dorés (trio)",
-    categorie: "Bougeoirs & Lanternes",
-    stock: 6,
-    dimensions: "H 18 / 24 / 30 cm",
-    prix: 4,
-    image: "/products/prod014.png",
-    description:
-      "Trio de bougeoirs piliers en laiton doré de hauteurs graduées. Composez un centre de table lumineux et sophistiqué.",
-    couleur: "Or",
-  },
-  {
-    id: "pre-002",
-    nom: "Plateau Miroir Doré",
-    categorie: "Présentoirs",
-    stock: 5,
-    dimensions: "40 × 22 × H 8 cm",
-    prix: 12,
-    image: "/products/prod015.png",
-    description:
-      "Plateau rectangulaire à structure laiton doré et fond miroir. Idéal pour présenter parfums, bougies ou la verrerie du bar.",
-    couleur: "Or & Miroir",
-  },
-  {
-    id: "dec-008",
-    nom: "Boîtes Géométriques Verre & Laiton (paire)",
-    categorie: "Décoration",
-    stock: 4,
-    dimensions: "H 12 × 10 cm",
-    prix: 10,
-    image: "/products/PROD029.png",
-    description:
-      "Paire de boîtes géométriques en verre et laiton doré. Parfaites comme porte-alliances, écrins à bijoux ou mini terrariums décoratifs.",
-    couleur: "Or & Verre",
-  },
-  // ── Catalogue complémentaire ──
-  {
-    id: "bou-001",
-    nom: "Lanterne Marocaine Dorée",
-    categorie: "Bougeoirs & Lanternes",
-    stock: 8,
-    dimensions: "H 45 × Ø 20 cm",
-    prix: 5,
-    image: "/products/PROD023.png",
-    description:
-      "Lanterne en métal ajouré doré de style oriental. Crée une ambiance lumineuse et envoûtante.",
-    couleur: "Or",
-  },
-  {
-    id: "bou-002",
-    nom: "Bougeoir Cristal Haut",
-    categorie: "Bougeoirs & Lanternes",
-    stock: 12,
-    dimensions: "H 30 × Ø 8 cm",
-    prix: 8,
-    image: "/products/PROD022.png",
-    description:
-      "Chandelier en cristal soufflé d'une finesse rare. Mille reflets sur vos tables.",
-    couleur: "Cristal",
-  },
-  {
-    id: "bou-003",
-    nom: "Photophore Doré",
-    categorie: "Bougeoirs & Lanternes",
-    stock: 30,
-    dimensions: "H 10 × Ø 8 cm",
-    prix: 0.50,
-    image: "/products/prod034.png",
-    description: "Photophore en verre texturé doré pour bougies chauffe-plat.",
-    couleur: "Or",
-  },
-  {
-    id: "ver-001",
-    nom: "Vase Cylindrique Transparent",
-    categorie: "Verreries",
-    stock: 15,
-    dimensions: "H 40 × Ø 15 cm",
-    prix: 10,
-    image: "/products/prod016.png",
-    description:
-      "Vase cylindrique en verre soufflé. Polyvalent pour compositions florales ou bougies flottantes.",
-    couleur: "Transparent",
-  },
-  {
-    id: "ver-002",
-    nom: "Carafe Vintage Biseautée",
-    categorie: "Verreries",
-    stock: 10,
-    dimensions: "H 30 × Ø 12 cm",
-    prix: 4,
-    image: "/products/prod081.png",
-    description:
-      "Carafe en cristal biseauté de style vintage. Pour l'eau, limonades ou cocktails signature.",
-    couleur: "Transparent",
-  },
-  {
-    id: "pre-001",
-    nom: "Présentoir Gâteau 3 Étages",
-    categorie: "Présentoirs",
-    stock: 3,
-    dimensions: "H 60 cm · plateaux Ø 20/30/40 cm",
-    prix: 6,
-    image: "/products/prod048.png",
-    description:
-      "Présentoir à gâteau en métal blanc 3 étages avec plateaux miroir.",
-    couleur: "Blanc & Or",
-  },
-  {
-    id: "urn-001",
-    nom: "Urne à Enveloppes Bois",
-    categorie: "Urnes",
-    stock: 3,
-    dimensions: "H 30 × 20 × 20 cm",
-    prix: 8,
-    image: "/products/prod049.png",
-    description:
-      "Urne en bois massif avec fente pour enveloppes. Sobre et élégante.",
-    couleur: "Bois naturel",
-  },
-  {
-    id: "art-002",
-    nom: "Chemin de Table Lin Naturel",
-    categorie: "Art de la Table",
-    stock: 20,
-    dimensions: "30 × 300 cm",
-    prix: 2,
-    image: "/products/PROD059.png",
-    description:
-      "Chemin de table en lin lavé naturel, bords effilochés. Touche rustique et poétique.",
-    couleur: "Beige",
-  },
-  {
-    id: "vas-001",
-    nom: "Vase Pampa Céramique Blanc",
-    categorie: "Vases",
-    stock: 6,
-    dimensions: "H 45 × Ø 22 cm",
-    prix: 0.90,
-    image: "/products/prod072.png",
-    description:
-      "Grand vase en céramique blanche à l'émail mat. Pour pampa, branches ou fleurs séchées.",
-    couleur: "Blanc",
-  },
-  {
-    id: "vas-002",
-    nom: "Vase Amphore Terracotta",
-    categorie: "Vases",
-    stock: 4,
-    dimensions: "H 55 × Ø 30 cm",
-    prix: 1.50,
-    image: "/products/prod071.png",
-    description:
-      "Vase amphore en terracotta naturelle. Idéal pour une décoration bohème ou méditerranéenne.",
-    couleur: "Terracotta",
-  },
-  {
-    id: "dec-001",
-    nom: "Guirlande Lumineuse 10 m",
-    categorie: "Décoration",
-    stock: 15,
-    dimensions: "10 m · 100 LED blanc chaud",
-    prix: 10,
-    image: "/products/prod019.png",
-    description:
-      "Guirlande lumineuse avec 100 LED blanc chaud. Intérieur ou extérieur.",
-    couleur: "Blanc chaud",
-  },
-  {
-    id: "fle-002",
-    nom: "Roses Artificielles Blanches ×12",
-    categorie: "Fleurs & Feuillages",
-    stock: 10,
-    dimensions: "Tige 50 cm · Tête Ø 6 cm",
-    prix: 15,
-    image: "/products/prod080.png",
-    description:
-      "Lot de 12 roses artificielles blanches premium. Réutilisables à l'infini.",
-    couleur: "Blanc",
-  },
-
-  // ── Nouveaux produits du catalogue ──
-  {
-    id: "bou-007",
-    nom: "Lanterne Argentée",
-    categorie: "Bougeoirs & Lanternes",
-    stock: 6,
-    dimensions: "H 40 × Ø 18 cm",
-    prix: 12,
-    image: "/products/prod020.png",
-    description: "Lanterne en métal argenté au design élégant. Parfaite pour une ambiance lumineuse raffinée.",
-    couleur: "Argenté",
-  },
-  {
-    id: "bou-008",
-    nom: "Lanterne Noire",
-    categorie: "Bougeoirs & Lanternes",
-    stock: 6,
-    dimensions: "H 40 × Ø 18 cm",
-    prix: 5,
-    image: "/products/prod021.png",
-    description: "Lanterne en métal noir mat. Style moderne et sobre pour vos décorations.",
-    couleur: "Noir",
-  },
-  {
-    id: "bou-009",
-    nom: "Bougeoir Étincelle Doré",
-    categorie: "Bougeoirs & Lanternes",
-    stock: 8,
-    dimensions: "H 25 × Ø 10 cm",
-    prix: 9,
-    image: "/products/prod025.png",
-    description: "Bougeoir doré aux reflets étincelants. Illumine vos tables avec élégance.",
-    couleur: "Or",
-  },
-  {
-    id: "dec-010",
-    nom: "Boa Plume décoratif",
-    categorie: "Décoration",
-    stock: 5,
-    dimensions: "150 cm",
-    prix: 0.50,
-    image: "/products/prod076.png",
-    description: "Boa en plumes blanches. Accessoire décoratif pour chaises, arches ou espaces photo.",
-    couleur: "Blanc",
-  },
-  {
-    id: "dec-011",
-    nom: "Candy Bar",
-    categorie: "Décoration",
-    stock: 3,
-    dimensions: "80 × 40 × H 90 cm",
-    prix: 20,
-    image: "/products/prod032.png",
-    description: "Présentoir candy bar pour buffets sucrés, anniversaires et goûters d'enfants.",
-    couleur: "Multicolore",
-  },
-  {
-    id: "dec-012",
-    nom: "Feuille d'Or Décorative",
-    categorie: "Décoration",
-    stock: 10,
-    dimensions: "H 45 cm",
-    prix: 1.50,
-    image: "/products/prod046.png",
-    description: "Feuille décorative dorée. Idéale pour compositions florales et centres de table.",
-    couleur: "Or",
-  },
-  {
-    id: "dec-013",
-    nom: "Fontaine à Agrumes",
-    categorie: "Décoration",
-    stock: 2,
-    dimensions: "H 50 × Ø 25 cm",
-    prix: 8,
-    image: "/products/prod036.png",
-    description: "Fontaine décorative à agrumes. Originale et rafraîchissante pour vos réceptions.",
-    couleur: "Transparent",
-  },
-  {
-    id: "dec-014",
-    nom: "Gazon Artificiel à Suspendre",
-    categorie: "Décoration",
-    stock: 8,
-    dimensions: "100 × 100 cm",
-    prix: 10,
-    image: "/products/prod084.png",
-    description: "Panneau de gazon artificiel à suspendre. Crée un mur végétal pour vos événements.",
-    couleur: "Vert",
-  },
-  {
-    id: "dec-015",
-    nom: "Horloge Décorative",
-    categorie: "Décoration",
-    stock: 3,
-    dimensions: "Ø 40 cm",
-    prix: 7,
-    image: "/products/prod074.png",
-    description: "Horloge décorative sur pied. Pièce unique pour habiller vos espaces réception.",
-    couleur: "Noir & Or",
-  },
-  {
-    id: "dec-016",
-    nom: "Ours Blanc Décoratif",
-    categorie: "Décoration",
-    stock: 3,
-    dimensions: "H 70 cm",
-    prix: 5,
-    image: "/products/ours-blanc.png",
-    description: "Ours blanc décoratif en résine. Parfait pour les baptêmes et événements hivernaux.",
-    couleur: "Blanc",
-  },
-  {
-    id: "mob-007",
-    nom: "Coussins Velours pour Chaises (paire)",
-    categorie: "Mobilier",
-    stock: 12,
-    dimensions: "40 × 40 cm",
-    prix: 1,
-    image: "/products/PROD065.png",
-    description: "Paire de coussins en velours pour chaises. Confort et élégance pour vos invités.",
-    couleur: "Velours",
-  },
-  {
-    id: "art-003",
-    nom: "Nappe Papillon Rectangle",
-    categorie: "Art de la Table",
-    stock: 10,
-    dimensions: "150 × 250 cm",
-    prix: 2,
-    image: "/products/prod058.png",
-    description: "Nappe rectangulaire motif papillon. Douce et raffinée pour vos tables de réception.",
-    couleur: "Rose",
-  },
-  {
-    id: "art-004",
-    nom: "Pack Candy Bar en Verre",
-    categorie: "Art de la Table",
-    stock: 4,
-    dimensions: "Set de 6 pièces",
-    prix: 20,
-    image: "/products/pack-candy-bar-verre.png",
-    description: "Set de verreries pour candy bar. Pots et coupes en verre pour buffets sucrés.",
-    couleur: "Transparent",
-  },
-  {
-    id: "ver-003",
-    nom: "Pack Soupières en Verre",
-    categorie: "Verreries",
-    stock: 6,
-    dimensions: "Set de 4 · H 12 cm",
-    prix: 20,
-    image: "/products/PROD051.png",
-    description: "Lot de soupières en verre. Idéales pour entrées et soupes lors de vos réceptions.",
-    couleur: "Transparent",
-  },
-  {
-    id: "art-005",
-    nom: "Panier à Pain",
-    categorie: "Art de la Table",
-    stock: 8,
-    dimensions: "25 × 15 × H 10 cm",
-    prix: 2,
-    image: "/products/PROD064.png",
-    description: "Panier à pain en osier. Pour servir le pain avec style sur vos tables.",
-    couleur: "Naturel",
-  },
-  {
-    id: "dec-017",
-    nom: "Porte-Alliance Prisme",
-    categorie: "Décoration",
-    stock: 4,
-    dimensions: "H 8 × 6 cm",
-    prix: 7,
-    image: "/products/PROD030.png",
-    description: "Porte-alliance en forme de prisme en cristal. Écrin parfait pour les alliances.",
-    couleur: "Cristal",
-  },
-  {
-    id: "dec-018",
-    nom: "Porte-Alliance Rectangle",
-    categorie: "Décoration",
-    stock: 4,
-    dimensions: "H 6 × 8 cm",
-    prix: 7,
-    image: "/products/prod031.png",
-    description: "Porte-alliance rectangulaire en cristal. Présentez vos alliances avec élégance.",
-    couleur: "Cristal",
-  },
-  {
-    id: "pre-003",
-    nom: "Porte-Carte Or",
-    categorie: "Présentoirs",
-    stock: 10,
-    dimensions: "H 12 × 8 cm",
-    prix: 0.90,
-    image: "/products/prod060.png",
-    description: "Porte-carte doré pour plans de table, menus ou marque-places. Raffinement garanti.",
-    couleur: "Or",
-  },
-  {
-    id: "art-006",
-    nom: "Porte-Serviettes Doré",
-    categorie: "Art de la Table",
-    stock: 15,
-    dimensions: "H 8 cm",
-    prix: 4,
-    image: "/products/prod052.png",
-    description: "Porte-serviettes doré. Pour une présentation élégante de vos serviettes de table.",
-    couleur: "Or",
-  },
-  {
-    id: "dec-019",
-    nom: "Prisme Décoratif Cristal",
-    categorie: "Décoration",
-    stock: 6,
-    dimensions: "H 10 × 5 cm",
-    prix: 6,
-    image: "/products/prod026.png",
-    description: "Prisme en cristal décoratif. Capte la lumière et crée des reflets sur vos tables.",
-    couleur: "Cristal",
-  },
-  {
-    id: "art-007",
-    nom: "Salière et Poivrière",
-    categorie: "Art de la Table",
-    stock: 10,
-    dimensions: "H 8 cm (paire)",
-    prix: 2,
-    image: "/products/prod063.png",
-    description: "Paire de salière et poivrière en verre. Indispensables pour vos tables dressées.",
-    couleur: "Transparent",
-  },
-  {
-    id: "art-008",
-    nom: "Saucière",
-    categorie: "Art de la Table",
-    stock: 8,
-    dimensions: "H 10 × 15 cm",
-    prix: 13,
-    image: "/products/prod054.png",
-    description: "Saucière en porcelaine blanche. Pour servir sauces et accompaniments avec élégance.",
-    couleur: "Blanc",
-  },
-  {
-    id: "art-009",
-    nom: "Serviette de Table Émeraude",
-    categorie: "Art de la Table",
-    stock: 30,
-    dimensions: "45 × 45 cm",
-    prix: 0.50,
-    image: "/products/prod055.png",
-    description: "Serviette de table en lin vert émeraude. Touche de couleur pour vos tables habillées.",
-    couleur: "Émeraude",
-  },
-  {
-    id: "dec-020",
-    nom: "Sonnette de Comptoir",
-    categorie: "Décoration",
-    stock: 5,
-    dimensions: "H 8 × Ø 5 cm",
-    prix: 5,
-    image: "/products/prod075.png",
-    description: "Sonnette de comptoir en laiton doré. Pour appeler vos convives ou servir le bar.",
-    couleur: "Or",
-  },
-  {
-    id: "dec-021",
-    nom: "Sous-Assiette Or (lot de 6)",
-    categorie: "Art de la Table",
-    stock: 10,
-    dimensions: "Ø 30 cm · lot de 6",
-    prix: 6,
-    image: "/products/prod053.png",
-    description: "Lot de 6 sous-assiettes dorées. Rehaussez votre table avec une touche précieuse.",
-    couleur: "Or",
-  },
-  {
-    id: "dec-022",
-    nom: "Top Cake Diamant®",
-    categorie: "Décoration",
-    stock: 5,
-    dimensions: "H 12 cm",
-    prix: 9,
-    image: "/products/PROD066.png",
-    description: "Décoration de gâteau en forme de diamant doré. Sublime votre pièce montée.",
-    couleur: "Or",
-  },
-  {
-    id: "dec-023",
-    nom: "Ombrelle Décorative",
-    categorie: "Décoration",
-    stock: 4,
-    dimensions: "H 80 cm",
-    prix: 4,
-    image: "/products/prod078.png",
-    description: "Ombrelle décorative en dentelle. Idéale pour séances photo et décoration bohème.",
-    couleur: "Blanc",
-  },
-  {
-    id: "dec-024",
-    nom: "Oiseau Décoratif Scotch",
-    categorie: "Décoration",
-    stock: 3,
-    dimensions: "H 25 cm",
-    prix: 7,
-    image: "/products/prod050.png",
-    description: "Oiseau décoratif en métal. Duo d'oiseaux tropicaux pour une déco colorée.",
-    couleur: "Multicolore",
-  },
-  {
-    id: "dec-025",
-    nom: "Lustre 12 Branches",
-    categorie: "Bougeoirs & Lanternes",
-    stock: 1,
-    dimensions: "H 80 × Ø 60 cm",
-    prix: 80,
-    image: "/products/lustre-12-branches.png",
-    description: "Lustre à 12 branches en métal doré. Pièce maîtresse pour vos réceptions et mariages.",
-    couleur: "Or",
-  },
-  {
-    id: "dec-026",
-    nom: "Enseigne LED Bride to Be",
-    categorie: "Décoration",
-    stock: 2,
-    dimensions: "60 × 30 cm",
-    prix: 30,
-    image: "/products/bride-to-be-led.png",
-    description: "Enseigne lumineuse LED 'Bride to Be' blanc chaud. Parfaite pour EVJF et enterrements de vie de jeune fille.",
-    couleur: "Blanc chaud",
-  },
-  {
-    id: "dec-027",
-    nom: "Vélo Décoratif Blanc",
-    categorie: "Décoration",
-    stock: 2,
-    dimensions: "H 60 × L 40 cm",
-    prix: 18,
-    image: "/products/velo.png",
-    description: "Vélo décoratif blanc en métal. Idéal pour compositions florales et décoration bohème.",
-    couleur: "Blanc",
-  },
-  {
-    id: "dec-028",
-    nom: "Décoration Numéro 36",
-    categorie: "Décoration",
-    stock: 3,
-    dimensions: "H 25 cm",
-    prix: 12,
-    image: "/products/36.png",
-    description: "Chiffre décoratif 36 en métal doré. Parfait pour anniversaires et événements marquants.",
-    couleur: "Or",
-  },
-]
+const PRODUCTS = produits
 
 let CATEGORY_IMAGES: Record<string, string> = {
-  Mobilier: "/products/prod004.png",
-  "Figurines & Jeux": "/products/prod007.png",
-  "Bougeoirs & Lanternes": "/products/PROD020.png",
-  Verreries: "/products/prod071.png",
-  Cadres: "/products/prod060.png",
-  Présentoirs: "/products/PROD048.png",
-  Urnes: "/products/PROD049.png",
-  "Art de la Table": "/products/PROD059.png",
-  Vases: "/products/prod072.png",
-  Décoration: "/products/prod006.png",
-  "Fleurs & Feuillages": "/products/prod003.png",
+  Mobilier: "/images/prod/prod005.png",
+  "Figurines & Jeux": "/images/prod/prod009.png",
+  "Bougeoirs & Lustres": "/images/prod/lustre-12-branches.png",
+  Verreries: "/images/prod/photophore-transparent.png",
+  Cadres: "/images/prod/prod39.png",
+  "Présentoirs & Plateaux": "/images/prod/presentoir-gateau-1.png",
+  "Urnes & Accessoires": "/images/prod/urne-cage.png",
+  "Art de la Table": "/images/prod/sous-assiettes-or.png",
+  "Vases & Pots": "/images/prod/vase-geometrique-blanc.png",
+  Décoration: "/images/prod/horloge.png",
+  "Fleurs & Feuillages": "/images/prod/gazon-artificiel.png",
 }
 
 // Images will be prefixed at render time
@@ -777,7 +84,7 @@ function ProductCard({
   onView,
   onAdd,
 }: {
-  product: Product
+  product: Produit
   isFav: boolean
   onFav: () => void
   onView: () => void
@@ -795,16 +102,16 @@ function ProductCard({
           alt={product.nom}
           className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
         />
-        {product.stock === 0 && (
+        {(product.stock === 0 || product.badge === "epuise") && (
           <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
             <span className="text-xs text-gray-400 uppercase tracking-widest font-medium">
               Indisponible
             </span>
           </div>
         )}
-        {product.stock <= 2 && product.stock > 0 && (
+        {(product.badge === "stock-limite" || (product.stock <= 2 && product.stock > 0)) && product.badge !== "epuise" && product.stock !== 0 && (
           <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide">
-            Dernière{product.stock > 1 ? "s" : ""}
+            {product.stock > 0 ? `Dernière${product.stock > 1 ? "s" : ""}` : "Stock limité"}
           </span>
         )}
         <button
@@ -831,12 +138,14 @@ function ProductCard({
         >
           {product.nom}
         </h3>
-        <p className="text-[11px] text-gray-400 mt-0.5 truncate">
-          {product.dimensions}
-        </p>
+        {product.dimension && (
+          <p className="text-[11px] text-gray-400 mt-0.5 truncate">
+            {product.dimension}
+          </p>
+        )}
         <div className="flex items-center justify-between mt-auto pt-2">
           <span style={DP} className="text-base font-bold text-[#2E2E2E]">
-            {product.prix}{" "}
+            {formatPrix(product.prix)}{" "}
             <span className="text-sm font-normal text-gray-400">€<span className="text-xs">/jour</span></span>
           </span>
           <button
@@ -987,9 +296,9 @@ export default function PapillonRoseSite() {
   const [page, setPage] = useState<Page>("home")
   const [category, setCategory] = useState("Tous")
   const [search, setSearch] = useState("")
-  const [modalProduct, setModalProduct] = useState<Product | null>(null)
+  const [modalProduct, setModalProduct] = useState<Produit | null>(null)
   const [quote, setQuote] = useState<QuoteItem[]>([])
-  const [favorites, setFavorites] = useState<Set<string>>(new Set())
+  const [favorites, setFavorites] = useState<Set<number>>(new Set())
   const [showQuote, setShowQuote] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [priceMax, setPriceMax] = useState(200)
@@ -1016,13 +325,13 @@ export default function PapillonRoseSite() {
           (!search ||
             p.nom.toLowerCase().includes(search.toLowerCase()) ||
             p.categorie.toLowerCase().includes(search.toLowerCase())) &&
-          p.prix <= priceMax &&
+          parsePrix(p.prix) <= priceMax &&
           (!inStockOnly || p.stock > 0),
       ),
     [category, search, priceMax, inStockOnly],
   )
 
-  const addToQuote = (p: Product) => {
+  const addToQuote = (p: Produit) => {
     setQuote((prev) => {
       const ex = prev.find((i) => i.product.id === p.id)
       return ex
@@ -1034,7 +343,7 @@ export default function PapillonRoseSite() {
     setShowQuote(true)
   }
 
-  const updateQty = (id: string, delta: number) => {
+  const updateQty = (id: number, delta: number) => {
     setQuote((prev) =>
       prev
         .map((i) =>
@@ -1044,7 +353,7 @@ export default function PapillonRoseSite() {
     )
   }
 
-  const toggleFav = (id: string) => {
+  const toggleFav = (id: number) => {
     setFavorites((prev) => {
       const n = new Set(prev)
       if (n.has(id)) n.delete(id)
@@ -1053,7 +362,7 @@ export default function PapillonRoseSite() {
     })
   }
 
-  const quoteTotal = quote.reduce((s, i) => s + i.product.prix * i.qty, 0)
+  const quoteTotal = quote.reduce((s, i) => s + parsePrix(i.product.prix) * i.qty, 0)
   const quoteCount = quote.reduce((s, i) => s + i.qty, 0)
   const navTo = (p: Page) => {
     setPage(p)
@@ -1754,26 +1063,14 @@ export default function PapillonRoseSite() {
                 >
                   {modalProduct.nom}
                 </h2>
-                <p className="text-sm text-gray-500 leading-relaxed mb-5">
-                  {modalProduct.description}
-                </p>
-
                 <div className="space-y-2.5 bg-[#F8F5F0] rounded-2xl p-4 mb-5">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400 text-[11px] uppercase tracking-wider">
-                      Dimensions
-                    </span>
-                    <span className="font-medium text-[#2E2E2E] text-right max-w-[55%] text-sm">
-                      {modalProduct.dimensions}
-                    </span>
-                  </div>
-                  {modalProduct.couleur && (
+                  {modalProduct.dimension && (
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-400 text-[11px] uppercase tracking-wider">
-                        Couleur
+                        Dimensions
                       </span>
-                      <span className="font-medium text-[#2E2E2E]">
-                        {modalProduct.couleur}
+                      <span className="font-medium text-[#2E2E2E] text-right max-w-[55%] text-sm">
+                        {modalProduct.dimension}
                       </span>
                     </div>
                   )}
@@ -1804,7 +1101,7 @@ export default function PapillonRoseSite() {
                     style={DP}
                     className="text-3xl font-bold text-[#2E2E2E] mb-5"
                   >
-                    {modalProduct.prix} €
+                    {formatPrix(modalProduct.prix)} €
                     <span className="text-sm font-normal text-gray-400 ml-1">
                       / jour
                     </span>
@@ -1913,7 +1210,7 @@ export default function PapillonRoseSite() {
                           {p.nom}
                         </p>
                         <p className="text-[11px] text-gray-400 mt-0.5">
-                          {p.prix} € / jour
+                          {formatPrix(p.prix)} € / jour
                         </p>
                         <div className="flex items-center gap-2 mt-2">
                           <button
@@ -1937,7 +1234,7 @@ export default function PapillonRoseSite() {
                       </div>
                       <div className="text-right flex-shrink-0">
                         <p className="font-bold text-sm text-[#2E2E2E]">
-                          {p.prix * qty} €
+                          {parsePrix(p.prix) * qty} €
                         </p>
                         <button
                           onClick={() => updateQty(p.id, -qty)}
