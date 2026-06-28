@@ -58,17 +58,17 @@ const CATEGORIES = [
 const PRODUCTS = produits
 
 let CATEGORY_IMAGES: Record<string, string> = {
-  Mobilier: "/images/prod/prod005.png",
-  "Figurines & Jeux": "/images/prod/prod009.png",
-  "Bougeoirs & Lustres": "/images/prod/lustre-12-branches.png",
-  Verreries: "/images/prod/photophore-transparent.png",
-  Cadres: "/images/prod/prod39.png",
-  "Présentoirs & Plateaux": "/images/prod/presentoir-gateau-1.png",
-  "Urnes & Accessoires": "/images/prod/urne-cage.png",
-  "Art de la Table": "/images/prod/sous-assiettes-or.png",
-  "Vases & Pots": "/images/prod/vase-geometrique-blanc.png",
-  Décoration: "/images/prod/horloge.png",
-  "Fleurs & Feuillages": "/images/prod/gazon-artificiel.png",
+  Mobilier: "/images/PROD005.png",
+  "Figurines & Jeux": "/images/PROD009.png",
+  "Bougeoirs & Lustres": "/images/PROD023.png",
+  Verreries: "/images/PROD032.png",
+  Cadres: "/images/PROD39.png",
+  "Présentoirs & Plateaux": "/images/PROD048.png",
+  "Urnes & Accessoires": "/images/PROD049.png",
+  "Art de la Table": "/images/PROD053.png",
+  "Vases & Pots": "/images/PROD071.png",
+  Décoration: "/images/PROD074.png",
+  "Fleurs & Feuillages": "/images/PROD084.png",
 }
 
 // Images will be prefixed at render time
@@ -685,7 +685,7 @@ export default function PapillonRoseSite() {
               <div className="relative overflow-hidden rounded-3xl bg-[#2E2E2E] px-10 py-16 text-center">
                 <div className="absolute inset-0">
                   <img
-                    src={img("/products/prod005.png")}
+                    src={img("/images/PROD005.png")}
                     alt=""
                     aria-hidden
                     className="w-full h-full object-cover opacity-15 rounded-3xl"
