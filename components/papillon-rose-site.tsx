@@ -994,11 +994,11 @@ export default function PapillonRoseSite() {
   const [showMenu, setShowMenu] = useState(false)
   const [priceMax, setPriceMax] = useState(200)
   const [inStockOnly, setInStockOnly] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(page !== "home")
   const [showQuoteSent, setShowQuoteSent] = useState(false)
 
   useEffect(() => {
-    const check = () => setScrolled(window.scrollY > window.innerHeight)
+    const check = () => setScrolled(page !== "home" || window.scrollY > window.innerHeight)
     check()
     window.addEventListener("scroll", check)
     window.addEventListener("resize", check)
@@ -1006,7 +1006,7 @@ export default function PapillonRoseSite() {
       window.removeEventListener("scroll", check)
       window.removeEventListener("resize", check)
     }
-  }, [])
+  }, [page])
 
   const filtered = useMemo(
     () =>
@@ -1244,7 +1244,7 @@ export default function PapillonRoseSite() {
             </section>
 
             {/* Stats strip */}
-            <section className="max-w-3xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6">
+            <section className="max-w-5xl mx-auto px-6 py-10 md:py-14 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {[
                 { val: "+200", label: "références" },
                 { val: "11", label: "catégories" },
