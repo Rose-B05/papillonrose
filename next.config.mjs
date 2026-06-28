@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const nextConfig = {
-  output: "export",
   basePath: BASE,
   trailingSlash: true,
   typescript: {
@@ -10,6 +9,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+
 }
 
 export default nextConfig

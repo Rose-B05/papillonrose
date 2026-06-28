@@ -9,6 +9,9 @@ __v0_jsx-dev-runtime.ts
 # Environment variables
 .env*.local
 
+# Reservation system data (auto-generated)
+data/
+
 # Common ignores
 node_modules
 .next/

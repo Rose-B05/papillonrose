@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo, useEffect, useCallback } from "react"
 import {
   Search,
   ShoppingBag,
@@ -17,6 +17,13 @@ import {
   Trash2,
 } from "lucide-react"
 import { produits, type Produit } from "@/data/produits"
+import { useCart } from "@/components/cart-context"
+import CatalogGallery from "@/components/catalog-gallery"
+import CatalogFilters from "@/components/catalog-filters"
+import OverflowCarousel from "@/components/overflow-carousel"
+import Chatbot from "@/components/chatbot"
+import { getThemes, getCouleurs, type FilterState } from "@/lib/product-tags"
+import { FEATURED_IDS } from "@/lib/scenes"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
@@ -34,7 +41,7 @@ function parsePrix(prix: number | string): number {
 }
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type Page = "home" | "catalogue" | "favorites" | "contact"
+type Page = "home" | "catalogue" | "panier" | "favorites" | "contact"
 interface QuoteItem {
   product: Produit
   qty: number
@@ -148,14 +155,26 @@ function ProductCard({
             {formatPrix(product.prix)}{" "}
             <span className="text-sm font-normal text-gray-400">€<span className="text-xs">/jour</span></span>
           </span>
-          <button
-            onClick={onAdd}
-            disabled={product.stock === 0}
-            aria-label="Ajouter au devis"
-            className="w-8 h-8 rounded-full bg-[#C8A97E] text-white flex items-center justify-center hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
-          >
-            <Plus size={15} strokeWidth={2.5} />
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => addCartItem({ productId: product.id, qty: 1, dateStart: "", dateEnd: "" })}
+              disabled={product.stock === 0}
+              aria-label="Ajouter au panier (sélectionnez 2 dates ensuite)"
+              title="Ajouter au panier — sélectionnez 2 dates dans le panier"
+              className="w-8 h-8 rounded-full bg-white border border-[#C8A97E]/30 text-[#C8A97E] flex items-center justify-center hover:bg-[#C8A97E] hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
+            >
+              <ShoppingBag size={13} />
+            </button>
+            <button
+              onClick={onAdd}
+              disabled={product.stock === 0}
+              aria-label="Ajouter au devis"
+              className="w-8 h-8 rounded-full bg-[#C8A97E] text-white flex items-center justify-center hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
+            >
+              <Plus size={15} strokeWidth={2.5} />
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -192,6 +211,73 @@ function CategoryPills({
   )
 }
 
+// ─── ProductImages (Carousel) ───────────────────────────────────────────────
+function ProductImages({
+  images,
+  nom,
+  onClose,
+}: {
+  images: string[]
+  nom: string
+  onClose: () => void
+}) {
+  const [idx, setIdx] = useState(0)
+  const len = images.length
+  const prev = useCallback(() => setIdx((i) => (i - 1 + len) % len), [len])
+  const next = useCallback(() => setIdx((i) => (i + 1) % len), [len])
+  return (
+    <div
+      className="relative bg-white rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none overflow-hidden"
+      style={{ aspectRatio: "1 / 1" }}
+    >
+      {len > 1 && (
+        <>
+          <button
+            onClick={prev}
+            aria-label="Image précédente"
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full shadow-md flex items-center justify-center hover:bg-white transition-colors text-[#2E2E2E]/60 hover:text-[#C8A97E]"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+          </button>
+          <button
+            onClick={next}
+            aria-label="Image suivante"
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full shadow-md flex items-center justify-center hover:bg-white transition-colors text-[#2E2E2E]/60 hover:text-[#C8A97E]"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+          </button>
+        </>
+      )}
+      <img
+        src={img(images[idx])}
+        alt={nom}
+        className="w-full h-full object-contain p-4 transition-opacity duration-300"
+      />
+      {len > 1 && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIdx(i)}
+              aria-label={`Image ${i + 1}`}
+              className={`w-2 h-2 rounded-full transition-all ${
+                i === idx ? "bg-[#C8A97E] w-4" : "bg-black/20 hover:bg-black/40"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+      <button
+        onClick={onClose}
+        aria-label="Fermer"
+        className="absolute top-4 right-4 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-red-50 hover:text-red-400 transition-colors z-10"
+      >
+        <X size={16} />
+      </button>
+    </div>
+  )
+}
+
 // ─── Footer ───────────────────────────────────────────────────────────────────
 function Footer({
   onNav,
@@ -220,21 +306,30 @@ function Footer({
             Navigation
           </p>
           <ul className="space-y-3 text-sm text-white/55">
-            {(["home", "catalogue", "favorites", "contact"] as Page[]).map(
+            {(["home", "catalogue", "panier", "favorites", "contact"] as Page[]).map(
               (p) => (
                 <li key={p}>
-                  <button
-                    onClick={() => onNav(p)}
-                    className="hover:text-[#C8A97E] transition-colors"
-                  >
-                    {p === "home"
-                      ? "Accueil"
-                      : p === "catalogue"
-                        ? "Catalogue"
+                  {p === "panier" ? (
+                    <a href="/reservation" className="hover:text-[#C8A97E] transition-colors">Panier</a>
+                  ) : p === "catalogue" ? (
+                    <button
+                      onClick={() => onCatalogue()}
+                      className="hover:text-[#C8A97E] transition-colors"
+                    >
+                      Catalogue
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => onNav(p)}
+                      className="hover:text-[#C8A97E] transition-colors"
+                    >
+                      {p === "home"
+                        ? "Accueil"
                         : p === "favorites"
                           ? "Favoris"
                           : "Contact"}
-                  </button>
+                    </button>
+                  )}
                 </li>
               ),
             )}
@@ -268,7 +363,7 @@ function Footer({
             </li>
             <li className="flex items-center gap-2.5">
               <Mail size={13} className="text-[#C8A97E]" />
-              contact@papillonrose.fr
+              papillonrosebertha@gmail.com
             </li>
             <li className="flex items-start gap-2.5">
               <MapPin size={13} className="text-[#C8A97E] mt-0.5" />
@@ -283,7 +378,7 @@ function Footer({
       </div>
       <div className="max-w-7xl mx-auto px-6 md:px-10 pt-6 border-t border-white/10">
         <p className="text-white/25 text-xs text-center">
-          © 2025 Papillon Rose — Location décoration événements · Tous droits
+          © 2026 Papillon Rose — Location décoration événements · Tous droits
           réservés
         </p>
       </div>
@@ -293,6 +388,7 @@ function Footer({
 
 // ─── Main ──────────────────────────────────────────────────────────────────────
 export default function PapillonRoseSite() {
+  const { items: cartItems, addItem: addCartItem, itemCount: cartCount } = useCart()
   const [page, setPage] = useState<Page>("home")
   const [category, setCategory] = useState("Tous")
   const [search, setSearch] = useState("")
@@ -305,6 +401,14 @@ export default function PapillonRoseSite() {
   const [inStockOnly, setInStockOnly] = useState(false)
   const [scrolled, setScrolled] = useState(page !== "home")
   const [showQuoteSent, setShowQuoteSent] = useState(false)
+  const [tagFilters, setTagFilters] = useState<FilterState>({
+    themes: [],
+    couleurs: [],
+    budgetMin: 0,
+    budgetMax: Infinity,
+    dateDebut: "",
+    dateFin: "",
+  })
 
   useEffect(() => {
     const check = () => setScrolled(page !== "home" || window.scrollY > window.innerHeight)
@@ -319,16 +423,39 @@ export default function PapillonRoseSite() {
 
   const filtered = useMemo(
     () =>
-      PRODUCTS.filter(
-        (p) =>
-          (category === "Tous" || p.categorie === category) &&
-          (!search ||
-            p.nom.toLowerCase().includes(search.toLowerCase()) ||
-            p.categorie.toLowerCase().includes(search.toLowerCase())) &&
-          parsePrix(p.prix) <= priceMax &&
-          (!inStockOnly || p.stock > 0),
-      ),
-    [category, search, priceMax, inStockOnly],
+      PRODUCTS.filter((p) => {
+        const pThemes = getThemes(p)
+        const pCouleurs = getCouleurs(p)
+        const pPrix = parsePrix(p.prix)
+
+        const matchCategory = category === "Tous" || p.categorie === category
+        const matchSearch =
+          !search ||
+          p.nom.toLowerCase().includes(search.toLowerCase()) ||
+          p.categorie.toLowerCase().includes(search.toLowerCase())
+        const matchPrice = pPrix <= priceMax
+        const matchStock = !inStockOnly || p.stock > 0
+
+        const matchTheme =
+          tagFilters.themes.length === 0 ||
+          tagFilters.themes.some((t) => pThemes.includes(t))
+        const matchCouleur =
+          tagFilters.couleurs.length === 0 ||
+          tagFilters.couleurs.some((c) => pCouleurs.includes(c))
+        const matchBudget =
+          pPrix >= tagFilters.budgetMin && pPrix <= tagFilters.budgetMax
+
+        return (
+          matchCategory &&
+          matchSearch &&
+          matchPrice &&
+          matchStock &&
+          matchTheme &&
+          matchCouleur &&
+          matchBudget
+        )
+      }),
+    [category, search, priceMax, inStockOnly, tagFilters],
   )
 
   const addToQuote = (p: Produit) => {
@@ -379,47 +506,56 @@ export default function PapillonRoseSite() {
     setCategory("Tous")
     setPriceMax(200)
     setInStockOnly(false)
+    setTagFilters({
+      themes: [],
+      couleurs: [],
+      budgetMin: 0,
+      budgetMax: Infinity,
+      dateDebut: "",
+      dateFin: "",
+    })
   }
 
   return (
     <div className="min-h-screen bg-[#F8F5F0] font-sans text-[#2E2E2E]">
       {/* ── Navbar ── */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white/80 backdrop-blur-xl shadow-sm" : "opacity-0 pointer-events-none"}`}>
-        <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16">
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white/80 backdrop-blur-xl shadow-sm" : "bg-transparent"}`}>
+        <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-20">
           <button onClick={() => navTo("home")} aria-label="Accueil Papillon Rose">
             <img
               src={LOGO || PLACEHOLDER}
               alt="Papillon Rose"
-              className="h-10 w-auto"
+              className={`h-10 md:h-12 w-auto transition-all duration-500 ${scrolled ? "" : "brightness-0 invert"}`}
             />
           </button>
 
           <div className="hidden md:flex items-center gap-8 mr-8">
-            {(["home", "catalogue", "favorites", "contact"] as Page[]).map(
+            {(["home", "catalogue", "panier", "favorites", "contact"] as Page[]).map(
                 (p) => (
                   <button
                     key={p}
-                    onClick={() =>
+                    onClick={() => {
+                      if (p === "panier") { window.location.href = "/reservation"; return }
                       p === "catalogue" ? goToCatalogue() : navTo(p)
-                    }
-                    className={`text-sm transition-colors ${
-                      page === p || p === "home"
-                        ? scrolled
-                          ? "text-[#C8A97E] font-bold"
-                          : "text-white"
+                    }}
+                    className={`text-sm transition-all duration-300 ${
+                      page === p
+                        ? "font-bold " + (scrolled ? "text-[#C8A97E]" : "text-white")
                         : scrolled
                           ? "text-[#2E2E2E]/60 hover:text-[#C8A97E]"
                           : "text-white/70 hover:text-white"
                     }`}
                   >
-                  {p === "home"
-                    ? "Accueil"
-                    : p === "catalogue"
-                      ? "Catalogue"
-                      : p === "favorites"
-                        ? "Favoris"
-                        : "Contact"}
-                </button>
+                    {p === "home"
+                      ? "Accueil"
+                      : p === "catalogue"
+                        ? "Catalogue"
+                        : p === "panier"
+                          ? "Panier"
+                          : p === "favorites"
+                            ? "Favoris"
+                            : "Contact"}
+                  </button>
               ),
             )}
           </div>
@@ -428,7 +564,7 @@ export default function PapillonRoseSite() {
             <button
               onClick={() => navTo("favorites")}
               aria-label="Favoris"
-              className="relative p-2 hover:text-[#C8A97E] transition-colors"
+              className={`relative p-2 transition-colors ${scrolled ? "hover:text-[#C8A97E]" : "hover:text-white"}`}
             >
               <Heart
                 size={19}
@@ -438,7 +574,7 @@ export default function PapillonRoseSite() {
                     ? "text-[#C8A97E]"
                     : scrolled
                       ? "text-[#2E2E2E]/40"
-                      : "text-white/70"
+                      : "text-white/80"
                 }
               />
               {favorites.size > 0 && (
@@ -447,6 +583,18 @@ export default function PapillonRoseSite() {
                 </span>
               )}
             </button>
+            <a
+              href="/reservation"
+              className="relative p-2 hover:text-[#C8A97E] transition-colors"
+              aria-label="Panier"
+            >
+              <ShoppingBag size={19} className={cartCount > 0 ? "text-[#C8A97E]" : scrolled ? "text-[#2E2E2E]/40" : "text-white/80"} />
+              {cartCount > 0 && (
+                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-[#C8A97E] text-white text-[9px] rounded-full flex items-center justify-center font-bold">
+                  {cartCount}
+                </span>
+              )}
+            </a>
             <button
               onClick={() => setShowQuote(true)}
               className="relative flex items-center gap-2 bg-[#C8A97E] text-white px-4 py-2 rounded-full text-sm hover:bg-[#B8926E] transition-colors"
@@ -462,7 +610,7 @@ export default function PapillonRoseSite() {
             <button
               onClick={() => setShowMenu(true)}
               aria-label="Menu"
-              className={`md:hidden p-2 ${scrolled ? "text-[#2E2E2E]/60" : "text-white/70"}`}
+              className={`md:hidden p-2 ${scrolled ? "text-[#2E2E2E]/60" : "text-white/80"}`}
             >
               <Menu size={20} />
             </button>
@@ -495,14 +643,15 @@ export default function PapillonRoseSite() {
               </button>
             </div>
             <div className="flex flex-col gap-5">
-              {(["home", "catalogue", "favorites", "contact"] as Page[]).map(
+              {(["home", "catalogue", "panier", "favorites", "contact"] as Page[]).map(
                 (p) => (
                   <button
                     key={p}
-                    onClick={() =>
+                    onClick={() => {
+                      if (p === "panier") { window.location.href = "/reservation"; return }
                       p === "catalogue" ? goToCatalogue() : navTo(p)
-                    }
-                    className="text-left text-[#2E2E2E]/70 hover:text-[#C8A97E] transition-colors text-lg"
+                    }}
+                    className={`text-left transition-colors text-lg ${page === p ? "font-bold text-[#C8A97E]" : "text-[#2E2E2E]/70 hover:text-[#C8A97E]"}`}
                     style={DP}
                   >
                     {p === "home"
@@ -517,7 +666,7 @@ export default function PapillonRoseSite() {
               )}
             </div>
             <div className="mt-auto text-sm text-[#2E2E2E]/35 space-y-1">
-              <p>contact@papillonrose.fr</p>
+              <p>papillonrosebertha@gmail.com</p>
               <p>06 12 34 56 78</p>
             </div>
           </div>
@@ -529,7 +678,7 @@ export default function PapillonRoseSite() {
         {page === "home" && (
           <div>
             {/* Hero */}
-            <section className="relative" style={{ height: "100vh", maxHeight: "100vh" }}>
+            <section className="relative h-screen">
               <video
                 src="https://raw.githubusercontent.com/Rose-B05/papillonrose/master/public/products/hero.mp4"
                 autoPlay
@@ -540,39 +689,135 @@ export default function PapillonRoseSite() {
               />
             </section>
 
-            {/* Hero text */}
-            <section className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
-              <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-3 font-medium">
-                LOCATION DÉCORATION ÉVÉNEMENT
-              </p>
-              <h1 style={DP} className="text-[#2E2E2E] text-5xl md:text-7xl font-semibold leading-[1.1] mb-6">
-                Papillon
-                <br />
-                <em className="font-normal italic">Rose</em>
-              </h1>
+            {/* Hero text + Stats */}
+            <section className="max-w-7xl mx-auto px-6 md:px-10 mt-6 md:mt-8">
+              <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-10 bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-lg">
+                {/* Title */}
+                <div className="flex-shrink-0">
+                  <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-2 font-medium">
+                    LOCATION DÉCORATION ÉVÉNEMENT
+                  </p>
+                  <h1 style={DP} className="text-[#2E2E2E] text-4xl md:text-6xl font-semibold leading-[1.1]">
+                    Papillon
+                    <br />
+                    <em className="font-normal italic">Rose</em>
+                  </h1>
+                </div>
+
+                {/* Gold vertical separator (desktop) */}
+                <div className="hidden md:block w-px self-stretch bg-[#C8A97E]/40 flex-shrink-0" />
+
+                {/* Stats 2×2 */}
+                <div className="grid grid-cols-2 gap-x-8 gap-y-3 flex-1">
+                  {[
+                    { val: "+200", label: "références" },
+                    { val: "11", label: "catégories" },
+                    { val: "Stock", label: "mis à jour" },
+                    { val: "Devis", label: "en 24h" },
+                  ].map((s) => (
+                    <div key={s.val}>
+                      <p style={DP} className="text-xl md:text-2xl font-bold text-[#C8A97E]">
+                        {s.val}
+                      </p>
+                      <p className="text-[10px] md:text-xs text-[#2E2E2E]/45 uppercase tracking-wider">
+                        {s.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </section>
 
-            {/* Stats strip */}
-            <section className="max-w-5xl mx-auto px-6 py-10 md:py-14 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-              {[
-                { val: "+200", label: "références" },
-                { val: "11", label: "catégories" },
-                { val: "Stock", label: "mis à jour" },
-                { val: "Devis", label: "en 24h" },
-              ].map((s) => (
-                <div key={s.val} className="text-center">
-                  <p style={DP} className="text-2xl font-bold text-[#C8A97E]">
-                    {s.val}
+            {/* Category showcase */}
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-8">
+              <div className="flex items-end justify-between mb-0">
+                <div>
+                  <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+                    Explorer par thème
                   </p>
-                  <p className="text-xs text-[#2E2E2E]/45 uppercase tracking-wider mt-0.5">
-                    {s.label}
-                  </p>
+                  <h2
+                    style={DP}
+                    className="text-2xl md:text-3xl font-semibold text-[#2E2E2E]"
+                  >
+                    Nos Catégories
+                  </h2>
                 </div>
-              ))}
+              </div>
+              <OverflowCarousel
+                cards={[
+                  {
+                    nom: "Mobilier",
+                    categorie: "Mobilier",
+                    image: "/images/PROD004.png",
+                    bgColor: "#E8C4B8",
+                  },
+                  {
+                    nom: "Figurines & Jeux",
+                    categorie: "Figurines & Jeux",
+                    image: "/images/PROD011.png",
+                    bgColor: "#C9A96E",
+                  },
+                  {
+                    nom: "Bougeoirs & Lustres",
+                    categorie: "Bougeoirs & Lustres",
+                    image: "/images/PROD019.png",
+                    bgColor: "#E8C4B8",
+                  },
+                  {
+                    nom: "Verreries",
+                    categorie: "Verreries",
+                    image: "/images/PROD030.png",
+                    bgColor: "#C9A96E",
+                  },
+                  {
+                    nom: "Cadres",
+                    categorie: "Cadres",
+                    image: "/images/PROD040.png",
+                    bgColor: "#E8C4B8",
+                  },
+                  {
+                    nom: "Présentoirs & Plateaux",
+                    categorie: "Présentoirs & Plateaux",
+                    image: "/images/PROD046.png",
+                    bgColor: "#C9A96E",
+                  },
+                  {
+                    nom: "Urnes & Accessoires",
+                    categorie: "Urnes & Accessoires",
+                    image: "/images/PROD049.png",
+                    bgColor: "#E8C4B8",
+                  },
+                  {
+                    nom: "Art de la Table",
+                    categorie: "Art de la Table",
+                    image: "/images/PROD055.png",
+                    bgColor: "#C9A96E",
+                  },
+                  {
+                    nom: "Vases & Pots",
+                    categorie: "Vases & Pots",
+                    image: "/images/PROD068.png",
+                    bgColor: "#E8C4B8",
+                  },
+                  {
+                    nom: "Décoration",
+                    categorie: "Décoration",
+                    image: "/images/PROD074.png",
+                    bgColor: "#C9A96E",
+                  },
+                  {
+                    nom: "Fleurs & Feuillages",
+                    categorie: "Fleurs & Feuillages",
+                    image: "/images/PROD081.png",
+                    bgColor: "#E8C4B8",
+                  },
+                ]}
+                onSelect={(cat) => goToCatalogue(cat)}
+              />
             </section>
 
             {/* Featured products */}
-            <section className="max-w-7xl mx-auto px-5 md:px-10">
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-8">
               <div className="flex items-end justify-between mb-5">
                 <div>
                   <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
@@ -598,9 +843,10 @@ export default function PapillonRoseSite() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-                {PRODUCTS.filter(
-                  (p) => category === "Tous" || p.categorie === category,
-                )
+                {FEATURED_IDS
+                  .map((id) => PRODUCTS.find((p) => p.id === id))
+                  .filter((p): p is Produit => !!p)
+                  .filter((p) => category === "Tous" || p.categorie === category)
                   .slice(0, 10)
                   .map((p) => (
                     <ProductCard
@@ -621,62 +867,6 @@ export default function PapillonRoseSite() {
                 >
                   Voir tout le catalogue <ArrowRight size={15} />
                 </button>
-              </div>
-            </section>
-
-            {/* Category showcase */}
-            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-16">
-              <div className="flex items-end justify-between mb-6">
-                <div>
-                  <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
-                    Explorer par thème
-                  </p>
-                  <h2
-                    style={DP}
-                    className="text-2xl md:text-3xl font-semibold text-[#2E2E2E]"
-                  >
-                    Nos Catégories
-                  </h2>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-                {CATEGORIES.slice(1).map((cat) => {
-                  const count = PRODUCTS.filter(
-                    (p) => p.categorie === cat,
-                  ).length
-                  return (
-                    <button
-                      key={cat}
-                      onClick={() => goToCatalogue(cat)}
-                      className="group relative overflow-hidden rounded-3xl bg-[#EDE8DF]"
-                      style={{ aspectRatio: "4/3" }}
-                    >
-                      <img
-                        src={img(CATEGORY_IMAGES[cat] || "/placeholder.svg")}
-                        alt={cat}
-                        className="w-full h-full object-cover opacity-75 group-hover:opacity-60 group-hover:scale-105 transition-all duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#2E2E2E]/80 via-[#2E2E2E]/10 to-transparent rounded-3xl" />
-                      <div className="absolute bottom-0 left-0 right-0 p-4 text-left">
-                        <p
-                          style={DP}
-                          className="text-white text-sm font-semibold leading-tight"
-                        >
-                          {cat}
-                        </p>
-                        <div className="flex items-center gap-1 mt-1">
-                          <span className="text-[#C8A97E] text-[11px]">
-                            {count} article{count > 1 ? "s" : ""}
-                          </span>
-                          <ArrowRight
-                            size={11}
-                            className="text-[#C8A97E] group-hover:translate-x-1 transition-transform"
-                          />
-                        </div>
-                      </div>
-                    </button>
-                  )
-                })}
               </div>
             </section>
 
@@ -770,69 +960,57 @@ export default function PapillonRoseSite() {
               </label>
             </div>
 
-            <div className="flex items-center gap-4 mb-5 bg-white rounded-2xl px-5 py-3.5 border border-black/[0.07] shadow-sm">
-              <span className="text-[11px] text-gray-400 uppercase tracking-wider whitespace-nowrap">
-                Prix max
-              </span>
-              <input
-                type="range"
-                min={0}
-                max={200}
-                value={priceMax}
-                onChange={(e) => setPriceMax(Number(e.target.value))}
-                className="flex-1 accent-[#C8A97E] h-1"
-              />
-              <span
-                style={DP}
-                className="text-[#C8A97E] font-bold text-base w-16 text-right"
-              >
-                {priceMax} €
-              </span>
-            </div>
-
             <div className="mb-7">
               <CategoryPills active={category} onChange={setCategory} />
             </div>
 
-            <div className="flex items-center justify-between mb-5">
-              <p className="text-sm text-gray-400">
-                <span className="text-[#2E2E2E] font-semibold">
-                  {filtered.length}
-                </span>{" "}
-                résultat{filtered.length > 1 ? "s" : ""}
-                {category !== "Tous" && (
-                  <span>
-                    {" "}
-                    — <span className="text-[#C8A97E]">{category}</span>
-                  </span>
-                )}
-              </p>
-              {(search ||
-                category !== "Tous" ||
-                priceMax < 200 ||
-                inStockOnly) && (
-                <button
-                  onClick={resetFilters}
-                  className="text-xs text-gray-400 hover:text-[#C8A97E] transition-colors underline"
-                >
-                  Réinitialiser
-                </button>
-              )}
-            </div>
+            <div className="md:flex md:gap-6 md:items-start">
+              <div className="md:w-64 md:flex-shrink-0">
+                <CatalogFilters
+                  filters={tagFilters}
+                  onChange={setTagFilters}
+                  resultCount={filtered.length}
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-5 mt-3 md:mt-0">
+                  <p className="text-sm text-gray-400">
+                    <span className="text-[#2E2E2E] font-semibold">
+                      {filtered.length}
+                    </span>{" "}
+                    résultat{filtered.length > 1 ? "s" : ""}
+                    {category !== "Tous" && (
+                      <span>
+                        {" "}
+                        — <span className="text-[#C8A97E]">{category}</span>
+                      </span>
+                    )}
+                  </p>
+                  {(search ||
+                    category !== "Tous" ||
+                    priceMax < 200 ||
+                    inStockOnly ||
+                    tagFilters.themes.length > 0 ||
+                    tagFilters.couleurs.length > 0 ||
+                    tagFilters.budgetMin > 0 ||
+                    tagFilters.dateDebut) && (
+                    <button
+                      onClick={resetFilters}
+                      className="text-xs text-gray-400 hover:text-[#C8A97E] transition-colors underline"
+                    >
+                      Réinitialiser
+                    </button>
+                  )}
+                </div>
 
             {filtered.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-                {filtered.map((p) => (
-                  <ProductCard
-                    key={p.id}
-                    product={p}
-                    isFav={favorites.has(p.id)}
-                    onFav={() => toggleFav(p.id)}
-                    onView={() => setModalProduct(p)}
-                    onAdd={() => addToQuote(p)}
-                  />
-                ))}
-              </div>
+              <CatalogGallery
+                produits={filtered}
+                favorites={favorites}
+                onFav={toggleFav}
+                onAddCart={(id) => addCartItem({ productId: id, qty: 1, dateStart: "", dateEnd: "" })}
+                onAddQuote={addToQuote}
+              />
             ) : (
               <div className="py-24 text-center">
                 <p className="text-gray-400 text-base mb-5">
@@ -848,6 +1026,8 @@ export default function PapillonRoseSite() {
             )}
 
             <Footer onNav={navTo} onCatalogue={goToCatalogue} />
+          </div>
+        </div>
           </div>
         )}
 
@@ -925,7 +1105,7 @@ export default function PapillonRoseSite() {
                       {
                         Icon: Mail,
                         label: "Email",
-                        val: "contact@papillonrose.fr",
+                        val: "papillonrosebertha@gmail.com",
                       },
                       {
                         Icon: MapPin,
@@ -1026,7 +1206,9 @@ export default function PapillonRoseSite() {
       </div>
 
       {/* ── Product Modal ── */}
-      {modalProduct && (
+      {modalProduct && (() => {
+        const allImages = [modalProduct.image, ...(modalProduct.gallerie || [])]
+        return (
         <div
           className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-0 md:p-4 bg-black/50 backdrop-blur-sm"
           onClick={() => setModalProduct(null)}
@@ -1036,23 +1218,11 @@ export default function PapillonRoseSite() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="grid md:grid-cols-2">
-              <div
-                className="relative bg-white rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none overflow-hidden"
-                style={{ aspectRatio: "1 / 1" }}
-              >
-                <img
-                  src={modalProduct.image ? img(modalProduct.image) : PLACEHOLDER}
-                  alt={modalProduct.nom}
-                  className="w-full h-full object-contain p-4"
-                />
-                <button
-                  onClick={() => setModalProduct(null)}
-                  aria-label="Fermer"
-                  className="absolute top-4 right-4 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-red-50 hover:text-red-400 transition-colors"
-                >
-                  <X size={16} />
-                </button>
-              </div>
+              <ProductImages
+                images={allImages}
+                nom={modalProduct.nom}
+                onClose={() => setModalProduct(null)}
+              />
               <div className="p-7 flex flex-col">
                 <span className="text-[#C8A97E] text-[10px] tracking-[0.35em] uppercase font-medium mb-2">
                   {modalProduct.categorie}
@@ -1106,14 +1276,27 @@ export default function PapillonRoseSite() {
                       / jour
                     </span>
                   </p>
-                  <div className="flex gap-3">
+                  <div className="flex flex-col gap-2">
+                    <button
+                      onClick={() => {
+                        addCartItem({ productId: modalProduct.id, qty: 1, dateStart: "", dateEnd: "" })
+                        setModalProduct(null)
+                      }}
+                      disabled={modalProduct.stock === 0}
+                      className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    >
+                      Ajouter au panier
+                    </button>
+                    <p className="text-[10px] text-gray-400 text-center -mt-1">
+                      Sélectionnez 2 dates dans le panier pour valider la disponibilité
+                    </p>
                     <button
                       onClick={() => {
                         addToQuote(modalProduct)
                         setModalProduct(null)
                       }}
                       disabled={modalProduct.stock === 0}
-                      className="flex-1 bg-[#2E2E2E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#C8A97E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="w-full bg-[#F0EBE3] text-[#2E2E2E]/60 py-3.5 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       Ajouter au devis
                     </button>
@@ -1141,7 +1324,8 @@ export default function PapillonRoseSite() {
             </div>
           </div>
         </div>
-      )}
+      )
+      })()}
 
       {/* ── Quote sidebar ── */}
       {showQuote && (
@@ -1292,6 +1476,8 @@ export default function PapillonRoseSite() {
           <span className="text-sm font-medium">Demande de devis envoyée avec succès</span>
         </div>
       )}
+
+      <Chatbot />
     </div>
   )
 }
