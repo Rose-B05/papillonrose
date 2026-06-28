@@ -115,7 +115,7 @@ export default function OverflowCarousel({
   }
 
   return (
-    <div className="relative w-full select-none mb-[60px]" style={{ touchAction: "pan-y" }}>
+    <div className="relative w-full select-none mb-[30px]" style={{ touchAction: "pan-y" }}>
       {/* Arrows */}
       {!isMobile && (
         <>

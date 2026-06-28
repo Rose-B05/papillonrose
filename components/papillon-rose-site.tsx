@@ -97,84 +97,72 @@ function ProductCard({
   onView: () => void
   onAdd: () => void
 }) {
+  const getSrc = () => {
+    if (product.image && product.image !== "/placeholder.png") return product.image
+    if (product.gallerie && product.gallerie.length > 0) return product.gallerie[0]
+    return "/placeholder.svg"
+  }
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group">
+    <div className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
       <div
-        className="relative m-2.5 overflow-hidden rounded-lg bg-[#F8F5F0] cursor-pointer"
-        style={{ aspectRatio: "1 / 1" }}
+        className="relative overflow-hidden cursor-pointer bg-[#F8F5F0] h-[250px]"
         onClick={onView}
       >
         <img
-          src={product.image ? img(product.image) : PLACEHOLDER}
+          src={img(getSrc())}
           alt={product.nom}
-          className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          loading="lazy"
         />
-        {(product.stock === 0 || product.badge === "epuise") && (
-          <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
-            <span className="text-xs text-gray-400 uppercase tracking-widest font-medium">
-              Indisponible
-            </span>
-          </div>
-        )}
-        {(product.badge === "stock-limite" || (product.stock <= 2 && product.stock > 0)) && product.badge !== "epuise" && product.stock !== 0 && (
-          <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        {(product.badge === "stock-limite" || (product.stock <= 2 && product.stock > 0)) && (
+          <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10">
             {product.stock > 0 ? `Dernière${product.stock > 1 ? "s" : ""}` : "Stock limité"}
           </span>
         )}
-        <button
-          onClick={(e) => {
-            e.stopPropagation()
-            onFav()
-          }}
-          aria-label="Ajouter aux favoris"
-          className={`absolute top-2.5 right-2.5 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center transition-colors ${
-            isFav ? "text-[#C8A97E]" : "text-gray-300 hover:text-[#C8A97E]"
-          }`}
-        >
-          <Heart size={13} fill={isFav ? "currentColor" : "none"} />
-        </button>
       </div>
-      <div className="px-3.5 pb-4 pt-0.5 flex flex-col flex-1">
-        <p className="text-[10px] font-medium text-[#C8A97E] uppercase tracking-wider truncate">
-          {product.categorie}
-        </p>
-        <h3
-          style={DP}
-          className="text-[13px] font-semibold text-[#2E2E2E] mt-0.5 leading-snug line-clamp-2 cursor-pointer hover:text-[#C8A97E] transition-colors"
-          onClick={onView}
-        >
-          {product.nom}
-        </h3>
-        {product.dimension && (
-          <p className="text-[11px] text-gray-400 mt-0.5 truncate">
-            {product.dimension}
+      <div className="p-3.5 flex items-center justify-between gap-2">
+        <div className="min-w-0 flex-1">
+          <p className="text-[10px] font-medium text-[#C8A97E] uppercase tracking-wider truncate">
+            {product.categorie}
           </p>
-        )}
-        <div className="flex items-center justify-between mt-auto pt-2">
-          <span style={DP} className="text-base font-bold text-[#2E2E2E]">
-            {formatPrix(product.prix)}{" "}
-            <span className="text-sm font-normal text-gray-400">€<span className="text-xs">/jour</span></span>
-          </span>
-          <div className="flex items-center gap-1.5">
-            <button
-              onClick={() => addCartItem({ productId: product.id, qty: 1, dateStart: "", dateEnd: "" })}
-              disabled={product.stock === 0}
-              aria-label="Ajouter au panier (sélectionnez 2 dates ensuite)"
-              title="Ajouter au panier — sélectionnez 2 dates dans le panier"
-              className="w-8 h-8 rounded-full bg-white border border-[#C8A97E]/30 text-[#C8A97E] flex items-center justify-center hover:bg-[#C8A97E] hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
-            >
-              <ShoppingBag size={13} />
-            </button>
-            <button
-              onClick={onAdd}
-              disabled={product.stock === 0}
-              aria-label="Ajouter au devis"
-              className="w-8 h-8 rounded-full bg-[#C8A97E] text-white flex items-center justify-center hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
-            >
-              <Plus size={15} strokeWidth={2.5} />
-            </button>
-          </div>
-
+          <h3 className="text-[13px] font-semibold text-[#2E2E2E] leading-snug truncate">
+            {product.nom}
+          </h3>
+          {product.dimension && (
+            <p className="text-[10px] text-gray-400 truncate">{product.dimension}</p>
+          )}
+          <p className="text-sm font-bold text-[#2E2E2E] mt-0.5">
+            {typeof product.prix === "number" ? `${product.prix} €` : `${product.prix} €`}
+            <span className="text-[10px] font-normal text-gray-400 ml-0.5">/jour</span>
+          </p>
+        </div>
+        <div className="flex flex-col gap-1.5 flex-shrink-0">
+          <button
+            onClick={(e) => { e.stopPropagation(); addCartItem({ productId: product.id, qty: 1, dateStart: "", dateEnd: "" }) }}
+            aria-label="Ajouter au panier"
+            className="w-8 h-8 rounded-full bg-white border border-[#C8A97E]/30 text-[#C8A97E] flex items-center justify-center hover:bg-[#C8A97E] hover:text-white transition-all shadow-sm"
+          >
+            <ShoppingBag size={13} />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); onAdd() }}
+            aria-label="Ajouter au devis"
+            className="w-8 h-8 rounded-full bg-[#C8A97E] text-white flex items-center justify-center hover:bg-[#B8926E] transition-all shadow-sm"
+          >
+            <Plus size={13} />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); onFav() }}
+            aria-label="Favoris"
+            className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all shadow-sm ${
+              isFav
+                ? "border-[#C8A97E] bg-[#C8A97E]/10 text-[#C8A97E]"
+                : "border-gray-200 text-gray-300 hover:text-[#C8A97E] hover:border-[#C8A97E]/30"
+            }`}
+          >
+            <Heart size={12} fill={isFav ? "currentColor" : "none"} />
+          </button>
         </div>
       </div>
     </div>
