@@ -281,7 +281,7 @@ function Footer({
         src={img("/images/PROD086.png")}
         alt=""
         aria-hidden
-        className="hidden md:block absolute top-[-120px] left-[20px] w-[280px] h-full object-contain object-bottom pointer-events-none z-10"
+        className="hidden md:block absolute top-[-200px] left-[20px] w-[280px] h-[400px] object-contain object-bottom pointer-events-none z-10"
       />
       <div className="max-w-7xl mx-auto px-6 md:pl-[340px] md:pr-10 grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
         <div className="col-span-2 md:col-span-1">
