@@ -79,7 +79,7 @@ export const produits: Produit[] = [
     stock: 4,
     dimension: "4 cm",
     prix: 0.20,
-    image: "/images/prod007.png",
+    image: "/images/PROD007.png",
   },
   {
     id: 8,
@@ -124,7 +124,7 @@ export const produits: Produit[] = [
     categorie: "Figurines & Jeux",
     stock: 1,
     prix: 20,
-    image: "/images/prod012.png",
+    image: "/images/PROD012.png",
     badge: "stock-limite",
   },
   {
@@ -143,7 +143,7 @@ export const produits: Produit[] = [
     stock: 1,
     dimension: "300 cm",
     prix: 5,
-    image: "/images/prod014.png",
+    image: "/images/PROD014.png",
     badge: "stock-limite",
   },
 
@@ -155,7 +155,7 @@ export const produits: Produit[] = [
     stock: 1,
     dimension: "13 cm",
     prix: 4,
-    image: "/images/prod016.png",
+    image: "/images/PROD016.png",
     badge: "stock-limite",
   },
   {
