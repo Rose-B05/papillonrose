@@ -66,7 +66,7 @@ export const produits: Produit[] = [
     categorie: "Mobilier",
     stock: 3,
     prix: 40,
-    image: "/images/PROD004.png",
+    image: "/images/PROD087.png",
   },
   {
     id: 5,
@@ -147,6 +147,17 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 10,
     image: "/images/placeholder.png",
+  },
+  {
+    id: 14,
+    nom: "Tapis de Jeu Nuage Rose",
+    categorie: "Figurines & Jeux",
+    stock: 1,
+    dimension: "160 x 160 cm",
+    prix: 20,
+    image: "/images/placeholder.png",
+    badge: "stock-limite",
+    actif: false,
   },
 
   {
@@ -289,7 +300,7 @@ export const produits: Produit[] = [
     categorie: "Verreries",
     stock: 1,
     prix: 7,
-    image: "/images/PROD030.png",
+    image: "/images/PROD088.png",
   },
   {
     id: 31,
@@ -456,7 +467,7 @@ export const produits: Produit[] = [
     stock: 2,
     dimension: "39 x 20 x 20 cm",
     prix: "7 - 9",
-    image: "/images/PROD049.png",
+    image: "/images/PROD093.png",
   },
   {
     id: 50,
