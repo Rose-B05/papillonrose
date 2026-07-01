@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
 import { saveQuote, getBooking } from "@/lib/db"
 import { calcTotalHt, calcTtc, formatDateFr } from "@/lib/utils"
+import { calcDeliveryFee } from "@/lib/delivery"
 import { sendQuoteConfirmation, sendAdminQuoteNotification } from "@/lib/email"
 import type { QuoteRequest, ClientInfo, CartItem } from "@/lib/types"
 
@@ -32,6 +33,19 @@ export async function POST(request: NextRequest) {
     const totalHt = calcTotalHt(itemsWithPrix)
     const totalTtc = calcTtc(totalHt)
 
+    // Calcul des frais de livraison si applicable
+    let deliveryFee = 0
+    let deliveryInfo = ""
+    if (client?.besoinLivraison && client?.codePostalLivraison) {
+      const deliveryResult = calcDeliveryFee(client.codePostalLivraison)
+      if (deliveryResult.allowed && deliveryResult.distanceKm) {
+        deliveryFee = deliveryResult.totalFee
+        deliveryInfo = `Livraison : ${deliveryResult.baseFee.toFixed(2)}€ + ${deliveryResult.distanceKm} km × 1,50€ = ${deliveryResult.totalFee.toFixed(2)}€`
+      }
+    }
+
+    const totalTtcWithDelivery = Math.round((totalTtc + deliveryFee) * 100) / 100
+
     const quoteNumber = `DEV-${uuidv4().slice(0, 6).toUpperCase()}`
 
     const quoteRequest: QuoteRequest = {
@@ -60,7 +74,9 @@ export async function POST(request: NextRequest) {
         <tr><th style="text-align:left;padding:8px;border-bottom:2px solid #C8A97E">Article</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C8A97E">Qté</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C8A97E">Dates</th></tr>
         ${itemsHtml}
       </table>
-      <p><strong>Total estimé :</strong> ${totalTtc.toFixed(2)} € TTC</p>
+      <p><strong>Total location :</strong> ${totalTtc.toFixed(2)} € TTC</p>
+      ${deliveryFee > 0 ? `<p><strong>Livraison :</strong> ${deliveryInfo}</p>` : ""}
+      ${deliveryFee > 0 ? `<p><strong>Total avec livraison :</strong> ${totalTtcWithDelivery.toFixed(2)} € TTC</p>` : ""}
       <p><strong>Événement :</strong> ${client.typeEvenement} — ${formatDateFr(client.dateEvenement)}</p>
       <p><strong>Lieu :</strong> ${client.lieuEvenement} — ${client.nbInvites} invités</p>
       <p><strong>Livraison :</strong> ${client.besoinLivraison ? "Oui" : "Non"}</p>

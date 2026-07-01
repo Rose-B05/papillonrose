@@ -7,7 +7,8 @@ import { produits } from "@/data/produits"
 import AvailabilityCalendar from "@/components/calendar"
 import { parsePrix, calcTotalHt, calcTtc, calcDeposit, formatDateFr } from "@/lib/utils"
 import { calcRentalDates, calculateLateFee, getRuleSummary, formatDateLong, type RentalDates } from "@/lib/rental-dates"
-import { ShoppingBag, ArrowRight, ArrowLeft, Check, X, Trash2, Plus, Minus, Loader2, Package, RotateCcw, AlertTriangle } from "lucide-react"
+import { calcDeliveryFee, type DeliveryResult } from "@/lib/delivery"
+import { ShoppingBag, ArrowRight, ArrowLeft, Check, X, Trash2, Plus, Minus, Loader2, Package, RotateCcw, AlertTriangle, Truck } from "lucide-react"
 import type { ClientInfo, CartItem } from "@/lib/types"
 
 type Step = "panier" | "dates" | "client" | "confirmation"
@@ -30,6 +31,7 @@ export default function ReservationPage() {
   const [acceptedConditions, setAcceptedConditions] = useState(false)
   const [availableStock, setAvailableStock] = useState<Record<number, number>>({})
   const [serverWarnings, setServerWarnings] = useState<string[]>([])
+  const [deliveryResult, setDeliveryResult] = useState<DeliveryResult | null>(null)
 
   const getProduct = (id: number) => produits.find((p) => p.id === id)
 
@@ -40,7 +42,9 @@ export default function ReservationPage() {
 
   const totalHt = calcTotalHt(itemsWithPrix)
   const totalTtc = calcTtc(totalHt)
-  const deposit = calcDeposit(totalTtc)
+  const deliveryFee = deliveryResult?.allowed ? deliveryResult.totalFee : 0
+  const totalTtcWithDelivery = Math.round((totalTtc + deliveryFee) * 100) / 100
+  const deposit = calcDeposit(totalTtcWithDelivery)
 
   const rentalDatesMap = useMemo(() => {
     const map: Record<number, RentalDates> = {}
@@ -92,6 +96,22 @@ export default function ReservationPage() {
       }
     }
   }, [availableStock])
+
+  // Recalcul des frais de livraison quand le code postal change
+  useEffect(() => {
+    if (client.besoinLivraison && client.codePostalLivraison && client.codePostalLivraison.length === 5) {
+      const result = calcDeliveryFee(client.codePostalLivraison)
+      setDeliveryResult(result)
+      setClient((c) => ({
+        ...c,
+        fraisLivraison: result.allowed ? result.totalFee : undefined,
+        distanceLivraison: result.allowed && result.distanceKm ? result.distanceKm : undefined,
+      }))
+    } else {
+      setDeliveryResult(null)
+      setClient((c) => ({ ...c, fraisLivraison: undefined, distanceLivraison: undefined }))
+    }
+  }, [client.besoinLivraison, client.codePostalLivraison])
 
   const validateDates = () => {
     for (const item of items) {
@@ -255,7 +275,7 @@ export default function ReservationPage() {
                   })}
                 </div>
 
-                <Totals totalHt={totalHt} totalTtc={totalTtc} deposit={deposit} />
+                <Totals totalHt={totalHt} totalTtc={totalTtc} deposit={deposit} deliveryFee={deliveryFee} />
 
                 <div className="flex gap-3">
                   <button onClick={clearCart} className="flex-1 border border-[#C8A97E] text-gray-500 py-3 rounded-2xl text-sm font-medium hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition-colors">Vider le panier</button>
@@ -351,24 +371,88 @@ export default function ReservationPage() {
               </div>
               <InputField label="Lieu de l'événement (adresse)" value={client.lieuEvenement} onChange={(v) => setClient((c) => ({ ...c, lieuEvenement: v }))} required />
               <InputField label="Nombre d'invités" type="number" value={String(client.nbInvites || "")} onChange={(v) => setClient((c) => ({ ...c, nbInvites: Number(v) }))} required />
-              <div className="flex items-center gap-3 bg-white rounded-2xl px-5 py-4 border border-black/[0.07] shadow-sm">
-                <div
-                  className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer"
-                  style={{
-                    borderColor: client.besoinLivraison ? "#C8A97E" : "#d1d5db",
-                    backgroundColor: client.besoinLivraison ? "#C8A97E" : "transparent",
-                    borderRadius: "6px",
-                  }}
-                  onClick={() => setClient((c) => ({ ...c, besoinLivraison: !c.besoinLivraison }))}
-                >
-                  {client.besoinLivraison && (
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
-                  <input type="checkbox" checked={client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 bg-white rounded-2xl px-5 py-4 border border-black/[0.07] shadow-sm">
+                  <div
+                    className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer"
+                    style={{
+                      borderColor: client.besoinLivraison ? "#C8A97E" : "#d1d5db",
+                      backgroundColor: client.besoinLivraison ? "#C8A97E" : "transparent",
+                      borderRadius: "6px",
+                    }}
+                    onClick={() => setClient((c) => ({ ...c, besoinLivraison: !c.besoinLivraison }))}
+                  >
+                    {client.besoinLivraison && (
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    )}
+                    <input type="checkbox" checked={client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
+                  </div>
+                  <label className="text-sm text-[#2E2E2E] cursor-pointer flex items-center gap-2">
+                    <Truck size={16} className="text-[#C8A97E]" />
+                    Besoin de livraison et/ou montage ?
+                  </label>
                 </div>
-                <label htmlFor="livraison" className="text-sm text-[#2E2E2E] cursor-pointer">Besoin de livraison et/ou montage ?</label>
+
+                {client.besoinLivraison && (
+                  <div className="bg-white rounded-2xl p-5 border border-black/[0.07] shadow-sm space-y-4">
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">Code postal de livraison</label>
+                      <input
+                        type="text"
+                        value={client.codePostalLivraison || ""}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/\D/g, "").slice(0, 5)
+                          setClient((c) => ({ ...c, codePostalLivraison: val }))
+                        }}
+                        placeholder="ex: 94000"
+                        maxLength={5}
+                        className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
+                      />
+                    </div>
+
+                    {deliveryResult && deliveryResult.error && (
+                      <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-sm text-red-600">
+                        {deliveryResult.error}
+                        {deliveryResult.error.includes("non disponible") && (
+                          <a href="mailto:papillonrosebertha@gmail.com" className="block mt-2 text-[#C8A97E] underline font-medium hover:text-[#B8926E] transition-colors">
+                            Contactez-nous pour un devis personnalisé
+                          </a>
+                        )}
+                      </div>
+                    )}
+
+                    {deliveryResult && deliveryResult.allowed && deliveryResult.distanceKm && (
+                      <div className="bg-[#F8F5F0] rounded-xl p-4 border border-black/[0.05]">
+                        <p className="text-xs text-gray-400 mb-2">Frais de livraison estimés</p>
+                        <div className="space-y-1.5 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-[#2E2E2E]">Forfait de base</span>
+                            <span className="font-medium">{deliveryResult.baseFee.toFixed(2)} €</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-[#2E2E2E]">{deliveryResult.distanceKm} km × 1,50 €/km</span>
+                            <span className="font-medium">{deliveryResult.perKmFee.toFixed(2)} €</span>
+                          </div>
+                          <div className="flex justify-between pt-2 border-t border-black/[0.1] font-bold text-[#C8A97E]">
+                            <span>Total livraison</span>
+                            <span>{deliveryResult.totalFee.toFixed(2)} €</span>
+                          </div>
+                        </div>
+                        <p className="text-[10px] text-gray-400 mt-2">
+                          📍 Depuis Créteil (94) — {deliveryResult.zoneLabel}
+                        </p>
+                      </div>
+                    )}
+
+                    <InputField
+                      label="Adresse complète de livraison (optionnel)"
+                      value={client.adresseLivraison || ""}
+                      onChange={(v) => setClient((c) => ({ ...c, adresseLivraison: v }))}
+                    />
+                  </div>
+                )}
               </div>
               <div>
                 <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">Message (optionnel)</label>
@@ -392,6 +476,12 @@ export default function ReservationPage() {
                   <span className="text-[#666]">Acompte 30%</span>
                   <span className="text-[#C8A97E]">{Number.isFinite(deposit) ? `${deposit.toFixed(2)} €` : "0,00 €"}</span>
                 </div>
+                {deliveryFee > 0 && (
+                  <div className="flex justify-between text-xs text-[#C8A97E] mt-1">
+                    <span className="flex items-center gap-1"><Truck size={11} /> Livraison incluse</span>
+                    <span>{deliveryFee.toFixed(2)} €</span>
+                  </div>
+                )}
               </div>
 
               {/* Dates de retrait / restitution */}
@@ -575,7 +665,7 @@ function fmt(n: number) {
   return Number.isFinite(n) ? `${n.toFixed(2)} €` : "0,00 €"
 }
 
-function Totals({ totalHt, totalTtc, deposit }: { totalHt: number; totalTtc: number; deposit: number }) {
+function Totals({ totalHt, totalTtc, deposit, deliveryFee }: { totalHt: number; totalTtc: number; deposit: number; deliveryFee?: number }) {
   return (
     <div className="bg-white rounded-2xl p-5 shadow-sm border border-black/[0.07] mb-6">
       <div className="flex justify-between text-sm mb-2">
@@ -586,9 +676,17 @@ function Totals({ totalHt, totalTtc, deposit }: { totalHt: number; totalTtc: num
         <span className="text-gray-400">TVA (20%)</span>
         <span className="font-semibold">{fmt(totalTtc - totalHt)}</span>
       </div>
+      {deliveryFee && deliveryFee > 0 && (
+        <div className="flex justify-between text-sm mb-2">
+          <span className="text-gray-400 flex items-center gap-1.5">
+            <Truck size={12} /> Livraison
+          </span>
+          <span className="font-semibold text-[#C8A97E]">{fmt(deliveryFee)}</span>
+        </div>
+      )}
       <div className="flex justify-between text-lg font-bold text-[#2E2E2E] pt-2 border-t border-black/[0.07]">
         <span>Total TTC</span>
-        <span>{fmt(totalTtc)}</span>
+        <span>{deliveryFee && deliveryFee > 0 ? fmt(totalTtc + deliveryFee) : fmt(totalTtc)}</span>
       </div>
       <div className="flex justify-between text-sm mt-1 text-[#C8A97E]">
         <span>Acompte 30%</span>

@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
 import { saveBooking, getBooking, blockDates, getBlockedDates } from "@/lib/db"
 import { calcTotalHt, calcTtc, calcDeposit, DEPOSIT_RATE } from "@/lib/utils"
+import { calcDeliveryFee } from "@/lib/delivery"
 import { createPaymentIntent } from "@/lib/stripe"
 import { getAvailableStock } from "@/lib/stock"
 import type { Booking, CartItem } from "@/lib/types"
@@ -73,14 +74,25 @@ export async function POST(request: NextRequest) {
 
     const totalHt = calcTotalHt(itemsWithPrix)
     const totalTtc = calcTtc(totalHt)
-    const depositAmount = calcDeposit(totalTtc)
+
+    // Calcul des frais de livraison si applicable
+    let deliveryFee = 0
+    if (client?.besoinLivraison && client?.codePostalLivraison) {
+      const deliveryResult = calcDeliveryFee(client.codePostalLivraison)
+      if (deliveryResult.allowed) {
+        deliveryFee = deliveryResult.totalFee
+      }
+    }
+
+    const totalTtcWithDelivery = Math.round((totalTtc + deliveryFee) * 100) / 100
+    const depositAmount = calcDeposit(totalTtcWithDelivery)
 
     const booking: Booking = {
       id: uuidv4().slice(0, 8).toUpperCase(),
       items: finalItems,
       client: client || {} as any,
       totalHt,
-      totalTtc,
+      totalTtc: totalTtcWithDelivery,
       depositAmount,
       status: client ? "deposit-pending" : "pending-quote",
       createdAt: new Date().toISOString(),

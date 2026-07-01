@@ -43,6 +43,10 @@ export interface ClientInfo {
   lieuEvenement: string
   nbInvites: number
   besoinLivraison: boolean
+  codePostalLivraison?: string
+  adresseLivraison?: string
+  fraisLivraison?: number
+  distanceLivraison?: number
   message?: string
 }
 
