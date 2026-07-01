@@ -2,10 +2,11 @@
 
 import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react"
 import type { CartItem } from "@/lib/types"
+import { produits } from "@/data/produits"
 
 interface CartContextType {
   items: CartItem[]
-  addItem: (item: CartItem) => void
+  addItem: (item: CartItem) => boolean
   updateItem: (productId: number, updates: Partial<CartItem>) => void
   removeItem: (productId: number) => void
   clearCart: () => void
@@ -30,13 +31,21 @@ export function CartProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
   }, [items])
 
-  const addItem = useCallback((item: CartItem) => {
+  const addItem = useCallback((item: CartItem): boolean => {
+    const product = produits.find((p) => p.id === item.productId)
+    if (!product) return false
+
+    const ex = items.find((i) => i.productId === item.productId)
+    const currentQty = ex ? ex.qty : 0
+    if (currentQty + item.qty > product.stock) return false
+
     setItems((prev) => {
-      const ex = prev.find((i) => i.productId === item.productId)
-      if (ex) return prev.map((i) => (i.productId === item.productId ? item : i))
+      const existing = prev.find((i) => i.productId === item.productId)
+      if (existing) return prev.map((i) => (i.productId === item.productId ? item : i))
       return [...prev, item]
     })
-  }, [])
+    return true
+  }, [items])
 
   const updateItem = useCallback((productId: number, updates: Partial<CartItem>) => {
     setItems((prev) => prev.map((i) => (i.productId === productId ? { ...i, ...updates } : i)))

@@ -1648,9 +1648,11 @@ export default function PapillonRoseSite() {
                   <div className="flex flex-col gap-2">
                     <button
                       onClick={() => {
-                        addCartItem({ productId: modalProduct.id, qty: modalQty, dateStart: "", dateEnd: "" })
-                        setModalProduct(null)
-                        setModalQty(1)
+                        const added = addCartItem({ productId: modalProduct.id, qty: modalQty, dateStart: "", dateEnd: "" })
+                        if (added) {
+                          setModalProduct(null)
+                          setModalQty(1)
+                        }
                       }}
                       disabled={modalProduct.stock === 0}
                       className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
