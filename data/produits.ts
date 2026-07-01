@@ -20,7 +20,6 @@ export const produits: Produit[] = [
     dimension: "175 x 54 cm",
     prix: 30,
     image: "/images/PROD001.png",
-    badge: "stock-limite",
   },
   {
     id: 2,
@@ -30,7 +29,6 @@ export const produits: Produit[] = [
     dimension: "200 x 200 cm",
     prix: 60,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 3,
@@ -39,7 +37,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 25,
     image: "/images/PROD003.png",
-    badge: "stock-limite",
   },
   {
     id: 4,
@@ -57,7 +54,6 @@ export const produits: Produit[] = [
     dimension: "H 230 x 65 cm",
     prix: 40,
     image: "/images/PROD005.png",
-    badge: "stock-limite",
   },
 
   // ── FIGURINES, STATUES ET JEUX ──
@@ -105,7 +101,6 @@ export const produits: Produit[] = [
     dimension: "55 cm",
     prix: 5,
     image: "/images/PROD010.png",
-    badge: "stock-limite",
   },
   {
     id: 11,
@@ -114,7 +109,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 5,
     image: "/images/PROD011.png",
-    badge: "stock-limite",
   },
   {
     id: 12,
@@ -123,7 +117,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 20,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 13,
@@ -132,7 +125,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 10,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
 
   {
@@ -143,7 +135,6 @@ export const produits: Produit[] = [
     dimension: "300 cm",
     prix: 5,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
 
   // ── BOUGEOIRS, LUSTRES, CHANDELIERS ET LANTERNES ──
@@ -155,7 +146,6 @@ export const produits: Produit[] = [
     dimension: "13 cm",
     prix: 4,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 17,
@@ -165,7 +155,6 @@ export const produits: Produit[] = [
     dimension: "7 cm",
     prix: 2,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 18,
@@ -175,7 +164,6 @@ export const produits: Produit[] = [
     dimension: "H 21 cm",
     prix: 4,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 19,
@@ -210,7 +198,6 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 5,
     image: "/images/PROD021.png",
-    badge: "stock-limite",
   },
   {
     id: 23,
@@ -228,7 +215,6 @@ export const produits: Produit[] = [
     dimension: "75 x 113 x 75 cm - 4 kg",
     prix: 80,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 25,
@@ -238,7 +224,6 @@ export const produits: Produit[] = [
     dimension: "20 cm",
     prix: 6,
     image: "/images/PROD026.png",
-    badge: "stock-limite",
   },
   {
     id: 26,
@@ -247,7 +232,6 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 30,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 27,
@@ -267,7 +251,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 12,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 29,
@@ -277,7 +260,6 @@ export const produits: Produit[] = [
     dimension: "18 x 18 x 5.5 cm",
     prix: 10,
     image: "/images/PROD029.png",
-    badge: "stock-limite",
   },
   {
     id: 30,
@@ -286,7 +268,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 7,
     image: "/images/PROD030.png",
-    badge: "stock-limite",
   },
   {
     id: 31,
@@ -296,7 +277,6 @@ export const produits: Produit[] = [
     dimension: "30 x 15 x 4 cm",
     prix: 7,
     image: "/images/PROD031.png",
-    badge: "stock-limite",
   },
   {
     id: 32,
@@ -329,7 +309,6 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 0.10,
     image: "/images/PROD034.png",
-    badge: "stock-limite",
   },
   {
     id: 36,
@@ -339,7 +318,6 @@ export const produits: Produit[] = [
     dimension: "H 16 cm",
     prix: 8,
     image: "/images/PROD036.png",
-    badge: "stock-limite",
   },
   {
     id: 37,
@@ -349,7 +327,6 @@ export const produits: Produit[] = [
     dimension: "5.5 L",
     prix: 15,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 38,
@@ -358,7 +335,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 4,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
 
   // ── CADRES ──
@@ -370,7 +346,6 @@ export const produits: Produit[] = [
     dimension: "10 x 10 cm",
     prix: 3,
     image: "/images/PROD39.png",
-    badge: "stock-limite",
   },
   {
     id: 40,
@@ -380,7 +355,6 @@ export const produits: Produit[] = [
     dimension: "18 x 13 cm",
     prix: 2.50,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 41,
@@ -400,7 +374,6 @@ export const produits: Produit[] = [
     dimension: "H18 x D15 cm",
     prix: 1,
     image: "/images/PROD041.png",
-    badge: "stock-limite",
   },
   {
     id: 43,
@@ -410,7 +383,6 @@ export const produits: Produit[] = [
     dimension: "H13 x D18 cm",
     prix: 2,
     image: "/images/PROD042.png",
-    badge: "stock-limite",
   },
   {
     id: 44,
@@ -428,7 +400,6 @@ export const produits: Produit[] = [
     dimension: "40 x 25 x 4 cm",
     prix: 1,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 46,
@@ -453,7 +424,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 6,
     image: "/images/PROD048.png",
-    badge: "stock-limite",
   },
 
   // ── URNES ET ACCESSOIRES ──
@@ -465,7 +435,6 @@ export const produits: Produit[] = [
     dimension: "39 x 20 x 20 cm",
     prix: "7 - 9",
     image: "/images/PROD049.png",
-    badge: "stock-limite",
   },
   {
     id: 50,
@@ -474,7 +443,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 7,
     image: "/images/PROD050.png",
-    badge: "stock-limite",
   },
 
   // ── ART DE LA TABLE ──
@@ -493,7 +461,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 4,
     image: "/images/PROD052.png",
-    badge: "stock-limite",
   },
   {
     id: 53,
@@ -510,7 +477,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 13,
     image: "/images/PROD054.png",
-    badge: "stock-limite",
   },
   {
     id: 55,
@@ -545,7 +511,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 2,
     image: "/images/PROD058.png",
-    badge: "stock-limite",
   },
   {
     id: 59,
@@ -572,7 +537,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 50,
     image: "/images/PROD061.png",
-    badge: "stock-limite",
   },
   {
     id: 62,
@@ -581,7 +545,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 30,
     image: "/images/PROD057.png",
-    badge: "stock-limite",
   },
   {
     id: 63,
@@ -591,7 +554,6 @@ export const produits: Produit[] = [
     dimension: "H 18 cm",
     prix: 2,
     image: "/images/PROD064.png",
-    badge: "stock-limite",
   },
   {
     id: 64,
@@ -600,7 +562,6 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 2,
     image: "/images/PROD063.png",
-    badge: "stock-limite",
   },
   {
     id: 65,
@@ -617,7 +578,6 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 9,
     image: "/images/PROD066.png",
-    badge: "stock-limite",
   },
   {
     id: 67,
@@ -626,7 +586,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 20,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
 
   // ── VASES ET POTS ──
@@ -638,7 +597,6 @@ export const produits: Produit[] = [
     dimension: "32 cm",
     prix: 5,
     image: "/images/PROD023.png",
-    badge: "stock-limite",
   },
   {
     id: 69,
@@ -648,7 +606,6 @@ export const produits: Produit[] = [
     dimension: "6 cm",
     prix: 0.50,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 70,
@@ -657,7 +614,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 1.50,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 71,
@@ -666,7 +622,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 2,
     image: "/images/PROD071.png",
-    badge: "stock-limite",
   },
   {
     id: 72,
@@ -694,7 +649,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 7,
     image: "/images/PROD074.png",
-    badge: "stock-limite",
   },
   {
     id: 75,
@@ -703,7 +657,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 5,
     image: "/images/PROD075.png",
-    badge: "stock-limite",
   },
   {
     id: 76,
@@ -713,7 +666,6 @@ export const produits: Produit[] = [
     dimension: "95 cm",
     prix: 0.50,
     image: "/images/PROD076.png",
-    badge: "stock-limite",
   },
   {
     id: 77,
@@ -723,7 +675,6 @@ export const produits: Produit[] = [
     dimension: "29 x 23 cm",
     prix: 2,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 78,
@@ -732,7 +683,6 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 4,
     image: "/images/PROD078.png",
-    badge: "stock-limite",
   },
 
   // ── FLEURS ET FEUILLAGES ──
@@ -760,7 +710,6 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 10,
     image: "/images/PROD081.png",
-    badge: "stock-limite",
   },
   {
     id: 82,
@@ -778,7 +727,6 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 10,
     image: "/images/placeholder.png",
-    badge: "stock-limite",
   },
   {
     id: 84,

@@ -158,9 +158,9 @@ function ProductCard({
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        {(product.badge === "stock-limite" || (product.stock <= 2 && product.stock > 0)) && (
+        {product.stock === 1 && (
           <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10">
-            {product.stock > 0 ? `Dernière${product.stock > 1 ? "s" : ""}` : "Stock limité"}
+            Unique
           </span>
         )}
       </div>
