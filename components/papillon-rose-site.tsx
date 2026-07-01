@@ -918,7 +918,7 @@ export default function PapillonRoseSite() {
             </section>
 
             {/* Category showcase */}
-            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-8 overflow-hidden">
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-6 md:mt-8 overflow-hidden">
               <div className="flex items-end justify-between mb-0">
                 <div>
                   <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
@@ -1009,8 +1009,8 @@ export default function PapillonRoseSite() {
             </section>
 
             {/* Featured products */}
-            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-8">
-              <div className="flex items-end justify-between mb-5">
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-6 md:mt-8">
+              <div className="flex items-end justify-between mb-4 md:mb-5">
                 <div>
                   <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                     Sélection du moment
@@ -1030,11 +1030,11 @@ export default function PapillonRoseSite() {
                 </button>
               </div>
 
-              <div className="mb-6">
+              <div className="mb-5 md:mb-6">
                 <CategoryPills active={category} onChange={setCategory} />
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 md:gap-4">
                 {FEATURED_IDS
                   .map((id) => VISIBLE_PRODUCTS.find((p) => p.id === id))
                   .filter((p): p is Produit => !!p)
@@ -1269,7 +1269,7 @@ export default function PapillonRoseSite() {
 
         {/* ─── CATALOGUE ─── */}
         {page === "catalogue" && (
-          <div className="max-w-7xl mx-auto px-5 md:px-10 pt-24 pb-8">
+          <div className="max-w-7xl mx-auto px-5 md:px-10 pt-20 md:pt-24 pb-8">
             <Breadcrumb
               category={category !== "Tous" ? category : undefined}
               onNavigate={(p, cat) => {
@@ -1278,7 +1278,7 @@ export default function PapillonRoseSite() {
                 else goToCatalogue()
               }}
             />
-            <div className="mb-7">
+            <div className="mb-5 md:mb-7">
               <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                 Explorer
               </p>
@@ -1290,7 +1290,7 @@ export default function PapillonRoseSite() {
               </h1>
             </div>
 
-            <div className="flex gap-3 mb-5">
+            <div className="flex gap-3 mb-4 md:mb-5">
               <div className="relative flex-1">
                 <Search
                   size={15}
@@ -1306,7 +1306,7 @@ export default function PapillonRoseSite() {
               </div>
             </div>
 
-            <div className="mb-7">
+            <div className="mb-5 md:mb-7">
               <CategoryPills active={category} onChange={setCategory} />
             </div>
 
@@ -1319,7 +1319,7 @@ export default function PapillonRoseSite() {
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-5 mt-3 md:mt-0">
+                <div className="flex items-center justify-between mb-4 mt-2 md:mb-5 md:mt-3">
                   <p className="text-sm text-gray-400">
                     <span className="text-[#2E2E2E] font-semibold">
                       {filtered.length}
@@ -1407,7 +1407,7 @@ export default function PapillonRoseSite() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 md:gap-4">
                 {VISIBLE_PRODUCTS.filter((p) => favorites.has(p.id)).map((p) => (
                   <ProductCard
                     key={p.id}

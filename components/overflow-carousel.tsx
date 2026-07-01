@@ -116,7 +116,7 @@ export default function OverflowCarousel({
   }
 
   return (
-    <div className="relative w-full select-none mb-[30px]" style={{ touchAction: "pan-y" }}>
+    <div className="relative w-full select-none mb-6 md:mb-[30px] px-5 md:px-0" style={{ touchAction: "pan-y" }}>
       {/* Arrows */}
       {!isMobile && (
         <>
@@ -140,7 +140,7 @@ export default function OverflowCarousel({
       {/* Cards */}
       <div
         className="relative w-full"
-        style={{ height: "clamp(360px, 44vw, 500px)" }}
+        style={{ height: "clamp(340px, 44vw, 500px)" }}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
         onPointerMove={handlePointerMove}
