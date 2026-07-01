@@ -73,6 +73,38 @@ const CATEGORIES = [
 
 const PRODUCTS = produits
 
+/**
+ * Règle de filtrage des produits sans photo réelle.
+ * Un produit est masqué du site s'il ne satisfait PAS à ces critères :
+ *   1. Le champ `image` n'est PAS un placeholder générique
+ *      (placeholder.png, placeholder.svg, ou chemin vide/null)
+ *   2. Le champ `image` n'est PAS vide ou null
+ *
+ * Cette fonction est appliquée automatiquement à la source de données.
+ * Dès qu'une vraie photo est ajoutée (fichier PRODxxx.png dans /public/images),
+ * le produit réapparaît automatiquement au prochain build sans intervention code.
+ *
+ * NOTE : La vérification d'existence du fichier image ne peut pas se faire
+ * côté client. On se base donc sur le nom du fichier. Si un produit a un nom
+ * de fichier qui ne correspond à aucun fichier réel, il faudra le corriger
+ * dans cette liste ou ajouter l'image manquante.
+ */
+const PLACEHOLDER_PATTERNS = [
+  "/placeholder.png",
+  "/placeholder.svg",
+  "/images/placeholder.png",
+  "/images/placeholder.svg",
+]
+
+function hasRealPhoto(product: { image?: string | null }): boolean {
+  if (!product.image) return false
+  const img = product.image.toLowerCase()
+  return !PLACEHOLDER_PATTERNS.some((p) => img === p)
+}
+
+/** Produits visibles sur le site (ayant une vraie photo) */
+const VISIBLE_PRODUCTS = PRODUCTS.filter(hasRealPhoto)
+
 let CATEGORY_IMAGES: Record<string, string> = {
   Mobilier: "/images/PROD005.png",
   "Figurines & Jeux": "/images/PROD009.png",
@@ -573,7 +605,7 @@ export default function PapillonRoseSite() {
 
   const filtered = useMemo(
     () =>
-      PRODUCTS.filter((p) => {
+      VISIBLE_PRODUCTS.filter((p) => {
         const pThemes = getThemes(p)
         const pCouleurs = getCouleurs(p)
         const pPrix = parsePrix(p.prix)
@@ -865,7 +897,7 @@ export default function PapillonRoseSite() {
                 {/* Stats 2×2 */}
                 <div className="grid grid-cols-2 gap-x-8 gap-y-3 flex-1">
                   {[
-                    { val: `${PRODUCTS.length}`, label: "références" },
+                    { val: `${VISIBLE_PRODUCTS.length}`, label: "références" },
                     { val: `${CATEGORIES.length - 1}`, label: "catégories" },
                     { val: "Stock", label: "mis à jour" },
                     { val: "Devis", label: "en 24h" },
@@ -1002,7 +1034,7 @@ export default function PapillonRoseSite() {
 
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                 {FEATURED_IDS
-                  .map((id) => PRODUCTS.find((p) => p.id === id))
+                  .map((id) => VISIBLE_PRODUCTS.find((p) => p.id === id))
                   .filter((p): p is Produit => !!p)
                   .filter((p) => category === "Tous" || p.categorie === category)
                   .slice(0, 10)
@@ -1048,7 +1080,7 @@ export default function PapillonRoseSite() {
                     step: 1,
                     Icon: Search,
                     title: "Explorez le catalogue",
-                    text: "Parcourez nos 83 références et ajoutez vos coups de cœur à votre sélection.",
+                    text: `Parcourez nos ${VISIBLE_PRODUCTS.length} références et ajoutez vos coups de cœur à votre sélection.`,
                   },
                   {
                     step: 2,
@@ -1372,7 +1404,7 @@ export default function PapillonRoseSite() {
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-                {PRODUCTS.filter((p) => favorites.has(p.id)).map((p) => (
+                {VISIBLE_PRODUCTS.filter((p) => favorites.has(p.id)).map((p) => (
                   <ProductCard
                     key={p.id}
                     product={p}
