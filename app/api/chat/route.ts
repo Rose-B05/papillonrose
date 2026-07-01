@@ -1,8 +1,20 @@
 import { NextRequest, NextResponse } from "next/server"
 import { produits } from "@/data/produits"
 
-const nbRef = produits.length
-const nbCat = new Set(produits.map(p => p.categorie)).size
+const PLACEHOLDER_PATTERNS = [
+  "/placeholder.png",
+  "/placeholder.svg",
+  "/images/placeholder.png",
+  "/images/placeholder.svg",
+]
+function hasRealPhoto(product: { image?: string | null }): boolean {
+  if (!product.image) return false
+  const img = product.image.toLowerCase()
+  return !PLACEHOLDER_PATTERNS.some((p) => img === p)
+}
+const visibleProduits = produits.filter((p) => hasRealPhoto(p) && p.actif !== false)
+const nbRef = visibleProduits.length
+const nbCat = new Set(visibleProduits.map(p => p.categorie)).size
 
 const SYSTEM_PROMPT = `Tu es l'assistant virtuel de "Papillon Rose", un service de location de mobilier et décoration pour événements (mariages, anniversaires, baptêmes, soirées d'entreprise, séminaires).
 

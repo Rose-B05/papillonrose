@@ -102,8 +102,8 @@ function hasRealPhoto(product: { image?: string | null }): boolean {
   return !PLACEHOLDER_PATTERNS.some((p) => img === p)
 }
 
-/** Produits visibles sur le site (ayant une vraie photo) */
-const VISIBLE_PRODUCTS = PRODUCTS.filter(hasRealPhoto)
+/** Produits visibles sur le site (ayant une vraie photo et non archivés) */
+const VISIBLE_PRODUCTS = PRODUCTS.filter((p) => hasRealPhoto(p) && p.actif !== false)
 
 let CATEGORY_IMAGES: Record<string, string> = {
   Mobilier: "/images/PROD005.png",

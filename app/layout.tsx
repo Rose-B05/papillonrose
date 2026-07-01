@@ -26,7 +26,7 @@ function hasRealPhoto(product: { image?: string | null }): boolean {
   const img = product.image.toLowerCase()
   return !PLACEHOLDER_PATTERNS.some((p) => img === p)
 }
-const nbRef = produits.filter(hasRealPhoto).length
+const nbRef = produits.filter((p) => hasRealPhoto(p) && p.actif !== false).length
 
 export const metadata: Metadata = {
   title: {

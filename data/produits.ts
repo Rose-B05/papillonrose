@@ -7,6 +7,7 @@ export type Produit = {
   prix: number | string;
   image: string;
   badge?: "stock-limite" | "epuise";
+  actif?: boolean;
 };
 
 export const produits: Produit[] = [
@@ -586,6 +587,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 20,
     image: "/images/placeholder.png",
+    actif: false,
   },
 
   // ── VASES ET POTS ──
@@ -606,6 +608,7 @@ export const produits: Produit[] = [
     dimension: "6 cm",
     prix: 0.50,
     image: "/images/placeholder.png",
+    actif: false,
   },
   {
     id: 70,
