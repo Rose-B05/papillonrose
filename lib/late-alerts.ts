@@ -169,8 +169,8 @@ export async function processLateAlerts(): Promise<{
           productNom,
           dateRestitutionPrevue: expectedDate,
           joursRetard,
-          penaliteCalculee: penaliteAmount,
-          penalitePercent,
+          penaliteCalculee: fee.montant,
+          penalitePercent: fee.taux,
           destinataires,
           sentAt: new Date().toISOString(),
         }
