@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/components/cart-context'
+import { produits } from '@/data/produits'
 
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'] })
 const playfair = Playfair_Display({
@@ -10,10 +11,15 @@ const playfair = Playfair_Display({
   subsets: ['latin'],
 })
 
+const nbRef = produits.length
+
 export const metadata: Metadata = {
-  title: 'Papillon Rose — Location mobilier & décoration d\'événements',
+  title: {
+    default: 'Papillon Rose — Location mobilier & décoration événements en Île-de-France',
+    template: '%s | Papillon Rose',
+  },
   description:
-    'Papillon Rose : location de mobilier et décoration pour mariages, réceptions et événements. Plus de 200 références, devis sous 24h.',
+    `Location de mobilier et décoration pour mariages, réceptions et événements en Île-de-France. ${nbRef} références, devis sous 24h, livraison 94/93/95/77/91.`,
   generator: 'v0.app',
   icons: {
     icon: [
@@ -39,6 +45,23 @@ export const viewport: Viewport = {
   themeColor: '#F8F5F0',
 }
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Papillon Rose',
+  description: 'Location de mobilier et décoration pour événements en Île-de-France',
+  url: 'https://papillon-rose.vercel.app',
+  email: 'papillonrosebertha@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Créteil',
+    addressRegion: 'Île-de-France',
+    addressCountry: 'FR',
+  },
+  areaServed: ['94', '93', '95', '77', '91'],
+  priceRange: '€€',
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,6 +72,12 @@ export default function RootLayout({
       lang="fr"
       className={`${inter.variable} ${playfair.variable} bg-[#F8F5F0]`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="font-sans antialiased">
         <CartProvider>
           {children}

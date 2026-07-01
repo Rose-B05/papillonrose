@@ -24,12 +24,13 @@ export interface Booking {
   totalHt: number
   totalTtc: number
   depositAmount: number
-  status: "pending-quote" | "quote-sent" | "deposit-pending" | "confirmed" | "cancelled"
+  status: "pending-quote" | "quote-sent" | "deposit-pending" | "confirmed" | "cancelled" | "returned"
   quoteNumber?: string
   createdAt: string
   updatedAt: string
   paymentIntentId?: string
   depositPaidAt?: string
+  returnedAt?: string
 }
 
 export interface ClientInfo {
@@ -69,4 +70,17 @@ export interface PaymentRecord {
   stripePaymentIntentId: string
   status: "pending" | "succeeded" | "failed"
   createdAt: string
+}
+
+export interface LateAlert {
+  id: string
+  bookingId: string
+  productId: number
+  productNom: string
+  dateRestitutionPrevue: string
+  joursRetard: number
+  penaliteCalculee: number
+  penalitePercent: number
+  destinataires: string[]
+  sentAt: string
 }

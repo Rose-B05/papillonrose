@@ -7,6 +7,12 @@
       ]
     }
   ],
+  "crons": [
+    {
+      "path": "/api/cron/late-alerts",
+      "schedule": "0 9 * * *"
+    }
+  ],
   "buildCommand": "npx next build",
   "installCommand": "npm install",
   "framework": "nextjs"

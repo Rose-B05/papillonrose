@@ -1,23 +1,25 @@
 import { NextRequest, NextResponse } from "next/server"
-import Anthropic from "@anthropic-ai/sdk"
+import { produits } from "@/data/produits"
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY || "",
-})
+const nbRef = produits.length
+const nbCat = new Set(produits.map(p => p.categorie)).size
 
 const SYSTEM_PROMPT = `Tu es l'assistant virtuel de "Papillon Rose", un service de location de mobilier et décoration pour événements (mariages, anniversaires, baptêmes, soirées d'entreprise, séminaires).
 
 INFORMATIONS SUR LE SITE :
-- Plus de 200 références, 11 catégories
+- ${nbRef} références, ${nbCat} catégories
 - Location à la journée
 - Devis sous 48h ouvrées
-- Livraison en Île-de-France et nationale
+- Livraison en Île-de-France et à Créteil (94)
 - Paiement : acompte 30% à la réservation, solde 70% avant l'événement
 
 POLITIQUE D'ANNULATION :
 - Annulation -30 jours : remboursement total
 - Annulation -15 jours : remboursement 50%
 - Annulation -7 jours : aucun remboursement
+
+CATÉGORIES DE PRODUITS :
+Mobilier, Figurines & Jeux, Bougeoirs & Lustres, Verreries, Cadres, Présentoirs & Plateaux, Présentoirs & Plateaux, Art de la Table, Vases & Pots, Décoration, Fleurs & Feuillages
 
 TON : Chaleureux, professionnel, enthousiaste. Tu réponds UNIQUEMENT en français.
 Tu dois :
@@ -30,9 +32,9 @@ Tu dois :
 COORDONNÉES DE L'ENTREPRISE :
 - Email : papillonrosebertha@gmail.com
 - Téléphone : 06 12 34 56 78
+- Telegram : @PapillonRose
 
 RÈGLES IMPORTANTES :
-- Si le client demande des produits spécifiques, oriente-le vers des catégories comme Mobilier, Figurines & Jeux, Bougeoirs & Lustres, Verreries, Cadres, Présentoirs & Plateaux, Art de la Table, Vases & Pots, Décoration, Fleurs & Feuillages
 - Ne donne jamais de prix exacts variables, réfère-toi au catalogue
 - Collecte progressivement les infos, ne demande pas tout d'un coup
 - Sois concis mais chaleureux
@@ -75,27 +77,51 @@ export async function POST(request: NextRequest) {
   try {
     const { messages } = (await request.json()) as { messages: Message[] }
 
-    if (!process.env.ANTHROPIC_API_KEY) {
+    if (!process.env.MINIMAX_API_KEY) {
       return NextResponse.json(
-        { error: "Clé API Anthropic non configurée" },
+        { error: "Clé API Minimax non configurée" },
         { status: 500 },
       )
     }
 
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-6",
-      system: SYSTEM_PROMPT,
-      messages: messages.map((m) => ({
-        role: m.role,
-        content: m.content,
-      })),
-      max_tokens: 1024,
+    const res = await fetch("https://api.minimax.io/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.MINIMAX_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "MiniMax-M2.7",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          ...messages.map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        ],
+        max_tokens: 1024,
+        temperature: 0.7,
+      }),
     })
 
-    const text = response.content
-      .filter((block) => block.type === "text")
-      .map((block) => block.text)
-      .join("")
+    if (!res.ok) {
+      const err = await res.text()
+      console.error("Minimax API error:", err)
+      return NextResponse.json(
+        { error: "Erreur lors de la communication avec l'assistant" },
+        { status: 500 },
+      )
+    }
+
+    const data = await res.json()
+    const text = data.choices?.[0]?.message?.content
+
+    if (!text) {
+      return NextResponse.json(
+        { error: "Réponse vide de l'assistant" },
+        { status: 500 },
+      )
+    }
 
     return NextResponse.json({ response: text })
   } catch (err: any) {

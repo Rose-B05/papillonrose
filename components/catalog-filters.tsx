@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, ChevronUp, X, Filter, Calendar } from "lucide-react"
+import { ChevronDown, ChevronUp, X, Filter, Calendar, SlidersHorizontal } from "lucide-react"
 import { THEMES, COULEURS, BUDGET_RANGES, type FilterState } from "@/lib/product-tags"
 
 interface Props {
@@ -26,7 +26,8 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
     (filters.themes?.length || 0) +
     (filters.couleurs?.length || 0) +
     (filters.budgetMin > 0 || filters.budgetMax < Infinity ? 1 : 0) +
-    (filters.dateDebut || filters.dateFin ? 1 : 0)
+    (filters.dateDebut || filters.dateFin ? 1 : 0) +
+    (filters.inStockOnly ? 1 : 0)
 
   const toggleTheme = (t: string) =>
     onChange({
@@ -160,6 +161,24 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
 
           <Divider />
 
+          {/* Stock */}
+          <div className="px-5 py-3 flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="stock-filter"
+              checked={filters.inStockOnly}
+              onChange={(e) => onChange({ ...filters, inStockOnly: e.target.checked })}
+              className="appearance-none w-4 h-4 rounded border border-gray-300 checked:border-[#C9A96E] checked:bg-[#C9A96E] transition-colors cursor-pointer flex-shrink-0 relative
+                checked:after:content-[''] checked:after:absolute checked:after:left-[3.5px] checked:after:top-[0.5px] checked:after:w-[5px] checked:after:h-[9px] checked:after:border-r-2 checked:after:border-b-2 checked:after:border-white checked:after:rotate-45"
+            />
+            <label htmlFor="stock-filter" className="text-xs font-semibold text-[#2E2E2E] uppercase tracking-wider cursor-pointer select-none flex items-center gap-1.5">
+              <SlidersHorizontal size={12} className="text-[#C9A96E]" />
+              En stock uniquement
+            </label>
+          </div>
+
+          <Divider />
+
           {/* Disponibilité */}
           <SectionHeader
             label="Disponibilité"
@@ -200,7 +219,8 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
         filters.couleurs.length > 0 ||
         activeBudget ||
         filters.dateDebut ||
-        filters.dateFin) && (
+        filters.dateFin ||
+        filters.inStockOnly) && (
         <div className="flex flex-wrap gap-2 mt-3">
           {filters.themes.map((t) => (
             <Tag key={`th-${t}`} label={t} onRemove={() => toggleTheme(t)} />
@@ -216,6 +236,9 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
               label={`Du ${filters.dateDebut || "..."} au ${filters.dateFin || "..."}`}
               onRemove={() => onChange({ ...filters, dateDebut: "", dateFin: "" })}
             />
+          )}
+          {filters.inStockOnly && (
+            <Tag label="En stock" onRemove={() => onChange({ ...filters, inStockOnly: false })} />
           )}
         </div>
       )}

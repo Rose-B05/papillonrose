@@ -79,7 +79,7 @@ export const produits: Produit[] = [
     stock: 4,
     dimension: "4 cm",
     prix: 0.20,
-    image: "/images/placeholder.svg",
+    image: "/images/prod007.png",
   },
   {
     id: 8,
@@ -88,7 +88,7 @@ export const produits: Produit[] = [
     stock: 15,
     dimension: "6.5 - 24 cm",
     prix: "0.50 - 0.80",
-    image: "/images/placeholder.svg",
+    image: "/images/PROD008.png",
   },
   {
     id: 9,
@@ -124,7 +124,7 @@ export const produits: Produit[] = [
     categorie: "Figurines & Jeux",
     stock: 1,
     prix: 20,
-    image: "/images/placeholder.svg",
+    image: "/images/prod012.png",
     badge: "stock-limite",
   },
   {
@@ -133,7 +133,7 @@ export const produits: Produit[] = [
     categorie: "Figurines & Jeux",
     stock: 1,
     prix: 10,
-    image: "/images/placeholder.svg",
+    image: "/images/prod013.png",
     badge: "stock-limite",
   },
   {
@@ -143,7 +143,7 @@ export const produits: Produit[] = [
     stock: 1,
     dimension: "300 cm",
     prix: 5,
-    image: "/images/placeholder.svg",
+    image: "/images/prod014.png",
     badge: "stock-limite",
   },
 
@@ -155,7 +155,7 @@ export const produits: Produit[] = [
     stock: 1,
     dimension: "13 cm",
     prix: 4,
-    image: "/images/placeholder.svg",
+    image: "/images/prod016.png",
     badge: "stock-limite",
   },
   {
@@ -175,7 +175,7 @@ export const produits: Produit[] = [
     stock: 2,
     dimension: "H 21 cm",
     prix: 4,
-    image: "/images/placeholder.svg",
+    image: "/images/PROD018.png",
     badge: "stock-limite",
   },
   {
@@ -228,7 +228,7 @@ export const produits: Produit[] = [
     stock: 2,
     dimension: "75 x 113 x 75 cm - 4 kg",
     prix: 80,
-    image: "/images/placeholder.svg",
+    image: "/images/prod/lustre-12-branches.png",
     badge: "stock-limite",
   },
   {
@@ -257,7 +257,7 @@ export const produits: Produit[] = [
     stock: 17,
     dimension: "26 cm",
     prix: 9,
-    image: "/images/placeholder.svg",
+    image: "/images/prod/bougeoire-etincelle.png",
   },
 
   // ── VERRERIES ──
@@ -307,7 +307,7 @@ export const produits: Produit[] = [
     categorie: "Verreries",
     stock: 7,
     prix: 20,
-    image: "/images/PROD032.png",
+    image: "/images/PROD034.png",
   },
   {
     id: 33,
@@ -323,7 +323,7 @@ export const produits: Produit[] = [
     categorie: "Verreries",
     stock: 71,
     prix: 0.50,
-    image: "/images/PROD034.png",
+    image: "/images/PROD032.png",
   },
   {
     id: 35,
@@ -351,7 +351,7 @@ export const produits: Produit[] = [
     stock: 2,
     dimension: "5.5 L",
     prix: 15,
-    image: "/images/placeholder.svg",
+    image: "/images/PROD037.png",
     badge: "stock-limite",
   },
   {
@@ -360,7 +360,7 @@ export const produits: Produit[] = [
     categorie: "Verreries",
     stock: 1,
     prix: 4,
-    image: "/images/placeholder.svg",
+    image: "/images/PROD038.png",
     badge: "stock-limite",
   },
 
@@ -412,7 +412,7 @@ export const produits: Produit[] = [
     stock: 1,
     dimension: "H13 x D18 cm",
     prix: 2,
-    image: "/images/PROD042.png",
+    image: "/images/PROD043.png",
     badge: "stock-limite",
   },
   {
@@ -421,7 +421,7 @@ export const produits: Produit[] = [
     categorie: "Présentoirs & Plateaux",
     stock: 4,
     prix: 1,
-    image: "/images/placeholder.svg",
+    image: "/images/PROD044.png",
   },
   {
     id: 45,
@@ -677,7 +677,7 @@ export const produits: Produit[] = [
     stock: 12,
     dimension: "5 L",
     prix: 7,
-    image: "/images/PROD072.png",
+    image: "/images/PROD073.png",
   },
 
   // ── DÉCORATION ──

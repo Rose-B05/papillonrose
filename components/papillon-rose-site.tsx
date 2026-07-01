@@ -9,12 +9,17 @@ import {
   Plus,
   Minus,
   Menu,
-  SlidersHorizontal,
   ArrowRight,
   Phone,
   Mail,
   MapPin,
   Trash2,
+  FileText,
+  Send,
+  Clock,
+  Package,
+  RotateCcw,
+  Star,
 } from "lucide-react"
 import { produits, type Produit } from "@/data/produits"
 import { useCart } from "@/components/cart-context"
@@ -22,6 +27,7 @@ import CatalogGallery from "@/components/catalog-gallery"
 import CatalogFilters from "@/components/catalog-filters"
 import OverflowCarousel from "@/components/overflow-carousel"
 import Chatbot from "@/components/chatbot"
+import WhatsAppButton from "@/components/whatsapp-button"
 import { getThemes, getCouleurs, type FilterState } from "@/lib/product-tags"
 import { FEATURED_IDS } from "@/lib/scenes"
 
@@ -31,8 +37,11 @@ const PLACEHOLDER = img("/placeholder.svg")
 const LOGO = img("/papillon-rose-logo.png")
 
 function formatPrix(prix: number | string): string {
-  if (typeof prix === "number") return `${prix}`
-  return prix
+  if (typeof prix === "number") return prix.toFixed(2).replace(".", ",")
+  return prix.replace(/\./g, ",")
+}
+function formatDecimalFr(val: string): string {
+  return val.replace(/\./g, ",")
 }
 function parsePrix(prix: number | string): number {
   if (typeof prix === "number") return prix
@@ -68,14 +77,14 @@ let CATEGORY_IMAGES: Record<string, string> = {
   Mobilier: "/images/PROD005.png",
   "Figurines & Jeux": "/images/PROD009.png",
   "Bougeoirs & Lustres": "/images/PROD023.png",
-  Verreries: "/images/PROD032.png",
+  Verreries: "/images/PROD088.png",
   Cadres: "/images/PROD39.png",
-  "Présentoirs & Plateaux": "/images/PROD048.png",
-  "Urnes & Accessoires": "/images/PROD049.png",
+  "Présentoirs & Plateaux": "/images/PROD097.png",
+  "Urnes & Accessoires": "/images/PROD093.png",
   "Art de la Table": "/images/PROD053.png",
   "Vases & Pots": "/images/PROD071.png",
   Décoration: "/images/PROD074.png",
-  "Fleurs & Feuillages": "/images/PROD084.png",
+  "Fleurs & Feuillages": "/images/PROD089.png",
 }
 
 // Images will be prefixed at render time
@@ -130,10 +139,10 @@ function ProductCard({
             {product.nom}
           </h3>
           {product.dimension && (
-            <p className="text-[10px] text-gray-400 truncate">{product.dimension}</p>
+            <p className="text-[10px] text-gray-400 truncate">{formatDecimalFr(product.dimension)}</p>
           )}
           <p className="text-sm font-bold text-[#2E2E2E] mt-0.5">
-            {typeof product.prix === "number" ? `${product.prix} €` : `${product.prix} €`}
+            {formatPrix(product.prix)} €
             <span className="text-[10px] font-normal text-gray-400 ml-0.5">/jour</span>
           </p>
         </div>
@@ -266,6 +275,17 @@ function ProductImages({
   )
 }
 
+// ─── Instagram Icon (inline SVG) ───────────────────────────────────────────────
+function InstagramIcon({ size = 13, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
 // ─── Footer ───────────────────────────────────────────────────────────────────
 function Footer({
   onNav,
@@ -275,107 +295,162 @@ function Footer({
   onCatalogue: (cat?: string) => void
 }) {
   return (
-    <footer className="bg-[#2E2E2E] text-white pt-14 pb-8 mt-16 rounded-t-[2.5rem] relative overflow-visible">
-      {/* Image décorative bas-gauche */}
+    <footer className="bg-[#1C1A17] text-white pt-16 pb-8 mt-16 relative overflow-hidden">
+      {/* Cage décorative en filigrane — droite */}
       <img
         src={img("/images/PROD086.png")}
         alt=""
         aria-hidden
-        className="hidden md:block absolute top-[-200px] left-[20px] w-auto h-[400px] object-contain object-bottom pointer-events-none z-10"
+        loading="lazy"
+        className="hidden md:block absolute right-[5%] top-1/2 -translate-y-1/2 w-auto h-[380px] object-contain pointer-events-none opacity-[0.18]"
       />
-      <div className="max-w-7xl mx-auto px-6 md:pl-[380px] md:pr-10 grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
-        <div className="col-span-2 md:col-span-1">
-          <p className="text-[#C8A97E] text-[10px] tracking-[0.35em] uppercase font-light">
-            Location décoration
+      <img
+        src={img("/images/PROD086.png")}
+        alt=""
+        aria-hidden
+        loading="lazy"
+        className="md:hidden absolute right-0 bottom-0 w-[200px] h-auto object-contain pointer-events-none opacity-[0.08]"
+      />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-12">
+        {/* Colonne 1 — Identité */}
+        <div className="lg:col-span-1">
+          <img src={LOGO} alt="Papillon Rose" className="h-10 w-auto brightness-0 invert opacity-90 mb-4" />
+          <p className="text-[#A89880] text-sm leading-relaxed mb-6">
+            Location de mobilier et décoration pour événements, mariages et réceptions.
           </p>
-          <p style={DP} className="text-white text-2xl font-semibold mt-1 mb-4">
-            Papillon Rose
-          </p>
-          <p className="text-white/45 text-sm leading-relaxed">
-            Location de mobilier et décoration pour événements, mariages et
-            réceptions.
+          <a
+            href="/reservation"
+            className="inline-flex items-center gap-2 bg-[#C9A96E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#d4b87a] transition-colors"
+          >
+            Demander un devis
+          </a>
+          <p className="text-[#C9A96E]/70 text-[10px] mt-2 tracking-wide">
+            Réponse sous 24h
           </p>
         </div>
+
+        {/* Colonne 2 — Navigation */}
         <div>
-          <p className="text-[#C8A97E] text-[10px] tracking-[0.3em] uppercase mb-5">
+          <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
             Navigation
           </p>
-          <ul className="space-y-3 text-sm text-white/55">
-            {(["home", "catalogue", "panier", "favorites", "contact"] as Page[]).map(
-              (p) => (
-                <li key={p}>
-                  {p === "panier" ? (
-                    <a href="/reservation" className="hover:text-[#C8A97E] transition-colors">Panier</a>
-                  ) : p === "catalogue" ? (
-                    <button
-                      onClick={() => onCatalogue()}
-                      className="hover:text-[#C8A97E] transition-colors"
-                    >
-                      Catalogue
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => onNav(p)}
-                      className="hover:text-[#C8A97E] transition-colors"
-                    >
-                      {p === "home"
-                        ? "Accueil"
-                        : p === "favorites"
-                          ? "Favoris"
-                          : "Contact"}
-                    </button>
-                  )}
-                </li>
-              ),
-            )}
+          <ul className="space-y-3 text-sm">
+            {([
+              { label: "Accueil", page: "home" as Page },
+              { label: "Catalogue", page: "catalogue" as Page },
+              { label: "Panier", href: "/reservation" },
+              { label: "Favoris", page: "favorites" as Page },
+              { label: "Contact", page: "contact" as Page },
+            ]).map((item) => (
+              <li key={item.label}>
+                {"href" in item ? (
+                  <a href={item.href} className="text-[#D4B896] hover:text-white transition-colors">
+                    {item.label}
+                  </a>
+                ) : (
+                  <button
+                    onClick={() => onNav(item.page)}
+                    className="text-[#D4B896] hover:text-white transition-colors text-left"
+                  >
+                    {item.label}
+                  </button>
+                )}
+              </li>
+            ))}
+            <li>
+              <a href="/a-propos" className="text-[#D4B896] hover:text-white transition-colors">
+                À propos
+              </a>
+            </li>
+            <li>
+              <a href="/faq" className="text-[#D4B896] hover:text-white transition-colors">
+                FAQ
+              </a>
+            </li>
+            <li>
+              <a href="/conditions-location" className="text-[#D4B896] hover:text-white transition-colors">
+                Conditions de location
+              </a>
+            </li>
           </ul>
         </div>
+
+        {/* Colonne 3 — Catégories */}
         <div>
-          <p className="text-[#C8A97E] text-[10px] tracking-[0.3em] uppercase mb-5">
+          <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
             Catégories
           </p>
-          <ul className="space-y-3 text-sm text-white/55">
-            {CATEGORIES.slice(1, 7).map((cat) => (
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-2.5 text-sm">
+            {CATEGORIES.slice(1).map((cat) => (
               <li key={cat}>
-                <button
-                  onClick={() => onCatalogue(cat)}
-                  className="hover:text-[#C8A97E] transition-colors"
+                <a
+                  href={`/catalogue?categorie=${encodeURIComponent(cat)}`}
+                  className="text-[#D4B896] hover:text-white transition-colors"
                 >
                   {cat}
-                </button>
+                </a>
               </li>
             ))}
           </ul>
         </div>
+
+        {/* Colonne 4 — Contact */}
         <div>
-          <p className="text-[#C8A97E] text-[10px] tracking-[0.3em] uppercase mb-5">
+          <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
             Contact
           </p>
-          <ul className="space-y-3.5 text-sm text-white/55">
+          <ul className="space-y-3.5 text-sm">
             <li className="flex items-center gap-2.5">
-              <Phone size={13} className="text-[#C8A97E]" />
-              06 12 34 56 78
-            </li>
-            <li className="flex items-center gap-2.5">
-              <Mail size={13} className="text-[#C8A97E]" />
-              papillonrosebertha@gmail.com
+              <Phone size={13} className="text-[#C9A96E] flex-shrink-0" />
+              <span className="text-[#D4B896]">À REMPLACER</span>
             </li>
             <li className="flex items-start gap-2.5">
-              <MapPin size={13} className="text-[#C8A97E] mt-0.5" />
-              <span>
+              <Mail size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
+              <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors break-all">
+                papillonrosebertha@gmail.com
+              </a>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <MapPin size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
+              <span className="text-[#D4B896]">
                 Île-de-France
                 <br />
-                Livraison nationale
+                Créteil (94)
               </span>
+            </li>
+            <li className="flex items-center gap-2.5">
+              <Send size={13} className="text-[#C9A96E] flex-shrink-0" />
+              <a href="https://t.me/PapillonRose" target="_blank" rel="noopener noreferrer" className="text-[#D4B896] hover:text-white transition-colors">
+                @PapillonRose
+              </a>
+            </li>
+            <li className="flex items-center gap-2.5">
+              <a href="https://www.instagram.com/papillonrose.g" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors">
+                <InstagramIcon size={13} />
+                Instagram
+              </a>
+              <img src="/icons/rose.svg" alt="" aria-hidden className="w-3 h-3 opacity-60" />
             </li>
           </ul>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-6 md:pl-[380px] md:pr-10 pt-6 border-t border-white/10">
-        <p className="text-white/25 text-xs text-center">
-          © 2026 Papillon Rose — Location décoration événements · Tous droits
-          réservés
-        </p>
+
+      {/* Barre copyright */}
+      <div className="max-w-7xl mx-auto px-6 relative z-10 pt-6 border-t border-white/10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+          <p className="text-[#A89880]/60 text-xs">
+            © 2026 Papillon Rose — Location décoration événements · Tous droits réservés
+          </p>
+          <div className="flex items-center gap-4 text-xs">
+            <a href="/conditions-location" className="text-[#A89880]/60 hover:text-[#D4B896] transition-colors">
+              Conditions de location
+            </a>
+            <a href="/mentions-legales" className="text-[#A89880]/60 hover:text-[#D4B896] transition-colors">
+              Mentions légales
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
   )
@@ -388,12 +463,12 @@ export default function PapillonRoseSite() {
   const [category, setCategory] = useState("Tous")
   const [search, setSearch] = useState("")
   const [modalProduct, setModalProduct] = useState<Produit | null>(null)
+  const [modalQty, setModalQty] = useState(1)
   const [quote, setQuote] = useState<QuoteItem[]>([])
   const [favorites, setFavorites] = useState<Set<number>>(new Set())
   const [showQuote, setShowQuote] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [priceMax, setPriceMax] = useState(200)
-  const [inStockOnly, setInStockOnly] = useState(false)
   const [scrolled, setScrolled] = useState(page !== "home")
   const [showQuoteSent, setShowQuoteSent] = useState(false)
   const [tagFilters, setTagFilters] = useState<FilterState>({
@@ -403,6 +478,7 @@ export default function PapillonRoseSite() {
     budgetMax: Infinity,
     dateDebut: "",
     dateFin: "",
+    inStockOnly: false,
   })
 
   useEffect(() => {
@@ -429,7 +505,7 @@ export default function PapillonRoseSite() {
           p.nom.toLowerCase().includes(search.toLowerCase()) ||
           p.categorie.toLowerCase().includes(search.toLowerCase())
         const matchPrice = pPrix <= priceMax
-        const matchStock = !inStockOnly || p.stock > 0
+        const matchStock = !tagFilters.inStockOnly || p.stock > 0
 
         const matchTheme =
           tagFilters.themes.length === 0 ||
@@ -450,7 +526,7 @@ export default function PapillonRoseSite() {
           matchBudget
         )
       }),
-    [category, search, priceMax, inStockOnly, tagFilters],
+    [category, search, priceMax, tagFilters],
   )
 
   const addToQuote = (p: Produit) => {
@@ -493,6 +569,7 @@ export default function PapillonRoseSite() {
   }
   const goToCatalogue = (cat?: string) => {
     setPage("catalogue")
+    setShowMenu(false)
     if (cat) setCategory(cat)
     window.scrollTo(0, 0)
   }
@@ -500,7 +577,6 @@ export default function PapillonRoseSite() {
     setSearch("")
     setCategory("Tous")
     setPriceMax(200)
-    setInStockOnly(false)
     setTagFilters({
       themes: [],
       couleurs: [],
@@ -508,11 +584,12 @@ export default function PapillonRoseSite() {
       budgetMax: Infinity,
       dateDebut: "",
       dateFin: "",
+      inStockOnly: false,
     })
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F5F0] font-sans text-[#2E2E2E]">
+    <div className="min-h-screen bg-[#F8F5F0] font-sans text-[#2E2E2E] overflow-x-hidden">
       {/* ── Navbar ── */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white/80 backdrop-blur-xl shadow-sm" : "bg-transparent"}`}>
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-20">
@@ -594,7 +671,7 @@ export default function PapillonRoseSite() {
               onClick={() => setShowQuote(true)}
               className="relative flex items-center gap-2 bg-[#C8A97E] text-white px-4 py-2 rounded-full text-sm hover:bg-[#B8926E] transition-colors"
             >
-              <ShoppingBag size={15} />
+              <FileText size={15} />
               <span className="hidden md:inline font-medium">Devis</span>
               {quoteCount > 0 && (
                 <span className="w-5 h-5 bg-white text-[#C8A97E] text-[10px] rounded-full flex items-center justify-center font-bold">
@@ -653,9 +730,11 @@ export default function PapillonRoseSite() {
                       ? "Accueil"
                       : p === "catalogue"
                         ? "Catalogue"
-                        : p === "favorites"
-                          ? "Favoris"
-                          : "Contact"}
+                        : p === "panier"
+                          ? "Panier"
+                          : p === "favorites"
+                            ? "Favoris"
+                            : "Contact"}
                   </button>
                 ),
               )}
@@ -675,11 +754,13 @@ export default function PapillonRoseSite() {
             {/* Hero */}
             <section className="relative h-screen">
               <video
-                src="https://raw.githubusercontent.com/Rose-B05/papillonrose/master/public/products/hero.mp4"
+                src="/videos/hero.mp4"
                 autoPlay
                 loop
                 muted
                 playsInline
+                preload="metadata"
+                poster="/images/PROD087.png"
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </section>
@@ -705,8 +786,8 @@ export default function PapillonRoseSite() {
                 {/* Stats 2×2 */}
                 <div className="grid grid-cols-2 gap-x-8 gap-y-3 flex-1">
                   {[
-                    { val: "+200", label: "références" },
-                    { val: "11", label: "catégories" },
+                    { val: `${PRODUCTS.length}`, label: "références" },
+                    { val: `${CATEGORIES.length - 1}`, label: "catégories" },
                     { val: "Stock", label: "mis à jour" },
                     { val: "Devis", label: "en 24h" },
                   ].map((s) => (
@@ -724,7 +805,7 @@ export default function PapillonRoseSite() {
             </section>
 
             {/* Category showcase */}
-            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-8">
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-8 overflow-hidden">
               <div className="flex items-end justify-between mb-0">
                 <div>
                   <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
@@ -732,7 +813,7 @@ export default function PapillonRoseSite() {
                   </p>
                   <h2
                     style={DP}
-                    className="text-2xl md:text-3xl font-semibold text-[#2E2E2E]"
+                    className="text-4xl md:text-5xl font-semibold text-[#2E2E2E]"
                   >
                     Nos Catégories
                   </h2>
@@ -743,8 +824,9 @@ export default function PapillonRoseSite() {
                   {
                     nom: "Mobilier",
                     categorie: "Mobilier",
-                    image: "/images/PROD004.png",
+                    image: "/images/PROD087.png",
                     bgColor: "#E8C4B8",
+                    largeImage: true,
                   },
                   {
                     nom: "Figurines & Jeux",
@@ -761,7 +843,7 @@ export default function PapillonRoseSite() {
                   {
                     nom: "Verreries",
                     categorie: "Verreries",
-                    image: "/images/PROD030.png",
+                    image: "/images/PROD088.png",
                     bgColor: "#C9A96E",
                   },
                   {
@@ -773,13 +855,14 @@ export default function PapillonRoseSite() {
                   {
                     nom: "Présentoirs & Plateaux",
                     categorie: "Présentoirs & Plateaux",
-                    image: "/images/PROD046.png",
+                    image: "/images/PROD097.png",
                     bgColor: "#C9A96E",
+                    largeImage: true,
                   },
                   {
                     nom: "Urnes & Accessoires",
                     categorie: "Urnes & Accessoires",
-                    image: "/images/PROD049.png",
+                    image: "/images/PROD093.png",
                     bgColor: "#E8C4B8",
                   },
                   {
@@ -803,8 +886,9 @@ export default function PapillonRoseSite() {
                   {
                     nom: "Fleurs & Feuillages",
                     categorie: "Fleurs & Feuillages",
-                    image: "/images/PROD081.png",
+                    image: "/images/PROD089.png",
                     bgColor: "#E8C4B8",
+                    largeImage: true,
                   },
                 ]}
                 onSelect={(cat) => goToCatalogue(cat)}
@@ -837,7 +921,7 @@ export default function PapillonRoseSite() {
                 <CategoryPills active={category} onChange={setCategory} />
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                 {FEATURED_IDS
                   .map((id) => PRODUCTS.find((p) => p.id === id))
                   .filter((p): p is Produit => !!p)
@@ -849,7 +933,7 @@ export default function PapillonRoseSite() {
                       product={p}
                       isFav={favorites.has(p.id)}
                       onFav={() => toggleFav(p.id)}
-                      onView={() => setModalProduct(p)}
+                      onView={() => { setModalProduct(p); setModalQty(1) }}
                       onAdd={() => addToQuote(p)}
                     />
                   ))}
@@ -865,6 +949,161 @@ export default function PapillonRoseSite() {
               </div>
             </section>
 
+            {/* Comment ça marche ? */}
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-16">
+              <div className="text-center mb-10">
+                <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+                  Simple et rapide
+                </p>
+                <h2
+                  style={DP}
+                  className="text-3xl md:text-4xl font-semibold text-[#2E2E2E]"
+                >
+                  Comment ça marche&nbsp;?
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-4">
+                {[
+                  {
+                    step: 1,
+                    Icon: Search,
+                    title: "Explorez le catalogue",
+                    text: "Parcourez nos 83 références et ajoutez vos coups de cœur à votre sélection.",
+                  },
+                  {
+                    step: 2,
+                    Icon: FileText,
+                    title: "Envoyez votre demande",
+                    text: "Indiquez vos dates d'événement et soumettez votre demande de devis en quelques clics.",
+                  },
+                  {
+                    step: 3,
+                    Icon: Clock,
+                    title: "Recevez votre devis sous 24h",
+                    text: "Nous vous envoyons un devis personnalisé avec les disponibilités confirmées.",
+                  },
+                  {
+                    step: 4,
+                    Icon: Package,
+                    title: "Retirez votre matériel",
+                    text: "Retraite à Créteil (94) selon le calendrier convenu. Livraison disponible en Île-de-France.",
+                  },
+                  {
+                    step: 5,
+                    Icon: RotateCcw,
+                    title: "Restituez après votre événement",
+                    text: "Retournez le matériel dans les délais convenus. Tout retard est facturé selon le barème indiqué dans votre devis.",
+                  },
+                ].map(({ step, Icon, title, text }, idx) => (
+                  <div key={step} className="relative flex flex-col items-center text-center group">
+                    {/* Ligne de connexion (desktop, pas sur le dernier) */}
+                    {idx < 4 && (
+                      <div className="hidden lg:block absolute top-7 left-[calc(50%+28px)] w-[calc(100%-56px)] h-px bg-[#C8A97E]/25" />
+                    )}
+                    {/* Numéro */}
+                    <div className="relative z-10 w-14 h-14 rounded-full bg-[#C8A97E]/10 flex items-center justify-center mb-4 group-hover:bg-[#C8A97E]/20 transition-colors">
+                      <span
+                        style={DP}
+                        className="absolute -top-1 -right-1 w-5 h-5 bg-[#C8A97E] text-white text-[10px] font-bold rounded-full flex items-center justify-center"
+                      >
+                        {step}
+                      </span>
+                      <Icon size={22} className="text-[#C8A97E]" />
+                    </div>
+                    <h3
+                      style={DP}
+                      className="text-sm font-semibold text-[#2E2E2E] mb-1.5"
+                    >
+                      {title}
+                    </h3>
+                    <p className="text-[11px] text-[#2E2E2E]/55 leading-relaxed max-w-[200px]">
+                      {text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Témoignages */}
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-16">
+              <div className="text-center mb-10">
+                <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+                  Ils nous ont fait confiance
+                </p>
+                <h2
+                  style={DP}
+                  className="text-3xl md:text-4xl font-semibold text-[#2E2E2E]"
+                >
+                  Avis de nos clients
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[
+                  {
+                    name: "Sophie M.",
+                    event: "Mariage",
+                    date: "Juin 2025",
+                    text: "Un service impeccable du début à la fin. La sélection de mobilier était magnifique et a totalement sublimé notre salle de réception. Merci pour votre réactivité et votre professionnalisme !",
+                  },
+                  {
+                    name: "Camille R.",
+                    event: "Baptême",
+                    date: "Mars 2025",
+                    text: "Les photophores et les urnes étaient à couper le souffle. Nos invités n'arrêtaient pas de faire des compliments. Le retrait et la restitution se sont faits sans aucune problème. Je recommande à 100%.",
+                  },
+                  {
+                    name: "Léa et Thomas D.",
+                    event: "Anniversaire",
+                    date: "Novembre 2024",
+                    text: "Nous avions un budget serré et Papillon Rose a su nous proposer des options élégantes qui correspondaient parfaitement à notre vision. Le devis était prêt en moins de 24h. Bravo !",
+                  },
+                ].map((review) => (
+                  <div
+                    key={review.name}
+                    className="bg-white rounded-2xl p-6 border border-black/[0.07] shadow-sm flex flex-col"
+                  >
+                    {/* Étoiles */}
+                    <div className="flex gap-0.5 mb-3">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star
+                          key={s}
+                          size={14}
+                          className="text-[#C8A97E]"
+                          fill="#C8A97E"
+                        />
+                      ))}
+                    </div>
+                    {/* Texte */}
+                    <p className="text-sm text-[#2E2E2E]/70 leading-relaxed italic mb-4 flex-1">
+                      &ldquo;{review.text}&rdquo;
+                    </p>
+                    {/* Auteur */}
+                    <div className="border-t border-black/[0.07] pt-3">
+                      <p className="text-sm font-semibold text-[#2E2E2E]">
+                        {review.name}
+                      </p>
+                      <p className="text-[11px] text-[#C8A97E]">
+                        {review.event} — {review.date}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="text-center mt-8">
+                <a
+                  href="https://www.instagram.com/papillonrose.g"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-[#C8A97E] font-medium hover:gap-2.5 transition-all"
+                >
+                  Voir nos réalisations <ArrowRight size={14} />
+                </a>
+              </div>
+            </section>
+
             {/* CTA */}
             <section className="max-w-7xl mx-auto px-5 md:px-10 mt-16">
               <div className="relative overflow-hidden rounded-3xl bg-[#2E2E2E] px-10 py-16 text-center">
@@ -873,6 +1112,7 @@ export default function PapillonRoseSite() {
                     src={img("/images/PROD005.png")}
                     alt=""
                     aria-hidden
+                    loading="lazy"
                     className="w-full h-full object-cover opacity-15 rounded-3xl"
                   />
                 </div>
@@ -910,7 +1150,6 @@ export default function PapillonRoseSite() {
               </div>
             </section>
 
-            <Footer onNav={navTo} onCatalogue={goToCatalogue} />
           </div>
         )}
 
@@ -943,16 +1182,6 @@ export default function PapillonRoseSite() {
                   className="w-full bg-white pl-11 pr-4 py-3 rounded-2xl text-sm outline-none border border-black/[0.07] focus:border-[#C8A97E]/50 transition-colors placeholder:text-gray-400 shadow-sm"
                 />
               </div>
-              <label className="flex items-center gap-2 bg-white px-4 py-3 rounded-2xl text-sm cursor-pointer border border-black/[0.07] shadow-sm hover:border-[#C8A97E]/40 transition-colors select-none whitespace-nowrap">
-                <input
-                  type="checkbox"
-                  checked={inStockOnly}
-                  onChange={(e) => setInStockOnly(e.target.checked)}
-                  className="accent-[#C8A97E] w-3.5 h-3.5"
-                />
-                <SlidersHorizontal size={14} className="text-[#C8A97E]" />
-                En stock
-              </label>
             </div>
 
             <div className="mb-7">
@@ -984,7 +1213,7 @@ export default function PapillonRoseSite() {
                   {(search ||
                     category !== "Tous" ||
                     priceMax < 200 ||
-                    inStockOnly ||
+                    tagFilters.inStockOnly ||
                     tagFilters.themes.length > 0 ||
                     tagFilters.couleurs.length > 0 ||
                     tagFilters.budgetMin > 0 ||
@@ -1020,7 +1249,6 @@ export default function PapillonRoseSite() {
               </div>
             )}
 
-            <Footer onNav={navTo} onCatalogue={goToCatalogue} />
           </div>
         </div>
           </div>
@@ -1056,7 +1284,7 @@ export default function PapillonRoseSite() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                 {PRODUCTS.filter((p) => favorites.has(p.id)).map((p) => (
                   <ProductCard
                     key={p.id}
@@ -1069,7 +1297,6 @@ export default function PapillonRoseSite() {
                 ))}
               </div>
             )}
-            <Footer onNav={navTo} onCatalogue={goToCatalogue} />
           </div>
         )}
 
@@ -1105,9 +1332,20 @@ export default function PapillonRoseSite() {
                       {
                         Icon: MapPin,
                         label: "Zone",
-                        val: "Île-de-France\nLivraison nationale",
+                        val: "Île-de-France\nCréteil (94)",
                       },
-                    ].map(({ Icon, label, val }) => (
+                      {
+                        Icon: Send,
+                        label: "Telegram",
+                        val: "@PapillonRose",
+                      },
+                      {
+                        Icon: InstagramIcon,
+                        label: "Instagram",
+                        val: "papillonrose.g",
+                        link: "https://www.instagram.com/papillonrose.g",
+                      },
+                    ].map(({ Icon, label, val, link }) => (
                       <div key={label} className="flex items-start gap-4">
                         <div className="w-11 h-11 bg-[#C8A97E]/12 rounded-2xl flex items-center justify-center flex-shrink-0">
                           <Icon size={17} className="text-[#C8A97E]" />
@@ -1116,9 +1354,15 @@ export default function PapillonRoseSite() {
                           <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-0.5">
                             {label}
                           </p>
-                          <p className="font-medium text-sm whitespace-pre-line text-[#2E2E2E]">
-                            {val}
-                          </p>
+                          {link ? (
+                            <a href={link} target="_blank" rel="noopener noreferrer" className="font-medium text-sm text-[#2E2E2E] hover:text-[#C8A97E] transition-colors">
+                              {val}
+                            </a>
+                          ) : (
+                            <p className="font-medium text-sm whitespace-pre-line text-[#2E2E2E]">
+                              {val}
+                            </p>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -1195,10 +1439,11 @@ export default function PapillonRoseSite() {
                 </form>
               </div>
             </div>
-            <Footer onNav={navTo} onCatalogue={goToCatalogue} />
           </div>
         )}
       </div>
+
+      <Footer onNav={navTo} onCatalogue={goToCatalogue} />
 
       {/* ── Product Modal ── */}
       {modalProduct && (() => {
@@ -1271,11 +1516,36 @@ export default function PapillonRoseSite() {
                       / jour
                     </span>
                   </p>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-sm text-gray-500">Quantité</span>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setModalQty((q) => Math.max(1, q - 1))}
+                        className="w-8 h-8 rounded-full bg-[#F0EBE3] flex items-center justify-center hover:bg-[#C8A97E]/20 transition-colors"
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span className="text-sm font-bold w-6 text-center">{modalQty}</span>
+                      <button
+                        onClick={() => setModalQty((q) => Math.min(modalProduct.stock, q + 1))}
+                        disabled={modalQty >= modalProduct.stock}
+                        className="w-8 h-8 rounded-full bg-[#F0EBE3] flex items-center justify-center hover:bg-[#C8A97E]/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                  </div>
+                  {modalProduct.stock > 0 && (
+                    <p className={`text-xs mb-4 ${modalProduct.stock <= 2 ? "text-amber-500 font-medium" : "text-green-500"}`}>
+                      Plus que {modalProduct.stock} disponible{modalProduct.stock > 1 ? "s" : ""}
+                    </p>
+                  )}
                   <div className="flex flex-col gap-2">
                     <button
                       onClick={() => {
-                        addCartItem({ productId: modalProduct.id, qty: 1, dateStart: "", dateEnd: "" })
+                        addCartItem({ productId: modalProduct.id, qty: modalQty, dateStart: "", dateEnd: "" })
                         setModalProduct(null)
+                        setModalQty(1)
                       }}
                       disabled={modalProduct.stock === 0}
                       className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
@@ -1289,6 +1559,7 @@ export default function PapillonRoseSite() {
                       onClick={() => {
                         addToQuote(modalProduct)
                         setModalProduct(null)
+                        setModalQty(1)
                       }}
                       disabled={modalProduct.stock === 0}
                       className="w-full bg-[#F0EBE3] text-[#2E2E2E]/60 py-3.5 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
@@ -1403,12 +1674,16 @@ export default function PapillonRoseSite() {
                             {qty}
                           </span>
                           <button
-                            onClick={() => updateQty(p.id, 1)}
+                            onClick={() => { if (qty < p.stock) updateQty(p.id, 1) }}
+                            disabled={qty >= p.stock}
                             aria-label="Augmenter"
-                            className="w-6 h-6 bg-white rounded-full shadow-sm flex items-center justify-center hover:bg-[#C8A97E] hover:text-white transition-colors"
+                            className="w-6 h-6 bg-white rounded-full shadow-sm flex items-center justify-center hover:bg-[#C8A97E] hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                           >
                             <Plus size={11} />
                           </button>
+                          {qty >= p.stock && p.stock > 0 && (
+                            <span className="text-[9px] text-amber-500 font-medium">Stock max</span>
+                          )}
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
@@ -1473,6 +1748,7 @@ export default function PapillonRoseSite() {
       )}
 
       <Chatbot />
+      <WhatsAppButton />
     </div>
   )
 }

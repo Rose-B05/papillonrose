@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 interface AvailabilityCalendarProps {
@@ -10,10 +10,22 @@ interface AvailabilityCalendarProps {
   dateEnd: string | null
   onDateStartChange: (d: string) => void
   onDateEndChange: (d: string) => void
+  availableStock?: number
 }
 
 const DAYS = ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"]
 const MONTHS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+
+function getMonthData(year: number, month: number) {
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+  const firstDayOfWeek = new Date(year, month, 1).getDay()
+  return { daysInMonth, firstDayOfWeek }
+}
+
+function getNextMonth(year: number, month: number) {
+  if (month === 11) return { year: year + 1, month: 0 }
+  return { year, month: month + 1 }
+}
 
 export default function AvailabilityCalendar({
   productId,
@@ -22,6 +34,7 @@ export default function AvailabilityCalendar({
   dateEnd,
   onDateStartChange,
   onDateEndChange,
+  availableStock,
 }: AvailabilityCalendarProps) {
   const [blockedDates, setBlockedDates] = useState<string[]>([])
   const [viewMonth, setViewMonth] = useState(() => new Date().getMonth())
@@ -38,31 +51,30 @@ export default function AvailabilityCalendar({
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate()
-  const firstDayOfWeek = new Date(viewYear, viewMonth, 1).getDay()
+  const next = getNextMonth(viewYear, viewMonth)
 
-  const isBlocked = (day: number) => {
-    const d = formatDate(viewYear, viewMonth, day)
+  const isBlocked = (y: number, m: number, day: number) => {
+    const d = formatDate(y, m, day)
     return blockedDates.includes(d)
   }
 
-  const isPast = (day: number) => {
-    const d = new Date(viewYear, viewMonth, day)
+  const isPast = (y: number, m: number, day: number) => {
+    const d = new Date(y, m, day)
     return d < today
   }
 
-  const isInRange = (day: number) => {
+  const isInRange = (y: number, m: number, day: number) => {
     if (!dateStart || !dateEnd) return false
-    const d = formatDate(viewYear, viewMonth, day)
+    const d = formatDate(y, m, day)
     return d >= dateStart && d <= dateEnd
   }
 
-  const isStart = (day: number) => formatDate(viewYear, viewMonth, day) === dateStart
-  const isEnd = (day: number) => formatDate(viewYear, viewMonth, day) === dateEnd
+  const isStart = (y: number, m: number, day: number) => formatDate(y, m, day) === dateStart
+  const isEnd = (y: number, m: number, day: number) => formatDate(y, m, day) === dateEnd
 
-  const handleDayClick = (day: number) => {
-    const d = formatDate(viewYear, viewMonth, day)
-    if (isPast(day) || isBlocked(day)) return
+  const handleDayClick = (y: number, m: number, day: number) => {
+    const d = formatDate(y, m, day)
+    if (isPast(y, m, day) || isBlocked(y, m, day)) return
 
     setError("")
 
@@ -74,7 +86,6 @@ export default function AvailabilityCalendar({
         onDateStartChange(d)
         onDateEndChange("")
       } else {
-        // Check if range is available
         const range = getDatesBetween(dateStart, d)
         const conflict = range.some((r) => blockedDates.includes(r))
         if (conflict) {
@@ -96,9 +107,56 @@ export default function AvailabilityCalendar({
     else setViewMonth((m) => m + 1)
   }
 
-  const days: (number | null)[] = []
-  for (let i = 0; i < firstDayOfWeek; i++) days.push(null)
-  for (let i = 1; i <= daysInMonth; i++) days.push(i)
+  const renderMonth = (y: number, m: number) => {
+    const { daysInMonth, firstDayOfWeek } = getMonthData(y, m)
+    const days: (number | null)[] = []
+    for (let i = 0; i < firstDayOfWeek; i++) days.push(null)
+    for (let i = 1; i <= daysInMonth; i++) days.push(i)
+
+    return (
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-xs font-semibold text-[#2E2E2E]">
+            {MONTHS[m]} {y}
+          </span>
+        </div>
+        <div className="grid grid-cols-7 gap-0.5 mb-1">
+          {DAYS.map((d) => (
+            <div key={d} className="text-center text-[9px] text-gray-400 font-medium uppercase tracking-wider py-0.5">
+              {d}
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-7 gap-0.5">
+          {days.map((day, idx) => {
+            if (day === null) return <div key={`e-${y}-${m}-${idx}`} />
+            const blocked = isBlocked(y, m, day)
+            const past = isPast(y, m, day)
+            const inRange = isInRange(y, m, day)
+            const start = isStart(y, m, day)
+            const end = isEnd(y, m, day)
+            const disabled = blocked || past
+            return (
+              <button
+                key={`${y}-${m}-${day}`}
+                onClick={() => handleDayClick(y, m, day)}
+                disabled={disabled}
+                className={`
+                  relative w-full text-center text-[11px] py-1.5 rounded-md transition-all
+                  ${disabled ? "text-gray-300 line-through cursor-not-allowed bg-red-50" : "hover:bg-[#F0EBE3] cursor-pointer"}
+                  ${start || end ? "bg-[#C8A97E] text-white font-bold hover:bg-[#B8926E]" : ""}
+                  ${inRange && !start && !end ? "bg-[#C8A97E]/15 text-[#2E2E2E]" : ""}
+                  ${!disabled && !start && !end && !inRange ? "text-[#2E2E2E]" : ""}
+                `}
+              >
+                {day}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="bg-white rounded-2xl p-4 shadow-sm border border-black/[0.07]">
@@ -106,48 +164,18 @@ export default function AvailabilityCalendar({
         <button onClick={prevMonth} className="w-8 h-8 rounded-full hover:bg-[#F0EBE3] flex items-center justify-center transition-colors">
           <ChevronLeft size={16} />
         </button>
-        <span className="text-sm font-semibold text-[#2E2E2E]">
-          {MONTHS[viewMonth]} {viewYear}
+        <span className="text-xs font-semibold text-[#2E2E2E]">
+          {MONTHS[viewMonth]} {viewYear} — {MONTHS[next.month]} {next.year}
         </span>
         <button onClick={nextMonth} className="w-8 h-8 rounded-full hover:bg-[#F0EBE3] flex items-center justify-center transition-colors">
           <ChevronRight size={16} />
         </button>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 mb-2">
-        {DAYS.map((d) => (
-          <div key={d} className="text-center text-[10px] text-gray-400 font-medium uppercase tracking-wider py-1">
-            {d}
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-7 gap-1">
-        {days.map((day, idx) => {
-          if (day === null) return <div key={`e-${idx}`} />
-          const blocked = isBlocked(day)
-          const past = isPast(day)
-          const inRange = isInRange(day)
-          const start = isStart(day)
-          const end = isEnd(day)
-          const disabled = blocked || past
-          return (
-            <button
-              key={day}
-              onClick={() => handleDayClick(day)}
-              disabled={disabled}
-              className={`
-                relative w-full text-center text-xs py-2 rounded-lg transition-all
-                ${disabled ? "text-gray-300 line-through cursor-not-allowed bg-red-50" : "hover:bg-[#F0EBE3] cursor-pointer"}
-                ${start || end ? "bg-[#C8A97E] text-white font-bold hover:bg-[#B8926E]" : ""}
-                ${inRange && !start && !end ? "bg-[#C8A97E]/15 text-[#2E2E2E]" : ""}
-                ${!disabled && !start && !end && !inRange ? "text-[#2E2E2E]" : ""}
-              `}
-            >
-              {day}
-            </button>
-          )
-        })}
+      <div className="flex gap-4">
+        {renderMonth(viewYear, viewMonth)}
+        <div className="hidden md:block w-px bg-black/[0.05]" />
+        {renderMonth(next.year, next.month)}
       </div>
 
       {error && <p className="text-red-400 text-xs mt-3 text-center">{error}</p>}
@@ -167,9 +195,19 @@ export default function AvailabilityCalendar({
         </div>
       </div>
 
-      {stock > 0 && stock <= 3 && (
-        <p className="text-amber-500 text-xs mt-3 text-center font-medium">
-          Plus que {stock} disponible{stock > 1 ? "s" : ""}
+      {stock > 0 && (
+        <p className={`text-xs mt-3 text-center font-medium ${
+          (availableStock ?? stock) === 0
+            ? "text-red-400"
+            : (availableStock ?? stock) <= 2
+              ? "text-amber-500"
+              : "text-green-500"
+        }`}>
+          {(availableStock ?? stock) === 0
+            ? "Indisponible sur cette période"
+            : (availableStock ?? stock) < stock
+              ? `Stock limité sur cette période — Plus que ${availableStock} disponible${(availableStock ?? 0) > 1 ? "s" : ""}`
+              : `Plus que ${stock} disponible${stock > 1 ? "s" : ""}`}
         </p>
       )}
     </div>

@@ -1,6 +1,10 @@
 export function formatPrix(prix: number | string): string {
-  if (typeof prix === "number") return `${prix}`
-  return prix
+  if (typeof prix === "number") return prix.toFixed(2).replace(".", ",")
+  return prix.replace(/\./g, ",")
+}
+
+export function formatDecimalFr(val: string): string {
+  return val.replace(/\./g, ",")
 }
 
 export function parsePrix(prix: number | string): number {

@@ -4,6 +4,7 @@ import { produits } from "@/data/produits"
 import { saveBooking, getBooking, blockDates, getBlockedDates } from "@/lib/db"
 import { calcTotalHt, calcTtc, calcDeposit, DEPOSIT_RATE } from "@/lib/utils"
 import { createPaymentIntent } from "@/lib/stripe"
+import { getAvailableStock } from "@/lib/stock"
 import type { Booking, CartItem } from "@/lib/types"
 
 export async function POST(request: NextRequest) {
@@ -15,16 +16,47 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Panier vide" }, { status: 400 })
     }
 
-    // Verify product exists & stock
+    // Verify product exists & enforce stock limits per date range
+    const adjustedItems: CartItem[] = []
+    const warnings: string[] = []
+
     for (const item of items) {
       const product = produits.find((p) => p.id === item.productId)
       if (!product) return NextResponse.json({ error: `Produit ${item.productId} introuvable` }, { status: 400 })
-      if (product.stock < item.qty) return NextResponse.json({ error: `Stock insuffisant pour ${product.nom}` }, { status: 400 })
+
+      if (item.dateStart && item.dateEnd) {
+        const available = getAvailableStock(item.productId, item.dateStart, item.dateEnd)
+        if (available <= 0) {
+          return NextResponse.json(
+            { error: `Aucune disponibilité pour ${product.nom} sur la période ${item.dateStart} → ${item.dateEnd}` },
+            { status: 409 }
+          )
+        }
+        if (item.qty > available) {
+          warnings.push(
+            `Quantité ajustée pour ${product.nom} : ${item.qty} → ${available} (stock disponible sur cette période)`
+          )
+          adjustedItems.push({ ...item, qty: available })
+        } else {
+          adjustedItems.push(item)
+        }
+      } else {
+        if (product.stock < item.qty) {
+          warnings.push(
+            `Quantité ajustée pour ${product.nom} : ${item.qty} → ${product.stock} (stock maximum)`
+          )
+          adjustedItems.push({ ...item, qty: product.stock })
+        } else {
+          adjustedItems.push(item)
+        }
+      }
     }
+
+    const finalItems = adjustedItems
 
     // Verify dates not blocked
     const blockedAll = getBlockedDates()
-    for (const item of items) {
+    for (const item of finalItems) {
       const dates = getDatesBetween(item.dateStart, item.dateEnd)
       const blocked = blockedAll.filter((b) => b.productId === item.productId)
       const conflict = dates.some((d) => blocked.some((b) => b.date === d))
@@ -34,7 +66,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const itemsWithPrix = items.map((item) => {
+    const itemsWithPrix = finalItems.map((item) => {
       const p = produits.find((p) => p.id === item.productId)!
       return { ...item, prix: p.prix }
     })
@@ -45,7 +77,7 @@ export async function POST(request: NextRequest) {
 
     const booking: Booking = {
       id: uuidv4().slice(0, 8).toUpperCase(),
-      items,
+      items: finalItems,
       client: client || {} as any,
       totalHt,
       totalTtc,
@@ -58,7 +90,7 @@ export async function POST(request: NextRequest) {
     saveBooking(booking)
 
     // Block dates temporarily (pending payment)
-    for (const item of items) {
+    for (const item of finalItems) {
       const dates = getDatesBetween(item.dateStart, item.dateEnd)
       blockDates(item.productId, dates, booking.id)
     }
@@ -73,6 +105,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       booking,
       paymentIntent: paymentIntent ? { clientSecret: paymentIntent.client_secret } : null,
+      warnings: warnings.length > 0 ? warnings : undefined,
     })
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 })

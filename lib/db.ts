@@ -1,6 +1,6 @@
 import fs from "fs"
 import path from "path"
-import type { Booking, BlockedDate, QuoteRequest, PaymentRecord } from "./types"
+import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert } from "./types"
 
 const DATA_DIR = path.join(process.cwd(), "data")
 
@@ -110,3 +110,24 @@ export function getPaymentByBookingId(bookingId: string): PaymentRecord | undefi
 
 // ─── Helpers ───
 export { getDatesBetween }
+
+// ─── Late Alerts ───
+export function getLateAlerts(): LateAlert[] {
+  return read<LateAlert[]>("late-alerts", [])
+}
+
+export function getLateAlertsForBooking(bookingId: string): LateAlert[] {
+  return getLateAlerts().filter((a) => a.bookingId === bookingId)
+}
+
+export function saveLateAlert(alert: LateAlert) {
+  const all = getLateAlerts()
+  all.push(alert)
+  write("late-alerts", all)
+}
+
+export function hasAlertForBookingOnDate(bookingId: string, productId: number, date: string): boolean {
+  return getLateAlerts().some(
+    (a) => a.bookingId === bookingId && a.productId === productId && a.sentAt.split("T")[0] === date
+  )
+}

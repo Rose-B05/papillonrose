@@ -81,4 +81,5 @@ export type FilterState = {
   budgetMax: number
   dateDebut: string
   dateFin: string
+  inStockOnly: boolean
 }

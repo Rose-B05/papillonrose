@@ -1,15 +1,16 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/components/cart-context"
 import { produits } from "@/data/produits"
 import AvailabilityCalendar from "@/components/calendar"
 import { parsePrix, calcTotalHt, calcTtc, calcDeposit, formatDateFr } from "@/lib/utils"
-import { ShoppingBag, ArrowRight, ArrowLeft, Check, X, Trash2, Plus, Minus, Loader2, CreditCard } from "lucide-react"
+import { calcRentalDates, calculateLateFee, getRuleSummary, formatDateLong, type RentalDates } from "@/lib/rental-dates"
+import { ShoppingBag, ArrowRight, ArrowLeft, Check, X, Trash2, Plus, Minus, Loader2, Package, RotateCcw, AlertTriangle } from "lucide-react"
 import type { ClientInfo, CartItem } from "@/lib/types"
 
-type Step = "panier" | "dates" | "client" | "paiement" | "confirmation"
+type Step = "panier" | "dates" | "client" | "confirmation"
 
 const DP = { fontFamily: "var(--font-playfair), serif" } as const
 
@@ -26,7 +27,9 @@ export default function ReservationPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [bookingId, setBookingId] = useState<string>("")
-  const [paymentClientSecret, setPaymentClientSecret] = useState<string>("")
+  const [acceptedConditions, setAcceptedConditions] = useState(false)
+  const [availableStock, setAvailableStock] = useState<Record<number, number>>({})
+  const [serverWarnings, setServerWarnings] = useState<string[]>([])
 
   const getProduct = (id: number) => produits.find((p) => p.id === id)
 
@@ -38,6 +41,57 @@ export default function ReservationPage() {
   const totalHt = calcTotalHt(itemsWithPrix)
   const totalTtc = calcTtc(totalHt)
   const deposit = calcDeposit(totalTtc)
+
+  const rentalDatesMap = useMemo(() => {
+    const map: Record<number, RentalDates> = {}
+    for (const item of items) {
+      const eds = dateEdits[item.productId]
+      if (eds?.start && eds?.end) {
+        map[item.productId] = calcRentalDates(eds.start, eds.end)
+      }
+    }
+    return map
+  }, [items, dateEdits])
+
+  const firstRentalDate = useMemo(() => {
+    const keys = Object.keys(rentalDatesMap)
+    return keys.length > 0 ? rentalDatesMap[Number(keys[0])] : null
+  }, [rentalDatesMap])
+
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      const newAvailable: Record<number, number> = {}
+      for (const item of items) {
+        const eds = dateEdits[item.productId]
+        if (eds?.start && eds?.end) {
+          try {
+            const res = await fetch(`/api/availability?productId=${item.productId}&dateStart=${eds.start}&dateEnd=${eds.end}`)
+            const data = await res.json()
+            newAvailable[item.productId] = data.availableStock ?? getProduct(item.productId)?.stock ?? 0
+          } catch {
+            newAvailable[item.productId] = getProduct(item.productId)?.stock ?? 0
+          }
+        } else {
+          newAvailable[item.productId] = getProduct(item.productId)?.stock ?? 0
+        }
+      }
+      setAvailableStock(newAvailable)
+    }
+    fetchAvailability()
+  }, [items, dateEdits])
+
+  const getMaxQty = useCallback((productId: number) => {
+    return availableStock[productId] ?? getProduct(productId)?.stock ?? 0
+  }, [availableStock])
+
+  useEffect(() => {
+    for (const item of items) {
+      const max = getMaxQty(item.productId)
+      if (max > 0 && item.qty > max) {
+        updateItem(item.productId, { qty: max })
+      }
+    }
+  }, [availableStock])
 
   const validateDates = () => {
     for (const item of items) {
@@ -53,7 +107,7 @@ export default function ReservationPage() {
   }
 
   const handleCreateBooking = async () => {
-    setLoading(true); setError("")
+    setLoading(true); setError(""); setServerWarnings([])
     try {
       const cartItems: CartItem[] = items.map((i) => ({
         productId: i.productId, qty: i.qty,
@@ -67,21 +121,23 @@ export default function ReservationPage() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
-      setBookingId(data.booking.id)
-      if (data.paymentIntent?.clientSecret) {
-        setPaymentClientSecret(data.paymentIntent.clientSecret)
+      if (data.warnings) setServerWarnings(data.warnings)
+      if (data.booking.items) {
+        for (const bi of data.booking.items) {
+          const current = items.find((i) => i.productId === bi.productId)
+          if (current && current.qty !== bi.qty) {
+            updateItem(bi.productId, { qty: bi.qty })
+          }
+        }
       }
-      setStep("paiement")
+      setBookingId(data.booking.id)
+      clearCart()
+      setStep("confirmation")
     } catch (err: any) {
       setError(err.message)
     } finally {
       setLoading(false)
     }
-  }
-
-  const handlePaymentSuccess = () => {
-    clearCart()
-    setStep("confirmation")
   }
 
   const handleBack = () => {
@@ -91,13 +147,11 @@ export default function ReservationPage() {
       setStep("panier")
     } else if (step === "client") {
       setStep("dates")
-    } else if (step === "paiement") {
-      setStep("client")
     }
   }
 
-  const stepLabels = ["Panier", "Dates", "Client", "Paiement"]
-  const stepIndex = ["panier", "dates", "client", "paiement"].indexOf(step)
+  const stepLabels = ["Panier", "Dates", "Client"]
+  const stepIndex = ["panier", "dates", "client"].indexOf(step)
   const isConfirmation = step === "confirmation"
 
   if (isConfirmation) {
@@ -107,11 +161,11 @@ export default function ReservationPage() {
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
             <Check size={32} className="text-green-500" />
           </div>
-          <h1 style={DP} className="text-2xl font-semibold text-[#2E2E2E] mb-2">Réservation confirmée</h1>
-          <p className="text-gray-500 text-sm mb-1">Votre numéro de réservation :</p>
+          <h1 style={DP} className="text-2xl font-semibold text-[#2E2E2E] mb-2">Demande envoyée</h1>
+          <p className="text-gray-500 text-sm mb-1">Votre numéro de demande :</p>
           <p className="text-[#C8A97E] font-bold text-2xl mb-6">#{bookingId}</p>
           <p className="text-gray-500 text-sm mb-6">
-            Un email de confirmation vous a été envoyé. Le solde (70%) vous sera rappelé 7 jours avant votre événement.
+            Votre demande de devis a bien été enregistrée. Nous vous enverrons votre devis personnalisé sous <strong className="text-[#C8A97E]">48h ouvrées</strong>.
           </p>
           <button
             onClick={() => router.push("/")}
@@ -150,6 +204,11 @@ export default function ReservationPage() {
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-500 text-sm rounded-2xl px-5 py-3 mb-6">{error}</div>
         )}
+        {serverWarnings.length > 0 && (
+          <div className="bg-amber-50 border border-amber-200 text-amber-600 text-sm rounded-2xl px-5 py-3 mb-6 space-y-1">
+            {serverWarnings.map((w, i) => <p key={i}>{w}</p>)}
+          </div>
+        )}
 
         {step === "panier" && (
           <div>
@@ -169,6 +228,8 @@ export default function ReservationPage() {
                 <div className="space-y-3 mb-6">
                   {items.map((item) => {
                     const p = getProduct(item.productId)
+                    const maxQty = getMaxQty(item.productId)
+                    const atMax = item.qty >= maxQty
                     return (
                       <div key={item.productId} className="bg-white rounded-2xl p-4 flex gap-4 shadow-sm border border-black/[0.07]">
                         <img src={p?.image || "/placeholder.svg"} alt={p?.nom || ""} className="w-16 h-16 rounded-xl object-cover flex-shrink-0" />
@@ -178,8 +239,15 @@ export default function ReservationPage() {
                           <div className="flex items-center gap-2 mt-2">
                             <button onClick={() => updateItem(item.productId, { qty: Math.max(1, item.qty - 1) })} className="w-6 h-6 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm"><Minus size={10} /></button>
                             <span className="text-sm font-semibold text-[#2E2E2E] w-7 text-center">{item.qty}</span>
-                            <button onClick={() => updateItem(item.productId, { qty: item.qty + 1 })} className="w-6 h-6 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm"><Plus size={10} /></button>
+                            <button
+                              onClick={() => { if (!atMax) updateItem(item.productId, { qty: item.qty + 1 }) }}
+                              disabled={atMax}
+                              className="w-6 h-6 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
+                            ><Plus size={10} /></button>
                           </div>
+                          {atMax && maxQty > 0 && (
+                            <p className="text-[10px] text-amber-500 mt-1 font-medium">Stock maximum atteint</p>
+                          )}
                         </div>
                         <button onClick={() => removeItem(item.productId)} className="text-gray-300 hover:text-red-400 transition-colors self-start mt-1"><Trash2 size={14} /></button>
                       </div>
@@ -208,13 +276,35 @@ export default function ReservationPage() {
               {items.map((item) => {
                 const p = getProduct(item.productId)
                 const eds = dateEdits[item.productId] || { start: "", end: "" }
+                const maxQty = getMaxQty(item.productId)
+                const atMax = item.qty >= maxQty
                 return (
                   <div key={item.productId} className="bg-white rounded-2xl p-5 shadow-sm border border-black/[0.07]">
                     <div className="flex items-center gap-3 mb-4">
                       <img src={p?.image || "/placeholder.svg"} alt="" className="w-10 h-10 rounded-lg object-cover" />
-                      <div>
-                        <p className="font-medium text-sm">{p?.nom}</p>
-                        <p className="text-[11px] text-gray-400">Qté: {item.qty}</p>
+                      <div className="flex-1">
+                        <p className="font-medium text-sm text-[#2E2E2E]">{p?.nom}</p>
+                        <div className="flex items-center gap-3 mt-1">
+                          <div className="flex items-center gap-1.5">
+                            <button onClick={() => { if (item.qty > 1) updateItem(item.productId, { qty: item.qty - 1 }) }} className="w-5 h-5 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm"><Minus size={9} /></button>
+                            <span className="text-xs font-semibold w-5 text-center">{item.qty}</span>
+                            <button
+                              onClick={() => { if (!atMax) updateItem(item.productId, { qty: item.qty + 1 }) }}
+                              disabled={atMax}
+                              className="w-5 h-5 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
+                            ><Plus size={9} /></button>
+                          </div>
+                          {eds.start && eds.end && maxQty < (p?.stock || 0) && (
+                            <span className="text-[10px] text-amber-500 font-medium">
+                              Plus que {maxQty} dispo. sur cette période
+                            </span>
+                          )}
+                          {eds.start && eds.end && maxQty >= (p?.stock || 0) && maxQty > 0 && (
+                            <span className="text-[10px] text-green-500 font-medium">
+                              {maxQty} dispo.
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                     <AvailabilityCalendar
@@ -222,6 +312,7 @@ export default function ReservationPage() {
                       stock={p?.stock || 0}
                       dateStart={eds.start}
                       dateEnd={eds.end}
+                      availableStock={availableStock[item.productId]}
                       onDateStartChange={(d) => setDateEdits((prev) => ({ ...prev, [item.productId]: { ...prev[item.productId], start: d, end: "" } }))}
                       onDateEndChange={(d) => setDateEdits((prev) => ({ ...prev, [item.productId]: { ...prev[item.productId], end: d } }))}
                     />
@@ -229,6 +320,9 @@ export default function ReservationPage() {
                       <p className="text-xs text-green-500 mt-3 text-center">
                         ✓ {formatDateFr(eds.start)} → {formatDateFr(eds.end)} ({Math.ceil((new Date(eds.end).getTime() - new Date(eds.start).getTime()) / (1000 * 60 * 60 * 24))} jours)
                       </p>
+                    )}
+                    {rentalDatesMap[item.productId] && (
+                      <RentalDatesCard rd={rentalDatesMap[item.productId]} montantTotal={totalTtc} />
                     )}
                   </div>
                 )
@@ -300,46 +394,132 @@ export default function ReservationPage() {
                 </div>
               </div>
 
+              {/* Dates de retrait / restitution */}
+              {firstRentalDate && (
+                <div className="bg-white rounded-2xl p-5 border border-black/[0.07] shadow-sm">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#C8A97E] mb-3 flex items-center gap-2">
+                    <Package size={13} />
+                    Retrait & Restitution
+                  </p>
+                  <div className="space-y-3">
+                    {Object.values(rentalDatesMap).map((rd) => (
+                      <div key={rd.dateStart} className="flex items-start gap-3 text-sm">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <RotateCcw size={12} className="text-[#C8A97E]" />
+                            <span className="font-medium text-[#2E2E2E]">Retrait</span>
+                          </div>
+                          <p className="text-xs text-gray-500 ml-5">{formatDateLong(rd.pickupDate)}</p>
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <RotateCcw size={12} className="text-red-400" />
+                            <span className="font-medium text-[#2E2E2E]">Restitution</span>
+                          </div>
+                          <p className="text-xs text-gray-500 ml-5">Avant 12h le {formatDateLong(rd.returnDeadline)}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Barème des pénalités */}
+              {firstRentalDate && (
+                <div className="bg-amber-50 rounded-2xl p-5 border border-amber-200">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-amber-600 mb-3 flex items-center gap-2">
+                    <AlertTriangle size={13} />
+                    Barème des pénalités de retard
+                  </p>
+                  <div className="space-y-2 text-xs text-amber-800">
+                    <div className="flex justify-between">
+                      <span>Jour 1 de retard</span>
+                      <span className="font-semibold">+10% du montant total</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Jour 2 de retard</span>
+                      <span className="font-semibold">+40% (10% + 30%)</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Jour 3 et au-delà</span>
+                      <span className="font-semibold">+30% par jour supplémentaire</span>
+                    </div>
+                    <div className="flex justify-between pt-2 border-t border-amber-200">
+                      <span>Plafond maximum</span>
+                      <span className="font-bold text-amber-600">50% du montant total</span>
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-amber-600/70 mt-3 leading-relaxed">
+                    Formule : <code>min(10% + (jours - 1) × 30%, 50%)</code> — La restitution doit intervenir avant 12h à la date limite.
+                  </p>
+                </div>
+              )}
+
               <p className="text-xs text-gray-400 text-center">
-                Vous recevrez votre devis sous <strong className="text-[#C8A97E]">48h ouvrées</strong>
+                Vous recevrez votre devis sous <strong className="text-[#C8A97E]">48h ouvrees</strong>
               </p>
 
-              <button type="submit" disabled={!validateClient() || loading}
+              {/* Encart conditions de location */}
+              <div className="bg-[#2E2E2E] rounded-2xl p-5 text-white">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#C8A97E] mb-3">
+                  Conditions de location
+                </p>
+                <ul className="text-xs text-white/60 space-y-1.5 mb-4">
+                  <li>&#8226; Le materiel loue doit etre restitue en bon etat. Toute casse, perte, vol ou salissure irreversible entrainera des penalites.</li>
+                  <li>&#8226; Remplacement a valeur a neuf en cas de casse totale ou de perte.</li>
+                  <li>&#8226; Penalite de retard : 10% du montant de la location par jour de retard, plafonnee a 50%.</li>
+                  <li>&#8226; Annulation -30j : remboursement total | -15j : 50% | -7j : aucun remboursement.</li>
+                </ul>
+                <a
+                  href="/conditions-location"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-[#C8A97E] underline hover:text-white transition-colors"
+                >
+                  Lire les conditions completes
+                </a>
+              </div>
+
+              {/* Checkbox obligatoire */}
+              <label className="flex items-start gap-3 bg-white rounded-2xl px-5 py-4 border border-black/[0.07] shadow-sm cursor-pointer select-none">
+                <div
+                  className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors mt-0.5"
+                  style={{
+                    borderColor: acceptedConditions ? "#C8A97E" : "#d1d5db",
+                    backgroundColor: acceptedConditions ? "#C8A97E" : "transparent",
+                    borderRadius: "6px",
+                  }}
+                  onClick={() => setAcceptedConditions(!acceptedConditions)}
+                >
+                  {acceptedConditions && (
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  )}
+                  <input
+                    type="checkbox"
+                    checked={acceptedConditions}
+                    onChange={() => setAcceptedConditions(!acceptedConditions)}
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                  />
+                </div>
+                <span className="text-sm text-[#2E2E2E]">
+                  J&apos;ai lu et j&apos;accepte les{" "}
+                  <a href="/conditions-location" target="_blank" rel="noopener noreferrer" className="text-[#C8A97E] underline font-medium">
+                    conditions de location
+                  </a>
+                </span>
+              </label>
+
+              <button type="submit" disabled={!validateClient() || !acceptedConditions || loading}
                 className="w-full bg-[#C8A97E] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                {loading ? <Loader2 size={16} className="animate-spin" /> : <CreditCard size={16} />}
-                {loading ? "Traitement..." : `Payer l'acompte (${Number.isFinite(deposit) ? deposit.toFixed(2) : "0,00"} €)`}
+                {loading ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
+                {loading ? "Envoi en cours..." : "Envoyer la demande de devis"}
               </button>
             </form>
           </div>
         )}
 
-        {step === "paiement" && (
-          <div>
-            <div className="bg-white rounded-3xl shadow-xl max-w-md mx-auto p-8 text-center">
-              <div className="w-16 h-16 bg-[#C8A97E]/10 rounded-full flex items-center justify-center mx-auto mb-5">
-                <CreditCard size={28} className="text-[#C8A97E]" />
-              </div>
-              <h2 style={DP} className="text-2xl font-semibold text-[#2E2E2E] mb-2">Paiement sécurisé</h2>
-              <p className="text-gray-400 text-sm mb-2">Acompte de <strong className="text-[#C8A97E]">{Number.isFinite(deposit) ? `${deposit.toFixed(2)} €` : "0,00 €"}</strong></p>
-              <p className="text-gray-400 text-xs mb-6">Carte bancaire (Stripe) — Paiement sécurisé</p>
-
-              <StripePaymentForm
-                bookingId={bookingId}
-                clientSecret={paymentClientSecret}
-                deposit={deposit}
-                onSuccess={handlePaymentSuccess}
-                onError={(e) => setError(e)}
-              />
-
-              <div className="mt-6 pt-4 border-t border-black/[0.07] text-[10px] text-gray-400 space-y-1">
-                <p>🔒 Paiement 100% sécurisé</p>
-                <p>Annulation -30 jours : remboursement total</p>
-                <p>Annulation -15 jours : remboursement 50%</p>
-                <p>Annulation -7 jours : aucun remboursement</p>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )
@@ -418,55 +598,28 @@ function Totals({ totalHt, totalTtc, deposit }: { totalHt: number; totalTtc: num
   )
 }
 
-function StripePaymentForm({ bookingId, clientSecret, deposit, onSuccess, onError }: {
-  bookingId: string; clientSecret: string; deposit: number; onSuccess: () => void; onError: (e: string) => void
-}) {
-  const [loading, setLoading] = useState(false)
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      const res = await fetch("/api/payments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bookingId, paymentIntentId: clientSecret }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error)
-      onSuccess()
-    } catch (err: any) {
-      onError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
+function RentalDatesCard({ rd, montantTotal }: { rd: RentalDates; montantTotal: number }) {
+  const fee1 = calculateLateFee(1, montantTotal)
+  const fee2 = calculateLateFee(2, montantTotal)
+  const fee3 = calculateLateFee(3, montantTotal)
+  const feeMax = calculateLateFee(10, montantTotal)
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 text-left">
-      <div>
-        <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Numéro de carte</label>
-        <input value="4242 4242 4242 4242" readOnly
-          className="w-full bg-gray-50 border border-black/[0.08] rounded-xl px-4 py-3 text-sm outline-none text-gray-400 cursor-not-allowed" />
-      </div>
-      <div className="grid grid-cols-2 gap-3">
+    <div className="mt-3 bg-[#F8F5F0] rounded-xl p-3 border border-black/[0.05]">
+      <p className="text-[10px] uppercase tracking-wider text-[#C8A97E] font-semibold mb-2">{rd.ruleLabel}</p>
+      <div className="grid grid-cols-2 gap-3 text-xs">
         <div>
-          <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Expiration</label>
-          <input value="12/28" readOnly
-            className="w-full bg-gray-50 border border-black/[0.08] rounded-xl px-4 py-3 text-sm outline-none text-gray-400 cursor-not-allowed" />
+          <p className="text-gray-400 mb-0.5">Retrait</p>
+          <p className="font-medium text-[#2E2E2E]">{formatDateLong(rd.pickupDate)}</p>
         </div>
         <div>
-          <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">CVC</label>
-          <input value="123" readOnly
-            className="w-full bg-gray-50 border border-black/[0.08] rounded-xl px-4 py-3 text-sm outline-none text-gray-400 cursor-not-allowed" />
+          <p className="text-gray-400 mb-0.5">Restitution avant 12h</p>
+          <p className="font-medium text-[#2E2E2E]">{formatDateLong(rd.returnDeadline)}</p>
         </div>
       </div>
-      <p className="text-xs text-gray-400 text-center">Mode test — Carte Stripe de test (4242...)</p>
-      <button type="submit" disabled={loading}
-        className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-40 flex items-center justify-center gap-2">
-        {loading ? <Loader2 size={16} className="animate-spin" /> : null}
-        {loading ? "Paiement en cours..." : `Payer ${deposit.toFixed(2)} €`}
-      </button>
-    </form>
+      <div className="mt-2 pt-2 border-t border-black/[0.05] text-[10px] text-gray-400">
+        <span className="text-amber-600 font-medium">Retard :</span> +{fee1.taux * 100}%jour 1 ({fee1.montant.toFixed(2)}€) → +{fee2.taux * 100}%jour 2 ({fee2.montant.toFixed(2)}€) → plafond {feeMax.taux * 100}% ({feeMax.montant.toFixed(2)}€)
+      </div>
+    </div>
   )
 }

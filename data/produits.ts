@@ -134,16 +134,7 @@ export const produits: Produit[] = [
     image: "/images/placeholder.png",
     badge: "stock-limite",
   },
-  {
-    id: 14,
-    nom: "Tapis de Jeu Nuage Rose",
-    categorie: "Figurines & Jeux",
-    stock: 1,
-    dimension: "160 x 160 cm",
-    prix: 20,
-    image: "/images/placeholder.png",
-    badge: "stock-limite",
-  },
+
   {
     id: 15,
     nom: "Ciel de Lit Princesse Saumon",

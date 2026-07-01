@@ -20,6 +20,7 @@ interface OverflowCard {
   image: string
   bgColor: string
   count?: number
+  largeImage?: boolean
 }
 
 export default function OverflowCarousel({
@@ -151,6 +152,9 @@ export default function OverflowCarousel({
           const center = offset === 0
           const light = isLight(card.bgColor)
           const textColor = light ? "#333" : "#fff"
+          const isLarge = card.largeImage
+          const imgHeight = isLarge ? 400 : 300
+          const cardHeight = isLarge ? 320 : 280
 
           return (
             <div
@@ -170,10 +174,10 @@ export default function OverflowCarousel({
                 draggable={false}
                 style={{
                   position: "absolute",
-                  top: "-90px",
+                  top: isLarge ? "-120px" : "-90px",
                   left: "50%",
                   transform: "translateX(-50%)",
-                  height: "300px",
+                  height: `${imgHeight}px`,
                   objectFit: "contain",
                   zIndex: 20,
                   pointerEvents: "none",
@@ -186,7 +190,7 @@ export default function OverflowCarousel({
                 style={{
                   background: card.bgColor,
                   borderRadius: "20px",
-                  height: "280px",
+                  height: `${cardHeight}px`,
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
