@@ -10,6 +10,23 @@ export type Produit = {
   actif?: boolean;
 };
 
+const PLACEHOLDER_PATTERNS = [
+  "/placeholder.png",
+  "/placeholder.svg",
+  "/images/placeholder.png",
+  "/images/placeholder.svg",
+]
+
+export function hasRealPhoto(product: { image?: string | null }): boolean {
+  if (!product.image) return false
+  const img = product.image.toLowerCase()
+  return !PLACEHOLDER_PATTERNS.some((p) => img === p)
+}
+
+export function getActiveProductsCount(): number {
+  return produits.filter((p) => hasRealPhoto(p) && p.actif !== false).length
+}
+
 export const produits: Produit[] = [
 
   // ── MOBILIER ──

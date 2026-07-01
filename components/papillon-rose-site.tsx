@@ -21,7 +21,7 @@ import {
   RotateCcw,
   Star,
 } from "lucide-react"
-import { produits, type Produit } from "@/data/produits"
+import { produits, type Produit, hasRealPhoto } from "@/data/produits"
 import { useCart } from "@/components/cart-context"
 import CatalogGallery from "@/components/catalog-gallery"
 import CatalogFilters from "@/components/catalog-filters"
@@ -72,35 +72,6 @@ const CATEGORIES = [
 ]
 
 const PRODUCTS = produits
-
-/**
- * Règle de filtrage des produits sans photo réelle.
- * Un produit est masqué du site s'il ne satisfait PAS à ces critères :
- *   1. Le champ `image` n'est PAS un placeholder générique
- *      (placeholder.png, placeholder.svg, ou chemin vide/null)
- *   2. Le champ `image` n'est PAS vide ou null
- *
- * Cette fonction est appliquée automatiquement à la source de données.
- * Dès qu'une vraie photo est ajoutée (fichier PRODxxx.png dans /public/images),
- * le produit réapparaît automatiquement au prochain build sans intervention code.
- *
- * NOTE : La vérification d'existence du fichier image ne peut pas se faire
- * côté client. On se base donc sur le nom du fichier. Si un produit a un nom
- * de fichier qui ne correspond à aucun fichier réel, il faudra le corriger
- * dans cette liste ou ajouter l'image manquante.
- */
-const PLACEHOLDER_PATTERNS = [
-  "/placeholder.png",
-  "/placeholder.svg",
-  "/images/placeholder.png",
-  "/images/placeholder.svg",
-]
-
-function hasRealPhoto(product: { image?: string | null }): boolean {
-  if (!product.image) return false
-  const img = product.image.toLowerCase()
-  return !PLACEHOLDER_PATTERNS.some((p) => img === p)
-}
 
 /** Produits visibles sur le site (ayant une vraie photo et non archivés) */
 const VISIBLE_PRODUCTS = PRODUCTS.filter((p) => hasRealPhoto(p) && p.actif !== false)

@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, Crown, ShieldCheck, Heart } from "lucide-react"
+import { getActiveProductsCount } from "@/data/produits"
 
 export const metadata: Metadata = {
   title: "À propos — Notre histoire | Papillon Rose",
@@ -29,7 +30,7 @@ const VALUES = [
 ]
 
 const STATS = [
-  { val: "83", label: "références" },
+  { val: `${getActiveProductsCount()}`, label: "références" },
   { val: "11", label: "catégories" },
   { val: "IDF", label: "Île-de-France" },
   { val: "24h", label: "Devis sous" },

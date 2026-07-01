@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/components/cart-context'
-import { produits, type Produit } from '@/data/produits'
+import { getActiveProductsCount } from '@/data/produits'
 
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'] })
 const playfair = Playfair_Display({
@@ -11,22 +11,7 @@ const playfair = Playfair_Display({
   subsets: ['latin'],
 })
 
-/**
- * Filtre les produits sans photo réelle (voir composant papillon-rose-site.tsx
- * pour la documentation complète de cette règle).
- */
-const PLACEHOLDER_PATTERNS = [
-  "/placeholder.png",
-  "/placeholder.svg",
-  "/images/placeholder.png",
-  "/images/placeholder.svg",
-]
-function hasRealPhoto(product: { image?: string | null }): boolean {
-  if (!product.image) return false
-  const img = product.image.toLowerCase()
-  return !PLACEHOLDER_PATTERNS.some((p) => img === p)
-}
-const nbRef = produits.filter((p) => hasRealPhoto(p) && p.actif !== false).length
+const nbRef = getActiveProductsCount()
 
 export const metadata: Metadata = {
   title: {
