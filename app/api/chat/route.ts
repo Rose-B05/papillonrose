@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getActiveProductsCount } from "@/data/produits"
+import { getActiveProductsCount, getActiveCategoriesCount } from "@/data/produits"
 
 const nbRef = getActiveProductsCount()
-const nbCat = 11
+const nbCat = getActiveCategoriesCount()
 
 const SYSTEM_PROMPT = `Tu es l'assistant virtuel de "Papillon Rose", un service de location de mobilier et décoration pour événements (mariages, anniversaires, baptêmes, soirées d'entreprise, séminaires).
 

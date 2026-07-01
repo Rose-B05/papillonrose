@@ -27,6 +27,10 @@ export function getActiveProductsCount(): number {
   return produits.filter((p) => hasRealPhoto(p) && p.actif !== false).length
 }
 
+export function getActiveCategoriesCount(): number {
+  return new Set(produits.filter((p) => hasRealPhoto(p) && p.actif !== false).map((p) => p.categorie)).size
+}
+
 export const produits: Produit[] = [
 
   // ── MOBILIER ──

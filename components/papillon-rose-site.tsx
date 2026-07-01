@@ -21,7 +21,7 @@ import {
   RotateCcw,
   Star,
 } from "lucide-react"
-import { produits, type Produit, hasRealPhoto } from "@/data/produits"
+import { produits, type Produit, hasRealPhoto, getActiveProductsCount } from "@/data/produits"
 import { useCart } from "@/components/cart-context"
 import CatalogGallery from "@/components/catalog-gallery"
 import CatalogFilters from "@/components/catalog-filters"
@@ -870,7 +870,7 @@ export default function PapillonRoseSite() {
                 {/* Stats 2×2 */}
                 <div className="grid grid-cols-2 gap-x-8 gap-y-3 flex-1">
                   {[
-                    { val: `${VISIBLE_PRODUCTS.length}`, label: "références" },
+                    { val: `${getActiveProductsCount()}`, label: "références" },
                     { val: `${CATEGORIES.length - 1}`, label: "catégories" },
                     { val: "Stock", label: "mis à jour" },
                     { val: "Devis", label: "en 24h" },
@@ -1054,7 +1054,7 @@ export default function PapillonRoseSite() {
                     step: 1,
                     Icon: Search,
                     title: "Explorez le catalogue",
-                    text: `Parcourez nos ${VISIBLE_PRODUCTS.length} références et ajoutez vos coups de cœur à votre sélection.`,
+                    text: `Parcourez nos ${getActiveProductsCount()} références et ajoutez vos coups de cœur à votre sélection.`,
                   },
                   {
                     step: 2,
