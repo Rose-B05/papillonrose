@@ -128,15 +128,17 @@ const GOLD = "#C8A97E"
 function ProductCard({
   product,
   isFav,
+  isInCart,
   onFav,
   onView,
-  onAdd,
+  onAddCart,
 }: {
   product: Produit
   isFav: boolean
+  isInCart: boolean
   onFav: () => void
   onView: () => void
-  onAdd: () => void
+  onAddCart: () => void
 }) {
   const getSrc = () => {
     if (product.image && product.image !== "/placeholder.png") return product.image
@@ -144,15 +146,15 @@ function ProductCard({
     return "/placeholder.svg"
   }
   return (
-    <div className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
+    <div className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
       <div
-        className="relative overflow-hidden cursor-pointer bg-[#F8F5F0] h-[250px]"
+        className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0] p-3"
         onClick={onView}
       >
         <img
           src={img(getSrc())}
           alt={product.nom}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -162,8 +164,8 @@ function ProductCard({
           </span>
         )}
       </div>
-      <div className="p-3.5 flex items-center justify-between gap-2">
-        <div className="min-w-0 flex-1">
+      <div className="p-3.5 flex flex-col flex-1">
+        <div className="min-w-0">
           <p className="text-[10px] font-medium text-[#C8A97E] uppercase tracking-wider truncate">
             {product.categorie}
           </p>
@@ -173,36 +175,36 @@ function ProductCard({
           {product.dimension && (
             <p className="text-[10px] text-gray-400 truncate">{formatDecimalFr(product.dimension)}</p>
           )}
-          <p className="text-sm font-bold text-[#2E2E2E] mt-0.5">
+          <p className="text-lg font-bold text-[#2E2E2E] mt-0.5">
             {formatPrix(product.prix)} €
-            <span className="text-[10px] font-normal text-gray-400 ml-0.5">/jour</span>
+            <span className="text-xs font-normal text-gray-400 ml-0.5">/jour</span>
           </p>
         </div>
-        <div className="flex flex-col gap-1.5 flex-shrink-0">
+        <div className="mt-auto pt-2.5 flex items-center gap-2">
           <button
-            onClick={(e) => { e.stopPropagation(); addCartItem({ productId: product.id, qty: 1, dateStart: "", dateEnd: "" }) }}
-            aria-label="Ajouter au panier"
-            className="w-8 h-8 rounded-full bg-white border border-[#C8A97E]/30 text-[#C8A97E] flex items-center justify-center hover:bg-[#C8A97E] hover:text-white transition-all shadow-sm"
+            onClick={(e) => { e.stopPropagation(); onAddCart() }}
+            disabled={isInCart}
+            aria-label={isInCart ? "Déjà dans le panier" : "Ajouter au panier"}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
+              isInCart
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-[#C8A97E] text-white hover:bg-[#B8926E]"
+            }`}
           >
             <ShoppingBag size={13} />
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); onAdd() }}
-            aria-label="Ajouter au devis"
-            className="w-8 h-8 rounded-full bg-[#C8A97E] text-white flex items-center justify-center hover:bg-[#B8926E] transition-all shadow-sm"
-          >
-            <Plus size={13} />
+            <span className="hidden sm:inline">{isInCart ? "Déjà dans le panier" : "Ajouter au panier"}</span>
+            <span className="sm:hidden">{isInCart ? "Ajouté" : "Ajouter"}</span>
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); onFav() }}
             aria-label="Favoris"
-            className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all shadow-sm ${
+            className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all shadow-sm flex-shrink-0 ${
               isFav
                 ? "border-[#C8A97E] bg-[#C8A97E]/10 text-[#C8A97E]"
                 : "border-gray-200 text-gray-300 hover:text-[#C8A97E] hover:border-[#C8A97E]/30"
             }`}
           >
-            <Heart size={12} fill={isFav ? "currentColor" : "none"} />
+            <Heart size={14} fill={isFav ? "currentColor" : "none"} />
           </button>
         </div>
       </div>
@@ -1043,9 +1045,10 @@ export default function PapillonRoseSite() {
                       key={p.id}
                       product={p}
                       isFav={favorites.has(p.id)}
+                      isInCart={cartItems.some((i) => i.productId === p.id)}
                       onFav={() => toggleFav(p.id)}
                       onView={() => { setModalProduct(p); setModalQty(1) }}
-                      onAdd={() => addToQuote(p)}
+                      onAddCart={() => addCartItem({ productId: p.id, qty: 1, dateStart: "", dateEnd: "" })}
                     />
                   ))}
               </div>
@@ -1350,6 +1353,7 @@ export default function PapillonRoseSite() {
               <CatalogGallery
                 produits={filtered}
                 favorites={favorites}
+                cartItems={cartItems}
                 onFav={toggleFav}
                 onAddCart={(id) => addCartItem({ productId: id, qty: 1, dateStart: "", dateEnd: "" })}
                 onAddQuote={addToQuote}
@@ -1409,9 +1413,10 @@ export default function PapillonRoseSite() {
                     key={p.id}
                     product={p}
                     isFav
+                    isInCart={cartItems.some((i) => i.productId === p.id)}
                     onFav={() => toggleFav(p.id)}
                     onView={() => setModalProduct(p)}
-                    onAdd={() => addToQuote(p)}
+                    onAddCart={() => addCartItem({ productId: p.id, qty: 1, dateStart: "", dateEnd: "" })}
                   />
                 ))}
               </div>
