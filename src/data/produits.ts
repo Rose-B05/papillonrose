@@ -133,7 +133,7 @@ export const produits: Produit[] = [
     categorie: "Figurines & Jeux",
     stock: 1,
     prix: 10,
-    image: "/images/prod013.png",
+    image: "/images/PROD013.png",
     badge: "stock-limite",
   },
   {
