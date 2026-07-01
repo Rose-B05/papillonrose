@@ -514,7 +514,7 @@ export const produits: Produit[] = [
   },
   {
     id: 59,
-    nom: "Porte Carte Or (ruban)",
+    nom: "Nœud de Chaise Corail",
     categorie: "Art de la Table",
     stock: 25,
     dimension: "3.18 m",
