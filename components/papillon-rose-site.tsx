@@ -208,6 +208,85 @@ function CategoryPills({
   )
 }
 
+// ─── Breadcrumb ──────────────────────────────────────────────────────────────
+function Breadcrumb({
+  category,
+  productName,
+  onNavigate,
+}: {
+  category?: string
+  productName?: string
+  onNavigate: (page: Page, cat?: string) => void
+}) {
+  const items: { label: string; onClick?: () => void }[] = [
+    { label: "Accueil", onClick: () => onNavigate("home") },
+    { label: "Catalogue", onClick: () => onNavigate("catalogue") },
+  ]
+  if (category && category !== "Tous") {
+    items.push({
+      label: category,
+      onClick: () => onNavigate("catalogue", category),
+    })
+  }
+  if (productName) {
+    items.push({ label: productName })
+  }
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.label,
+      ...(item.onClick ? { item: "#" } : {}),
+    })),
+  }
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <nav aria-label="Fil d'Ariane" className="mb-5">
+        <ol className="flex items-center gap-1.5 text-xs text-gray-400 flex-wrap">
+          {items.map((item, i) => {
+            const isLast = i === items.length - 1
+            return (
+              <li key={i} className="flex items-center gap-1.5">
+                {i > 0 && (
+                  <svg
+                    className="w-3 h-3 text-gray-300 flex-shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                )}
+                {isLast ? (
+                  <span className="text-[#2E2E2E] font-medium truncate max-w-[200px]">
+                    {item.label}
+                  </span>
+                ) : (
+                  <button
+                    onClick={item.onClick}
+                    className="hover:text-[#C8A97E] transition-colors truncate max-w-[180px]"
+                  >
+                    {item.label}
+                  </button>
+                )}
+              </li>
+            )
+          })}
+        </ol>
+      </nav>
+    </>
+  )
+}
+
 // ─── ProductImages (Carousel) ───────────────────────────────────────────────
 function ProductImages({
   images,
@@ -1156,6 +1235,14 @@ export default function PapillonRoseSite() {
         {/* ─── CATALOGUE ─── */}
         {page === "catalogue" && (
           <div className="max-w-7xl mx-auto px-5 md:px-10 pt-24 pb-8">
+            <Breadcrumb
+              category={category !== "Tous" ? category : undefined}
+              onNavigate={(p, cat) => {
+                if (p === "home") navTo("home")
+                else if (cat) goToCatalogue(cat)
+                else goToCatalogue()
+              }}
+            />
             <div className="mb-7">
               <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                 Explorer
@@ -1464,6 +1551,16 @@ export default function PapillonRoseSite() {
                 onClose={() => setModalProduct(null)}
               />
               <div className="p-7 flex flex-col">
+                <Breadcrumb
+                  category={modalProduct.categorie}
+                  productName={modalProduct.nom}
+                  onNavigate={(p, cat) => {
+                    setModalProduct(null)
+                    if (p === "home") navTo("home")
+                    else if (cat) goToCatalogue(cat)
+                    else goToCatalogue()
+                  }}
+                />
                 <span className="text-[#C8A97E] text-[10px] tracking-[0.35em] uppercase font-medium mb-2">
                   {modalProduct.categorie}
                 </span>
