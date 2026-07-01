@@ -551,7 +551,7 @@ export const produits: Produit[] = [
     nom: "Salière Poivrière",
     categorie: "Art de la Table",
     stock: 2,
-    dimension: "H 18 cm",
+    dimension: "H 7 cm, Ø 5 cm",
     prix: 2,
     image: "/images/PROD063.png",
   },
