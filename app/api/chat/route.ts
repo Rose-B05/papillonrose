@@ -31,7 +31,7 @@ Tu dois :
 
 COORDONNÉES DE L'ENTREPRISE :
 - Email : papillonrosebertha@gmail.com
-- Téléphone : 06 12 34 56 78
+- Téléphone : temporairement indisponible (contacter par email ou Instagram)
 - Telegram : @PapillonRose
 
 RÈGLES IMPORTANTES :

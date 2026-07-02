@@ -14,6 +14,7 @@ const CRETEIL = { lat: 48.7773, lon: 2.4620 } as const
 export const DELIVERY_BASE_FEE = 20 // forfait de base en €
 export const DELIVERY_PER_KM = 1.50 // tarif kilométrique en €/km
 export const ROAD_COEFFICIENT = 1.3 // coefficient de majoration route vs vol d'oiseau
+export const FREE_DELIVERY_THRESHOLD = 150 // livraison gratuite à partir de 150€ de location
 
 // ─── Départements autorisés ──────────────────────────────────────────────────
 export const ALLOWED_DEPARTMENTS = ["94", "93", "95", "77", "91"] as const
@@ -122,11 +123,12 @@ export interface DeliveryResult {
   baseFee: number
   perKmFee: number
   totalFee: number
+  freeDelivery: boolean
   zoneLabel: string
   error?: string
 }
 
-export function calcDeliveryFee(postalCode: string): DeliveryResult {
+export function calcDeliveryFee(postalCode: string, cartTotal: number = 0): DeliveryResult {
   const department = getDepartment(postalCode)
 
   if (!department) {
@@ -138,6 +140,7 @@ export function calcDeliveryFee(postalCode: string): DeliveryResult {
       baseFee: DELIVERY_BASE_FEE,
       perKmFee: 0,
       totalFee: 0,
+      freeDelivery: false,
       zoneLabel: "",
       error: "Code postal invalide",
     }
@@ -152,6 +155,7 @@ export function calcDeliveryFee(postalCode: string): DeliveryResult {
       baseFee: DELIVERY_BASE_FEE,
       perKmFee: 0,
       totalFee: 0,
+      freeDelivery: false,
       zoneLabel: "",
       error: `Livraison non disponible en département ${department}. Contactez-nous pour un devis personnalisé.`,
     }
@@ -167,13 +171,16 @@ export function calcDeliveryFee(postalCode: string): DeliveryResult {
       baseFee: DELIVERY_BASE_FEE,
       perKmFee: 0,
       totalFee: 0,
+      freeDelivery: false,
       zoneLabel: "",
       error: "Code postal non reconnu dans notre zone de livraison.",
     }
   }
 
   const perKmFee = Math.round(distance * DELIVERY_PER_KM * 100) / 100
-  const totalFee = Math.round((DELIVERY_BASE_FEE + perKmFee) * 100) / 100
+  const rawTotal = Math.round((DELIVERY_BASE_FEE + perKmFee) * 100) / 100
+  const freeDelivery = cartTotal >= FREE_DELIVERY_THRESHOLD
+  const totalFee = freeDelivery ? 0 : rawTotal
   const coords = getCoordsFromPostalCode(postalCode)
 
   return {
@@ -184,6 +191,7 @@ export function calcDeliveryFee(postalCode: string): DeliveryResult {
     baseFee: DELIVERY_BASE_FEE,
     perKmFee,
     totalFee,
+    freeDelivery,
     zoneLabel: coords?.label || "",
   }
 }

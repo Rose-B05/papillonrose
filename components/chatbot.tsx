@@ -73,7 +73,7 @@ export default function Chatbot() {
         ...prev,
         {
           role: "assistant",
-          content: "Je suis désolée de ne pas pouvoir vous répondre pour le moment 🌸 N'hésitez pas à nous contacter directement par email à **papillonrosebertha@gmail.com** ou par téléphone au **06 12 34 56 78**, nous vous répondrons avec plaisir !",
+          content: "Je suis désolée de ne pas pouvoir vous répondre pour le moment 🌸 N'hésitez pas à nous contacter directement par email à **papillonrosebertha@gmail.com** ou via Instagram **@papillonrose.g**, nous vous répondrons avec plaisir !",
         },
       ])
     } finally {
@@ -125,7 +125,7 @@ export default function Chatbot() {
         {
           role: "assistant",
           content:
-            "Je suis désolée, la transmission n'a pas pu aboutir 🌸 Vous pouvez nous envoyer votre demande directement par email à **papillonrosebertha@gmail.com** ou nous appeler au **06 12 34 56 78**, nous vous répondrons avec plaisir !",
+            "Je suis désolée, la transmission n'a pas pu aboutir 🌸 Vous pouvez nous envoyer votre demande directement par email à **papillonrosebertha@gmail.com** ou via Instagram **@papillonrose.g**, nous vous répondrons avec plaisir !",
         },
       ])
     }
@@ -206,7 +206,7 @@ export default function Chatbot() {
             )}
             {remaining <= 0 ? (
               <p className="text-xs text-gray-400 text-center py-2">
-                Session terminée. Contactez-nous au 06 12 34 56 78
+                Session terminée. Contactez-nous par email ou Instagram
               </p>
             ) : (
               <div className="flex items-center gap-2">

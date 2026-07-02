@@ -472,6 +472,14 @@ function Footer({
             </p>
             <ul className="space-y-3.5 text-sm">
               <li className="flex items-start gap-2.5">
+                <Phone size={13} className="text-[#C8A97E]/50 mt-0.5 flex-shrink-0" />
+                <span className="text-[#D4B896]/60 text-xs italic">
+                  Téléphone temporairement indisponible
+                  <br />
+                  <span className="not-italic">Contactez-nous par email ou Instagram</span>
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
                 <Mail size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
                 <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors">
                   papillonrosebertha@gmail.com
@@ -842,7 +850,7 @@ export default function PapillonRoseSite() {
             </div>
             <div className="mt-auto text-sm text-[#2E2E2E]/35 space-y-1">
               <p>papillonrosebertha@gmail.com</p>
-              <p>06 12 34 56 78</p>
+              <p className="text-xs italic">Tél. temporairement indisponible</p>
             </div>
           </div>
         </div>
@@ -1435,7 +1443,8 @@ export default function PapillonRoseSite() {
                       {
                         Icon: Phone,
                         label: "Téléphone",
-                        val: "06 12 34 56 78",
+                        val: "Temporairement indisponible",
+                        note: "Contactez-nous par email ou Instagram",
                       },
                       {
                         Icon: Mail,
@@ -1458,7 +1467,7 @@ export default function PapillonRoseSite() {
                         val: "papillonrose.g",
                         link: "https://www.instagram.com/papillonrose.g",
                       },
-                    ].map(({ Icon, label, val, link }) => (
+                    ].map(({ Icon, label, val, link, note }) => (
                       <div key={label} className="flex items-start gap-4">
                         <div className="w-11 h-11 bg-[#C8A97E]/12 rounded-2xl flex items-center justify-center flex-shrink-0">
                           <Icon size={17} className="text-[#C8A97E]" />
@@ -1475,6 +1484,9 @@ export default function PapillonRoseSite() {
                             <p className="font-medium text-sm whitespace-pre-line text-[#2E2E2E]">
                               {val}
                             </p>
+                          )}
+                          {note && (
+                            <p className="text-xs text-gray-400 mt-0.5">{note}</p>
                           )}
                         </div>
                       </div>

@@ -102,7 +102,7 @@ export default function ReservationPage() {
   // Recalcul des frais de livraison quand le code postal change
   useEffect(() => {
     if (client.besoinLivraison && client.codePostalLivraison && client.codePostalLivraison.length === 5) {
-      const result = calcDeliveryFee(client.codePostalLivraison)
+      const result = calcDeliveryFee(client.codePostalLivraison, totalTtc)
       setDeliveryResult(result)
       setClient((c) => ({
         ...c,
@@ -113,7 +113,7 @@ export default function ReservationPage() {
       setDeliveryResult(null)
       setClient((c) => ({ ...c, fraisLivraison: undefined, distanceLivraison: undefined }))
     }
-  }, [client.besoinLivraison, client.codePostalLivraison])
+  }, [client.besoinLivraison, client.codePostalLivraison, totalTtc])
 
   const validateDates = () => {
     for (const item of items) {
@@ -392,6 +392,31 @@ export default function ReservationPage() {
               <InputField label="Lieu de l'événement (adresse)" value={client.lieuEvenement} onChange={(v) => { setClient((c) => ({ ...c, lieuEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.lieuEvenement; return n }) }} required error={showErrors ? fieldErrors.lieuEvenement : undefined} />
               <InputField label="Nombre d'invités" type="number" value={String(client.nbInvites || "")} onChange={(v) => setClient((c) => ({ ...c, nbInvites: Number(v) }))} required />
               <div className="space-y-3">
+                {/* Option retrait sur place */}
+                <div className="flex items-center gap-3 bg-white rounded-2xl px-5 py-4 border border-black/[0.07] shadow-sm">
+                  <div
+                    className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer"
+                    style={{
+                      borderColor: !client.besoinLivraison ? "#C8A97E" : "#d1d5db",
+                      backgroundColor: !client.besoinLivraison ? "#C8A97E" : "transparent",
+                      borderRadius: "6px",
+                    }}
+                    onClick={() => setClient((c) => ({ ...c, besoinLivraison: false }))}
+                  >
+                    {!client.besoinLivraison && (
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    )}
+                    <input type="radio" checked={!client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
+                  </div>
+                  <label className="text-sm text-[#2E2E2E] cursor-pointer flex items-center gap-2">
+                    <Package size={16} className="text-[#C8A97E]" />
+                    <span>Retrait sur place &mdash; <strong className="text-[#C8A97E]">Gratuit</strong></span>
+                  </label>
+                </div>
+
+                {/* Option livraison */}
                 <div className="flex items-center gap-3 bg-white rounded-2xl px-5 py-4 border border-black/[0.07] shadow-sm">
                   <div
                     className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer"
@@ -400,20 +425,30 @@ export default function ReservationPage() {
                       backgroundColor: client.besoinLivraison ? "#C8A97E" : "transparent",
                       borderRadius: "6px",
                     }}
-                    onClick={() => setClient((c) => ({ ...c, besoinLivraison: !c.besoinLivraison }))}
+                    onClick={() => setClient((c) => ({ ...c, besoinLivraison: true }))}
                   >
                     {client.besoinLivraison && (
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
                     )}
-                    <input type="checkbox" checked={client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
+                    <input type="radio" checked={client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
                   </div>
                   <label className="text-sm text-[#2E2E2E] cursor-pointer flex items-center gap-2">
                     <Truck size={16} className="text-[#C8A97E]" />
-                    Besoin de livraison et/ou montage ?
+                    <span>Livraison et/ou montage</span>
                   </label>
                 </div>
+
+                {totalTtc >= 150 && client.besoinLivraison && (
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-3 text-sm text-green-700 flex items-center gap-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                      <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    Livraison offerte pour cette commande (montant &ge; 150&euro;)
+                  </div>
+                )}
 
                 {client.besoinLivraison && (
                   <div className="bg-white rounded-2xl p-5 border border-black/[0.07] shadow-sm space-y-4">
@@ -445,24 +480,36 @@ export default function ReservationPage() {
 
                     {deliveryResult && deliveryResult.allowed && deliveryResult.distanceKm && (
                       <div className="bg-[#F8F5F0] rounded-xl p-4 border border-black/[0.05]">
-                        <p className="text-xs text-gray-400 mb-2">Frais de livraison estimés</p>
-                        <div className="space-y-1.5 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-[#2E2E2E]">Forfait de base</span>
-                            <span className="font-medium">{deliveryResult.baseFee.toFixed(2)} €</span>
+                        {deliveryResult.freeDelivery ? (
+                          <div className="text-center py-2">
+                            <p className="text-sm font-semibold text-green-600 mb-1">Livraison gratuite</p>
+                            <p className="text-xs text-gray-400">Commande &ge; 150&euro; — frais offerts</p>
+                            <p className="text-[10px] text-gray-400 mt-1">
+                              📍 Depuis Créteil (94) — {deliveryResult.zoneLabel} ({deliveryResult.distanceKm} km)
+                            </p>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-[#2E2E2E]">{deliveryResult.distanceKm} km × 1,50 €/km</span>
-                            <span className="font-medium">{deliveryResult.perKmFee.toFixed(2)} €</span>
-                          </div>
-                          <div className="flex justify-between pt-2 border-t border-black/[0.1] font-bold text-[#C8A97E]">
-                            <span>Total livraison</span>
-                            <span>{deliveryResult.totalFee.toFixed(2)} €</span>
-                          </div>
-                        </div>
-                        <p className="text-[10px] text-gray-400 mt-2">
-                          📍 Depuis Créteil (94) — {deliveryResult.zoneLabel}
-                        </p>
+                        ) : (
+                          <>
+                            <p className="text-xs text-gray-400 mb-2">Frais de livraison estimés</p>
+                            <div className="space-y-1.5 text-sm">
+                              <div className="flex justify-between">
+                                <span className="text-[#2E2E2E]">Forfait de base</span>
+                                <span className="font-medium">{deliveryResult.baseFee.toFixed(2)} €</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-[#2E2E2E]">{deliveryResult.distanceKm} km × 1,50 €/km</span>
+                                <span className="font-medium">{deliveryResult.perKmFee.toFixed(2)} €</span>
+                              </div>
+                              <div className="flex justify-between pt-2 border-t border-black/[0.1] font-bold text-[#C8A97E]">
+                                <span>Total livraison</span>
+                                <span>{deliveryResult.totalFee.toFixed(2)} €</span>
+                              </div>
+                            </div>
+                            <p className="text-[10px] text-gray-400 mt-2">
+                              📍 Depuis Créteil (94) — {deliveryResult.zoneLabel}
+                            </p>
+                          </>
+                        )}
                       </div>
                     )}
 
@@ -496,10 +543,22 @@ export default function ReservationPage() {
                   <span className="text-[#666]">Acompte 30%</span>
                   <span className="text-[#C8A97E]">{Number.isFinite(deposit) ? `${deposit.toFixed(2)} €` : "0,00 €"}</span>
                 </div>
-                {deliveryFee > 0 && (
+                {client.besoinLivraison && deliveryFee > 0 && (
                   <div className="flex justify-between text-xs text-[#C8A97E] mt-1">
-                    <span className="flex items-center gap-1"><Truck size={11} /> Livraison incluse</span>
+                    <span className="flex items-center gap-1"><Truck size={11} /> Livraison</span>
                     <span>{deliveryFee.toFixed(2)} €</span>
+                  </div>
+                )}
+                {client.besoinLivraison && deliveryResult?.freeDelivery && (
+                  <div className="flex justify-between text-xs text-green-600 mt-1">
+                    <span className="flex items-center gap-1"><Truck size={11} /> Livraison</span>
+                    <span>Offerte</span>
+                  </div>
+                )}
+                {!client.besoinLivraison && (
+                  <div className="flex justify-between text-xs text-green-600 mt-1">
+                    <span className="flex items-center gap-1"><Package size={11} /> Retrait</span>
+                    <span>Gratuit</span>
                   </div>
                 )}
               </div>

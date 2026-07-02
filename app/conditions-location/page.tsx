@@ -133,11 +133,16 @@ export default function ConditionsLocationPage() {
           </Section>
 
           <Section num={5} title="Caution">
+            <p className="mb-3">
+              Un checaution d un montant equivalent au <strong>prix d achat
+              du produit</strong> est demandee par article loue avant la prise
+              en charge du materiel. Cette caution couvre les cas de casse,
+              perte, vol ou salissure irreversible visees a l article 3.
+            </p>
             <p>
-              Une caution peut etre exigeee avant la prise en charge du
-              materiel. Elle est restituee integralement dans un delai de 14
-              jours ouvres apres la restitution du materiel, deduction faite
-              des eventuelles penalites prevues a l article 4.
+              Elle est restituee integralement dans un delai de 14 jours
+              ouvres apres la restitution du materiel, deduction faite des
+              eventuelles penalites prevues a l article 4.
             </p>
           </Section>
 
@@ -152,19 +157,51 @@ export default function ConditionsLocationPage() {
           </Section>
 
           <Section num={7} title="Annulation et remboursement">
-            <div className="space-y-2">
+            <div className="space-y-2 mb-4">
               <CancelRow delay="Plus de 30 jours avant l evenement" result="Remboursement total de l acompte" />
               <CancelRow delay="Entre 15 et 30 jours avant l evenement" result="Remboursement de 50% de l acompte" />
               <CancelRow delay="Moins de 15 jours avant l evenement" result="Aucun remboursement" />
             </div>
+            <div className="bg-[#C8A97E]/8 border border-[#C8A97E]/20 rounded-xl p-4">
+              <p className="text-sm font-semibold text-[#2E2E2E] mb-1">
+                Attention &mdash; Modification ou annulation tardive
+              </p>
+              <p className="text-xs text-[#2E2E2E]/70 leading-relaxed">
+                Aucune annulation ni modification n est possible a moins de
+                7 jours avant l evenement. Pass ce delai, aucun
+                remboursement ne sera effectue, quelle que soit la raison.
+              </p>
+            </div>
           </Section>
 
           <Section num={8} title="Livraison et retrait">
-            <p>
-              La livraison est effectuee a l adresse indiquee par le
-              Client. Les frais de livraison et de montage sont a la charge du
-              Client et precises dans le devis. Le retrait en magasin est
-              possible sur rendez-vous.
+            <p className="mb-3">
+              <strong>Retrait sur place (gratuit) :</strong> Le retrait et la
+              restitution du materiel se font gratuitement a notre
+              adresse a Creteil (94), sur rendez-vous. Un creneau vous
+              sera propose apres validation de la commande.
+            </p>
+            <p className="mb-3">
+              <strong>Livraison :</strong> La livraison est disponible
+              uniquement dans les departements <strong>94, 93, 95, 77 et
+              91</strong> (Ile-de-France). Les frais sont calcules selon
+              la distance depuis Creteil (20&euro; forfait de base +
+              1,50&euro;/km).
+            </p>
+            <div className="bg-[#C8A97E]/8 border border-[#C8A97E]/20 rounded-xl p-4 mb-3">
+              <p className="text-sm font-semibold text-[#2E2E2E] mb-1">
+                Livraison offerte a partir de 150&euro; de location
+              </p>
+              <p className="text-xs text-[#2E2E2E]/70 leading-relaxed">
+                Pour toute commande dont le montant de location atteint
+                150&euro; ou plus, les frais de livraison sont offerts
+                (inclus dans le tarif). En dessous de ce seuil, les frais
+                calcules s appliquent, emballage compris.
+              </p>
+            </div>
+            <p className="text-xs text-[#2E2E2E]/60">
+              Pour les commandes en dehors de ces departements, contactez-
+              nous pour un devis personnalise.
             </p>
           </Section>
 
@@ -178,7 +215,7 @@ export default function ConditionsLocationPage() {
           </Section>
 
           <div className="text-xs text-gray-400 pt-6 border-t border-black/[0.07]">
-            Derniere mise a jour : juin 2026
+            Derniere mise a jour : juillet 2026
           </div>
         </div>
       </div>
