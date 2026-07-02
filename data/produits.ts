@@ -66,7 +66,7 @@ export const produits: Produit[] = [
     categorie: "Mobilier",
     stock: 3,
     prix: 40,
-    image: "/images/PROD087.png",
+    image: "/images/PROD004.png",
   },
   {
     id: 5,
