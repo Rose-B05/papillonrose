@@ -959,6 +959,7 @@ export default function PapillonRoseSite() {
                     categorie: "Mobilier",
                     image: "/images/PROD087.png",
                     bgColor: "#E8C4B8",
+                    largeImage: true,
                   },
                   {
                     nom: "Figurines & Jeux",
@@ -989,6 +990,7 @@ export default function PapillonRoseSite() {
                     categorie: "Présentoirs & Plateaux",
                     image: "/images/PROD097.png",
                     bgColor: "#C9A96E",
+                    largeImage: true,
                   },
                   {
                     nom: "Urnes & Accessoires",
@@ -1019,6 +1021,7 @@ export default function PapillonRoseSite() {
                     categorie: "Fleurs & Feuillages",
                     image: "/images/PROD089.png",
                     bgColor: "#E8C4B8",
+                    largeImage: true,
                   },
                 ]}
                 onSelect={(cat) => goToCatalogue(cat)}
