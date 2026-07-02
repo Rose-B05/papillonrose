@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useEffect, useCallback } from "react"
+import { useState, useMemo, useEffect, useCallback, useRef } from "react"
 import {
   Search,
   ShoppingBag,
@@ -378,145 +378,225 @@ function Footer({
   onNav: (p: Page) => void
   onCatalogue: (cat?: string) => void
 }) {
+  const footerRef = useRef<HTMLElement>(null)
+  const [birdPhase, setBirdPhase] = useState<"idle" | "orbit" | "fly">("idle")
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(true)
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: no-preference)")
+    setPrefersReducedMotion(!mq.matches)
+    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(!e.matches)
+    mq.addEventListener("change", handler)
+    return () => mq.removeEventListener("change", handler)
+  }, [])
+
+  useEffect(() => {
+    if (prefersReducedMotion) return
+    const el = footerRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setBirdPhase("orbit")
+          setTimeout(() => setBirdPhase("fly"), 3200)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.15 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [prefersReducedMotion])
+
   return (
-    <footer className="bg-[#1C1A17] text-white pt-16 pb-8 mt-16 relative overflow-hidden">
-      {/* Cage décorative en filigrane — droite */}
-      <img
-        src={img("/images/PROD086.png")}
-        alt=""
-        aria-hidden
-        loading="lazy"
-        className="hidden md:block absolute right-[5%] top-1/2 -translate-y-1/2 w-auto h-[380px] object-contain pointer-events-none opacity-[0.18]"
-      />
-      <img
-        src={img("/images/PROD086.png")}
-        alt=""
-        aria-hidden
-        loading="lazy"
-        className="md:hidden absolute right-0 bottom-0 w-[200px] h-auto object-contain pointer-events-none opacity-[0.08]"
-      />
+    <footer ref={footerRef} className="bg-[#1C1A17] text-white pt-16 pb-8 mt-16 relative">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-8 mb-12 overflow-hidden">
+        {/* Colonnes de texte — gauche */}
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+          {/* Colonne 1 — Identité */}
+          <div className="lg:col-span-1">
+            <img src={LOGO} alt="Papillon Rose" className="h-10 w-auto brightness-0 invert opacity-90 mb-4" />
+            <p className="text-[#A89880] text-sm leading-relaxed mb-6">
+              Location de mobilier et décoration pour événements, mariages et réceptions.
+            </p>
+            <a
+              href="/reservation"
+              className="inline-flex items-center gap-2 bg-[#C9A96E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#d4b87a] transition-colors"
+            >
+              Demander un devis
+            </a>
+            <p className="text-[#C9A96E]/70 text-[10px] mt-2 tracking-wide">
+              Réponse sous 24h
+            </p>
+          </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-12">
-        {/* Colonne 1 — Identité */}
-        <div className="lg:col-span-1">
-          <img src={LOGO} alt="Papillon Rose" className="h-10 w-auto brightness-0 invert opacity-90 mb-4" />
-          <p className="text-[#A89880] text-sm leading-relaxed mb-6">
-            Location de mobilier et décoration pour événements, mariages et réceptions.
-          </p>
-          <a
-            href="/reservation"
-            className="inline-flex items-center gap-2 bg-[#C9A96E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#d4b87a] transition-colors"
-          >
-            Demander un devis
-          </a>
-          <p className="text-[#C9A96E]/70 text-[10px] mt-2 tracking-wide">
-            Réponse sous 24h
-          </p>
-        </div>
-
-        {/* Colonne 2 — Navigation */}
-        <div>
-          <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
-            Navigation
-          </p>
-          <ul className="space-y-3 text-sm">
-            {([
-              { label: "Accueil", page: "home" as Page },
-              { label: "Catalogue", page: "catalogue" as Page },
-              { label: "Panier", href: "/reservation" },
-              { label: "Favoris", page: "favorites" as Page },
-              { label: "Contact", page: "contact" as Page },
-            ]).map((item) => (
-              <li key={item.label}>
-                {"href" in item ? (
-                  <a href={item.href} className="text-[#D4B896] hover:text-white transition-colors">
-                    {item.label}
-                  </a>
-                ) : (
-                  <button
-                    onClick={() => onNav(item.page)}
-                    className="text-[#D4B896] hover:text-white transition-colors text-left"
-                  >
-                    {item.label}
-                  </button>
-                )}
-              </li>
-            ))}
-            <li>
-              <a href="/a-propos" className="text-[#D4B896] hover:text-white transition-colors">
-                À propos
-              </a>
-            </li>
-            <li>
-              <a href="/faq" className="text-[#D4B896] hover:text-white transition-colors">
-                FAQ
-              </a>
-            </li>
-            <li>
-              <a href="/conditions-location" className="text-[#D4B896] hover:text-white transition-colors">
-                Conditions de location
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Colonne 3 — Catégories */}
-        <div>
-          <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
-            Catégories
-          </p>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-2.5 text-sm">
-            {CATEGORIES.slice(1).map((cat) => (
-              <li key={cat}>
-                <a
-                  href={`/catalogue?categorie=${encodeURIComponent(cat)}`}
-                  className="text-[#D4B896] hover:text-white transition-colors"
-                >
-                  {cat}
+          {/* Colonne 2 — Navigation */}
+          <div>
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
+              Navigation
+            </p>
+            <ul className="space-y-3 text-sm">
+              {([
+                { label: "Accueil", page: "home" as Page },
+                { label: "Catalogue", page: "catalogue" as Page },
+                { label: "Panier", href: "/reservation" },
+                { label: "Favoris", page: "favorites" as Page },
+                { label: "Contact", page: "contact" as Page },
+              ]).map((item) => (
+                <li key={item.label}>
+                  {"href" in item ? (
+                    <a href={item.href} className="text-[#D4B896] hover:text-white transition-colors">
+                      {item.label}
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => onNav(item.page)}
+                      className="text-[#D4B896] hover:text-white transition-colors text-left"
+                    >
+                      {item.label}
+                    </button>
+                  )}
+                </li>
+              ))}
+              <li>
+                <a href="/a-propos" className="text-[#D4B896] hover:text-white transition-colors">
+                  À propos
                 </a>
               </li>
-            ))}
-          </ul>
+              <li>
+                <a href="/faq" className="text-[#D4B896] hover:text-white transition-colors">
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a href="/conditions-location" className="text-[#D4B896] hover:text-white transition-colors">
+                  Conditions de location
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Colonne 3 — Catégories */}
+          <div>
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
+              Catégories
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-2.5 text-sm">
+              {CATEGORIES.slice(1).map((cat) => (
+                <li key={cat}>
+                  <a
+                    href={`/catalogue?categorie=${encodeURIComponent(cat)}`}
+                    className="text-[#D4B896] hover:text-white transition-colors"
+                  >
+                    {cat}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Colonne 4 — Contact */}
+          <div>
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
+              Contact
+            </p>
+            <ul className="space-y-3.5 text-sm">
+              <li className="flex items-center gap-2.5">
+                <Phone size={13} className="text-[#C9A96E] flex-shrink-0" />
+                <span className="text-[#D4B896]">À REMPLACER</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Mail size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
+                <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors break-all">
+                  papillonrosebertha@gmail.com
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
+                <span className="text-[#D4B896]">
+                  Île-de-France
+                  <br />
+                  Créteil (94)
+                </span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Send size={13} className="text-[#C9A96E] flex-shrink-0" />
+                <a href="https://t.me/PapillonRose" target="_blank" rel="noopener noreferrer" className="text-[#D4B896] hover:text-white transition-colors">
+                  @PapillonRose
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <a href="https://www.instagram.com/papillonrose.g" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors">
+                  <InstagramIcon size={13} />
+                  Instagram
+                </a>
+                <img src="/icons/rose.svg" alt="" aria-hidden className="w-3 h-3 opacity-60" />
+              </li>
+            </ul>
+          </div>
         </div>
 
-        {/* Colonne 4 — Contact */}
-        <div>
-          <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
-            Contact
-          </p>
-          <ul className="space-y-3.5 text-sm">
-            <li className="flex items-center gap-2.5">
-              <Phone size={13} className="text-[#C9A96E] flex-shrink-0" />
-              <span className="text-[#D4B896]">À REMPLACER</span>
-            </li>
-            <li className="flex items-start gap-2.5">
-              <Mail size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
-              <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors break-all">
-                papillonrosebertha@gmail.com
-              </a>
-            </li>
-            <li className="flex items-start gap-2.5">
-              <MapPin size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
-              <span className="text-[#D4B896]">
-                Île-de-France
-                <br />
-                Créteil (94)
-              </span>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <Send size={13} className="text-[#C9A96E] flex-shrink-0" />
-              <a href="https://t.me/PapillonRose" target="_blank" rel="noopener noreferrer" className="text-[#D4B896] hover:text-white transition-colors">
-                @PapillonRose
-              </a>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <a href="https://www.instagram.com/papillonrose.g" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors">
-                <InstagramIcon size={13} />
-                Instagram
-              </a>
-              <img src="/icons/rose.svg" alt="" aria-hidden className="w-3 h-3 opacity-60" />
-            </li>
-          </ul>
+        {/* Scène femme + cage — droite (desktop uniquement) */}
+        <div className="hidden lg:block relative w-[340px] flex-shrink-0 mt-[-64px]">
+          <div className="relative w-full h-[420px]">
+            <img
+              src={img("/images/PROD086.png")}
+              alt=""
+              aria-hidden
+              loading="lazy"
+              className="w-full h-full object-contain drop-shadow-[0_4px_24px_rgba(201,169,110,0.15)]"
+            />
+            {/* Oiseau SVG animé */}
+            <svg
+              viewBox="0 0 48 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+              className={`absolute w-10 h-7 ${
+                birdPhase === "idle" && !prefersReducedMotion
+                  ? "opacity-0"
+                  : birdPhase === "idle"
+                    ? "opacity-100"
+                    : ""
+              }`}
+              style={{
+                left: "20%",
+                top: "33%",
+                transformOrigin: "center",
+                animation:
+                  birdPhase === "orbit"
+                    ? "bird-orbit 3.2s ease-in-out forwards"
+                    : birdPhase === "fly"
+                      ? "bird-fly 2s ease-in forwards"
+                      : prefersReducedMotion
+                        ? "bird-still 1s ease forwards"
+                        : "none",
+                opacity: birdPhase === "idle" && !prefersReducedMotion ? 0 : undefined,
+              }}
+            >
+              <path
+                d="M24 16c-3-8-14-12-18-8 3 0 7 1 10 4-3-1-7-1-10 0 4-3 10-1 14 5 2 3 3 6 2 9 2-3 3-6 2-10z"
+                fill="#C9A96E"
+              />
+              <path
+                d="M26 14c4-6 10-8 16-6-4 1-8 3-11 6 4-2 9-2 13 0-5 2-10 5-13 9 1-4 1-7-1-10z"
+                fill="#D4B896"
+              />
+              <circle cx="20" cy="13" r="1" fill="#1C1A17" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Scène mobile — empilée sous les colonnes */}
+        <div className="lg:hidden flex justify-center mt-4">
+          <img
+            src={img("/images/PROD086.png")}
+            alt=""
+            aria-hidden
+            loading="lazy"
+            className="w-[260px] h-auto object-contain opacity-90"
+          />
         </div>
       </div>
 
