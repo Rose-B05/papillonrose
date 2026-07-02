@@ -380,7 +380,7 @@ function Footer({
 }) {
   return (
     <footer className="bg-[#1C1A17] text-white pt-16 pb-8 mt-16 relative">
-      <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-8 mb-12 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-8 mb-12 overflow-hidden">
         {/* Colonnes de texte — gauche */}
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Colonne 1 — Identité */}
@@ -391,7 +391,7 @@ function Footer({
             </p>
             <a
               href="/reservation"
-              className="inline-flex items-center gap-2 bg-[#C9A96E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#d4b87a] transition-colors"
+              className="inline-flex items-center gap-2 bg-[#C9A96E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#d4b87a] transition-colors whitespace-nowrap"
             >
               Demander un devis
             </a>
@@ -471,13 +471,9 @@ function Footer({
               Contact
             </p>
             <ul className="space-y-3.5 text-sm">
-              <li className="flex items-center gap-2.5">
-                <Phone size={13} className="text-[#C9A96E] flex-shrink-0" />
-                <span className="text-[#D4B896]">À REMPLACER</span>
-              </li>
               <li className="flex items-start gap-2.5">
                 <Mail size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
-                <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors break-all">
+                <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors">
                   papillonrosebertha@gmail.com
                 </a>
               </li>
@@ -498,17 +494,34 @@ function Footer({
               <li className="flex items-center gap-2.5">
                 <a href="https://www.instagram.com/papillonrose.g" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors">
                   <InstagramIcon size={13} />
-                  Instagram
+                  @papillonrose.g
                 </a>
-                <img src="/icons/rose.svg" alt="" aria-hidden className="w-3 h-3 opacity-60" />
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Scène femme + cage — droite (desktop uniquement) */}
-        <div className="hidden lg:block relative w-[480px] flex-shrink-0 mt-[-80px]">
-          <div className="relative w-full h-[560px]">
+        {/* Scène femme + cage — droite (desktop) */}
+        <div className="hidden lg:flex flex-col items-center flex-shrink-0 mt-[-80px]">
+          {/* Texte en arche */}
+          <svg viewBox="0 0 440 60" className="w-[440px] h-[60px] mb-[-10px]" aria-hidden>
+            <defs>
+              <path id="arch-desktop" d="M 20,55 Q 220,-15 420,55" fill="none" />
+            </defs>
+            <text
+              fill="#C9A96E"
+              fontSize="18"
+              style={{ fontFamily: "var(--font-playfair), serif" }}
+              fontStyle="italic"
+              letterSpacing="2"
+            >
+              <textPath href="#arch-desktop" startOffset="50%" textAnchor="middle">
+                Votre histoire commence ici
+              </textPath>
+            </text>
+          </svg>
+          {/* Image scène */}
+          <div className="relative w-[480px] h-[560px]">
             <img
               src={img("/images/PROD086.png")}
               alt=""
@@ -520,7 +533,25 @@ function Footer({
         </div>
 
         {/* Scène mobile — empilée sous les colonnes */}
-        <div className="lg:hidden flex justify-center mt-4">
+        <div className="lg:hidden flex flex-col items-center mt-4">
+          {/* Texte en arche mobile */}
+          <svg viewBox="0 0 300 45" className="w-[280px] h-[40px] mb-[-6px]" aria-hidden>
+            <defs>
+              <path id="arch-mobile" d="M 10,40 Q 150,-5 290,40" fill="none" />
+            </defs>
+            <text
+              fill="#C9A96E"
+              fontSize="13"
+              style={{ fontFamily: "var(--font-playfair), serif" }}
+              fontStyle="italic"
+              letterSpacing="1"
+            >
+              <textPath href="#arch-mobile" startOffset="50%" textAnchor="middle">
+                Votre histoire commence ici
+              </textPath>
+            </text>
+          </svg>
+          {/* Image scène mobile */}
           <img
             src={img("/images/PROD086.png")}
             alt=""
@@ -532,7 +563,7 @@ function Footer({
       </div>
 
       {/* Barre copyright */}
-      <div className="max-w-7xl mx-auto px-6 relative z-10 pt-6 border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10 pt-6 border-t border-white/10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-[#A89880]/60 text-xs">
             © 2026 Papillon Rose — Location décoration événements · Tous droits réservés
