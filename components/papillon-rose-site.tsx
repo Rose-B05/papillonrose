@@ -502,25 +502,7 @@ function Footer({
         </div>
 
         {/* Scène femme + cage — droite (desktop) */}
-        <div className="hidden lg:flex flex-col items-center flex-shrink-0 mt-[-80px]">
-          {/* Texte en arche */}
-          <svg viewBox="0 0 440 60" className="w-[440px] h-[60px] mb-[-10px]" aria-hidden>
-            <defs>
-              <path id="arch-desktop" d="M 20,55 Q 220,-15 420,55" fill="none" />
-            </defs>
-            <text
-              fill="#C9A96E"
-              fontSize="18"
-              style={{ fontFamily: "var(--font-playfair), serif" }}
-              fontStyle="italic"
-              letterSpacing="2"
-            >
-              <textPath href="#arch-desktop" startOffset="50%" textAnchor="middle">
-                Votre histoire commence ici
-              </textPath>
-            </text>
-          </svg>
-          {/* Image scène */}
+        <div className="hidden lg:block flex-shrink-0 mt-[-30px]">
           <div className="relative w-[480px] h-[560px]">
             <img
               src={img("/images/PROD086.png")}
@@ -533,25 +515,7 @@ function Footer({
         </div>
 
         {/* Scène mobile — empilée sous les colonnes */}
-        <div className="lg:hidden flex flex-col items-center mt-4">
-          {/* Texte en arche mobile */}
-          <svg viewBox="0 0 300 45" className="w-[280px] h-[40px] mb-[-6px]" aria-hidden>
-            <defs>
-              <path id="arch-mobile" d="M 10,40 Q 150,-5 290,40" fill="none" />
-            </defs>
-            <text
-              fill="#C9A96E"
-              fontSize="13"
-              style={{ fontFamily: "var(--font-playfair), serif" }}
-              fontStyle="italic"
-              letterSpacing="1"
-            >
-              <textPath href="#arch-mobile" startOffset="50%" textAnchor="middle">
-                Votre histoire commence ici
-              </textPath>
-            </text>
-          </svg>
-          {/* Image scène mobile */}
+        <div className="lg:hidden flex justify-center mt-4">
           <img
             src={img("/images/PROD086.png")}
             alt=""
