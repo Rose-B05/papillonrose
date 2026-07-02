@@ -25,6 +25,7 @@ import { produits, type Produit, hasRealPhoto, getActiveProductsCount } from "@/
 import { useCart } from "@/components/cart-context"
 import CatalogGallery from "@/components/catalog-gallery"
 import CatalogFilters from "@/components/catalog-filters"
+import OverflowCarousel from "@/components/overflow-carousel"
 
 import Chatbot from "@/components/chatbot"
 import WhatsAppButton from "@/components/whatsapp-button"
@@ -937,8 +938,8 @@ export default function PapillonRoseSite() {
             </section>
 
             {/* Category showcase */}
-            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-16">
-              <div className="flex items-end justify-between mb-6">
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-8">
+              <div className="flex items-end justify-between mb-0">
                 <div>
                   <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                     Explorer par thème
@@ -951,45 +952,77 @@ export default function PapillonRoseSite() {
                   </h2>
                 </div>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-                {CATEGORIES.slice(1).map((cat) => {
-                  const count = PRODUCTS.filter(
-                    (p) => p.categorie === cat,
-                  ).length
-                  return (
-                    <button
-                      key={cat}
-                      onClick={() => goToCatalogue(cat)}
-                      className="group relative overflow-hidden rounded-3xl bg-[#EDE8DF]"
-                      style={{ aspectRatio: "4/3" }}
-                    >
-                      <img
-                        src={img(CATEGORY_IMAGES[cat] || "/placeholder.svg")}
-                        alt={cat}
-                        className="w-full h-full object-cover opacity-75 group-hover:opacity-60 group-hover:scale-105 transition-all duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#2E2E2E]/80 via-[#2E2E2E]/10 to-transparent rounded-3xl" />
-                      <div className="absolute bottom-0 left-0 right-0 p-4 text-left">
-                        <p
-                          style={DP}
-                          className="text-white text-sm font-semibold leading-tight"
-                        >
-                          {cat}
-                        </p>
-                        <div className="flex items-center gap-1 mt-1">
-                          <span className="text-[#C8A97E] text-[11px]">
-                            {count} article{count > 1 ? "s" : ""}
-                          </span>
-                          <ArrowRight
-                            size={11}
-                            className="text-[#C8A97E] group-hover:translate-x-1 transition-transform"
-                          />
-                        </div>
-                      </div>
-                    </button>
-                  )
-                })}
-              </div>
+              <OverflowCarousel
+                cards={[
+                  {
+                    nom: "Mobilier",
+                    categorie: "Mobilier",
+                    image: "/images/PROD004.png",
+                    bgColor: "#E8C4B8",
+                  },
+                  {
+                    nom: "Figurines & Jeux",
+                    categorie: "Figurines & Jeux",
+                    image: "/images/PROD011.png",
+                    bgColor: "#C9A96E",
+                  },
+                  {
+                    nom: "Bougeoirs & Lustres",
+                    categorie: "Bougeoirs & Lustres",
+                    image: "/images/PROD019.png",
+                    bgColor: "#E8C4B8",
+                  },
+                  {
+                    nom: "Verreries",
+                    categorie: "Verreries",
+                    image: "/images/PROD030.png",
+                    bgColor: "#C9A96E",
+                  },
+                  {
+                    nom: "Cadres",
+                    categorie: "Cadres",
+                    image: "/images/PROD040.png",
+                    bgColor: "#E8C4B8",
+                  },
+                  {
+                    nom: "Présentoirs & Plateaux",
+                    categorie: "Présentoirs & Plateaux",
+                    image: "/images/PROD046.png",
+                    bgColor: "#C9A96E",
+                  },
+                  {
+                    nom: "Urnes & Accessoires",
+                    categorie: "Urnes & Accessoires",
+                    image: "/images/PROD049.png",
+                    bgColor: "#E8C4B8",
+                  },
+                  {
+                    nom: "Art de la Table",
+                    categorie: "Art de la Table",
+                    image: "/images/PROD055.png",
+                    bgColor: "#C9A96E",
+                  },
+                  {
+                    nom: "Vases & Pots",
+                    categorie: "Vases & Pots",
+                    image: "/images/PROD068.png",
+                    bgColor: "#E8C4B8",
+                  },
+                  {
+                    nom: "Décoration",
+                    categorie: "Décoration",
+                    image: "/images/PROD074.png",
+                    bgColor: "#C9A96E",
+                  },
+                  {
+                    nom: "Fleurs & Feuillages",
+                    categorie: "Fleurs & Feuillages",
+                    image: "/images/PROD081.png",
+                    bgColor: "#E8C4B8",
+                  },
+                ]}
+                onSelect={(cat) => goToCatalogue(cat)}
+              />
             </section>
 
             {/* Featured products */}
