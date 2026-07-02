@@ -359,13 +359,22 @@ function ProductImages({
   )
 }
 
-// ─── Instagram Icon (inline SVG) ───────────────────────────────────────────────
-function InstagramIcon({ size = 13, className = "" }: { size?: number; className?: string }) {
+// ─── Instagram Icon (official gradient logo) ───────────────────────────────────
+function InstagramIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <circle cx="12" cy="12" r="5" />
-      <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+    <svg width={size} height={size} viewBox="0 0 24 24" className={className}>
+      <defs>
+        <linearGradient id="ig-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#FEDA75" />
+          <stop offset="20%" stopColor="#FA7E1E" />
+          <stop offset="45%" stopColor="#D62976" />
+          <stop offset="70%" stopColor="#962FBF" />
+          <stop offset="100%" stopColor="#4F5BD4" />
+        </linearGradient>
+      </defs>
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="url(#ig-gradient)" />
+      <circle cx="12" cy="12" r="5" fill="none" stroke="white" strokeWidth="2" />
+      <circle cx="17.5" cy="6.5" r="1.5" fill="white" />
     </svg>
   )
 }
@@ -501,7 +510,7 @@ function Footer({
               </li>
               <li className="flex items-center gap-2.5">
                 <a href="https://www.instagram.com/papillonrose.g" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors">
-                  <InstagramIcon size={13} />
+                  <InstagramIcon size={18} />
                   @papillonrose.g
                 </a>
               </li>
