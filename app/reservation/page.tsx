@@ -637,7 +637,7 @@ export default function ReservationPage() {
                 <ul className="text-xs text-white/60 space-y-1.5 mb-4">
                   <li>&#8226; Le materiel loue doit etre restitue en bon etat. Toute casse, perte, vol ou salissure irreversible entrainera des penalites.</li>
                   <li>&#8226; Remplacement a valeur a neuf en cas de casse totale ou de perte.</li>
-                  <li>&#8226; Penalite de retard : 10% du montant de la location par jour de retard, plafonnee a 50%.</li>
+                  <li>&#8226; Penalite de retard : 10% le 1er jour, puis +30% par jour supplémentaire, plafond 50%.</li>
                   <li>&#8226; Annulation -30j : remboursement total | -15j : 50% | -7j : aucun remboursement.</li>
                 </ul>
                 <a

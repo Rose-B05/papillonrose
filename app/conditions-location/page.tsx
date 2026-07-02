@@ -118,7 +118,7 @@ export default function ConditionsLocationPage() {
                   />
                   <TableRow
                     damage="Non-restitution a la date convenue"
-                    penalty="Penalite de retard : 10% du montant de la location par jour de retard, plafonnee a 50% du montant total"
+                    penalty="Penalite de retard : 10% le 1er jour, puis +30% par jour supplémentaire, plafonnee a 50% du montant total"
                   />
                 </tbody>
               </table>

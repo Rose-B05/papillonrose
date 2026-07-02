@@ -892,8 +892,7 @@ export default function PapillonRoseSite() {
                 loop
                 muted
                 playsInline
-                preload="metadata"
-                poster="/images/PROD087.png"
+                preload="auto"
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </section>
