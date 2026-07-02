@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { getRentalRuleForDate, validateStartDate, validateDuration } from "@/lib/rental-rules"
 
 interface AvailabilityCalendarProps {
   productId: number
@@ -79,6 +80,13 @@ export default function AvailabilityCalendar({
     setError("")
 
     if (!dateStart || (dateStart && dateEnd)) {
+      // First click or reset: validate start date against rental rules
+      const startDate = new Date(y, m, day)
+      const startError = validateStartDate(startDate)
+      if (startError) {
+        setError(startError)
+        return
+      }
       onDateStartChange(d)
       onDateEndChange("")
     } else {
@@ -91,6 +99,17 @@ export default function AvailabilityCalendar({
         if (conflict) {
           setError("Ces dates contiennent des jours déjà réservés")
         } else {
+          // Validate duration against rental rules
+          const startDate = new Date(dateStart)
+          const endDate = new Date(y, m, day)
+          const nights = Math.round(
+            (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+          )
+          const durationError = validateDuration(nights, startDate)
+          if (durationError) {
+            setError(durationError)
+            return
+          }
           onDateEndChange(d)
         }
       }
@@ -179,6 +198,12 @@ export default function AvailabilityCalendar({
       </div>
 
       {error && <p className="text-red-400 text-xs mt-3 text-center">{error}</p>}
+
+      {dateStart && !dateEnd && (
+        <p className="text-[#C8A97E] text-[10px] mt-2 text-center font-medium">
+          {getRentalRuleForDate(new Date(dateStart)).description}
+        </p>
+      )}
 
       <div className="flex items-center gap-4 mt-4 pt-3 border-t border-black/[0.05] text-[10px] text-gray-400">
         <div className="flex items-center gap-1.5">

@@ -25,7 +25,7 @@ import { produits, type Produit, hasRealPhoto, getActiveProductsCount } from "@/
 import { useCart } from "@/components/cart-context"
 import CatalogGallery from "@/components/catalog-gallery"
 import CatalogFilters from "@/components/catalog-filters"
-import OverflowCarousel from "@/components/overflow-carousel"
+
 import Chatbot from "@/components/chatbot"
 import WhatsAppButton from "@/components/whatsapp-button"
 import { getThemes, getCouleurs, type FilterState } from "@/lib/product-tags"
@@ -463,12 +463,12 @@ function Footer({
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-2.5 text-sm">
               {CATEGORIES.slice(1).map((cat) => (
                 <li key={cat}>
-                  <a
-                    href={`/catalogue?categorie=${encodeURIComponent(cat)}`}
-                    className="text-[#D4B896] hover:text-white transition-colors"
+                  <button
+                    onClick={() => onCatalogue(cat)}
+                    className="text-[#D4B896] hover:text-white transition-colors text-left"
                   >
                     {cat}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -920,97 +920,6 @@ export default function PapillonRoseSite() {
                   ))}
                 </div>
               </div>
-            </section>
-
-            {/* Category showcase */}
-            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-6 md:mt-8 overflow-hidden">
-              <div className="flex items-end justify-between mb-0">
-                <div>
-                  <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
-                    Explorer par thème
-                  </p>
-                  <h2
-                    style={DP}
-                    className="text-4xl md:text-5xl font-semibold text-[#2E2E2E]"
-                  >
-                    Nos Catégories
-                  </h2>
-                </div>
-              </div>
-              <OverflowCarousel
-                cards={[
-                  {
-                    nom: "Mobilier",
-                    categorie: "Mobilier",
-                    image: "/images/PROD087.png",
-                    bgColor: "#E8C4B8",
-                    largeImage: true,
-                  },
-                  {
-                    nom: "Figurines & Jeux",
-                    categorie: "Figurines & Jeux",
-                    image: "/images/PROD011.png",
-                    bgColor: "#C9A96E",
-                  },
-                  {
-                    nom: "Bougeoirs & Lustres",
-                    categorie: "Bougeoirs & Lustres",
-                    image: "/images/PROD095.png",
-                    bgColor: "#E8C4B8",
-                  },
-                  {
-                    nom: "Verreries",
-                    categorie: "Verreries",
-                    image: "/images/PROD088.png",
-                    bgColor: "#C9A96E",
-                  },
-                  {
-                    nom: "Cadres",
-                    categorie: "Cadres",
-                    image: "/images/PROD096.png",
-                    bgColor: "#E8C4B8",
-                  },
-                  {
-                    nom: "Présentoirs & Plateaux",
-                    categorie: "Présentoirs & Plateaux",
-                    image: "/images/PROD097.png",
-                    bgColor: "#C9A96E",
-                    largeImage: true,
-                  },
-                  {
-                    nom: "Urnes & Accessoires",
-                    categorie: "Urnes & Accessoires",
-                    image: "/images/PROD093.png",
-                    bgColor: "#E8C4B8",
-                  },
-                  {
-                    nom: "Art de la Table",
-                    categorie: "Art de la Table",
-                    image: "/images/PROD090.png",
-                    bgColor: "#C9A96E",
-                  },
-                  {
-                    nom: "Vases & Pots",
-                    categorie: "Vases & Pots",
-                    image: "/images/PROD091.png",
-                    bgColor: "#E8C4B8",
-                  },
-                  {
-                    nom: "Décoration",
-                    categorie: "Décoration",
-                    image: "/images/PROD092.png",
-                    bgColor: "#C9A96E",
-                  },
-                  {
-                    nom: "Fleurs & Feuillages",
-                    categorie: "Fleurs & Feuillages",
-                    image: "/images/PROD089.png",
-                    bgColor: "#E8C4B8",
-                    largeImage: true,
-                  },
-                ]}
-                onSelect={(cat) => goToCatalogue(cat)}
-              />
             </section>
 
             {/* Featured products */}

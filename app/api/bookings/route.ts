@@ -18,8 +18,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify product exists & enforce stock limits per date range
-    const adjustedItems: CartItem[] = []
-    const warnings: string[] = []
+    const validatedItems: CartItem[] = []
 
     for (const item of items) {
       const product = produits.find((p) => p.id === item.productId)
@@ -34,26 +33,24 @@ export async function POST(request: NextRequest) {
           )
         }
         if (item.qty > available) {
-          warnings.push(
-            `Quantité ajustée pour ${product.nom} : ${item.qty} → ${available} (stock disponible sur cette période)`
+          return NextResponse.json(
+            { error: `Stock insuffisant pour ${product.nom} : demandé ${item.qty}, disponible ${available} sur cette période` },
+            { status: 409 }
           )
-          adjustedItems.push({ ...item, qty: available })
-        } else {
-          adjustedItems.push(item)
         }
+        validatedItems.push(item)
       } else {
         if (product.stock < item.qty) {
-          warnings.push(
-            `Quantité ajustée pour ${product.nom} : ${item.qty} → ${product.stock} (stock maximum)`
+          return NextResponse.json(
+            { error: `Stock insuffisant pour ${product.nom} : demandé ${item.qty}, stock maximum ${product.stock}` },
+            { status: 409 }
           )
-          adjustedItems.push({ ...item, qty: product.stock })
-        } else {
-          adjustedItems.push(item)
         }
+        validatedItems.push(item)
       }
     }
 
-    const finalItems = adjustedItems
+    const finalItems = validatedItems
 
     // Verify dates not blocked
     const blockedAll = getBlockedDates()
@@ -78,7 +75,7 @@ export async function POST(request: NextRequest) {
     // Calcul des frais de livraison si applicable
     let deliveryFee = 0
     if (client?.besoinLivraison && client?.codePostalLivraison) {
-      const deliveryResult = calcDeliveryFee(client.codePostalLivraison)
+      const deliveryResult = calcDeliveryFee(client.codePostalLivraison, totalTtc)
       if (deliveryResult.allowed) {
         deliveryFee = deliveryResult.totalFee
       }
@@ -117,7 +114,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       booking,
       paymentIntent: paymentIntent ? { clientSecret: paymentIntent.client_secret } : null,
-      warnings: warnings.length > 0 ? warnings : undefined,
     })
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 })

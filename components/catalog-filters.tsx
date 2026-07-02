@@ -162,17 +162,17 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
           <Divider />
 
           {/* Stock */}
-          <div className="px-5 py-3 flex items-center gap-2">
+          <div className="px-5 py-3 flex items-center gap-2 group">
             <input
               type="checkbox"
               id="stock-filter"
               checked={filters.inStockOnly}
               onChange={(e) => onChange({ ...filters, inStockOnly: e.target.checked })}
-              className="appearance-none w-4 h-4 rounded border border-gray-300 checked:border-[#C9A96E] checked:bg-[#C9A96E] transition-colors cursor-pointer flex-shrink-0 relative
+              className="appearance-none w-4 h-4 rounded border-2 border-gray-300 group-hover:border-[#C8A97E] checked:border-[#C8A97E] checked:bg-[#C8A97E] transition-all cursor-pointer flex-shrink-0 relative
                 checked:after:content-[''] checked:after:absolute checked:after:left-[3.5px] checked:after:top-[0.5px] checked:after:w-[5px] checked:after:h-[9px] checked:after:border-r-2 checked:after:border-b-2 checked:after:border-white checked:after:rotate-45"
             />
             <label htmlFor="stock-filter" className="text-xs font-semibold text-[#2E2E2E] uppercase tracking-wider cursor-pointer select-none flex items-center gap-1.5">
-              <SlidersHorizontal size={12} className="text-[#C9A96E]" />
+              <SlidersHorizontal size={12} className="text-[#C8A97E]" />
               En stock uniquement
             </label>
           </div>

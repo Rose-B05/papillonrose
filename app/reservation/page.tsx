@@ -254,9 +254,9 @@ export default function ReservationPage() {
                   <ShoppingBag size={24} className="text-[#C8A97E]/40" />
                 </div>
                 <p className="text-gray-400 mb-5">Votre panier est vide</p>
-                <button onClick={() => router.push("/")} className="bg-[#C8A97E] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8926E] transition-colors">
+                <a href="/" className="bg-[#C8A97E] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8926E] transition-colors inline-block">
                   Découvrir le catalogue
-                </button>
+                </a>
               </div>
             ) : (
               <>
