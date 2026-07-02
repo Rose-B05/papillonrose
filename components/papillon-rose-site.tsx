@@ -936,6 +936,62 @@ export default function PapillonRoseSite() {
               </div>
             </section>
 
+            {/* Category showcase */}
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-16">
+              <div className="flex items-end justify-between mb-6">
+                <div>
+                  <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+                    Explorer par thème
+                  </p>
+                  <h2
+                    style={DP}
+                    className="text-2xl md:text-3xl font-semibold text-[#2E2E2E]"
+                  >
+                    Nos Catégories
+                  </h2>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+                {CATEGORIES.slice(1).map((cat) => {
+                  const count = PRODUCTS.filter(
+                    (p) => p.categorie === cat,
+                  ).length
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => goToCatalogue(cat)}
+                      className="group relative overflow-hidden rounded-3xl bg-[#EDE8DF]"
+                      style={{ aspectRatio: "4/3" }}
+                    >
+                      <img
+                        src={img(CATEGORY_IMAGES[cat] || "/placeholder.svg")}
+                        alt={cat}
+                        className="w-full h-full object-cover opacity-75 group-hover:opacity-60 group-hover:scale-105 transition-all duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2E2E2E]/80 via-[#2E2E2E]/10 to-transparent rounded-3xl" />
+                      <div className="absolute bottom-0 left-0 right-0 p-4 text-left">
+                        <p
+                          style={DP}
+                          className="text-white text-sm font-semibold leading-tight"
+                        >
+                          {cat}
+                        </p>
+                        <div className="flex items-center gap-1 mt-1">
+                          <span className="text-[#C8A97E] text-[11px]">
+                            {count} article{count > 1 ? "s" : ""}
+                          </span>
+                          <ArrowRight
+                            size={11}
+                            className="text-[#C8A97E] group-hover:translate-x-1 transition-transform"
+                          />
+                        </div>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            </section>
+
             {/* Featured products */}
             <section className="max-w-7xl mx-auto px-5 md:px-10 mt-6 md:mt-8">
               <div className="flex items-end justify-between mb-4 md:mb-5">
