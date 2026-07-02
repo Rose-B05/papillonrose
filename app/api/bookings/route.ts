@@ -6,6 +6,7 @@ import { calcTotalHt, calcTtc, calcDeposit, DEPOSIT_RATE } from "@/lib/utils"
 import { calcDeliveryFee } from "@/lib/delivery"
 import { createPaymentIntent } from "@/lib/stripe"
 import { getAvailableStock } from "@/lib/stock"
+import { sendBookingConfirmation } from "@/lib/order-confirmation"
 import type { Booking, CartItem } from "@/lib/types"
 
 export async function POST(request: NextRequest) {
@@ -111,9 +112,18 @@ export async function POST(request: NextRequest) {
       saveBooking(booking)
     }
 
+    // Send confirmation email (admin + client)
+    let emailStatus = null
+    try {
+      emailStatus = await sendBookingConfirmation(booking)
+    } catch (err) {
+      console.error("Booking confirmation email error:", err)
+    }
+
     return NextResponse.json({
       booking,
       paymentIntent: paymentIntent ? { clientSecret: paymentIntent.client_secret } : null,
+      email: emailStatus,
     })
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 })
