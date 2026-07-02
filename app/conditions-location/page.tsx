@@ -182,10 +182,11 @@ export default function ConditionsLocationPage() {
               sera propose apres validation de la commande.
             </p>
             <p className="mb-3">
-              <strong>Livraison :</strong> La livraison est disponible
-              uniquement dans les departements <strong>94, 93, 95, 77 et
-              91</strong> (Ile-de-France). Les frais sont calcules selon
-              la distance depuis Creteil (20&euro; forfait de base +
+              <strong>Livraison :</strong> La livraison et la reprise de
+              l emballage sont incluses dans les frais. La livraison est
+              disponible uniquement dans les departements <strong>94, 93, 95,
+              77 et 91</strong> (Ile-de-France). Les frais sont calcules
+              selon la distance depuis Creteil (20&euro; forfait de base +
               1,50&euro;/km).
             </p>
             <div className="bg-[#C8A97E]/8 border border-[#C8A97E]/20 rounded-xl p-4 mb-3">
@@ -194,14 +195,14 @@ export default function ConditionsLocationPage() {
               </p>
               <p className="text-xs text-[#2E2E2E]/70 leading-relaxed">
                 Pour toute commande dont le montant de location atteint
-                150&euro; ou plus, les frais de livraison sont offerts
-                (inclus dans le tarif). En dessous de ce seuil, les frais
-                calcules s appliquent, emballage compris.
+                150&euro; ou plus, les frais de livraison et reprise
+                emballage sont offerts. En dessous de ce seuil, les frais
+                calcules s appliquent.
               </p>
             </div>
             <p className="text-xs text-[#2E2E2E]/60">
-              Pour les commandes en dehors de ces departements, contactez-
-              nous pour un devis personnalise.
+              Hors Ile-de-France : le retrait sur place reste disponible
+              gratuitement. Contactez-nous pour toute demande particuliere.
             </p>
           </Section>
 

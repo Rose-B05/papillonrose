@@ -135,6 +135,7 @@ export default function ReservationPage() {
     if (!client.email) errors.email = "L'email est requis"
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(client.email)) errors.email = "L'email n'est pas valide"
     if (!client.telephone) errors.telephone = "Le téléphone est requis"
+    else if (!/^(\+33|0033|0)[1-9](\s?\d{2}){4}$/.test(client.telephone.replace(/[\s.-]/g, ""))) errors.telephone = "Numéro de téléphone invalide (format français attendu)"
     if (!client.typeEvenement) errors.typeEvenement = "Le type d'événement est requis"
     if (!client.dateEvenement) errors.dateEvenement = "La date de l'événement est requise"
     if (!client.lieuEvenement) errors.lieuEvenement = "Le lieu de l'événement est requis"
@@ -436,7 +437,7 @@ export default function ReservationPage() {
                   </div>
                   <label className="text-sm text-[#2E2E2E] cursor-pointer flex items-center gap-2">
                     <Truck size={16} className="text-[#C8A97E]" />
-                    <span>Livraison et/ou montage</span>
+                    <span>Livraison + reprise emballage incluses</span>
                   </label>
                 </div>
 
@@ -446,7 +447,7 @@ export default function ReservationPage() {
                       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                       <polyline points="22 4 12 14.01 9 11.01" />
                     </svg>
-                    Livraison offerte pour cette commande (montant &ge; 150&euro;)
+                    Livraison + reprise emballage offertes (commande &ge; 150&euro;)
                   </div>
                 )}
 
@@ -523,7 +524,7 @@ export default function ReservationPage() {
               </div>
               <div>
                 <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">Message (optionnel)</label>
-                <textarea value={client.message || ""} onChange={(e) => setClient((c) => ({ ...c, message: e.target.value }))} rows={3} placeholder="Informations complémentaires..." className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm" />
+                <textarea value={client.message || ""} onChange={(e) => setClient((c) => ({ ...c, message: e.target.value }))} rows={3} placeholder="Informations complémentaires..." className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm" style={{ WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
               </div>
 
               {/* Recap */}
@@ -720,7 +721,8 @@ function InputField({ label, type = "text", value, onChange, required, error }: 
     <div>
       <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">{label}{required && <span className="text-red-400 ml-0.5">*</span>}</label>
       <input type={type} value={value} onChange={(e) => onChange(e.target.value)} required={required}
-        className={`w-full bg-white border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-300' : 'border-black/[0.08]'}`} />
+        className={`w-full bg-white border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-300' : 'border-black/[0.08]'}`}
+        style={{ WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
       {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   )
@@ -733,7 +735,8 @@ function SelectField({ label, value, onChange, options, required, error }: {
     <div>
       <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">{label}{required && <span className="text-red-400 ml-0.5">*</span>}</label>
       <select value={value} onChange={(e) => onChange(e.target.value)} required={required}
-        className={`w-full bg-white border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-300' : 'border-black/[0.08]'}`}>
+        className={`w-full bg-white border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-300' : 'border-black/[0.08]'}`}
+        style={{ WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}>
         <option value="">Sélectionner</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>

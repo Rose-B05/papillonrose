@@ -387,6 +387,7 @@ function Footer({
   onNav: (p: Page) => void
   onCatalogue: (cat?: string) => void
 }) {
+  const [showCategories, setShowCategories] = useState(false)
   return (
     <footer className="bg-[#1C1A17] text-white pt-16 pb-8 mt-16 relative">
       <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-8 mb-12 overflow-hidden">
@@ -455,23 +456,37 @@ function Footer({
             </ul>
           </div>
 
-          {/* Colonne 3 — Catégories */}
+          {/* Colonne 3 — Catégories (accordion) */}
           <div>
-            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
+            <button
+              onClick={() => setShowCategories(!showCategories)}
+              className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
+            >
               Catégories
-            </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-2.5 text-sm">
-              {CATEGORIES.slice(1).map((cat) => (
-                <li key={cat}>
-                  <button
-                    onClick={() => onCatalogue(cat)}
-                    className="text-[#D4B896] hover:text-white transition-colors text-left"
-                  >
-                    {cat}
-                  </button>
-                </li>
-              ))}
-            </ul>
+              <svg
+                width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={`transition-transform duration-200 ${showCategories ? "rotate-180" : ""}`}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div
+              className="overflow-hidden transition-all duration-300"
+              style={{ maxHeight: showCategories ? "500px" : "0px" }}
+            >
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-2.5 text-sm pb-2">
+                {CATEGORIES.slice(1).map((cat) => (
+                  <li key={cat}>
+                    <button
+                      onClick={() => onCatalogue(cat)}
+                      className="text-[#D4B896] hover:text-white transition-colors text-left"
+                    >
+                      {cat}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Colonne 4 — Contact */}
