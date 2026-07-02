@@ -957,7 +957,7 @@ export default function PapillonRoseSite() {
                   {
                     nom: "Mobilier",
                     categorie: "Mobilier",
-                    image: "/images/PROD004.png",
+                    image: "/images/PROD087.png",
                     bgColor: "#E8C4B8",
                   },
                   {
@@ -975,49 +975,49 @@ export default function PapillonRoseSite() {
                   {
                     nom: "Verreries",
                     categorie: "Verreries",
-                    image: "/images/PROD030.png",
+                    image: "/images/PROD088.png",
                     bgColor: "#C9A96E",
                   },
                   {
                     nom: "Cadres",
                     categorie: "Cadres",
-                    image: "/images/PROD096.png",
+                    image: "/images/PROD040.png",
                     bgColor: "#E8C4B8",
                   },
                   {
                     nom: "Présentoirs & Plateaux",
                     categorie: "Présentoirs & Plateaux",
-                    image: "/images/PROD046.png",
+                    image: "/images/PROD097.png",
                     bgColor: "#C9A96E",
                   },
                   {
                     nom: "Urnes & Accessoires",
                     categorie: "Urnes & Accessoires",
-                    image: "/images/PROD049.png",
+                    image: "/images/PROD093.png",
                     bgColor: "#E8C4B8",
                   },
                   {
                     nom: "Art de la Table",
                     categorie: "Art de la Table",
-                    image: "/images/PROD090.png",
+                    image: "/images/PROD055.png",
                     bgColor: "#C9A96E",
                   },
                   {
                     nom: "Vases & Pots",
                     categorie: "Vases & Pots",
-                    image: "/images/PROD091.png",
+                    image: "/images/PROD068.png",
                     bgColor: "#E8C4B8",
                   },
                   {
                     nom: "Décoration",
                     categorie: "Décoration",
-                    image: "/images/PROD092.png",
+                    image: "/images/PROD074.png",
                     bgColor: "#C9A96E",
                   },
                   {
                     nom: "Fleurs & Feuillages",
                     categorie: "Fleurs & Feuillages",
-                    image: "/images/PROD081.png",
+                    image: "/images/PROD089.png",
                     bgColor: "#E8C4B8",
                   },
                 ]}
