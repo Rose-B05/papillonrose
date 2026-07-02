@@ -16,9 +16,10 @@ interface GalleryProps {
   onFav: (id: number) => void
   onAddCart: (id: number) => void
   onAddQuote: (p: Produit) => void
+  onView?: (p: Produit) => void
 }
 
-export default function CatalogGallery({ produits, favorites, cartItems, onFav, onAddCart, onAddQuote }: GalleryProps) {
+export default function CatalogGallery({ produits, favorites, cartItems, onFav, onAddCart, onAddQuote, onView }: GalleryProps) {
   const [lightbox, setLightbox] = useState<{ product: Produit; index: number } | null>(null)
 
   const getSrc = (p: Produit) => {
@@ -41,7 +42,7 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
             >
               <div
                 className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0] p-3"
-                onClick={() => setLightbox({ product: p, index: 0 })}
+                onClick={() => onView ? onView(p) : setLightbox({ product: p, index: 0 })}
               >
                 <img
                   src={img(getSrc(p))}

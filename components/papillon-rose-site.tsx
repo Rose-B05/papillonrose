@@ -561,6 +561,7 @@ export default function PapillonRoseSite() {
   const [priceMax, setPriceMax] = useState(200)
   const [scrolled, setScrolled] = useState(page !== "home")
   const [showQuoteSent, setShowQuoteSent] = useState(false)
+  const [cartToast, setCartToast] = useState<string | null>(null)
   const [tagFilters, setTagFilters] = useState<FilterState>({
     themes: [],
     couleurs: [],
@@ -648,6 +649,16 @@ export default function PapillonRoseSite() {
       else n.add(id)
       return n
     })
+  }
+
+  const addToCartWithToast = (productId: number, qty: number = 1) => {
+    const p = produits.find((x) => x.id === productId)
+    const added = addCartItem({ productId, qty, dateStart: "", dateEnd: "" })
+    if (added && p) {
+      setCartToast(p.nom)
+      setTimeout(() => setCartToast(null), 3000)
+    }
+    return added
   }
 
   const quoteTotal = quote.reduce((s, i) => s + parsePrix(i.product.prix) * i.qty, 0)
@@ -1025,7 +1036,7 @@ export default function PapillonRoseSite() {
                       isInCart={cartItems.some((i) => i.productId === p.id)}
                       onFav={() => toggleFav(p.id)}
                       onView={() => { setModalProduct(p); setModalQty(1) }}
-                      onAddCart={() => addCartItem({ productId: p.id, qty: 1, dateStart: "", dateEnd: "" })}
+                      onAddCart={() => addToCartWithToast(p.id)}
                     />
                   ))}
               </div>
@@ -1332,8 +1343,9 @@ export default function PapillonRoseSite() {
                 favorites={favorites}
                 cartItems={cartItems}
                 onFav={toggleFav}
-                onAddCart={(id) => addCartItem({ productId: id, qty: 1, dateStart: "", dateEnd: "" })}
+                onAddCart={(id) => addToCartWithToast(id)}
                 onAddQuote={addToQuote}
+                onView={(p) => { setModalProduct(p); setModalQty(1) }}
               />
             ) : (
               <div className="py-24 text-center">
@@ -1393,7 +1405,7 @@ export default function PapillonRoseSite() {
                     isInCart={cartItems.some((i) => i.productId === p.id)}
                     onFav={() => toggleFav(p.id)}
                     onView={() => setModalProduct(p)}
-                    onAddCart={() => addCartItem({ productId: p.id, qty: 1, dateStart: "", dateEnd: "" })}
+                    onAddCart={() => addToCartWithToast(p.id)}
                   />
                 ))}
               </div>
@@ -1508,7 +1520,7 @@ export default function PapillonRoseSite() {
                       <input
                         type={f.type}
                         placeholder={f.placeholder}
-                        className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
+                        className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
                       />
                     </div>
                   ))}
@@ -1518,7 +1530,7 @@ export default function PapillonRoseSite() {
                     </label>
                     <input
                       type="date"
-                      className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
+                      className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
                     />
                   </div>
                   <div>
@@ -1528,7 +1540,7 @@ export default function PapillonRoseSite() {
                     <textarea
                       rows={5}
                       placeholder="Décrivez votre projet, nombre d'invités, lieu…"
-                      className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm"
+                      className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm"
                     />
                   </div>
                   <button
@@ -1653,13 +1665,13 @@ export default function PapillonRoseSite() {
                   )}
                   <div className="flex flex-col gap-2">
                     <button
-                      onClick={() => {
-                        const added = addCartItem({ productId: modalProduct.id, qty: modalQty, dateStart: "", dateEnd: "" })
-                        if (added) {
-                          setModalProduct(null)
-                          setModalQty(1)
-                        }
-                      }}
+            onClick={() => {
+              const added = addToCartWithToast(modalProduct.id, modalQty)
+              if (added) {
+                setModalProduct(null)
+                setModalQty(1)
+              }
+            }}
                       disabled={modalProduct.stock === 0}
                       className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
@@ -1857,6 +1869,13 @@ export default function PapillonRoseSite() {
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#2E2E2E] text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 animate-[fade-in-up_0.3s_ease-out]">
           <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
           <span className="text-sm font-medium">Demande de devis envoyée avec succès</span>
+        </div>
+      )}
+
+      {cartToast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#2E2E2E] text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 animate-[fade-in-up_0.3s_ease-out]">
+          <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+          <span className="text-sm font-medium">{cartToast} ajouté au panier</span>
         </div>
       )}
 

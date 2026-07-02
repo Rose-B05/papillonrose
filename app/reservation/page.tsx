@@ -32,6 +32,8 @@ export default function ReservationPage() {
   const [availableStock, setAvailableStock] = useState<Record<number, number>>({})
   const [serverWarnings, setServerWarnings] = useState<string[]>([])
   const [deliveryResult, setDeliveryResult] = useState<DeliveryResult | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
+  const [showErrors, setShowErrors] = useState(false)
 
   const getProduct = (id: number) => produits.find((p) => p.id === id)
 
@@ -126,8 +128,21 @@ export default function ReservationPage() {
     return client.nom && client.prenom && client.email && client.telephone && client.typeEvenement && client.dateEvenement && client.lieuEvenement
   }
 
+  const validateClientFields = (): Record<string, string> => {
+    const errors: Record<string, string> = {}
+    if (!client.prenom) errors.prenom = "Le prénom est requis"
+    if (!client.nom) errors.nom = "Le nom est requis"
+    if (!client.email) errors.email = "L'email est requis"
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(client.email)) errors.email = "L'email n'est pas valide"
+    if (!client.telephone) errors.telephone = "Le téléphone est requis"
+    if (!client.typeEvenement) errors.typeEvenement = "Le type d'événement est requis"
+    if (!client.dateEvenement) errors.dateEvenement = "La date de l'événement est requise"
+    if (!client.lieuEvenement) errors.lieuEvenement = "Le lieu de l'événement est requis"
+    return errors
+  }
+
   const handleCreateBooking = async () => {
-    setLoading(true); setError(""); setServerWarnings([])
+    setLoading(true); setError(""); setServerWarnings([]); setShowErrors(false)
     try {
       const cartItems: CartItem[] = items.map((i) => ({
         productId: i.productId, qty: i.qty,
@@ -355,21 +370,26 @@ export default function ReservationPage() {
         {step === "client" && (
           <div>
             <BackButton onClick={() => setStep("dates")} label="Retour aux dates" />
-            <h2 style={DP} className="text-2xl font-semibold text-[#2E2E2E] mb-6">Vos informations</h2>
-            <form onSubmit={(e) => { e.preventDefault(); handleCreateBooking() }} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <InputField label="Prénom" value={client.prenom} onChange={(v) => setClient((c) => ({ ...c, prenom: v }))} required />
-                <InputField label="Nom" value={client.nom} onChange={(v) => setClient((c) => ({ ...c, nom: v }))} required />
+            <div className="flex items-center justify-between mb-6">
+              <h2 style={DP} className="text-2xl font-semibold text-[#2E2E2E]">Vos informations</h2>
+              <button onClick={() => router.push("/")} className="text-xs text-[#C8A97E] hover:text-[#B8926E] transition-colors underline">
+                Retour à l&apos;accueil
+              </button>
+            </div>
+            <form onSubmit={(e) => { e.preventDefault(); const errs = validateClientFields(); setFieldErrors(errs); setShowErrors(true); if (Object.keys(errs).length === 0) handleCreateBooking() }} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <InputField label="Prénom" value={client.prenom} onChange={(v) => { setClient((c) => ({ ...c, prenom: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.prenom; return n }) }} required error={showErrors ? fieldErrors.prenom : undefined} />
+                <InputField label="Nom" value={client.nom} onChange={(v) => { setClient((c) => ({ ...c, nom: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.nom; return n }) }} required error={showErrors ? fieldErrors.nom : undefined} />
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <InputField label="Email" type="email" value={client.email} onChange={(v) => setClient((c) => ({ ...c, email: v }))} required />
-                <InputField label="Téléphone" type="tel" value={client.telephone} onChange={(v) => setClient((c) => ({ ...c, telephone: v }))} required />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <InputField label="Email" type="email" value={client.email} onChange={(v) => { setClient((c) => ({ ...c, email: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.email; return n }) }} required error={showErrors ? fieldErrors.email : undefined} />
+                <InputField label="Téléphone" type="tel" value={client.telephone} onChange={(v) => { setClient((c) => ({ ...c, telephone: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.telephone; return n }) }} required error={showErrors ? fieldErrors.telephone : undefined} />
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <SelectField label="Type d'événement" value={client.typeEvenement} onChange={(v) => setClient((c) => ({ ...c, typeEvenement: v }))} options={["Mariage", "Anniversaire", "Baptême", "Soirée d'entreprise", "Séminaire", "Autre"]} required />
-                <InputField label="Date de l'événement" type="date" value={client.dateEvenement} onChange={(v) => setClient((c) => ({ ...c, dateEvenement: v }))} required />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <SelectField label="Type d'événement" value={client.typeEvenement} onChange={(v) => { setClient((c) => ({ ...c, typeEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.typeEvenement; return n }) }} options={["Mariage", "Anniversaire", "Baptême", "Soirée d'entreprise", "Séminaire", "Autre"]} required error={showErrors ? fieldErrors.typeEvenement : undefined} />
+                <InputField label="Date de l'événement" type="date" value={client.dateEvenement} onChange={(v) => { setClient((c) => ({ ...c, dateEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.dateEvenement; return n }) }} required error={showErrors ? fieldErrors.dateEvenement : undefined} />
               </div>
-              <InputField label="Lieu de l'événement (adresse)" value={client.lieuEvenement} onChange={(v) => setClient((c) => ({ ...c, lieuEvenement: v }))} required />
+              <InputField label="Lieu de l'événement (adresse)" value={client.lieuEvenement} onChange={(v) => { setClient((c) => ({ ...c, lieuEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.lieuEvenement; return n }) }} required error={showErrors ? fieldErrors.lieuEvenement : undefined} />
               <InputField label="Nombre d'invités" type="number" value={String(client.nbInvites || "")} onChange={(v) => setClient((c) => ({ ...c, nbInvites: Number(v) }))} required />
               <div className="space-y-3">
                 <div className="flex items-center gap-3 bg-white rounded-2xl px-5 py-4 border border-black/[0.07] shadow-sm">
@@ -408,7 +428,7 @@ export default function ReservationPage() {
                         }}
                         placeholder="ex: 94000"
                         maxLength={5}
-                        className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
+                        className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
                       />
                     </div>
 
@@ -456,7 +476,7 @@ export default function ReservationPage() {
               </div>
               <div>
                 <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">Message (optionnel)</label>
-                <textarea value={client.message || ""} onChange={(e) => setClient((c) => ({ ...c, message: e.target.value }))} rows={3} placeholder="Informations complémentaires..." className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm" />
+                <textarea value={client.message || ""} onChange={(e) => setClient((c) => ({ ...c, message: e.target.value }))} rows={3} placeholder="Informations complémentaires..." className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm" />
               </div>
 
               {/* Recap */}
@@ -634,29 +654,31 @@ function NextButton({ onClick, disabled, label }: { onClick: () => void; disable
   )
 }
 
-function InputField({ label, type = "text", value, onChange, required }: {
-  label: string; type?: string; value: string; onChange: (v: string) => void; required?: boolean
+function InputField({ label, type = "text", value, onChange, required, error }: {
+  label: string; type?: string; value: string; onChange: (v: string) => void; required?: boolean; error?: string
 }) {
   return (
     <div>
-      <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">{label}</label>
+      <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">{label}{required && <span className="text-red-400 ml-0.5">*</span>}</label>
       <input type={type} value={value} onChange={(e) => onChange(e.target.value)} required={required}
-        className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm" />
+        className={`w-full bg-white border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-300' : 'border-black/[0.08]'}`} />
+      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   )
 }
 
-function SelectField({ label, value, onChange, options, required }: {
-  label: string; value: string; onChange: (v: string) => void; options: string[]; required?: boolean
+function SelectField({ label, value, onChange, options, required, error }: {
+  label: string; value: string; onChange: (v: string) => void; options: string[]; required?: boolean; error?: string
 }) {
   return (
     <div>
-      <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">{label}</label>
+      <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">{label}{required && <span className="text-red-400 ml-0.5">*</span>}</label>
       <select value={value} onChange={(e) => onChange(e.target.value)} required={required}
-        className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm">
+        className={`w-full bg-white border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-300' : 'border-black/[0.08]'}`}>
         <option value="">Sélectionner</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
+      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   )
 }
