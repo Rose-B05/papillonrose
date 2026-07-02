@@ -41,13 +41,13 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
               className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col"
             >
               <div
-                className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0] p-3"
+                className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0]"
                 onClick={() => onView ? onView(p) : setLightbox({ product: p, index: 0 })}
               >
                 <img
                   src={img(getSrc(p))}
                   alt={p.nom}
-                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
 

@@ -120,13 +120,13 @@ function ProductCard({
   return (
     <div className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
       <div
-        className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0] p-3"
+        className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0]"
         onClick={onView}
       >
         <img
           src={img(getSrc())}
           alt={product.nom}
-          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
