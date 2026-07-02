@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useEffect, useCallback, useRef } from "react"
+import { useState, useMemo, useEffect, useCallback } from "react"
 import {
   Search,
   ShoppingBag,
@@ -378,39 +378,8 @@ function Footer({
   onNav: (p: Page) => void
   onCatalogue: (cat?: string) => void
 }) {
-  const footerRef = useRef<HTMLElement>(null)
-  const [birdPhase, setBirdPhase] = useState<"idle" | "orbit" | "fly">("idle")
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(true)
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: no-preference)")
-    setPrefersReducedMotion(!mq.matches)
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(!e.matches)
-    mq.addEventListener("change", handler)
-    return () => mq.removeEventListener("change", handler)
-  }, [])
-
-  useEffect(() => {
-    if (prefersReducedMotion) return
-    const el = footerRef.current
-    if (!el) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setBirdPhase("orbit")
-          setTimeout(() => setBirdPhase("fly"), 3200)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.15 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [prefersReducedMotion])
-
   return (
-    <footer ref={footerRef} className="bg-[#1C1A17] text-white pt-16 pb-8 mt-16 relative">
+    <footer className="bg-[#1C1A17] text-white pt-16 pb-8 mt-16 relative">
       <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-8 mb-12 overflow-hidden">
         {/* Colonnes de texte — gauche */}
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
@@ -538,8 +507,8 @@ function Footer({
         </div>
 
         {/* Scène femme + cage — droite (desktop uniquement) */}
-        <div className="hidden lg:block relative w-[340px] flex-shrink-0 mt-[-64px]">
-          <div className="relative w-full h-[420px]">
+        <div className="hidden lg:block relative w-[480px] flex-shrink-0 mt-[-80px]">
+          <div className="relative w-full h-[560px]">
             <img
               src={img("/images/PROD086.png")}
               alt=""
@@ -547,44 +516,6 @@ function Footer({
               loading="lazy"
               className="w-full h-full object-contain drop-shadow-[0_4px_24px_rgba(201,169,110,0.15)]"
             />
-            {/* Oiseau SVG animé */}
-            <svg
-              viewBox="0 0 48 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-              className={`absolute w-10 h-7 ${
-                birdPhase === "idle" && !prefersReducedMotion
-                  ? "opacity-0"
-                  : birdPhase === "idle"
-                    ? "opacity-100"
-                    : ""
-              }`}
-              style={{
-                left: "20%",
-                top: "33%",
-                transformOrigin: "center",
-                animation:
-                  birdPhase === "orbit"
-                    ? "bird-orbit 3.2s ease-in-out forwards"
-                    : birdPhase === "fly"
-                      ? "bird-fly 2s ease-in forwards"
-                      : prefersReducedMotion
-                        ? "bird-still 1s ease forwards"
-                        : "none",
-                opacity: birdPhase === "idle" && !prefersReducedMotion ? 0 : undefined,
-              }}
-            >
-              <path
-                d="M24 16c-3-8-14-12-18-8 3 0 7 1 10 4-3-1-7-1-10 0 4-3 10-1 14 5 2 3 3 6 2 9 2-3 3-6 2-10z"
-                fill="#C9A96E"
-              />
-              <path
-                d="M26 14c4-6 10-8 16-6-4 1-8 3-11 6 4-2 9-2 13 0-5 2-10 5-13 9 1-4 1-7-1-10z"
-                fill="#D4B896"
-              />
-              <circle cx="20" cy="13" r="1" fill="#1C1A17" />
-            </svg>
           </div>
         </div>
 
@@ -595,7 +526,7 @@ function Footer({
             alt=""
             aria-hidden
             loading="lazy"
-            className="w-[260px] h-auto object-contain opacity-90"
+            className="w-[300px] max-w-[80vw] h-auto object-contain opacity-90"
           />
         </div>
       </div>
