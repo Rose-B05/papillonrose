@@ -969,7 +969,7 @@ export default function PapillonRoseSite() {
                   {
                     nom: "Bougeoirs & Lustres",
                     categorie: "Bougeoirs & Lustres",
-                    image: "/images/PROD019.png",
+                    image: "/images/PROD095.png",
                     bgColor: "#E8C4B8",
                   },
                   {
@@ -981,7 +981,7 @@ export default function PapillonRoseSite() {
                   {
                     nom: "Cadres",
                     categorie: "Cadres",
-                    image: "/images/PROD040.png",
+                    image: "/images/PROD096.png",
                     bgColor: "#E8C4B8",
                   },
                   {
@@ -999,19 +999,19 @@ export default function PapillonRoseSite() {
                   {
                     nom: "Art de la Table",
                     categorie: "Art de la Table",
-                    image: "/images/PROD055.png",
+                    image: "/images/PROD090.png",
                     bgColor: "#C9A96E",
                   },
                   {
                     nom: "Vases & Pots",
                     categorie: "Vases & Pots",
-                    image: "/images/PROD068.png",
+                    image: "/images/PROD091.png",
                     bgColor: "#E8C4B8",
                   },
                   {
                     nom: "Décoration",
                     categorie: "Décoration",
-                    image: "/images/PROD074.png",
+                    image: "/images/PROD092.png",
                     bgColor: "#C9A96E",
                   },
                   {
