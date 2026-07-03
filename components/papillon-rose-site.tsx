@@ -49,6 +49,13 @@ function parsePrix(prix: number | string): number {
   const m = prix.match(/[\d.]+/)
   return m ? parseFloat(m[0]) : 0
 }
+function getStartingPrix(product: { prix: number | string; variants?: { label: string; prix: number | string }[] }): number | string {
+  if (product.variants && product.variants.length > 0) {
+    const min = Math.min(...product.variants.map((v) => parsePrix(v.prix)))
+    return min
+  }
+  return product.prix
+}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Page = "home" | "catalogue" | "panier" | "favorites" | "contact"
@@ -148,7 +155,16 @@ function ProductCard({
             <p className="text-[10px] text-gray-400 truncate">{formatDecimalFr(product.dimension)}</p>
           )}
           <p className="text-lg font-bold text-[#2E2E2E] mt-0.5">
-            {formatPrix(product.prix)} €
+            {product.variants && product.variants.length > 0 ? (
+              <>
+                <span className="text-[10px] font-normal text-gray-400 mr-0.5">à partir de</span>
+                {formatPrix(getStartingPrix(product))} €
+              </>
+            ) : (
+              <>
+                {formatPrix(product.prix)} €
+              </>
+            )}
             <span className="text-xs font-normal text-gray-400 ml-0.5">/jour</span>
           </p>
         </div>
@@ -587,6 +603,7 @@ export default function PapillonRoseSite() {
   const [search, setSearch] = useState("")
   const [modalProduct, setModalProduct] = useState<Produit | null>(null)
   const [modalQty, setModalQty] = useState(1)
+  const [modalVariant, setModalVariant] = useState<string | undefined>(undefined)
   const [quote, setQuote] = useState<QuoteItem[]>([])
   const [favorites, setFavorites] = useState<Set<number>>(new Set())
   const [showQuote, setShowQuote] = useState(false)
@@ -684,11 +701,12 @@ export default function PapillonRoseSite() {
     })
   }
 
-  const addToCartWithToast = (productId: number, qty: number = 1) => {
+  const addToCartWithToast = (productId: number, qty: number = 1, variantLabel?: string) => {
     const p = produits.find((x) => x.id === productId)
-    const added = addCartItem({ productId, qty, dateStart: "", dateEnd: "" })
+    const added = addCartItem({ productId, qty, dateStart: "", dateEnd: "", variantLabel })
     if (added && p) {
-      setCartToast(p.nom)
+      const label = variantLabel ? `${p.nom} — ${variantLabel}` : p.nom
+      setCartToast(label)
       setTimeout(() => setCartToast(null), 3000)
     }
     return added
@@ -1067,7 +1085,7 @@ export default function PapillonRoseSite() {
                       isFav={favorites.has(p.id)}
                       isInCart={cartItems.some((i) => i.productId === p.id)}
                       onFav={() => toggleFav(p.id)}
-                      onView={() => { setModalProduct(p); setModalQty(1) }}
+                      onView={() => { setModalProduct(p); setModalQty(1); setModalVariant(undefined) }}
                       onAddCart={() => addToCartWithToast(p.id)}
                     />
                   ))}
@@ -1377,7 +1395,7 @@ export default function PapillonRoseSite() {
                 onFav={toggleFav}
                 onAddCart={(id) => addToCartWithToast(id)}
                 onAddQuote={addToQuote}
-                onView={(p) => { setModalProduct(p); setModalQty(1) }}
+                onView={(p) => { setModalProduct(p); setModalQty(1); setModalVariant(undefined) }}
               />
             ) : (
               <div className="py-24 text-center">
@@ -1666,11 +1684,37 @@ export default function PapillonRoseSite() {
                 </div>
 
                 <div className="mt-auto">
+                  {modalProduct.variants && modalProduct.variants.length > 0 && (
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-500 mb-2">Taille</p>
+                      <div className="flex gap-2">
+                        {modalProduct.variants.map((v) => (
+                          <button
+                            key={v.label}
+                            onClick={() => setModalVariant(v.label)}
+                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                              modalVariant === v.label
+                                ? "bg-[#C8A97E] text-white shadow-sm"
+                                : "bg-[#F0EBE3] text-[#2E2E2E]/60 hover:bg-[#C8A97E]/20"
+                            }`}
+                          >
+                            {v.label} — {formatPrix(v.prix)} €/jour
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <p
                     style={DP}
                     className="text-3xl font-bold text-[#2E2E2E] mb-5"
                   >
-                    {formatPrix(modalProduct.prix)} €
+                    {modalProduct.variants && modalProduct.variants.length > 0
+                      ? formatPrix(
+                          modalVariant
+                            ? modalProduct.variants.find((v) => v.label === modalVariant)?.prix ?? modalProduct.prix
+                            : getStartingPrix(modalProduct)
+                        )
+                      : formatPrix(modalProduct.prix)} €
                     <span className="text-sm font-normal text-gray-400 ml-1">
                       / jour
                     </span>
@@ -1702,16 +1746,19 @@ export default function PapillonRoseSite() {
                   <div className="flex flex-col gap-2">
                     <button
             onClick={() => {
-              const added = addToCartWithToast(modalProduct.id, modalQty)
+              const added = addToCartWithToast(modalProduct.id, modalQty, modalVariant)
               if (added) {
                 setModalProduct(null)
                 setModalQty(1)
+                setModalVariant(undefined)
               }
             }}
-                      disabled={modalProduct.stock === 0}
+                      disabled={modalProduct.stock === 0 || (modalProduct.variants && modalProduct.variants.length > 0 && !modalVariant)}
                       className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
-                      Ajouter au panier
+                      {modalProduct.variants && modalProduct.variants.length > 0 && !modalVariant
+                        ? "Sélectionnez une taille"
+                        : "Ajouter au panier"}
                     </button>
                     <p className="text-[10px] text-gray-400 text-center -mt-1">
                       Sélectionnez 2 dates dans le panier pour valider la disponibilité
@@ -1721,6 +1768,7 @@ export default function PapillonRoseSite() {
                         addToQuote(modalProduct)
                         setModalProduct(null)
                         setModalQty(1)
+                        setModalVariant(undefined)
                       }}
                       disabled={modalProduct.stock === 0}
                       className="w-full bg-[#F0EBE3] text-[#2E2E2E]/60 py-3.5 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"

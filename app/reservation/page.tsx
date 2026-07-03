@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useCart } from "@/components/cart-context"
 import { produits } from "@/data/produits"
 import AvailabilityCalendar from "@/components/calendar"
-import { parsePrix, calcTotalHt, calcTtc, calcDeposit, formatDateFr } from "@/lib/utils"
+import { parsePrix, calcTotalHt, calcTtc, calcDeposit, formatDateFr, getPrixForProduct } from "@/lib/utils"
 import { calcRentalDates, calculateLateFee, getRuleSummary, formatDateLong, type RentalDates } from "@/lib/rental-dates"
 import { calcDeliveryFee, type DeliveryResult } from "@/lib/delivery"
 import { ShoppingBag, ArrowRight, ArrowLeft, Check, X, Trash2, Plus, Minus, Loader2, Package, RotateCcw, AlertTriangle, Truck } from "lucide-react"
@@ -38,7 +38,7 @@ export default function ReservationPage() {
   const getProduct = (id: number) => produits.find((p) => p.id === id)
 
   const itemsWithPrix = useMemo(
-    () => items.map((i) => ({ ...i, prix: getProduct(i.productId)?.prix || 0 })),
+    () => items.map((i) => ({ ...i, prix: getPrixForProduct(getProduct(i.productId) || { prix: 0 }, i.variantLabel) || 0 })),
     [items]
   )
 
@@ -94,7 +94,7 @@ export default function ReservationPage() {
     for (const item of items) {
       const max = getMaxQty(item.productId)
       if (max > 0 && item.qty > max) {
-        updateItem(item.productId, { qty: max })
+        updateItem(item.productId, item.variantLabel, { qty: max })
       }
     }
   }, [availableStock])
@@ -146,7 +146,7 @@ export default function ReservationPage() {
     setLoading(true); setError(""); setServerWarnings([]); setShowErrors(false)
     try {
       const cartItems: CartItem[] = items.map((i) => ({
-        productId: i.productId, qty: i.qty,
+        productId: i.productId, qty: i.qty, variantLabel: i.variantLabel,
         dateStart: dateEdits[i.productId]?.start || "",
         dateEnd: dateEdits[i.productId]?.end || "",
       }))
@@ -266,17 +266,19 @@ export default function ReservationPage() {
                     const p = getProduct(item.productId)
                     const maxQty = getMaxQty(item.productId)
                     const atMax = item.qty >= maxQty
+                    const itemPrix = getPrixForProduct(p || { prix: 0 }, item.variantLabel)
                     return (
-                      <div key={item.productId} className="bg-white rounded-2xl p-4 flex gap-4 shadow-sm border border-black/[0.07]">
+                      <div key={`${item.productId}:${item.variantLabel || ""}`} className="bg-white rounded-2xl p-4 flex gap-4 shadow-sm border border-black/[0.07]">
                         <img src={p?.image || "/placeholder.svg"} alt={p?.nom || ""} className="w-16 h-16 rounded-xl object-cover flex-shrink-0" />
                         <div className="flex-1 min-w-0">
                           <p className="font-medium text-sm text-[#2E2E2E]">{p?.nom}</p>
-                          <p className="text-[11px] text-gray-400 mt-0.5">{parsePrix(p?.prix || 0)} € / jour</p>
+                          {item.variantLabel && <p className="text-[11px] text-[#C8A97E] font-medium">{item.variantLabel}</p>}
+                          <p className="text-[11px] text-gray-400 mt-0.5">{parsePrix(itemPrix)} € / jour</p>
                           <div className="flex items-center gap-2 mt-2">
-                            <button onClick={() => updateItem(item.productId, { qty: Math.max(1, item.qty - 1) })} className="w-6 h-6 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm"><Minus size={10} /></button>
+                            <button onClick={() => updateItem(item.productId, item.variantLabel, { qty: Math.max(1, item.qty - 1) })} className="w-6 h-6 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm"><Minus size={10} /></button>
                             <span className="text-sm font-semibold text-[#2E2E2E] w-7 text-center">{item.qty}</span>
                             <button
-                              onClick={() => { if (!atMax) updateItem(item.productId, { qty: item.qty + 1 }) }}
+                              onClick={() => { if (!atMax) updateItem(item.productId, item.variantLabel, { qty: item.qty + 1 }) }}
                               disabled={atMax}
                               className="w-6 h-6 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
                             ><Plus size={10} /></button>
@@ -285,7 +287,7 @@ export default function ReservationPage() {
                             <p className="text-[10px] text-amber-500 mt-1 font-medium">Stock maximum atteint</p>
                           )}
                         </div>
-                        <button onClick={() => removeItem(item.productId)} className="text-gray-300 hover:text-red-400 transition-colors self-start mt-1"><Trash2 size={14} /></button>
+                        <button onClick={() => removeItem(item.productId, item.variantLabel)} className="text-gray-300 hover:text-red-400 transition-colors self-start mt-1"><Trash2 size={14} /></button>
                       </div>
                     )
                   })}
@@ -314,18 +316,20 @@ export default function ReservationPage() {
                 const eds = dateEdits[item.productId] || { start: "", end: "" }
                 const maxQty = getMaxQty(item.productId)
                 const atMax = item.qty >= maxQty
+                const itemPrix = getPrixForProduct(p || { prix: 0 }, item.variantLabel)
                 return (
-                  <div key={item.productId} className="bg-white rounded-2xl p-5 shadow-sm border border-black/[0.07]">
+                  <div key={`${item.productId}:${item.variantLabel || ""}`} className="bg-white rounded-2xl p-5 shadow-sm border border-black/[0.07]">
                     <div className="flex items-center gap-3 mb-4">
                       <img src={p?.image || "/placeholder.svg"} alt="" className="w-10 h-10 rounded-lg object-cover" />
                       <div className="flex-1">
                         <p className="font-medium text-sm text-[#2E2E2E]">{p?.nom}</p>
+                        {item.variantLabel && <p className="text-[11px] text-[#C8A97E] font-medium">{item.variantLabel}</p>}
                         <div className="flex items-center gap-3 mt-1">
                           <div className="flex items-center gap-1.5">
-                            <button onClick={() => { if (item.qty > 1) updateItem(item.productId, { qty: item.qty - 1 }) }} className="w-5 h-5 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm"><Minus size={9} /></button>
+                            <button onClick={() => { if (item.qty > 1) updateItem(item.productId, item.variantLabel, { qty: item.qty - 1 }) }} className="w-5 h-5 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm"><Minus size={9} /></button>
                             <span className="text-xs font-semibold w-5 text-center">{item.qty}</span>
                             <button
-                              onClick={() => { if (!atMax) updateItem(item.productId, { qty: item.qty + 1 }) }}
+                              onClick={() => { if (!atMax) updateItem(item.productId, item.variantLabel, { qty: item.qty + 1 }) }}
                               disabled={atMax}
                               className="w-5 h-5 bg-[#C8A97E] text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
                             ><Plus size={9} /></button>
@@ -534,8 +538,8 @@ export default function ReservationPage() {
                   const p = getProduct(i.productId)
                   const eds = dateEdits[i.productId]
                   return (
-                    <div key={i.productId} className="flex justify-between text-sm text-[#2E2E2E]">
-                      <span>{p?.nom} × {i.qty}</span>
+                    <div key={`${i.productId}:${i.variantLabel || ""}`} className="flex justify-between text-sm text-[#2E2E2E]">
+                      <span>{p?.nom}{i.variantLabel ? ` (${i.variantLabel})` : ""} × {i.qty}</span>
                       <span className="text-gray-500">{eds?.start ? formatDateFr(eds.start) : "..."} → {eds?.end ? formatDateFr(eds.end) : "..."}</span>
                     </div>
                   )
