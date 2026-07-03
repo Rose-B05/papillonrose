@@ -736,7 +736,7 @@ export const produits: Produit[] = [
     categorie: "Fleurs & Feuillages",
     stock: 3,
     prix: 15,
-    image: "/images/PROD082.png",
+    image: "/images/PROD080.png",
   },
   {
     id: 81,
