@@ -404,11 +404,13 @@ function Footer({
   onCatalogue: (cat?: string) => void
 }) {
   const [showCategories, setShowCategories] = useState(false)
+  const [showNavigation, setShowNavigation] = useState(false)
+  const [showDelivery, setShowDelivery] = useState(false)
   return (
     <footer className="bg-[#1C1A17] text-white pt-16 pb-8 mt-16 relative">
       <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-8 mb-12 overflow-hidden">
         {/* Colonnes de texte — gauche */}
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 lg:gap-8">
           {/* Colonne 1 — Identité */}
           <div className="lg:col-span-1">
             <img src={LOGO} alt="Papillon Rose" className="h-10 w-auto brightness-0 invert opacity-90 mb-4" />
@@ -426,126 +428,143 @@ function Footer({
             </p>
           </div>
 
-          {/* Colonne 2 — Navigation */}
-          <div>
-            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
-              Navigation
-            </p>
-            <ul className="space-y-3 text-sm">
-              {([
-                { label: "Accueil", page: "home" as Page },
-                { label: "Catalogue", page: "catalogue" as Page },
-                { label: "Panier", href: "/reservation" },
-                { label: "Favoris", page: "favorites" as Page },
-                { label: "Contact", page: "contact" as Page },
-              ]).map((item) => (
-                <li key={item.label}>
-                  {"href" in item ? (
-                    <a href={item.href} className="text-[#D4B896] hover:text-white transition-colors">
-                      {item.label}
-                    </a>
-                  ) : (
-                    <button
-                      onClick={() => onNav(item.page)}
-                      className="text-[#D4B896] hover:text-white transition-colors text-left"
-                    >
-                      {item.label}
-                    </button>
-                  )}
-                </li>
-              ))}
-              <li>
-                <a href="/a-propos" className="text-[#D4B896] hover:text-white transition-colors">
-                  À propos
-                </a>
-              </li>
-              <li>
-                <a href="/faq" className="text-[#D4B896] hover:text-white transition-colors">
-                  FAQ
-                </a>
-              </li>
-              <li>
-                <a href="/conditions-location" className="text-[#D4B896] hover:text-white transition-colors">
-                  Conditions de location
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Colonne 3 — Catégories (accordion) */}
-          <div>
-            <button
-              onClick={() => setShowCategories(!showCategories)}
-              className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
-            >
-              Catégories
-              <svg
-                width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                className={`transition-transform duration-200 ${showCategories ? "rotate-180" : ""}`}
+          {/* Colonne 2 — Menus empilés : Navigation → Catégories → Contact */}
+          <div className="flex flex-col gap-8">
+            {/* Navigation (accordion) */}
+            <div>
+              <button
+                onClick={() => setShowNavigation(!showNavigation)}
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
               >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div
-              className="overflow-hidden transition-all duration-300"
-              style={{ maxHeight: showCategories ? "500px" : "0px" }}
-            >
-              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-2.5 text-sm pb-2">
-                {CATEGORIES.slice(1).map((cat) => (
-                  <li key={cat}>
-                    <button
-                      onClick={() => onCatalogue(cat)}
-                      className="text-[#D4B896] hover:text-white transition-colors text-left"
-                    >
-                      {cat}
-                    </button>
+                Navigation
+                <svg
+                  width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                  className={`transition-transform duration-200 ${showNavigation ? "rotate-180" : ""}`}
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div
+                className="overflow-hidden transition-all duration-300"
+                style={{ maxHeight: showNavigation ? "500px" : "0px" }}
+              >
+                <ul className="space-y-3 text-sm pb-2">
+                  {([
+                    { label: "Accueil", page: "home" as Page },
+                    { label: "Catalogue", page: "catalogue" as Page },
+                    { label: "Panier", href: "/reservation" },
+                    { label: "Favoris", page: "favorites" as Page },
+                    { label: "Contact", page: "contact" as Page },
+                  ]).map((item) => (
+                    <li key={item.label}>
+                      {"href" in item ? (
+                        <a href={item.href} className="text-[#D4B896] hover:text-white transition-colors">
+                          {item.label}
+                        </a>
+                      ) : (
+                        <button
+                          onClick={() => onNav(item.page)}
+                          className="text-[#D4B896] hover:text-white transition-colors text-left"
+                        >
+                          {item.label}
+                        </button>
+                      )}
+                    </li>
+                  ))}
+                  <li>
+                    <a href="/a-propos" className="text-[#D4B896] hover:text-white transition-colors">
+                      À propos
+                    </a>
                   </li>
-                ))}
+                  <li>
+                    <a href="/faq" className="text-[#D4B896] hover:text-white transition-colors">
+                      FAQ
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/conditions-location" className="text-[#D4B896] hover:text-white transition-colors">
+                      Conditions de location
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Catégories (accordion) */}
+            <div>
+              <button
+                onClick={() => setShowCategories(!showCategories)}
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
+              >
+                Catégories
+                <svg
+                  width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                  className={`transition-transform duration-200 ${showCategories ? "rotate-180" : ""}`}
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div
+                className="overflow-hidden transition-all duration-300"
+                style={{ maxHeight: showCategories ? "500px" : "0px" }}
+              >
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 text-sm pb-2">
+                  {CATEGORIES.slice(1).map((cat) => (
+                    <li key={cat}>
+                      <button
+                        onClick={() => onCatalogue(cat)}
+                        className="text-[#D4B896] hover:text-white transition-colors text-left"
+                      >
+                        {cat}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
+                Contact
+              </p>
+              <ul className="space-y-3.5 text-sm">
+                <li className="flex items-start gap-2.5">
+                  <Phone size={13} className="text-[#C8A97E]/50 mt-0.5 flex-shrink-0" />
+                  <span className="text-[#D4B896]/60 text-xs italic">
+                    Téléphone temporairement indisponible
+                    <br />
+                    <span className="not-italic">Contactez-nous par email ou Instagram</span>
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Mail size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
+                  <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors">
+                    papillonrosebertha@gmail.com
+                  </a>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <MapPin size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
+                  <span className="text-[#D4B896]">
+                    Île-de-France
+                    <br />
+                    Créteil (94)
+                  </span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Send size={13} className="text-[#C9A96E] flex-shrink-0" />
+                  <a href="https://t.me/PapillonRose" target="_blank" rel="noopener noreferrer" className="text-[#D4B896] hover:text-white transition-colors">
+                    @PapillonRose
+                  </a>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <a href="https://www.instagram.com/papillonrose.g" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors">
+                    <InstagramIcon size={18} />
+                    @papillonrose.g
+                  </a>
+                </li>
               </ul>
             </div>
-          </div>
-
-          {/* Colonne 4 — Contact */}
-          <div>
-            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
-              Contact
-            </p>
-            <ul className="space-y-3.5 text-sm">
-              <li className="flex items-start gap-2.5">
-                <Phone size={13} className="text-[#C8A97E]/50 mt-0.5 flex-shrink-0" />
-                <span className="text-[#D4B896]/60 text-xs italic">
-                  Téléphone temporairement indisponible
-                  <br />
-                  <span className="not-italic">Contactez-nous par email ou Instagram</span>
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Mail size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
-                <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors">
-                  papillonrosebertha@gmail.com
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <MapPin size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
-                <span className="text-[#D4B896]">
-                  Île-de-France
-                  <br />
-                  Créteil (94)
-                </span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Send size={13} className="text-[#C9A96E] flex-shrink-0" />
-                <a href="https://t.me/PapillonRose" target="_blank" rel="noopener noreferrer" className="text-[#D4B896] hover:text-white transition-colors">
-                  @PapillonRose
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <a href="https://www.instagram.com/papillonrose.g" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors">
-                  <InstagramIcon size={18} />
-                  @papillonrose.g
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
 
