@@ -1,12 +1,15 @@
 "use client"
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "0612345678"
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || ""
+const IS_FAKE = !WHATSAPP_NUMBER || WHATSAPP_NUMBER === "0612345678"
 const WHATSAPP_MSG = encodeURIComponent(
   "Bonjour Papillon Rose, je souhaite obtenir des informations sur une location de décoration."
 )
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace(/^0/, "33")}?text=${WHATSAPP_MSG}`
+const WHATSAPP_URL = WHATSAPP_NUMBER ? `https://wa.me/${WHATSAPP_NUMBER.replace(/^0/, "33")}?text=${WHATSAPP_MSG}` : "#"
 
 export default function WhatsAppButton() {
+  if (IS_FAKE) return null
+
   return (
     <a
       href={WHATSAPP_URL}

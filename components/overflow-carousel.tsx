@@ -152,9 +152,8 @@ export default function OverflowCarousel({
           const center = offset === 0
           const light = isLight(card.bgColor)
           const textColor = light ? "#333" : "#fff"
-          const isLarge = card.largeImage
-          const imgHeight = isLarge ? 400 : 300
-          const cardHeight = isLarge ? 320 : 280
+          const imgHeight = 300
+          const cardHeight = 280
 
           return (
             <div
@@ -174,7 +173,7 @@ export default function OverflowCarousel({
                 draggable={false}
                 style={{
                   position: "absolute",
-                  top: isLarge ? "-120px" : "-90px",
+                  top: "-90px",
                   left: "50%",
                   transform: "translateX(-50%)",
                   height: `${imgHeight}px`,
