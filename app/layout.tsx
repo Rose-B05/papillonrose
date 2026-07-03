@@ -38,6 +38,15 @@ export const metadata: Metadata = {
     ],
     apple: '/apple-icon.png',
   },
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
 }
 
 export const viewport: Viewport = {
