@@ -54,7 +54,7 @@ export const produits: Produit[] = [
   },
   {
     id: 3,
-    nom: "Chaise Haute Or",
+    nom: "Chaise Haute Bébé",
     categorie: "Mobilier",
     stock: 1,
     prix: 25,
@@ -330,6 +330,7 @@ export const produits: Produit[] = [
     stock: 9,
     prix: 0.30,
     image: "/images/PROD032.png",
+    actif: false,
   },
   {
     id: 34,
@@ -677,7 +678,7 @@ export const produits: Produit[] = [
     stock: 12,
     dimension: "5 L",
     prix: 7,
-    image: "/images/PROD072.png",
+    image: "/images/PROD073.png",
   },
 
   // ── DÉCORATION ──
@@ -757,7 +758,7 @@ export const produits: Produit[] = [
     stock: 400,
     dimension: "35 - 40 cm",
     prix: 0.30,
-    image: "/images/PROD084.png",
+    image: "/images/PROD082.png",
   },
   {
     id: 83,
