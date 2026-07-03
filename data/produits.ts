@@ -467,7 +467,7 @@ export const produits: Produit[] = [
     stock: 2,
     dimension: "39 x 20 x 20 cm",
     prix: "7 - 9",
-    image: "/images/PROD093.png",
+    image: "/images/PROD049.png",
   },
   {
     id: 50,
