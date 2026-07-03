@@ -408,7 +408,7 @@ function Footer({
   const [showDelivery, setShowDelivery] = useState(false)
   return (
     <footer className="bg-[#1C1A17] text-white pt-16 pb-8 mt-16 relative">
-      <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-8 mb-12 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-8 mb-12 overflow-visible">
         {/* Colonnes de texte — gauche */}
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 lg:gap-8">
           {/* Colonne 1 — Identité */}
@@ -569,8 +569,8 @@ function Footer({
         </div>
 
         {/* Scène femme + cage — droite (desktop) */}
-        <div className="hidden lg:block flex-shrink-0 mt-[-30px]">
-          <div className="relative w-[480px] h-[560px]">
+        <div className="hidden lg:block flex-shrink-0">
+          <div className="relative w-[580px] h-[700px] -mt-[140px]">
             <img
               src={img("/images/PROD086.png")}
               alt=""
@@ -582,13 +582,13 @@ function Footer({
         </div>
 
         {/* Scène mobile — empilée sous les colonnes */}
-        <div className="lg:hidden flex justify-center mt-4">
+        <div className="lg:hidden flex justify-center mt-4 overflow-visible">
           <img
             src={img("/images/PROD086.png")}
             alt=""
             aria-hidden
             loading="lazy"
-            className="w-[300px] max-w-[80vw] h-auto object-contain opacity-90"
+            className="w-[350px] max-w-[90vw] h-auto object-contain opacity-90 -mt-[60px]"
           />
         </div>
       </div>
