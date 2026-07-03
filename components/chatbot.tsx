@@ -146,14 +146,14 @@ export default function Chatbot() {
       <button
         onClick={() => setOpen(!open)}
         aria-label="Ouvrir le chat"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#C8A97E] text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-[#B8926E] transition-all hover:scale-105 active:scale-95"
+        className="fixed bottom-24 right-6 z-50 w-14 h-14 bg-[#C8A97E] text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-[#B8926E] transition-all hover:scale-105 active:scale-95"
       >
         {open ? <X size={22} /> : <MessageCircle size={22} />}
       </button>
 
       {/* Chat window */}
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] h-[520px] max-h-[calc(100vh-10rem)] bg-white rounded-2xl shadow-2xl border border-black/[0.07] flex flex-col overflow-hidden animate-[fade-in-up_0.25s_ease-out]">
+        <div className="fixed bottom-[10.5rem] right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] h-[520px] max-h-[calc(100vh-10rem)] bg-white rounded-2xl shadow-2xl border border-black/[0.07] flex flex-col overflow-hidden animate-[fade-in-up_0.25s_ease-out]">
           {/* Header */}
           <div className="bg-[#2E2E2E] text-white px-5 py-4 flex items-center gap-3">
             <div className="w-9 h-9 bg-[#C8A97E] rounded-full flex items-center justify-center text-sm font-bold">

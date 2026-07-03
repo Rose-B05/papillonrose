@@ -210,8 +210,7 @@ function CategoryPills({
 }) {
   return (
     <div
-      className="flex gap-2 overflow-x-auto pb-1"
-      style={{ scrollbarWidth: "none" } as React.CSSProperties}
+      className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide"
     >
       {CATEGORIES.map((cat) => (
         <button
@@ -1478,7 +1477,7 @@ export default function PapillonRoseSite() {
                   Contactez-nous
                 </h1>
               </div>
-              <div className="grid md:grid-cols-2 gap-12">
+              <div className="grid sm:grid-cols-2 gap-12">
                 <div>
                   <div className="space-y-7">
                     {[
