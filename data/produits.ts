@@ -196,7 +196,7 @@ export const produits: Produit[] = [
     stock: 2,
     dimension: "H 21 cm",
     prix: 4,
-    image: "/images/placeholder.png",
+    image: "/images/PROD018.png",
   },
   {
     id: 19,
@@ -221,8 +221,12 @@ export const produits: Produit[] = [
     nom: "Lanterne Argent",
     categorie: "Bougeoirs & Lustres",
     stock: 4,
-    prix: "8 - 15",
+    prix: 8,
     image: "/images/PROD020.png",
+    variants: [
+      { label: "Moyen", prix: 8 },
+      { label: "Grand", prix: 15 },
+    ],
   },
   {
     id: 22,
@@ -238,7 +242,7 @@ export const produits: Produit[] = [
     categorie: "Bougeoirs & Lustres",
     stock: 7,
     prix: 5,
-    image: "/images/placeholder.png",
+    image: "/images/PROD023.png",
   },
   {
     id: 24,
