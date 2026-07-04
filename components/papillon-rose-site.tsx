@@ -86,7 +86,7 @@ const VISIBLE_PRODUCTS = PRODUCTS.filter((p) => hasRealPhoto(p) && p.actif !== f
 
 let CATEGORY_IMAGES: Record<string, string> = {
   Mobilier: "/images/PROD005.png",
-  "Figurines & Jeux": "/images/PROD009.png",
+  "Figurines & Jeux": "/images/PROD011.png",
   "Bougeoirs & Lustres": "/images/PROD023.png",
   Verreries: "/images/PROD088.png",
   Cadres: "/images/PROD39.png",
