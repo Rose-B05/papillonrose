@@ -8,6 +8,7 @@ export type Produit = {
   image: string;
   badge?: "stock-limite" | "epuise";
   actif?: boolean;
+  dateAjout?: string;
 };
 
 const PLACEHOLDER_PATTERNS = [
@@ -204,8 +205,13 @@ export const produits: Produit[] = [
     categorie: "Bougeoirs & Lustres",
     stock: 42,
     dimension: "15 - 20 - 25 cm",
-    prix: "5 - 6 - 7",
+    prix: 5,
     image: "/images/PROD019.png",
+    variants: [
+      { label: "15 cm", prix: 5 },
+      { label: "20 cm", prix: 6 },
+      { label: "25 cm", prix: 7 },
+    ],
   },
   {
     id: 20,
@@ -213,8 +219,13 @@ export const produits: Produit[] = [
     categorie: "Bougeoirs & Lustres",
     stock: 6,
     dimension: "21.3 - 18 - 16.3 cm",
-    prix: "6 - 4 - 2",
+    prix: 6,
     image: "/images/PROD022.png",
+    variants: [
+      { label: "21,3 cm", prix: 6 },
+      { label: "18 cm", prix: 4 },
+      { label: "16,3 cm", prix: 2 },
+    ],
   },
   {
     id: 21,
@@ -471,8 +482,12 @@ export const produits: Produit[] = [
     categorie: "Urnes & Accessoires",
     stock: 2,
     dimension: "39 x 20 x 20 cm",
-    prix: "7 - 9",
+    prix: 7,
     image: "/images/PROD049.png",
+    variants: [
+      { label: "Standard", prix: 7 },
+      { label: "Grand", prix: 9 },
+    ],
   },
   {
     id: 50,
