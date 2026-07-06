@@ -57,6 +57,28 @@ function getStartingPrix(product: { prix: number | string; variants?: { label: s
   return product.prix
 }
 
+/**
+ * Resolve variants for a product: use explicit `variants` if present,
+ * otherwise parse string prix ("5 - 6 - 7") + dimension ("15 - 20 - 25 cm")
+ * into virtual variants. Returns undefined if product has no variants.
+ */
+function resolveVariants(product: {
+  prix: number | string
+  dimension?: string
+  variants?: { label: string; prix: number | string }[]
+}): { label: string; prix: number | string }[] | undefined {
+  if (product.variants && product.variants.length > 0) return product.variants
+  if (typeof product.prix !== "string" || !product.prix.includes(" - ")) return undefined
+  const prices = product.prix.split(" - ").map((s) => s.trim())
+  const dims = product.dimension?.includes(" - ")
+    ? product.dimension.split(" - ").map((s) => s.trim())
+    : undefined
+  return prices.map((p, i) => ({
+    label: dims?.[i] ?? `Taille ${i + 1}`,
+    prix: isNaN(Number(p)) ? p : Number(p),
+  }))
+}
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Page = "home" | "catalogue" | "panier" | "favorites" | "contact"
 interface QuoteItem {
@@ -639,6 +661,8 @@ export default function PapillonRoseSite() {
     dateFin: "",
     inStockOnly: false,
   })
+
+  const modalVariants = modalProduct ? resolveVariants(modalProduct) : undefined
 
   useEffect(() => {
     const check = () => setScrolled(page !== "home" || window.scrollY > window.innerHeight)
@@ -1702,11 +1726,11 @@ export default function PapillonRoseSite() {
                 </div>
 
                 <div className="mt-auto">
-                  {modalProduct.variants && modalProduct.variants.length > 0 && (
+                  {modalVariants && modalVariants.length > 0 && (
                     <div className="mb-4">
                       <p className="text-sm text-gray-500 mb-2">Taille</p>
                       <div className="flex gap-2">
-                        {modalProduct.variants.map((v) => (
+                        {modalVariants.map((v) => (
                           <button
                             key={v.label}
                             onClick={() => setModalVariant(v.label)}
@@ -1726,10 +1750,10 @@ export default function PapillonRoseSite() {
                     style={DP}
                     className="text-3xl font-bold text-[#2E2E2E] mb-5"
                   >
-                    {modalProduct.variants && modalProduct.variants.length > 0
+                    {modalVariants && modalVariants.length > 0
                       ? formatPrix(
                           modalVariant
-                            ? modalProduct.variants.find((v) => v.label === modalVariant)?.prix ?? modalProduct.prix
+                            ? modalVariants.find((v) => v.label === modalVariant)?.prix ?? modalProduct.prix
                             : getStartingPrix(modalProduct)
                         )
                       : formatPrix(modalProduct.prix)} €
@@ -1771,10 +1795,10 @@ export default function PapillonRoseSite() {
                 setModalVariant(undefined)
               }
             }}
-                      disabled={modalProduct.stock === 0 || (modalProduct.variants && modalProduct.variants.length > 0 && !modalVariant)}
+                      disabled={modalProduct.stock === 0 || (modalVariants && modalVariants.length > 0 && !modalVariant)}
                       className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
-                      {modalProduct.variants && modalProduct.variants.length > 0 && !modalVariant
+                      {modalVariants && modalVariants.length > 0 && !modalVariant
                         ? "Sélectionnez une taille"
                         : "Ajouter au panier"}
                     </button>

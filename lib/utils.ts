@@ -13,6 +13,40 @@ export function parsePrix(prix: number | string): number {
   return m ? parseFloat(m[0]) : 0
 }
 
+/** Get price for a product, optionally picking a specific variant */
+export function getPrixForProduct(
+  product: { prix: number | string; dimension?: string; variants?: { label: string; prix: number | string }[] },
+  variantLabel?: string
+): number | string {
+  // Explicit variants array
+  if (variantLabel && product.variants) {
+    const v = product.variants.find((v) => v.label === variantLabel)
+    if (v) return v.prix
+  }
+  // String prix with " - " separator → parse into virtual variants
+  if (variantLabel && typeof product.prix === "string" && product.prix.includes(" - ")) {
+    const prices = product.prix.split(" - ").map((s) => s.trim())
+    const dims = product.dimension?.includes(" - ")
+      ? product.dimension.split(" - ").map((s) => s.trim())
+      : undefined
+    const idx = dims?.indexOf(variantLabel) ?? -1
+    if (idx >= 0 && idx < prices.length) {
+      const p = prices[idx]
+      return isNaN(Number(p)) ? p : Number(p)
+    }
+  }
+  return product.prix
+}
+
+/** Get "à partir de" price for products with variants */
+export function getStartingPrix(product: { prix: number | string; variants?: { label: string; prix: number | string }[] }): number | string {
+  if (product.variants && product.variants.length > 0) {
+    const min = Math.min(...product.variants.map((v) => parsePrix(v.prix)))
+    return min
+  }
+  return product.prix
+}
+
 export function calcTotalHt(items: { prix: number | string; qty: number; dateStart: string; dateEnd: string }[]): number {
   return items.reduce((sum, item) => {
     if (!item.dateStart || !item.dateEnd) return sum + parsePrix(item.prix) * item.qty * 1
