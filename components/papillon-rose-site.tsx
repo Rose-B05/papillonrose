@@ -998,7 +998,7 @@ export default function PapillonRoseSite() {
             </section>
 
             {/* Category showcase */}
-            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-8">
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-12 py-8">
               <div className="flex items-end justify-between mb-0">
                 <div>
                   <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">

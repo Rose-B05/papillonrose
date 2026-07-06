@@ -116,7 +116,7 @@ export default function OverflowCarousel({
   }
 
   return (
-    <div className="relative w-full select-none mb-6 md:mb-[30px] px-5 md:px-0" style={{ touchAction: "pan-y" }}>
+    <div className="relative w-full select-none mb-8 md:mb-[40px] px-5 md:px-0" style={{ touchAction: "pan-y" }}>
       {/* Arrows */}
       {!isMobile && (
         <>
@@ -139,7 +139,7 @@ export default function OverflowCarousel({
 
       {/* Cards */}
       <div
-        className="relative w-full h-[240px] md:h-[340px] lg:h-[500px]"
+        className="relative w-full h-[280px] md:h-[380px] lg:h-[540px]"
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
         onPointerMove={handlePointerMove}
@@ -151,8 +151,8 @@ export default function OverflowCarousel({
           const center = offset === 0
           const light = isLight(card.bgColor)
           const textColor = light ? "#333" : "#fff"
-          const imgHeight = isMobile ? 180 : 300
-          const cardHeight = isMobile ? 160 : 280
+          const imgHeight = isMobile ? 210 : 340
+          const cardHeight = isMobile ? 185 : 310
 
           return (
             <div
