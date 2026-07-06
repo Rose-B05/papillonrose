@@ -139,7 +139,7 @@ export default function OverflowCarousel({
 
       {/* Cards */}
       <div
-        className="relative w-full h-[280px] md:h-[380px] lg:h-[540px]"
+        className="relative w-full h-[300px] md:h-[380px] lg:h-[540px]"
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
         onPointerMove={handlePointerMove}
@@ -152,7 +152,7 @@ export default function OverflowCarousel({
           const light = isLight(card.bgColor)
           const textColor = light ? "#333" : "#fff"
           const imgHeight = isMobile ? 210 : 340
-          const cardHeight = isMobile ? 185 : 310
+          const cardHeight = isMobile ? 210 : 310
 
           return (
             <div
@@ -162,27 +162,8 @@ export default function OverflowCarousel({
               style={{
                 ...s,
                 transition: "all 0.4s ease-in-out",
-                paddingTop: "30px",
               }}
             >
-              {/* Image qui flotte AU-DESSUS de la card */}
-              <img
-                src={img(card.image)}
-                alt={card.nom}
-                draggable={false}
-                style={{
-                  position: "absolute",
-                  top: isMobile ? "-60px" : "-90px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  height: `${imgHeight}px`,
-                  objectFit: "contain",
-                  zIndex: 20,
-                  pointerEvents: "none",
-                  filter: center ? "drop-shadow(0 12px 32px rgba(0,0,0,0.25))" : "none",
-                }}
-              />
-
               {/* Card */}
               <div
                 style={{
@@ -193,7 +174,7 @@ export default function OverflowCarousel({
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "flex-end",
-                  padding: isMobile ? "60px 20px 28px" : "24px 20px 28px",
+                  padding: "0 20px 28px",
                   textAlign: "center",
                   overflow: "visible",
                   boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
@@ -207,6 +188,34 @@ export default function OverflowCarousel({
                     borderRadius: "20px",
                   }}
                 />
+
+                {/* Image container — fixed height to ensure consistent gap */}
+                <div
+                  style={{
+                    height: isMobile ? "95px" : "160px",
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "flex-end",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <img
+                    src={img(card.image)}
+                    alt={card.nom}
+                    draggable={false}
+                    style={{
+                      height: `${imgHeight}px`,
+                      objectFit: "contain",
+                      transform: "translateY(40%)",
+                      pointerEvents: "none",
+                      filter: center ? "drop-shadow(0 12px 32px rgba(0,0,0,0.25))" : "none",
+                    }}
+                  />
+                </div>
+
+                {/* Spacer between image and text */}
+                <div style={{ height: isMobile ? "12px" : "20px", flexShrink: 0 }} />
 
                 <div className="relative z-10 w-full">
                   <p
