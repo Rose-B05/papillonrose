@@ -1089,7 +1089,7 @@ export default function PapillonRoseSite() {
             </section>
 
             {/* Featured products */}
-            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-6 md:mt-8">
+            <section className="max-w-7xl mx-auto px-5 md:px-10 mt-10 md:mt-8">
               <div className="flex items-end justify-between mb-4 md:mb-5">
                 <div>
                   <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">

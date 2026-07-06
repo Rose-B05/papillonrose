@@ -139,8 +139,7 @@ export default function OverflowCarousel({
 
       {/* Cards */}
       <div
-        className="relative w-full"
-        style={{ height: "clamp(340px, 44vw, 500px)" }}
+        className="relative w-full h-[240px] md:h-[340px] lg:h-[500px]"
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
         onPointerMove={handlePointerMove}
@@ -152,14 +151,14 @@ export default function OverflowCarousel({
           const center = offset === 0
           const light = isLight(card.bgColor)
           const textColor = light ? "#333" : "#fff"
-          const imgHeight = 300
-          const cardHeight = 280
+          const imgHeight = isMobile ? 180 : 300
+          const cardHeight = isMobile ? 160 : 280
 
           return (
             <div
               key={card.categorie}
               onClick={() => { onSelect(card.categorie) }}
-              className="absolute top-[28%] cursor-pointer"
+              className="absolute top-[18%] md:top-[28%] cursor-pointer"
               style={{
                 ...s,
                 transition: "all 0.4s ease-in-out",
@@ -173,7 +172,7 @@ export default function OverflowCarousel({
                 draggable={false}
                 style={{
                   position: "absolute",
-                  top: "-90px",
+                  top: isMobile ? "-60px" : "-90px",
                   left: "50%",
                   transform: "translateX(-50%)",
                   height: `${imgHeight}px`,
