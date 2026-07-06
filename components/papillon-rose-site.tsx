@@ -1024,7 +1024,7 @@ export default function PapillonRoseSite() {
                   {
                     nom: "Figurines & Jeux",
                     categorie: "Figurines & Jeux",
-                    image: "/images/PROD011.png",
+                    image: "/images/PROD098.png",
                     bgColor: "#C9A96E",
                   },
                   {
