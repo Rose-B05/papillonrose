@@ -193,7 +193,7 @@ export default function OverflowCarousel({
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "flex-end",
-                  padding: "24px 20px 28px",
+                  padding: isMobile ? "60px 20px 28px" : "24px 20px 28px",
                   textAlign: "center",
                   overflow: "visible",
                   boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
