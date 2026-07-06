@@ -198,6 +198,7 @@ export default function OverflowCarousel({
                     alignItems: "flex-end",
                     justifyContent: "center",
                     flexShrink: 0,
+                    overflow: "visible",
                   }}
                 >
                   <img
@@ -207,7 +208,7 @@ export default function OverflowCarousel({
                     style={{
                       height: `${imgHeight}px`,
                       objectFit: "contain",
-                      transform: "translateY(40%)",
+                      transform: isMobile ? "translateY(30%)" : "translateY(35%)",
                       pointerEvents: "none",
                       filter: center ? "drop-shadow(0 12px 32px rgba(0,0,0,0.25))" : "none",
                     }}
@@ -215,7 +216,7 @@ export default function OverflowCarousel({
                 </div>
 
                 {/* Spacer between image and text */}
-                <div style={{ height: isMobile ? "12px" : "20px", flexShrink: 0 }} />
+                <div style={{ height: isMobile ? "24px" : "32px", flexShrink: 0 }} />
 
                 <div className="relative z-10 w-full">
                   <p
