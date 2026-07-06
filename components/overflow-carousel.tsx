@@ -139,7 +139,7 @@ export default function OverflowCarousel({
 
       {/* Cards */}
       <div
-        className="relative w-full h-[300px] md:h-[380px] lg:h-[540px]"
+        className="relative w-full h-[300px] md:h-[400px] lg:h-[540px]"
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
         onPointerMove={handlePointerMove}
@@ -151,8 +151,8 @@ export default function OverflowCarousel({
           const center = offset === 0
           const light = isLight(card.bgColor)
           const textColor = light ? "#333" : "#fff"
-          const imgHeight = isMobile ? 210 : 340
-          const cardHeight = isMobile ? 210 : 310
+          const imgHeight = isMobile ? 190 : 320
+          const cardHeight = isMobile ? 230 : 330
 
           return (
             <div
@@ -192,7 +192,7 @@ export default function OverflowCarousel({
                 {/* Image container — fixed height to ensure consistent gap */}
                 <div
                   style={{
-                    height: isMobile ? "95px" : "160px",
+                    height: isMobile ? "85px" : "140px",
                     width: "100%",
                     display: "flex",
                     alignItems: "flex-end",
@@ -208,7 +208,7 @@ export default function OverflowCarousel({
                     style={{
                       height: `${imgHeight}px`,
                       objectFit: "contain",
-                      transform: isMobile ? "translateY(30%)" : "translateY(35%)",
+                      transform: isMobile ? "translateY(35%)" : "translateY(40%)",
                       pointerEvents: "none",
                       filter: center ? "drop-shadow(0 12px 32px rgba(0,0,0,0.25))" : "none",
                     }}
@@ -216,7 +216,7 @@ export default function OverflowCarousel({
                 </div>
 
                 {/* Spacer between image and text */}
-                <div style={{ height: isMobile ? "24px" : "32px", flexShrink: 0 }} />
+                <div style={{ height: isMobile ? "20px" : "28px", flexShrink: 0 }} />
 
                 <div className="relative z-10 w-full">
                   <p
