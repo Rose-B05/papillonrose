@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       client,
       items,
       totalHt,
-      status: "received",
+      statut: "recu",
       quoteNumber,
       createdAt: new Date().toISOString(),
     }

@@ -1,3 +1,8 @@
+export interface ProductVariant {
+  label: string
+  prix: number | string
+}
+
 export interface Product {
   id: number
   nom: string
@@ -8,6 +13,9 @@ export interface Product {
   image: string
   gallerie?: string[]
   badge?: "stock-limite" | "epuise"
+  variants?: ProductVariant[]
+  dateAjout?: string
+  actif?: boolean
 }
 
 export interface CartItem {
@@ -15,6 +23,7 @@ export interface CartItem {
   qty: number
   dateStart: string
   dateEnd: string
+  variantLabel?: string
 }
 
 export interface Booking {
@@ -56,7 +65,7 @@ export interface QuoteRequest {
   client: ClientInfo
   items: CartItem[]
   totalHt: number
-  status: "received" | "processed" | "sent"
+  statut: "recu" | "en_traitement" | "confirme_stock" | "refuse_stock" | "envoye" | "acompte_paye" | "solde_paye"
   quoteNumber: string
   createdAt: string
 }
