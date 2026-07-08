@@ -18,12 +18,32 @@ const DP = { fontFamily: "var(--font-playfair), serif" } as const
 export default function ReservationPage() {
   const { items, updateItem, removeItem, clearCart } = useCart()
   const router = useRouter()
-  const [step, setStep] = useState<Step>("panier")
-  const [dateEdits, setDateEdits] = useState<Record<number, { start: string; end: string }>>({})
-  const [client, setClient] = useState<ClientInfo>({
-    nom: "", prenom: "", email: "", telephone: "",
-    typeEvenement: "", dateEvenement: "", lieuEvenement: "",
-    nbInvites: 0, besoinLivraison: false, message: "",
+
+  const [step, setStep] = useState<Step>(() => {
+    if (typeof window !== "undefined") {
+      const saved = sessionStorage.getItem("reservation_step")
+      if (saved === "panier" || saved === "dates" || saved === "client" || saved === "confirmation") return saved
+    }
+    return "panier"
+  })
+  const [dateEdits, setDateEdits] = useState<Record<number, { start: string; end: string }>>(() => {
+    if (typeof window !== "undefined") {
+      try { return JSON.parse(sessionStorage.getItem("reservation_dateEdits") || "{}") } catch {}
+    }
+    return {}
+  })
+  const [client, setClient] = useState<ClientInfo>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = JSON.parse(sessionStorage.getItem("reservation_client") || "null")
+        if (saved) return saved
+      } catch {}
+    }
+    return {
+      nom: "", prenom: "", email: "", telephone: "",
+      typeEvenement: "", dateEvenement: "", lieuEvenement: "",
+      nbInvites: 0, besoinLivraison: false, message: "",
+    }
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -34,6 +54,18 @@ export default function ReservationPage() {
   const [deliveryResult, setDeliveryResult] = useState<DeliveryResult | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [showErrors, setShowErrors] = useState(false)
+
+  // Persist to sessionStorage
+  useEffect(() => { sessionStorage.setItem("reservation_step", step) }, [step])
+  useEffect(() => { sessionStorage.setItem("reservation_dateEdits", JSON.stringify(dateEdits)) }, [dateEdits])
+  useEffect(() => { sessionStorage.setItem("reservation_client", JSON.stringify(client)) }, [client])
+
+  // Clear sessionStorage on successful booking creation
+  const clearReservationSession = () => {
+    sessionStorage.removeItem("reservation_step")
+    sessionStorage.removeItem("reservation_dateEdits")
+    sessionStorage.removeItem("reservation_client")
+  }
 
   const getProduct = (id: number) => produits.find((p) => p.id === id)
 
@@ -197,6 +229,7 @@ export default function ReservationPage() {
       }
       setBookingId(data.booking.id)
       clearCart()
+      clearReservationSession()
       setStep("confirmation")
     } catch (err: any) {
       setError(err.message)
