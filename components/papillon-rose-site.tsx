@@ -1761,14 +1761,15 @@ export default function PapillonRoseSite() {
                           : getStartingPrix(modalProduct)
                         : modalProduct.prix
                     )
-                    const hasDates = modalDateStart && modalDateEnd
-                    const days = hasDates
-                      ? Math.max(1, Math.ceil((new Date(modalDateEnd).getTime() - new Date(modalDateStart).getTime()) / (1000 * 60 * 60 * 24)))
+                    const effectiveEnd = modalDateEnd || modalDateStart
+                    const hasDate = !!modalDateStart
+                    const days = hasDate
+                      ? Math.max(1, Math.ceil((new Date(effectiveEnd).getTime() - new Date(modalDateStart).getTime()) / (1000 * 60 * 60 * 24)))
                       : 0
-                    const total = hasDates ? dayPrix * days * modalQty : 0
+                    const total = hasDate ? dayPrix * days * modalQty : 0
                     return (
                       <p style={DP} className="text-3xl font-bold text-[#2E2E2E] mb-1">
-                        {hasDates
+                        {hasDate
                           ? <>{formatPrix(total)} €</>
                           : <>
                               <span className="text-[10px] font-normal text-gray-400 mr-0.5">à partir de</span>
@@ -1776,7 +1777,7 @@ export default function PapillonRoseSite() {
                             </>
                         }
                         <span className="text-sm font-normal text-gray-400 ml-1">
-                          {hasDates ? `total · ${days} jour${days > 1 ? "s" : ""} × ${modalQty}` : "/ jour"}
+                          {hasDate ? `total · ${days} jour${days > 1 ? "s" : ""} × ${modalQty}` : "/ jour"}
                         </span>
                       </p>
                     )
@@ -1845,7 +1846,8 @@ export default function PapillonRoseSite() {
                       {modalVariants && modalVariants.length > 0 && !modalVariant
                         ? "Sélectionnez une taille"
                         : (() => {
-                            if (!modalDateStart || !modalDateEnd) return "Ajouter au panier"
+                            if (!modalDateStart) return "Ajouter au panier"
+                            const effectiveEnd = modalDateEnd || modalDateStart
                             const dayPrix = parsePrix(
                               modalVariants && modalVariants.length > 0
                                 ? modalVariant
@@ -1853,7 +1855,7 @@ export default function PapillonRoseSite() {
                                   : getStartingPrix(modalProduct)
                                 : modalProduct.prix
                             )
-                            const days = Math.max(1, Math.ceil((new Date(modalDateEnd).getTime() - new Date(modalDateStart).getTime()) / (1000 * 60 * 60 * 24)))
+                            const days = Math.max(1, Math.ceil((new Date(effectiveEnd).getTime() - new Date(modalDateStart).getTime()) / (1000 * 60 * 60 * 24)))
                             return `Ajouter au panier · ${formatPrix(dayPrix * days * modalQty)} €`
                           })()}
                     </button>
