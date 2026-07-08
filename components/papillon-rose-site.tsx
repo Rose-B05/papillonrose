@@ -30,6 +30,7 @@ import OverflowCarousel from "@/components/overflow-carousel"
 
 import Chatbot from "@/components/chatbot"
 import WhatsAppButton from "@/components/whatsapp-button"
+import AccessibilityPanel from "@/components/accessibility-panel"
 import { getThemes, getCouleurs, type FilterState } from "@/lib/product-tags"
 import { FEATURED_IDS } from "@/lib/scenes"
 
@@ -2170,6 +2171,7 @@ export default function PapillonRoseSite() {
 
       <Chatbot />
       <WhatsAppButton />
+      <AccessibilityPanel />
     </div>
   )
 }
