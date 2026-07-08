@@ -116,7 +116,7 @@ export default function Chatbot() {
         {
           role: "assistant",
           content:
-            "✅ Votre demande a bien été transmise à **papillonrosebertha@gmail.com** ! Notre équipe vous répondra sous **48h ouvrées**. 🦋",
+            "✅ Votre demande a bien été transmise à **papillonrosebertha@gmail.com** ! Notre équipe vous répondra sous **24h ouvrées**. 🦋",
         },
       ])
     } catch {

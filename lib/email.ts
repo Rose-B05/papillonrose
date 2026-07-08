@@ -26,7 +26,7 @@ export async function sendQuoteConfirmation(to: string, quoteNumber: string, rec
       <p>Bonjour,</p>
       <p>Nous avons bien reçu votre demande de devis <strong>n°${quoteNumber}</strong>.</p>
       ${recapHtml}
-      <p>Vous recevrez votre devis personnalisé sous <strong>48h ouvrées</strong>.</p>
+      <p>Vous recevrez votre devis personnalisé sous <strong>24h ouvrées</strong>.</p>
       <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })

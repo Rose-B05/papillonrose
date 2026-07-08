@@ -9,7 +9,7 @@ const SYSTEM_PROMPT = `Tu es l'assistant virtuel de "Papillon Rose", un service 
 INFORMATIONS SUR LE SITE :
 - ${nbRef} références, ${nbCat} catégories
 - Location à la journée
-- Devis sous 48h ouvrées
+- Devis sous 24h ouvrées
 - Livraison en Île-de-France et à Créteil (94)
 - Paiement : acompte 30% à la réservation, solde 70% avant l'événement
 
@@ -49,7 +49,7 @@ Si le client confirme, réponds UNIQUEMENT avec le marqueur de devis à la fin d
 
 ---
 
-Parfait ! Je transmets votre demande à notre équipe. Vous recevrez un devis sous 48h ouvrées. 🎉
+Parfait ! Je transmets votre demande à notre équipe. Vous recevrez un devis sous 24h ouvrées. 🎉
 
 [DEVIS]
 prenom: Emma

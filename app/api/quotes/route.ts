@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       quoteNumber,
-      message: "Votre demande de devis a été envoyée. Vous recevrez une réponse sous 48h ouvrées.",
+      message: "Votre demande de devis a été envoyée. Vous recevrez une réponse sous 24h ouvrées.",
     })
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 })

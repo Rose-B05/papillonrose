@@ -206,7 +206,7 @@ export default function ReservationPage() {
           <p className="text-gray-500 text-sm mb-1">Votre numéro de demande :</p>
           <p className="text-[#C8A97E] font-bold text-2xl mb-6">#{bookingId}</p>
           <p className="text-gray-500 text-sm mb-6">
-            Votre demande de devis a bien été enregistrée. Nous vous enverrons votre devis personnalisé sous <strong className="text-[#C8A97E]">48h ouvrées</strong>.
+            Votre demande de devis a bien été enregistrée. Nous vous enverrons votre devis personnalisé sous <strong className="text-[#C8A97E]">24h ouvrées</strong>.
           </p>
           <button
             onClick={() => router.push("/")}
@@ -635,7 +635,7 @@ export default function ReservationPage() {
               )}
 
               <p className="text-xs text-gray-400 text-center">
-                Vous recevrez votre devis sous <strong className="text-[#C8A97E]">48h ouvrees</strong>
+                Vous recevrez votre devis sous <strong className="text-[#C8A97E]">24h ouvrées</strong>
               </p>
 
               {/* Encart conditions de location */}
