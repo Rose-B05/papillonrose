@@ -4,6 +4,10 @@ import { getActiveProductsCount, getActiveCategoriesCount } from "@/data/produit
 const nbRef = getActiveProductsCount()
 const nbCat = getActiveCategoriesCount()
 
+function stripThinkingTags(text: string): string {
+  return text.replace(/<think>[\s\S]*?<\/think>/gi, "").trim()
+}
+
 const SYSTEM_PROMPT = `Tu es l'assistant virtuel de "Papillon Rose", un service de location de mobilier et décoration pour événements (mariages, anniversaires, baptêmes, soirées d'entreprise, séminaires).
 
 INFORMATIONS SUR LE SITE :
@@ -114,14 +118,16 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await res.json()
-    const text = data.choices?.[0]?.message?.content
+    const rawText = data.choices?.[0]?.message?.content
 
-    if (!text) {
+    if (!rawText) {
       return NextResponse.json(
         { error: "Réponse vide de l'assistant" },
         { status: 500 },
       )
     }
+
+    const text = stripThinkingTags(rawText)
 
     return NextResponse.json({ response: text })
   } catch (err: any) {
