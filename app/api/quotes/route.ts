@@ -6,6 +6,7 @@ import { getAvailableStock } from "@/lib/stock"
 import { calcTotalHt, calcTtc, formatDateFr } from "@/lib/utils"
 import { calcDeliveryFee } from "@/lib/delivery"
 import { sendQuoteConfirmation, sendAdminQuoteNotification, sendQuoteStockConfirmed, sendQuoteStockRefused } from "@/lib/email"
+import { CUSTOMER_COOKIE } from "@/lib/customer-auth"
 import type { QuoteRequest, ClientInfo, CartItem } from "@/lib/types"
 
 export async function POST(request: NextRequest) {
@@ -49,10 +50,15 @@ export async function POST(request: NextRequest) {
 
     const quoteNumber = `DEV-${uuidv4().slice(0, 6).toUpperCase()}`
 
+    // Associer le devis au compte client si connecté
+    const customerSession = request.cookies.get(CUSTOMER_COOKIE)
+    const customerEmail = customerSession?.value || undefined
+
     const quoteRequest: QuoteRequest = {
       id: uuidv4(),
       bookingId,
       client,
+      customerEmail,
       items,
       totalHt,
       totalTtc: totalTtcWithDelivery,

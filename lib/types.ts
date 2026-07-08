@@ -63,6 +63,7 @@ export interface QuoteRequest {
   id: string
   bookingId?: string
   client: ClientInfo
+  customerEmail?: string
   items: CartItem[]
   totalHt: number
   totalTtc: number

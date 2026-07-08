@@ -187,3 +187,14 @@ export async function getStockOverride(productId: number): Promise<number | null
 export async function setStockOverride(productId: number, stock: number) {
   await kv.set(`stock:${productId}`, stock)
 }
+
+// ─── Customer Favorites ───
+// Stored as: favorites:{email} = number[] (product IDs)
+export async function getCustomerFavorites(email: string): Promise<number[]> {
+  const favs = await kv.get<number[]>(`favorites:${email.toLowerCase()}`)
+  return favs || []
+}
+
+export async function saveCustomerFavorites(email: string, favorites: number[]) {
+  await kv.set(`favorites:${email.toLowerCase()}`, favorites)
+}

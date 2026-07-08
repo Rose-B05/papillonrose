@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { verifyCustomer, CUSTOMER_COOKIE, CUSTOMER_SESSION_MAX_AGE } from "@/lib/customer-auth"
+import { getCustomerFavorites } from "@/lib/db"
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,9 +16,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Identifiants incorrects" }, { status: 401 })
     }
 
+    const favorites = await getCustomerFavorites(customer.email)
+
     const response = NextResponse.json({
       success: true,
       customer: { email: customer.email, prenom: customer.prenom, nom: customer.nom },
+      favorites,
     })
     response.cookies.set(CUSTOMER_COOKIE, customer.email, {
       httpOnly: true,

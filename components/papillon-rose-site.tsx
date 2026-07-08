@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useEffect, useCallback } from "react"
+import { useState, useMemo, useEffect, useCallback, useRef } from "react"
 import {
   Search,
   ShoppingBag,
@@ -671,13 +671,47 @@ export default function PapillonRoseSite() {
   const [customer, setCustomer] = useState<{ email: string; prenom: string; nom: string } | null>(null)
 
   const modalVariants = modalProduct ? resolveVariants(modalProduct) : undefined
+  const prevCustomerRef = useRef<{ email: string; prenom: string; nom: string } | null>(null)
 
+  // Load customer session + favorites on mount
   useEffect(() => {
     fetch("/api/customer/me")
       .then((r) => r.json())
-      .then((data) => { if (data.customer) setCustomer(data.customer) })
+      .then(async (data) => {
+        if (data.customer) {
+          setCustomer(data.customer)
+          const favRes = await fetch("/api/customer/favorites")
+          const favData = await favRes.json()
+          if (favData.favorites) {
+            setFavorites(new Set(favData.favorites))
+          }
+        }
+      })
       .catch(() => {})
   }, [])
+
+  // When customer logs in (state changes null → logged in), merge local + server favorites
+  useEffect(() => {
+    if (customer && !prevCustomerRef.current) {
+      // Just logged in — merge local favorites with server favorites
+      const localFavs = Array.from(favorites)
+      fetch("/api/customer/favorites")
+        .then((r) => r.json())
+        .then(async (data) => {
+          const serverFavs: number[] = data.favorites || []
+          const merged = Array.from(new Set([...serverFavs, ...localFavs]))
+          setFavorites(new Set(merged))
+          // Save merged to server
+          await fetch("/api/customer/favorites", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ favorites: merged }),
+          })
+        })
+        .catch(() => {})
+    }
+    prevCustomerRef.current = customer
+  }, [customer])
 
   useEffect(() => {
     const check = () => setScrolled(page !== "home" || window.scrollY > window.innerHeight)
@@ -772,6 +806,14 @@ export default function PapillonRoseSite() {
       const n = new Set(prev)
       if (n.has(id)) n.delete(id)
       else n.add(id)
+      // Save to server if logged in
+      if (customer) {
+        fetch("/api/customer/favorites", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ favorites: Array.from(n) }),
+        }).catch(() => {})
+      }
       return n
     })
   }
