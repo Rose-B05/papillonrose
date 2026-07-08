@@ -1,77 +1,67 @@
-import fs from "fs"
-import path from "path"
+import { kv } from "@vercel/kv"
 import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert } from "./types"
 
-const DATA_DIR = path.join(process.cwd(), "data")
-
-function ensureDir() {
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true })
-}
-
-function read<T>(name: string, fallback: T): T {
-  ensureDir()
-  const fp = path.join(DATA_DIR, `${name}.json`)
-  if (!fs.existsSync(fp)) return fallback
-  try {
-    return JSON.parse(fs.readFileSync(fp, "utf-8"))
-  } catch {
-    return fallback
-  }
-}
-
-function write<T>(name: string, data: T) {
-  ensureDir()
-  const fp = path.join(DATA_DIR, `${name}.json`)
-  fs.writeFileSync(fp, JSON.stringify(data, null, 2), "utf-8")
-}
-
 // ─── Bookings ───
-export function getBookings(): Booking[] {
-  return read<Booking[]>("bookings", [])
+export async function getBookings(): Promise<Booking[]> {
+  const keys = await kv.keys("bookings:*")
+  if (keys.length === 0) return []
+  const values = await kv.mget<Booking[]>(...keys)
+  return values.filter((v): v is Booking => v !== null)
 }
 
-export function getBooking(id: string): Booking | undefined {
-  return getBookings().find((b) => b.id === id)
+export async function getBooking(id: string): Promise<Booking | undefined> {
+  const b = await kv.get<Booking>(`bookings:${id}`)
+  return b ?? undefined
 }
 
-export function saveBooking(booking: Booking) {
-  const all = getBookings()
-  const idx = all.findIndex((b) => b.id === booking.id)
-  if (idx >= 0) all[idx] = booking
-  else all.push(booking)
-  write("bookings", all)
+export async function saveBooking(booking: Booking) {
+  await kv.set(`bookings:${booking.id}`, booking)
 }
 
 // ─── Blocked Dates ───
-export function getBlockedDates(): BlockedDate[] {
-  return read<BlockedDate[]>("blocked-dates", [])
+export async function getBlockedDates(): Promise<BlockedDate[]> {
+  const keys = await kv.keys("blocked:*")
+  if (keys.length === 0) return []
+  const values = await kv.mget<BlockedDate[]>(...keys)
+  return values.filter((v): v is BlockedDate => v !== null)
 }
 
-export function getBlockedDatesForProduct(productId: number): string[] {
-  return getBlockedDates()
-    .filter((bd) => bd.productId === productId)
-    .map((bd) => bd.date)
+export async function getBlockedDatesForProduct(productId: number): Promise<string[]> {
+  const keys = await kv.keys(`blocked:${productId}:*`)
+  if (keys.length === 0) return []
+  const values = await kv.mget<BlockedDate[]>(...keys)
+  return values.filter((v): v is BlockedDate => v !== null).map((bd) => bd.date)
 }
 
-export function blockDates(productId: number, dates: string[], bookingId: string) {
-  const all = getBlockedDates()
-  const newBlocks = dates
-    .filter((d) => !all.some((b) => b.productId === productId && b.date === d))
-    .map((date) => ({ productId, date, bookingId }))
-  write("blocked-dates", [...all, ...newBlocks])
+export async function blockDates(productId: number, dates: string[], bookingId: string) {
+  const existing = await getBlockedDatesForProduct(productId)
+  const toAdd = dates.filter((d) => !existing.includes(d))
+  if (toAdd.length === 0) return
+  await Promise.all(
+    toAdd.map((date) =>
+      kv.set(`blocked:${productId}:${date}`, { productId, date, bookingId } satisfies BlockedDate)
+    )
+  )
 }
 
-export function unblockDates(bookingId: string) {
-  const all = getBlockedDates()
-  write("blocked-dates", all.filter((b) => b.bookingId !== bookingId))
+export async function unblockDates(bookingId: string) {
+  const keys = await kv.keys("blocked:*")
+  if (keys.length === 0) return
+  const values = await kv.mget<BlockedDate[]>(...keys)
+  const toDelete = values
+    .filter((v): v is BlockedDate => v !== null && v.bookingId === bookingId)
+    .map((bd) => `blocked:${bd.productId}:${bd.date}`)
+  if (toDelete.length > 0) {
+    await Promise.all(toDelete.map((k) => kv.del(k)))
+  }
 }
 
-export function areDatesAvailable(productId: number, dates: string[]): boolean {
-  const blocked = getBlockedDatesForProduct(productId)
+export async function areDatesAvailable(productId: number, dates: string[]): Promise<boolean> {
+  const blocked = await getBlockedDatesForProduct(productId)
   return !dates.some((d) => blocked.includes(d))
 }
 
-function getDatesBetween(start: string, end: string): string[] {
+export function getDatesBetween(start: string, end: string): string[] {
   const dates: string[] = []
   const current = new Date(start)
   const endDate = new Date(end)
@@ -83,57 +73,59 @@ function getDatesBetween(start: string, end: string): string[] {
 }
 
 // ─── Quotes ───
-export function getQuotes(): QuoteRequest[] {
-  return read<QuoteRequest[]>("quotes", [])
+export async function getQuotes(): Promise<QuoteRequest[]> {
+  const keys = await kv.keys("quotes:*")
+  if (keys.length === 0) return []
+  const values = await kv.mget<QuoteRequest[]>(...keys)
+  return values.filter((v): v is QuoteRequest => v !== null)
 }
 
-export function getQuote(id: string): QuoteRequest | undefined {
-  return getQuotes().find((q) => q.id === id)
+export async function getQuote(id: string): Promise<QuoteRequest | undefined> {
+  const q = await kv.get<QuoteRequest>(`quotes:${id}`)
+  return q ?? undefined
 }
 
-export function saveQuote(quote: QuoteRequest) {
-  const all = getQuotes()
-  const idx = all.findIndex((q) => q.id === quote.id)
-  if (idx >= 0) all[idx] = quote
-  else all.push(quote)
-  write("quotes", all)
+export async function saveQuote(quote: QuoteRequest) {
+  await kv.set(`quotes:${quote.id}`, quote)
 }
 
 // ─── Payments ───
-export function getPayments(): PaymentRecord[] {
-  return read<PaymentRecord[]>("payments", [])
+export async function getPayments(): Promise<PaymentRecord[]> {
+  const keys = await kv.keys("payments:*")
+  if (keys.length === 0) return []
+  const values = await kv.mget<PaymentRecord[]>(...keys)
+  return values.filter((v): v is PaymentRecord => v !== null)
 }
 
-export function savePayment(payment: PaymentRecord) {
-  const all = getPayments()
-  all.push(payment)
-  write("payments", all)
+export async function savePayment(payment: PaymentRecord) {
+  await kv.set(`payments:${payment.id}`, payment)
 }
 
-export function getPaymentByBookingId(bookingId: string): PaymentRecord | undefined {
-  return getPayments().find((p) => p.bookingId === bookingId)
+export async function getPaymentByBookingId(bookingId: string): Promise<PaymentRecord | undefined> {
+  const payments = await getPayments()
+  return payments.find((p) => p.bookingId === bookingId)
 }
-
-// ─── Helpers ───
-export { getDatesBetween }
 
 // ─── Late Alerts ───
-export function getLateAlerts(): LateAlert[] {
-  return read<LateAlert[]>("late-alerts", [])
+export async function getLateAlerts(): Promise<LateAlert[]> {
+  const keys = await kv.keys("alerts:*")
+  if (keys.length === 0) return []
+  const values = await kv.mget<LateAlert[]>(...keys)
+  return values.filter((v): v is LateAlert => v !== null)
 }
 
-export function getLateAlertsForBooking(bookingId: string): LateAlert[] {
-  return getLateAlerts().filter((a) => a.bookingId === bookingId)
+export async function getLateAlertsForBooking(bookingId: string): Promise<LateAlert[]> {
+  const all = await getLateAlerts()
+  return all.filter((a) => a.bookingId === bookingId)
 }
 
-export function saveLateAlert(alert: LateAlert) {
-  const all = getLateAlerts()
-  all.push(alert)
-  write("late-alerts", all)
+export async function saveLateAlert(alert: LateAlert) {
+  await kv.set(`alerts:${alert.id}`, alert)
 }
 
-export function hasAlertForBookingOnDate(bookingId: string, productId: number, date: string): boolean {
-  return getLateAlerts().some(
+export async function hasAlertForBookingOnDate(bookingId: string, productId: number, date: string): Promise<boolean> {
+  const alerts = await getLateAlerts()
+  return alerts.some(
     (a) => a.bookingId === bookingId && a.productId === productId && a.sentAt.split("T")[0] === date
   )
 }

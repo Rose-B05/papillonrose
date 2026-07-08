@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "bookingId requis" }, { status: 400 })
     }
 
-    const booking = getBooking(bookingId)
+    const booking = await getBooking(bookingId)
     if (!booking) {
       return NextResponse.json({ error: "Réservation introuvable" }, { status: 404 })
     }
@@ -27,10 +27,10 @@ export async function POST(request: NextRequest) {
     booking.status = "returned"
     booking.returnedAt = new Date().toISOString()
     booking.updatedAt = new Date().toISOString()
-    saveBooking(booking)
+    await saveBooking(booking)
 
     // Libérer les dates bloquées
-    unblockDates(bookingId)
+    await unblockDates(bookingId)
 
     return NextResponse.json({ success: true, booking })
   } catch (err: any) {
@@ -48,6 +48,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "bookingId requis" }, { status: 400 })
   }
 
-  const alerts = getLateAlertsForBooking(bookingId)
+  const alerts = await getLateAlertsForBooking(bookingId)
   return NextResponse.json({ alerts })
 }

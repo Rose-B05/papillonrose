@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
 
     let items: CartItem[] = []
     if (bookingId) {
-      const booking = getBooking(bookingId)
+      const booking = await getBooking(bookingId)
       if (!booking) return NextResponse.json({ error: "Réservation introuvable" }, { status: 404 })
       items = booking.items
     } else {
@@ -61,12 +61,12 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
     }
 
-    saveQuote(quoteRequest)
+    await saveQuote(quoteRequest)
 
     // Vérification du stock pour chaque article
     const unavailableItems: string[] = []
     for (const item of items) {
-      const available = getAvailableStock(item.productId, item.dateStart, item.dateEnd)
+      const available = await getAvailableStock(item.productId, item.dateStart, item.dateEnd)
       if (available < item.qty) {
         const product = produits.find((p) => p.id === item.productId)
         unavailableItems.push(`${product?.nom || "Article"} (${item.qty} demandé(s), ${available} disponible(s))`)
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
 
     // Mettre à jour le statut du devis
     quoteRequest.statut = newStatut
-    saveQuote(quoteRequest)
+    await saveQuote(quoteRequest)
 
     // Calculer le montant de l'acompte (30%)
     const depositAmount = Math.round(totalTtcWithDelivery * 0.3 * 100) / 100

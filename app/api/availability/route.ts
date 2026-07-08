@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const dateStart = request.nextUrl.searchParams.get("dateStart") || undefined
   const dateEnd = request.nextUrl.searchParams.get("dateEnd") || undefined
   if (!productId) return NextResponse.json({ error: "productId required" }, { status: 400 })
-  const blocked = getBlockedDatesForProduct(productId)
-  const availableStock = getAvailableStock(productId, dateStart || "", dateEnd || "")
+  const blocked = await getBlockedDatesForProduct(productId)
+  const availableStock = await getAvailableStock(productId, dateStart || "", dateEnd || "")
   return NextResponse.json({ productId, blockedDates: blocked, availableStock })
 }

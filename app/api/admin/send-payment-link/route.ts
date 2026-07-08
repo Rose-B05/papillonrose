@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "quoteId requis" }, { status: 400 })
     }
 
-    const quote = getQuote(quoteId)
+    const quote = await getQuote(quoteId)
     if (!quote) {
       return NextResponse.json({ error: "Devis introuvable" }, { status: 404 })
     }

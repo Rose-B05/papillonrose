@@ -50,8 +50,8 @@ export function calcDaysLate(expectedReturnDate: string): number {
 /**
  * Trouve toutes les réservations en retard (non rendues, dates dépassées).
  */
-export function findOverdueBookings(): { booking: Booking; joursRetard: number; expectedDate: string }[] {
-  const bookings = getBookings()
+export async function findOverdueBookings(): Promise<{ booking: Booking; joursRetard: number; expectedDate: string }[]> {
+  const bookings = await getBookings()
   const overdue: { booking: Booking; joursRetard: number; expectedDate: string }[] = []
 
   for (const booking of bookings) {
@@ -129,7 +129,7 @@ export async function processLateAlerts(): Promise<{
   alerts: LateAlert[]
   errors: string[]
 }> {
-  const overdue = findOverdueBookings()
+  const overdue = await findOverdueBookings()
   const alerts: LateAlert[] = []
   const errors: string[] = []
 
@@ -137,7 +137,7 @@ export async function processLateAlerts(): Promise<{
     for (const item of booking.items) {
       // Vérifier si une alerte a déjà été envoyée aujourd'hui pour ce produit
       const today = new Date().toISOString().split("T")[0]
-      if (hasAlertForBookingOnDate(booking.id, item.productId, today)) {
+      if (await hasAlertForBookingOnDate(booking.id, item.productId, today)) {
         continue
       }
 
@@ -175,7 +175,7 @@ export async function processLateAlerts(): Promise<{
           sentAt: new Date().toISOString(),
         }
 
-        saveLateAlert(alert)
+        await saveLateAlert(alert)
         alerts.push(alert)
       } catch (err: any) {
         errors.push(`Erreur alerte #${booking.id} produit ${item.productId}: ${err.message}`)

@@ -34,10 +34,10 @@ export async function POST(request: NextRequest) {
     const metadata = session.metadata
 
     if (metadata?.type === "balance" && metadata?.quoteId) {
-      const quote = getQuote(metadata.quoteId)
+      const quote = await getQuote(metadata.quoteId)
       if (quote && quote.statut === "acompte_paye") {
         quote.statut = "solde_paye"
-        saveQuote(quote)
+        await saveQuote(quote)
 
         try {
           await sendQuoteBalancePaid(quote.client.email, quote.quoteNumber, quote.totalTtc)

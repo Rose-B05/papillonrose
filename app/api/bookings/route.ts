@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       if (!product) return NextResponse.json({ error: `Produit ${item.productId} introuvable` }, { status: 400 })
 
       if (item.dateStart && item.dateEnd) {
-        const available = getAvailableStock(item.productId, item.dateStart, item.dateEnd)
+        const available = await getAvailableStock(item.productId, item.dateStart, item.dateEnd)
         if (available <= 0) {
           return NextResponse.json(
             { error: `Aucune disponibilité pour ${product.nom} sur la période ${item.dateStart} → ${item.dateEnd}` },
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     const finalItems = validatedItems
 
     // Verify dates not blocked
-    const blockedAll = getBlockedDates()
+    const blockedAll = await getBlockedDates()
     for (const item of finalItems) {
       const dates = getDatesBetween(item.dateStart, item.dateEnd)
       const blocked = blockedAll.filter((b) => b.productId === item.productId)
@@ -97,19 +97,19 @@ export async function POST(request: NextRequest) {
       updatedAt: new Date().toISOString(),
     }
 
-    saveBooking(booking)
+    await saveBooking(booking)
 
     // Block dates temporarily (pending payment)
     for (const item of finalItems) {
       const dates = getDatesBetween(item.dateStart, item.dateEnd)
-      blockDates(item.productId, dates, booking.id)
+      await blockDates(item.productId, dates, booking.id)
     }
 
     let paymentIntent = null
     if (client) {
       paymentIntent = await createPaymentIntent(depositAmount, booking.id)
       booking.paymentIntentId = paymentIntent.id
-      saveBooking(booking)
+      await saveBooking(booking)
     }
 
     // Send confirmation email (admin + client)
@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.searchParams.get("id")
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 })
-  const booking = getBooking(id)
+  const booking = await getBooking(id)
   if (!booking) return NextResponse.json({ error: "Réservation introuvable" }, { status: 404 })
   return NextResponse.json(booking)
 }

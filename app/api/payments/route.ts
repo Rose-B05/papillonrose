@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "bookingId et paymentIntentId requis" }, { status: 400 })
     }
 
-    const booking = getBooking(bookingId)
+    const booking = await getBooking(bookingId)
     if (!booking) return NextResponse.json({ error: "Réservation introuvable" }, { status: 404 })
 
     const paymentIntent = await retrievePaymentIntent(paymentIntentId)
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Paiement non confirmé" }, { status: 400 })
     }
 
-    const existingPayment = getPaymentByBookingId(bookingId)
+    const existingPayment = await getPaymentByBookingId(bookingId)
 
     const payment: PaymentRecord = {
       id: existingPayment?.id || uuidv4(),
@@ -35,11 +35,11 @@ export async function POST(request: NextRequest) {
       createdAt: existingPayment?.createdAt || new Date().toISOString(),
     }
 
-    savePayment(payment)
+    await savePayment(payment)
 
     booking.status = "confirmed"
     booking.depositPaidAt = new Date().toISOString()
-    saveBooking(booking)
+    await saveBooking(booking)
 
     // Send confirmations
     try {

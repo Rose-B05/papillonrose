@@ -13,7 +13,7 @@ interface ProductStat {
 }
 
 export async function GET() {
-  const bookings = getBookings()
+  const bookings = await getBookings()
 
   // Count rentals per product across confirmed/returned bookings
   const statsMap = new Map<number, { nbLocations: number; revenuTotal: number }>()

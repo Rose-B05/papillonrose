@@ -12,12 +12,12 @@ function getDatesBetween(start: string, end: string): string[] {
   return dates
 }
 
-export function getAvailableStock(productId: number, dateStart: string, dateEnd: string): number {
+export async function getAvailableStock(productId: number, dateStart: string, dateEnd: string): Promise<number> {
   const product = produits.find((p) => p.id === productId)
   if (!product) return 0
 
   const dates = getDatesBetween(dateStart, dateEnd)
-  const allBlocked = getBlockedDates().filter((b) => b.productId === productId)
+  const allBlocked = (await getBlockedDates()).filter((b) => b.productId === productId)
 
   let minAvailable = product.stock
 
@@ -32,7 +32,7 @@ export function getAvailableStock(productId: number, dateStart: string, dateEnd:
   return Math.max(0, minAvailable)
 }
 
-export function getMaxQtyForProduct(productId: number, dateStart?: string, dateEnd?: string): number {
+export async function getMaxQtyForProduct(productId: number, dateStart?: string, dateEnd?: string): Promise<number> {
   const product = produits.find((p) => p.id === productId)
   if (!product) return 0
 
