@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Configuration Stripe manquante" }, { status: 500 })
   }
 
-  const stripe = new Stripe(key, { apiVersion: "2025-03-31" as any })
+  const stripe = new Stripe(key)
 
   let event: Stripe.Event
 
