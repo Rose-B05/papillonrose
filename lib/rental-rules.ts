@@ -23,9 +23,9 @@ export interface RentalRule {
   startDays: number[]
   /** Délai minimum de réservation en jours (par rapport à aujourd'hui) */
   minAdvanceDays: number
-  /** Durée minimum en nuits */
+  /** Durée minimum en jours */
   minNights: number
-  /** Durée maximum en nuits */
+  /** Durée maximum en jours */
   maxNights: number
 }
 
@@ -94,11 +94,11 @@ export function validateDuration(nights: number, startDate: Date): string | null
   const rule = getRentalRuleForDate(startDate)
 
   if (nights < rule.minNights) {
-    return `Durée minimum de ${rule.minNights} nuit${rule.minNights > 1 ? "s" : ""} pour une location ${rule.label.toLowerCase()}.`
+    return `Durée minimum de ${rule.minNights} jour${rule.minNights > 1 ? "s" : ""} pour une location ${rule.label.toLowerCase()}.`
   }
 
   if (nights > rule.maxNights) {
-    return `Durée maximum de ${rule.maxNights} nuit${rule.maxNights > 1 ? "s" : ""} pour une location ${rule.label.toLowerCase()}.`
+    return `Durée maximum de ${rule.maxNights} jour${rule.maxNights > 1 ? "s" : ""} pour une location ${rule.label.toLowerCase()}.`
   }
 
   return null

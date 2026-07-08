@@ -179,6 +179,9 @@ export default function AvailabilityCalendar({
 
   return (
     <div className="bg-white rounded-2xl p-4 shadow-sm border border-black/[0.07]">
+      <p className="text-xs text-gray-400 text-center mb-3">
+        Sélectionnez une date pour une location d&apos;un jour, ou deux dates pour une période plus longue.
+      </p>
       <div className="flex items-center justify-between mb-4">
         <button onClick={prevMonth} className="w-8 h-8 rounded-full hover:bg-[#F0EBE3] flex items-center justify-center transition-colors">
           <ChevronLeft size={16} />
