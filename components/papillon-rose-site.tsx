@@ -1785,20 +1785,28 @@ export default function PapillonRoseSite() {
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-sm text-gray-500">Quantité</span>
                     <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => setModalQty((q) => Math.max(1, q - 1))}
-                        className="w-8 h-8 rounded-full bg-[#F0EBE3] flex items-center justify-center hover:bg-[#C8A97E]/20 transition-colors"
-                      >
-                        <Minus size={14} />
-                      </button>
-                      <span className="text-sm font-bold w-6 text-center">{modalQty}</span>
-                      <button
-                        onClick={() => setModalQty((q) => Math.min(modalProduct.stock, q + 1))}
-                        disabled={modalQty >= modalProduct.stock}
-                        className="w-8 h-8 rounded-full bg-[#F0EBE3] flex items-center justify-center hover:bg-[#C8A97E]/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                      >
-                        <Plus size={14} />
-                      </button>
+                      {(() => {
+                        const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0)
+                        const effectiveStock = Math.max(0, modalProduct.stock - cartQty)
+                        return (
+                          <>
+                            <button
+                              onClick={() => setModalQty((q) => Math.max(1, q - 1))}
+                              className="w-8 h-8 rounded-full bg-[#F0EBE3] flex items-center justify-center hover:bg-[#C8A97E]/20 transition-colors"
+                            >
+                              <Minus size={14} />
+                            </button>
+                            <span className="text-sm font-bold w-6 text-center">{modalQty}</span>
+                            <button
+                              onClick={() => setModalQty((q) => Math.min(effectiveStock, q + 1))}
+                              disabled={modalQty >= effectiveStock}
+                              className="w-8 h-8 rounded-full bg-[#F0EBE3] flex items-center justify-center hover:bg-[#C8A97E]/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                            >
+                              <Plus size={14} />
+                            </button>
+                          </>
+                        )
+                      })()}
                     </div>
                   </div>
                   <div className="flex items-center gap-2 mb-4">
@@ -1825,11 +1833,15 @@ export default function PapillonRoseSite() {
                       />
                     </div>
                   </div>
-                  {modalProduct.stock > 0 && (
-                    <p className={`text-xs mb-4 ${modalProduct.stock <= 2 ? "text-amber-500 font-medium" : "text-green-500"}`}>
-                      Plus que {modalProduct.stock} disponible{modalProduct.stock > 1 ? "s" : ""}
-                    </p>
-                  )}
+                  {(() => {
+                    const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0)
+                    const effectiveStock = Math.max(0, modalProduct.stock - cartQty)
+                    return effectiveStock > 0 ? (
+                      <p className={`text-xs mb-4 ${effectiveStock <= 2 ? "text-amber-500 font-medium" : "text-green-500"}`}>
+                        Plus que {effectiveStock} disponible{effectiveStock > 1 ? "s" : ""}
+                      </p>
+                    ) : null
+                  })()}
                   <div className="flex flex-col gap-2">
                     <button
             onClick={() => {
@@ -1840,7 +1852,7 @@ export default function PapillonRoseSite() {
                 setModalVariant(undefined)
               }
             }}
-                      disabled={modalProduct.stock === 0 || (modalVariants && modalVariants.length > 0 && !modalVariant)}
+                      disabled={(() => { const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0); return modalProduct.stock - cartQty <= 0 || (modalVariants && modalVariants.length > 0 && !modalVariant) })()}
                       className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       {modalVariants && modalVariants.length > 0 && !modalVariant
@@ -1869,7 +1881,7 @@ export default function PapillonRoseSite() {
                         setModalQty(1)
                         setModalVariant(undefined)
                       }}
-                      disabled={modalProduct.stock === 0}
+                      disabled={(() => { const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0); return modalProduct.stock - cartQty <= 0 })()}
                       className="w-full bg-[#F0EBE3] text-[#2E2E2E]/60 py-3.5 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       Ajouter au devis
