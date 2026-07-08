@@ -31,7 +31,7 @@ export interface RentalRule {
 
 export const RENTAL_RULES: RentalRule[] = [
   {
-    label: "Règle 1 — Semaine complète",
+    label: "Semaine complète",
     description:
       "Location du lundi au mardi suivant. Retrait la veille (vendredi).",
     startDays: [1], // lundi
@@ -40,7 +40,7 @@ export const RENTAL_RULES: RentalRule[] = [
     maxNights: 7,
   },
   {
-    label: "Règle 2 — Mi-semaine",
+    label: "Mi-semaine",
     description:
       "Du mardi au jeudi inclus. Retrait le lundi, restitution le vendredi avant midi.",
     startDays: [2, 3, 4], // mardi, mercredi, jeudi
@@ -49,7 +49,7 @@ export const RENTAL_RULES: RentalRule[] = [
     maxNights: 5,
   },
   {
-    label: "Règle 3 — Week-end",
+    label: "Week-end",
     description:
       "Du vendredi au dimanche. Retrait le jeudi, restitution le lundi avant midi.",
     startDays: [5, 6, 0], // vendredi, samedi, dimanche

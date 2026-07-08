@@ -581,24 +581,28 @@ export default function ReservationPage() {
                     Retrait & Restitution
                   </p>
                   <div className="space-y-3">
-                    {Object.values(rentalDatesMap).map((rd) => (
-                      <div key={rd.dateStart} className="flex items-start gap-3 text-sm">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <RotateCcw size={12} className="text-[#C8A97E]" />
-                            <span className="font-medium text-[#2E2E2E]">Retrait</span>
+                    {Object.entries(rentalDatesMap).map(([productId, rd]) => {
+                      const prod = getProduct(Number(productId))
+                      return (
+                        <div key={productId} className="flex items-start gap-3 text-sm">
+                          <div className="flex-1">
+                            {prod && <p className="text-[10px] text-gray-400 mb-0.5">{prod.nom}</p>}
+                            <div className="flex items-center gap-2 mb-1">
+                              <RotateCcw size={12} className="text-[#C8A97E]" />
+                              <span className="font-medium text-[#2E2E2E]">Retrait</span>
+                            </div>
+                            <p className="text-xs text-gray-500 ml-5">{formatDateLong(rd.pickupDate)}</p>
                           </div>
-                          <p className="text-xs text-gray-500 ml-5">{formatDateLong(rd.pickupDate)}</p>
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <RotateCcw size={12} className="text-red-400" />
-                            <span className="font-medium text-[#2E2E2E]">Restitution</span>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <RotateCcw size={12} className="text-red-400" />
+                              <span className="font-medium text-[#2E2E2E]">Restitution</span>
+                            </div>
+                            <p className="text-xs text-gray-500 ml-5">Avant 12h le {formatDateLong(rd.returnDeadline)}</p>
                           </div>
-                          <p className="text-xs text-gray-500 ml-5">Avant 12h le {formatDateLong(rd.returnDeadline)}</p>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               )}
