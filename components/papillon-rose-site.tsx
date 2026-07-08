@@ -20,6 +20,7 @@ import {
   Package,
   RotateCcw,
   Star,
+  User,
 } from "lucide-react"
 import { produits, type Produit, hasRealPhoto, getActiveProductsCount } from "@/data/produits"
 import { useCart } from "@/components/cart-context"
@@ -667,8 +668,16 @@ export default function PapillonRoseSite() {
     inStockOnly: false,
   })
   const [dynamicStock, setDynamicStock] = useState<Record<number, number>>({})
+  const [customer, setCustomer] = useState<{ email: string; prenom: string; nom: string } | null>(null)
 
   const modalVariants = modalProduct ? resolveVariants(modalProduct) : undefined
+
+  useEffect(() => {
+    fetch("/api/customer/me")
+      .then((r) => r.json())
+      .then((data) => { if (data.customer) setCustomer(data.customer) })
+      .catch(() => {})
+  }, [])
 
   useEffect(() => {
     const check = () => setScrolled(page !== "home" || window.scrollY > window.innerHeight)
@@ -884,6 +893,22 @@ export default function PapillonRoseSite() {
                   {cartCount}
                 </span>
               )}
+            </a>
+            <a
+              href="/compte"
+              className={`relative p-2 transition-colors ${scrolled ? "hover:text-[#C8A97E]" : "hover:text-white"}`}
+              aria-label={customer ? "Mon compte" : "Se connecter"}
+            >
+              <User
+                size={19}
+                className={
+                  customer
+                    ? "text-[#C8A97E]"
+                    : scrolled
+                      ? "text-[#2E2E2E]/40"
+                      : "text-white/80"
+                }
+              />
             </a>
             <button
               onClick={() => setShowQuote(true)}
