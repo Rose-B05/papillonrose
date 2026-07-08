@@ -5,8 +5,12 @@ const COOKIE_NAME = "admin_session"
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Only protect /admin routes (not /api/admin which handles its own auth)
-  if (pathname.startsWith("/admin")) {
+  // Only protect /admin routes — exclude /admin/login and API routes (they handle their own auth)
+  if (
+    pathname.startsWith("/admin") &&
+    !pathname.startsWith("/admin/login") &&
+    !pathname.startsWith("/api/")
+  ) {
     const session = request.cookies.get(COOKIE_NAME)
 
     if (!session || !session.value) {
