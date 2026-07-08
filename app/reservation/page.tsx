@@ -792,7 +792,7 @@ function InputField({ label, type = "text", value, onChange, required, error }: 
       <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">{label}{required && <span className="text-red-400 ml-0.5">*</span>}</label>
       <input type={type} value={value} onChange={(e) => onChange(e.target.value)} required={required}
         className={`w-full bg-white border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-300' : 'border-black/[0.08]'}`}
-        style={{ WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
+        style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
       {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   )
@@ -806,7 +806,7 @@ function SelectField({ label, value, onChange, options, required, error }: {
       <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">{label}{required && <span className="text-red-400 ml-0.5">*</span>}</label>
       <select value={value} onChange={(e) => onChange(e.target.value)} required={required}
         className={`w-full bg-white border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-300' : 'border-black/[0.08]'}`}
-        style={{ WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}>
+        style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}>
         <option value="">Sélectionner</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
