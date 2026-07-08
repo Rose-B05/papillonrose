@@ -38,8 +38,13 @@ export default function ReservationPage() {
   const getProduct = (id: number) => produits.find((p) => p.id === id)
 
   const itemsWithPrix = useMemo(
-    () => items.map((i) => ({ ...i, prix: getPrixForProduct(getProduct(i.productId) || { prix: 0 }, i.variantLabel) || 0 })),
-    [items]
+    () => items.map((i) => ({
+      ...i,
+      dateStart: dateEdits[i.productId]?.start || i.dateStart,
+      dateEnd: dateEdits[i.productId]?.end || i.dateEnd,
+      prix: getPrixForProduct(getProduct(i.productId) || { prix: 0 }, i.variantLabel) || 0,
+    })),
+    [items, dateEdits]
   )
 
   const totalHt = calcTotalHt(itemsWithPrix)
