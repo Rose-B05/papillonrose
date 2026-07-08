@@ -2157,9 +2157,11 @@ export default function PapillonRoseSite() {
       )}
 
       {cartToast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#2E2E2E] text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 animate-[fade-in-up_0.3s_ease-out]">
-          <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-          <span className="text-sm font-medium">{cartToast} ajouté au panier</span>
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-white border border-[#C8A97E]/30 px-6 py-3.5 rounded-2xl shadow-lg flex items-center gap-2.5 animate-[fade-in-up_0.3s_ease-out]">
+          <span className="w-6 h-6 rounded-full bg-[#C8A97E]/15 flex items-center justify-center flex-shrink-0">
+            <svg className="w-3.5 h-3.5 text-[#C8A97E]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+          </span>
+          <span className="text-sm font-medium text-[#2E2E2E]">{cartToast} ajouté au panier ✓</span>
         </div>
       )}
 
