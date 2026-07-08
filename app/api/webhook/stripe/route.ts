@@ -3,10 +3,6 @@ import Stripe from "stripe"
 import { getQuote, saveQuote } from "@/lib/db"
 import { sendQuoteBalancePaid } from "@/lib/email"
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-03-31" as any,
-})
-
 export async function POST(request: NextRequest) {
   const body = await request.text()
   const signature = request.headers.get("stripe-signature")
@@ -15,14 +11,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Signature manquante" }, { status: 400 })
   }
 
+  const key = process.env.STRIPE_SECRET_KEY
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+  if (!key || !webhookSecret) {
+    console.error("STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET is not set")
+    return NextResponse.json({ error: "Configuration Stripe manquante" }, { status: 500 })
+  }
+
+  const stripe = new Stripe(key, { apiVersion: "2025-03-31" as any })
+
   let event: Stripe.Event
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    )
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
   } catch (err: any) {
     console.error("Webhook signature verification failed:", err.message)
     return NextResponse.json({ error: "Signature invalide" }, { status: 400 })
