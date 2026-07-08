@@ -470,7 +470,7 @@ export default function ReservationPage() {
                   </div>
                   <label className="text-sm text-[#2E2E2E] cursor-pointer flex items-center gap-2">
                     <Truck size={16} className="text-[#C8A97E]" />
-                    <span>Livraison + reprise emballage incluses</span>
+                    <span>Livraison</span>
                   </label>
                 </div>
 
@@ -480,7 +480,7 @@ export default function ReservationPage() {
                       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                       <polyline points="22 4 12 14.01 9 11.01" />
                     </svg>
-                    Livraison + reprise emballage offertes (commande &ge; 150&euro;)
+                    Livraison offerte (commande &ge; 150&euro;)
                   </div>
                 )}
 
