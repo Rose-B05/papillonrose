@@ -404,9 +404,9 @@ export default function ReservationPage() {
         {step === "client" && (
           <div>
             <BackButton onClick={() => setStep("dates")} label="Retour aux dates" />
-            <div className="flex items-center justify-between mb-6">
-              <h2 style={DP} className="text-2xl font-semibold text-[#2E2E2E]">Vos informations</h2>
-              <button onClick={() => router.push("/")} className="text-xs text-[#C8A97E] hover:text-[#B8926E] transition-colors underline">
+            <div className="flex items-center justify-between gap-3 mb-6">
+              <h2 style={DP} className="text-xl sm:text-2xl font-semibold text-[#2E2E2E]">Vos informations</h2>
+              <button onClick={() => router.push("/")} className="text-[10px] sm:text-xs text-[#C8A97E] hover:text-[#B8926E] transition-colors underline flex-shrink-0">
                 Retour à l&apos;accueil
               </button>
             </div>
@@ -427,7 +427,7 @@ export default function ReservationPage() {
               <InputField label="Nombre d'invités" type="number" value={String(client.nbInvites || "")} onChange={(v) => setClient((c) => ({ ...c, nbInvites: Number(v) }))} required />
               <div className="space-y-3">
                 {/* Option retrait sur place */}
-                <div className="flex items-center gap-3 bg-white rounded-2xl px-5 py-4 border border-black/[0.07] shadow-sm">
+                <div className="flex items-center gap-3 bg-white rounded-2xl px-4 sm:px-5 py-3.5 sm:py-4 border border-black/[0.07] shadow-sm">
                   <div
                     className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer"
                     style={{
@@ -444,14 +444,14 @@ export default function ReservationPage() {
                     )}
                     <input type="radio" checked={!client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
                   </div>
-                  <label className="text-sm text-[#2E2E2E] cursor-pointer flex items-center gap-2">
-                    <Package size={16} className="text-[#C8A97E]" />
-                    <span>Retrait sur place &mdash; <strong className="text-[#C8A97E]">Gratuit</strong></span>
+                  <label className="text-sm text-[#2E2E2E] cursor-pointer flex items-center gap-2 min-w-0">
+                    <Package size={16} className="text-[#C8A97E] flex-shrink-0" />
+                    <span className="truncate">Retrait sur place &mdash; <strong className="text-[#C8A97E]">Gratuit</strong></span>
                   </label>
                 </div>
 
                 {/* Option livraison */}
-                <div className="flex items-center gap-3 bg-white rounded-2xl px-5 py-4 border border-black/[0.07] shadow-sm">
+                <div className="flex items-center gap-3 bg-white rounded-2xl px-4 sm:px-5 py-3.5 sm:py-4 border border-black/[0.07] shadow-sm">
                   <div
                     className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer"
                     style={{
@@ -468,8 +468,8 @@ export default function ReservationPage() {
                     )}
                     <input type="radio" checked={client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
                   </div>
-                  <label className="text-sm text-[#2E2E2E] cursor-pointer flex items-center gap-2">
-                    <Truck size={16} className="text-[#C8A97E]" />
+                  <label className="text-sm text-[#2E2E2E] cursor-pointer flex items-center gap-2 min-w-0">
+                    <Truck size={16} className="text-[#C8A97E] flex-shrink-0" />
                     <span>Livraison</span>
                   </label>
                 </div>
@@ -485,7 +485,7 @@ export default function ReservationPage() {
                 )}
 
                 {client.besoinLivraison && (
-                  <div className="bg-white rounded-2xl p-5 border border-black/[0.07] shadow-sm space-y-4">
+                  <div className="bg-white rounded-2xl p-4 sm:p-5 border border-black/[0.07] shadow-sm space-y-4">
                     <div>
                       <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">Code postal de livraison</label>
                       <input

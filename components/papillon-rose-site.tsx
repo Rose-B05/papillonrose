@@ -1608,12 +1608,12 @@ export default function PapillonRoseSite() {
                 </p>
                 <h1
                   style={DP}
-                  className="text-4xl md:text-5xl font-semibold text-[#2E2E2E]"
+                  className="text-3xl sm:text-4xl md:text-5xl font-semibold text-[#2E2E2E]"
                 >
                   Contactez-nous
                 </h1>
               </div>
-              <div className="grid sm:grid-cols-2 gap-12">
+              <div className="grid sm:grid-cols-2 gap-8 sm:gap-12">
                 <div>
                   <div className="space-y-7">
                     {[
@@ -1669,7 +1669,7 @@ export default function PapillonRoseSite() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-10 p-6 bg-[#2E2E2E] rounded-3xl text-white">
+                  <div className="mt-10 p-4 sm:p-6 bg-[#2E2E2E] rounded-3xl text-white">
                     <p style={DP} className="text-lg font-semibold mb-3">
                       Horaires
                     </p>
@@ -1706,10 +1706,11 @@ export default function PapillonRoseSite() {
                       <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">
                         {f.label}
                       </label>
-                      <input
+                       <input
                         type={f.type}
                         placeholder={f.placeholder}
                         className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
+                        style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
                       />
                     </div>
                   ))}
@@ -1720,6 +1721,7 @@ export default function PapillonRoseSite() {
                     <input
                       type="date"
                       className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
+                      style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
                     />
                   </div>
                   <div>
@@ -1730,6 +1732,7 @@ export default function PapillonRoseSite() {
                       rows={5}
                       placeholder="Décrivez votre projet, nombre d'invités, lieu…"
                       className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm"
+                      style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
                     />
                   </div>
                   <button
