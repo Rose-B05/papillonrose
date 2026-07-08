@@ -597,6 +597,38 @@ export default function ReservationPage() {
                 )}
               </div>
 
+              {/* Carte itinéraire livraison */}
+              {client.besoinLivraison && client.adresseLivraison && (
+                <div className="bg-white rounded-2xl p-5 border border-black/[0.07] shadow-sm">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#C8A97E] mb-3 flex items-center gap-2">
+                    <Truck size={13} />
+                    Itinéraire de livraison
+                  </p>
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&origin=Cr%C3%A9teil+94000+France&destination=${encodeURIComponent(client.adresseLivraison)}&travelmode=driving`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-xl overflow-hidden border border-black/[0.05] hover:ring-2 hover:ring-[#C8A97E]/30 transition-all"
+                  >
+                    <div className="bg-gradient-to-br from-[#F0EBE3] to-white h-[200px] flex flex-col items-center justify-center relative">
+                      <div className="w-10 h-10 rounded-full bg-[#C8A97E]/15 flex items-center justify-center mb-3">
+                        <Truck size={18} className="text-[#C8A97E]" />
+                      </div>
+                      <p className="text-sm font-semibold text-[#2E2E2E]">Créteil (94)</p>
+                      <div className="flex items-center gap-2 my-1.5">
+                        <div className="w-8 h-px bg-[#C8A97E]" />
+                        <span className="text-xs text-gray-400">{deliveryResult?.distanceKm ? `${deliveryResult.distanceKm} km` : "…"}</span>
+                        <div className="w-8 h-px bg-[#C8A97E]" />
+                      </div>
+                      <p className="text-sm font-semibold text-[#2E2E2E] truncate max-w-[250px] px-4">{client.adresseLivraison}</p>
+                    </div>
+                  </a>
+                  <p className="text-[10px] text-gray-400 mt-2 text-center">
+                    Cliquez pour ouvrir l&apos;itinéraire dans Google Maps
+                  </p>
+                </div>
+              )}
+
               {/* Dates de retrait / restitution */}
               {firstRentalDate && (
                 <div className="bg-white rounded-2xl p-5 border border-black/[0.07] shadow-sm">
