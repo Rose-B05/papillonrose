@@ -176,3 +176,14 @@ export async function hasAlertForBookingOnDate(bookingId: string, productId: num
     (a) => a.bookingId === bookingId && a.productId === productId && a.sentAt.split("T")[0] === date
   )
 }
+
+// ─── Stock Overrides ───
+// Allows runtime stock changes (e.g. when items are returned)
+// Stored as: stock:{productId} = number
+export async function getStockOverride(productId: number): Promise<number | null> {
+  return kv.get<number>(`stock:${productId}`)
+}
+
+export async function setStockOverride(productId: number, stock: number) {
+  await kv.set(`stock:${productId}`, stock)
+}

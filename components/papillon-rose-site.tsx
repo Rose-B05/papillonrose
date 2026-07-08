@@ -133,6 +133,7 @@ function ProductCard({
   onFav,
   onView,
   onAddCart,
+  dynamicStock,
 }: {
   product: Produit
   isFav: boolean
@@ -140,12 +141,14 @@ function ProductCard({
   onFav: () => void
   onView: () => void
   onAddCart: () => void
+  dynamicStock?: Record<number, number>
 }) {
   const getSrc = () => {
     if (product.image && product.image !== "/placeholder.png") return product.image
     if (product.gallerie && product.gallerie.length > 0) return product.gallerie[0]
     return "/placeholder.svg"
   }
+  const effectiveStock = dynamicStock?.[product.id] ?? product.stock
   return (
     <div className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
       <div
@@ -159,7 +162,7 @@ function ProductCard({
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        {product.stock === 1 && (
+        {effectiveStock === 1 && (
           <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10">
             Unique
           </span>
@@ -663,6 +666,7 @@ export default function PapillonRoseSite() {
     dateFin: "",
     inStockOnly: false,
   })
+  const [dynamicStock, setDynamicStock] = useState<Record<number, number>>({})
 
   const modalVariants = modalProduct ? resolveVariants(modalProduct) : undefined
 
@@ -682,6 +686,19 @@ export default function PapillonRoseSite() {
     setModalDateEnd("")
   }, [modalProduct])
 
+  // Fetch dynamic stock on mount and when returning to home
+  useEffect(() => {
+    fetch("/api/products/stock")
+      .then((r) => r.json())
+      .then((data) => setDynamicStock(data.stock || {}))
+      .catch(() => {})
+  }, [page])
+
+  const getEffectiveStock = useCallback((id: number) => {
+    const p = produits.find((prod) => prod.id === id)
+    return dynamicStock[id] ?? p?.stock ?? 0
+  }, [dynamicStock])
+
   const filtered = useMemo(
     () =>
       VISIBLE_PRODUCTS.filter((p) => {
@@ -695,7 +712,7 @@ export default function PapillonRoseSite() {
           p.nom.toLowerCase().includes(search.toLowerCase()) ||
           p.categorie.toLowerCase().includes(search.toLowerCase())
         const matchPrice = pPrix <= priceMax
-        const matchStock = !tagFilters.inStockOnly || p.stock > 0
+        const matchStock = !tagFilters.inStockOnly || getEffectiveStock(p.id) > 0
 
         const matchTheme =
           tagFilters.themes.length === 0 ||
@@ -1136,6 +1153,7 @@ export default function PapillonRoseSite() {
                       onFav={() => toggleFav(p.id)}
                       onView={() => { setModalProduct(p); setModalQty(1); setModalVariant(undefined) }}
                       onAddCart={() => addToCartWithToast(p.id)}
+                      dynamicStock={dynamicStock}
                     />
                   ))}
               </div>
@@ -1505,6 +1523,7 @@ export default function PapillonRoseSite() {
                     onFav={() => toggleFav(p.id)}
                     onView={() => setModalProduct(p)}
                     onAddCart={() => addToCartWithToast(p.id)}
+                    dynamicStock={dynamicStock}
                   />
                 ))}
               </div>
@@ -1714,21 +1733,24 @@ export default function PapillonRoseSite() {
                     <span className="text-gray-400 text-[11px] uppercase tracking-wider">
                       Stock
                     </span>
-                    <span
-                      className={`font-semibold ${
-                        modalProduct.stock === 0
-                          ? "text-red-400"
-                          : modalProduct.stock <= 2
-                            ? "text-amber-500"
-                            : "text-green-500"
-                      }`}
-                    >
-                      {modalProduct.stock === 0
-                        ? "Indisponible"
-                        : `${modalProduct.stock} disponible${
-                            modalProduct.stock > 1 ? "s" : ""
+                    {(() => {
+                      const es = getEffectiveStock(modalProduct.id)
+                      return (
+                        <span
+                          className={`font-semibold ${
+                            es === 0
+                              ? "text-red-400"
+                              : es <= 2
+                                ? "text-amber-500"
+                                : "text-green-500"
                           }`}
-                    </span>
+                        >
+                          {es === 0
+                            ? "Indisponible"
+                            : `${es} disponible${es > 1 ? "s" : ""}`}
+                        </span>
+                      )
+                    })()}
                   </div>
                 </div>
 
@@ -1787,7 +1809,7 @@ export default function PapillonRoseSite() {
                     <div className="flex items-center gap-2">
                       {(() => {
                         const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0)
-                        const effectiveStock = Math.max(0, modalProduct.stock - cartQty)
+                        const effectiveStock = Math.max(0, getEffectiveStock(modalProduct.id) - cartQty)
                         return (
                           <>
                             <button
@@ -1835,7 +1857,7 @@ export default function PapillonRoseSite() {
                   </div>
                   {(() => {
                     const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0)
-                    const effectiveStock = Math.max(0, modalProduct.stock - cartQty)
+                    const effectiveStock = Math.max(0, getEffectiveStock(modalProduct.id) - cartQty)
                     return effectiveStock > 0 ? (
                       <p className={`text-xs mb-4 ${effectiveStock <= 2 ? "text-amber-500 font-medium" : "text-green-500"}`}>
                         Plus que {effectiveStock} disponible{effectiveStock > 1 ? "s" : ""}
@@ -1852,7 +1874,7 @@ export default function PapillonRoseSite() {
                 setModalVariant(undefined)
               }
             }}
-                      disabled={(() => { const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0); return modalProduct.stock - cartQty <= 0 || (modalVariants && modalVariants.length > 0 && !modalVariant) })()}
+                      disabled={(() => { const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0); return getEffectiveStock(modalProduct.id) - cartQty <= 0 || (modalVariants && modalVariants.length > 0 && !modalVariant) })()}
                       className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       {modalVariants && modalVariants.length > 0 && !modalVariant
@@ -1881,7 +1903,7 @@ export default function PapillonRoseSite() {
                         setModalQty(1)
                         setModalVariant(undefined)
                       }}
-                      disabled={(() => { const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0); return modalProduct.stock - cartQty <= 0 })()}
+                      disabled={(() => { const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0); return getEffectiveStock(modalProduct.id) - cartQty <= 0 })()}
                       className="w-full bg-[#F0EBE3] text-[#2E2E2E]/60 py-3.5 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       Ajouter au devis
@@ -1994,14 +2016,14 @@ export default function PapillonRoseSite() {
                             {qty}
                           </span>
                           <button
-                            onClick={() => { if (qty < p.stock) updateQty(p.id, 1) }}
-                            disabled={qty >= p.stock}
+                            onClick={() => { if (qty < getEffectiveStock(p.id)) updateQty(p.id, 1) }}
+                            disabled={qty >= getEffectiveStock(p.id)}
                             aria-label="Augmenter"
                             className="w-6 h-6 bg-white rounded-full shadow-sm flex items-center justify-center hover:bg-[#C8A97E] hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                           >
                             <Plus size={11} />
                           </button>
-                          {qty >= p.stock && p.stock > 0 && (
+                          {qty >= getEffectiveStock(p.id) && getEffectiveStock(p.id) > 0 && (
                             <span className="text-[9px] text-amber-500 font-medium">Stock max</span>
                           )}
                         </div>

@@ -1,5 +1,5 @@
 import { produits } from "@/data/produits"
-import { getBlockedDates } from "@/lib/db"
+import { getBlockedDates, getStockOverride } from "@/lib/db"
 
 function getDatesBetween(start: string, end: string): string[] {
   const dates: string[] = []
@@ -12,20 +12,31 @@ function getDatesBetween(start: string, end: string): string[] {
   return dates
 }
 
-export async function getAvailableStock(productId: number, dateStart: string, dateEnd: string): Promise<number> {
+/**
+ * Returns the effective stock for a product: static stock + any runtime override.
+ * This is the single source of truth for current stock availability.
+ */
+export async function getStock(productId: number): Promise<number> {
   const product = produits.find((p) => p.id === productId)
-  if (!product) return 0
+  const baseStock = product?.stock ?? 0
+  const override = await getStockOverride(productId)
+  return override ?? baseStock
+}
+
+export async function getAvailableStock(productId: number, dateStart: string, dateEnd: string): Promise<number> {
+  const totalStock = await getStock(productId)
+  if (!totalStock) return 0
 
   const dates = getDatesBetween(dateStart, dateEnd)
   const allBlocked = (await getBlockedDates()).filter((b) => b.productId === productId)
 
-  let minAvailable = product.stock
+  let minAvailable = totalStock
 
   for (const date of dates) {
     const bookingsOnDate = new Set(
       allBlocked.filter((b) => b.date === date).map((b) => b.bookingId)
     )
-    const available = product.stock - bookingsOnDate.size
+    const available = totalStock - bookingsOnDate.size
     minAvailable = Math.min(minAvailable, available)
   }
 
@@ -33,10 +44,10 @@ export async function getAvailableStock(productId: number, dateStart: string, da
 }
 
 export async function getMaxQtyForProduct(productId: number, dateStart?: string, dateEnd?: string): Promise<number> {
-  const product = produits.find((p) => p.id === productId)
-  if (!product) return 0
+  const totalStock = await getStock(productId)
+  if (!totalStock) return 0
 
-  if (!dateStart || !dateEnd) return product.stock
+  if (!dateStart || !dateEnd) return totalStock
 
   return getAvailableStock(productId, dateStart, dateEnd)
 }

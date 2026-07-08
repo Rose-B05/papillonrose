@@ -124,6 +124,12 @@ export default function AdminPage() {
           </div>
           <div className="flex items-center gap-4">
             <Link
+              href="/admin/returns"
+              className="text-sm text-[#C8A97E] hover:underline"
+            >
+              Restitutions
+            </Link>
+            <Link
               href="/admin/stats"
               className="text-sm text-[#C8A97E] hover:underline"
             >

@@ -42,12 +42,26 @@ export default function AdminStatsPage() {
               Produits les plus loués et revenus générés
             </p>
           </div>
-          <Link
-            href="/"
-            className="text-sm text-[#C8A97E] hover:underline"
-          >
-            ← Retour au site
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/admin"
+              className="text-sm text-[#C8A97E] hover:underline"
+            >
+              Devis
+            </Link>
+            <Link
+              href="/admin/returns"
+              className="text-sm text-[#C8A97E] hover:underline"
+            >
+              Restitutions
+            </Link>
+            <Link
+              href="/"
+              className="text-sm text-gray-400 hover:text-[#C8A97E] transition-colors"
+            >
+              Site
+            </Link>
+          </div>
         </div>
 
         {loading ? (

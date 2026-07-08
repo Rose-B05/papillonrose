@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getBooking, saveBooking, unblockDates, getLateAlertsForBooking } from "@/lib/db"
+import { getBooking, saveBooking, unblockDates, getLateAlertsForBooking, getStockOverride, setStockOverride } from "@/lib/db"
+import { produits } from "@/data/produits"
 
 /**
  * POST /api/admin/returned
- * Marque une réservation comme rendue et libère les dates bloquées.
+ * Marque une réservation comme rendue, incrémente le stock, et libère les dates bloquées.
  * Body: { bookingId: string }
  */
 export async function POST(request: NextRequest) {
@@ -21,6 +22,15 @@ export async function POST(request: NextRequest) {
 
     if (booking.status === "returned") {
       return NextResponse.json({ error: "Déjà marquée comme rendue" }, { status: 400 })
+    }
+
+    // Incrémenter le stock pour chaque produit restitué
+    for (const item of booking.items) {
+      const product = produits.find((p) => p.id === item.productId)
+      const baseStock = product?.stock ?? 0
+      const currentOverride = await getStockOverride(item.productId)
+      const currentStock = currentOverride ?? baseStock
+      await setStockOverride(item.productId, currentStock + item.qty)
     }
 
     // Mettre à jour le statut
