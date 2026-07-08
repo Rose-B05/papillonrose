@@ -134,15 +134,16 @@ export default function ConditionsLocationPage() {
 
           <Section num={5} title="Caution">
             <p className="mb-3">
-              Un checaution d un montant equivalent au <strong>prix d achat
-              du produit</strong> est demandee par article loue avant la prise
-              en charge du materiel. Cette caution couvre les cas de casse,
-              perte, vol ou salissure irreversible visees a l article 3.
+              Un chèque de caution, d&apos;un montant équivalent au <strong>prix d&apos;achat
+              du produit</strong>, sera demandé lors de la remise du matériel et
+              restitué après vérification de son bon état au retour. Cette
+              caution couvre les cas de casse, perte, vol ou salissure
+              irréversible visés à l&apos;article 3.
             </p>
             <p>
-              Elle est restituee integralement dans un delai de 14 jours
-              ouvres apres la restitution du materiel, deduction faite des
-              eventuelles penalites prevues a l article 4.
+              Elle est restituée intégralement dans un délai de 14 jours
+              ouvrés après la restitution du matériel, déduction faite des
+              éventuelles pénalités prévues à l&apos;article 4.
             </p>
           </Section>
 
