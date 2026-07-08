@@ -87,9 +87,15 @@ export function getQuotes(): QuoteRequest[] {
   return read<QuoteRequest[]>("quotes", [])
 }
 
+export function getQuote(id: string): QuoteRequest | undefined {
+  return getQuotes().find((q) => q.id === id)
+}
+
 export function saveQuote(quote: QuoteRequest) {
   const all = getQuotes()
-  all.push(quote)
+  const idx = all.findIndex((q) => q.id === quote.id)
+  if (idx >= 0) all[idx] = quote
+  else all.push(quote)
   write("quotes", all)
 }
 

@@ -65,6 +65,7 @@ export interface QuoteRequest {
   client: ClientInfo
   items: CartItem[]
   totalHt: number
+  totalTtc: number
   statut: "recu" | "en_traitement" | "confirme_stock" | "refuse_stock" | "envoye" | "acompte_paye" | "solde_paye"
   quoteNumber: string
   createdAt: string

@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
 import { saveQuote, getBooking } from "@/lib/db"
+import { getAvailableStock } from "@/lib/stock"
 import { calcTotalHt, calcTtc, formatDateFr } from "@/lib/utils"
 import { calcDeliveryFee } from "@/lib/delivery"
-import { sendQuoteConfirmation, sendAdminQuoteNotification } from "@/lib/email"
+import { sendQuoteConfirmation, sendAdminQuoteNotification, sendQuoteStockConfirmed, sendQuoteStockRefused } from "@/lib/email"
 import type { QuoteRequest, ClientInfo, CartItem } from "@/lib/types"
 
 export async function POST(request: NextRequest) {
@@ -54,12 +55,33 @@ export async function POST(request: NextRequest) {
       client,
       items,
       totalHt,
+      totalTtc: totalTtcWithDelivery,
       statut: "recu",
       quoteNumber,
       createdAt: new Date().toISOString(),
     }
 
     saveQuote(quoteRequest)
+
+    // Vérification du stock pour chaque article
+    const unavailableItems: string[] = []
+    for (const item of items) {
+      const available = getAvailableStock(item.productId, item.dateStart, item.dateEnd)
+      if (available < item.qty) {
+        const product = produits.find((p) => p.id === item.productId)
+        unavailableItems.push(`${product?.nom || "Article"} (${item.qty} demandé(s), ${available} disponible(s))`)
+      }
+    }
+
+    const allAvailable = unavailableItems.length === 0
+    const newStatut = allAvailable ? "confirme_stock" : "refuse_stock"
+
+    // Mettre à jour le statut du devis
+    quoteRequest.statut = newStatut
+    saveQuote(quoteRequest)
+
+    // Calculer le montant de l'acompte (30%)
+    const depositAmount = Math.round(totalTtcWithDelivery * 0.3 * 100) / 100
 
     // Build recap HTML
     const itemsHtml = items
@@ -83,8 +105,11 @@ export async function POST(request: NextRequest) {
     `
 
     try {
-      await sendQuoteConfirmation(client.email, quoteNumber, recapHtml)
-      await sendAdminQuoteNotification(quoteNumber, `${client.prenom} ${client.nom}`)
+      if (allAvailable) {
+        await sendQuoteStockConfirmed(client.email, quoteNumber, recapHtml, depositAmount)
+      } else {
+        await sendQuoteStockRefused(client.email, quoteNumber, unavailableItems)
+      }
     } catch (emailErr) {
       console.error("Email sending failed:", emailErr)
     }
