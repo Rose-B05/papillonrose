@@ -644,6 +644,8 @@ export default function PapillonRoseSite() {
   const [modalProduct, setModalProduct] = useState<Produit | null>(null)
   const [modalQty, setModalQty] = useState(1)
   const [modalVariant, setModalVariant] = useState<string | undefined>(undefined)
+  const [modalDateStart, setModalDateStart] = useState("")
+  const [modalDateEnd, setModalDateEnd] = useState("")
   const [quote, setQuote] = useState<QuoteItem[]>([])
   const [favorites, setFavorites] = useState<Set<number>>(new Set())
   const [showQuote, setShowQuote] = useState(false)
@@ -674,6 +676,11 @@ export default function PapillonRoseSite() {
       window.removeEventListener("resize", check)
     }
   }, [page])
+
+  useEffect(() => {
+    setModalDateStart("")
+    setModalDateEnd("")
+  }, [modalProduct])
 
   const filtered = useMemo(
     () =>
@@ -1746,21 +1753,34 @@ export default function PapillonRoseSite() {
                       </div>
                     </div>
                   )}
-                  <p
-                    style={DP}
-                    className="text-3xl font-bold text-[#2E2E2E] mb-5"
-                  >
-                    {modalVariants && modalVariants.length > 0
-                      ? formatPrix(
-                          modalVariant
-                            ? modalVariants.find((v) => v.label === modalVariant)?.prix ?? modalProduct.prix
-                            : getStartingPrix(modalProduct)
-                        )
-                      : formatPrix(modalProduct.prix)} €
-                    <span className="text-sm font-normal text-gray-400 ml-1">
-                      / jour
-                    </span>
-                  </p>
+                  {(() => {
+                    const dayPrix = parsePrix(
+                      modalVariants && modalVariants.length > 0
+                        ? modalVariant
+                          ? modalVariants.find((v) => v.label === modalVariant)?.prix ?? modalProduct.prix
+                          : getStartingPrix(modalProduct)
+                        : modalProduct.prix
+                    )
+                    const hasDates = modalDateStart && modalDateEnd
+                    const days = hasDates
+                      ? Math.max(1, Math.ceil((new Date(modalDateEnd).getTime() - new Date(modalDateStart).getTime()) / (1000 * 60 * 60 * 24)))
+                      : 0
+                    const total = hasDates ? dayPrix * days * modalQty : 0
+                    return (
+                      <p style={DP} className="text-3xl font-bold text-[#2E2E2E] mb-1">
+                        {hasDates
+                          ? <>{formatPrix(total)} €</>
+                          : <>
+                              <span className="text-[10px] font-normal text-gray-400 mr-0.5">à partir de</span>
+                              {formatPrix(dayPrix)} €
+                            </>
+                        }
+                        <span className="text-sm font-normal text-gray-400 ml-1">
+                          {hasDates ? `total · ${days} jour${days > 1 ? "s" : ""} × ${modalQty}` : "/ jour"}
+                        </span>
+                      </p>
+                    )
+                  })()}
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-sm text-gray-500">Quantité</span>
                     <div className="flex items-center gap-2">
@@ -1778,6 +1798,30 @@ export default function PapillonRoseSite() {
                       >
                         <Plus size={14} />
                       </button>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="flex-1">
+                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Début</label>
+                      <input
+                        type="date"
+                        value={modalDateStart}
+                        onChange={(e) => { setModalDateStart(e.target.value); setModalDateEnd("") }}
+                        className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-[#1a1a1a] outline-none focus:border-[#C8A97E]"
+                        style={{ WebkitTextFillColor: "#1a1a1a" } as React.CSSProperties}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Fin</label>
+                      <input
+                        type="date"
+                        value={modalDateEnd}
+                        min={modalDateStart || undefined}
+                        onChange={(e) => setModalDateEnd(e.target.value)}
+                        disabled={!modalDateStart}
+                        className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-[#1a1a1a] outline-none focus:border-[#C8A97E] disabled:opacity-40"
+                        style={{ WebkitTextFillColor: "#1a1a1a" } as React.CSSProperties}
+                      />
                     </div>
                   </div>
                   {modalProduct.stock > 0 && (
@@ -1800,7 +1844,18 @@ export default function PapillonRoseSite() {
                     >
                       {modalVariants && modalVariants.length > 0 && !modalVariant
                         ? "Sélectionnez une taille"
-                        : "Ajouter au panier"}
+                        : (() => {
+                            if (!modalDateStart || !modalDateEnd) return "Ajouter au panier"
+                            const dayPrix = parsePrix(
+                              modalVariants && modalVariants.length > 0
+                                ? modalVariant
+                                  ? modalVariants.find((v) => v.label === modalVariant)?.prix ?? modalProduct.prix
+                                  : getStartingPrix(modalProduct)
+                                : modalProduct.prix
+                            )
+                            const days = Math.max(1, Math.ceil((new Date(modalDateEnd).getTime() - new Date(modalDateStart).getTime()) / (1000 * 60 * 60 * 24)))
+                            return `Ajouter au panier · ${formatPrix(dayPrix * days * modalQty)} €`
+                          })()}
                     </button>
                     <p className="text-[10px] text-gray-400 text-center -mt-1">
                       Sélectionnez 2 dates dans le panier pour valider la disponibilité
