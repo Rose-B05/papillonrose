@@ -13,6 +13,6 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.json({
-    customer: { email: customer.email, prenom: customer.prenom, nom: customer.nom },
+    customer: { email: customer.email, prenom: customer.prenom, nom: customer.nom, telephone: customer.telephone || "", adresse: customer.adresse || "" },
   })
 }

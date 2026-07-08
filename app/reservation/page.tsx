@@ -120,6 +120,30 @@ export default function ReservationPage() {
     }
   }, [client.besoinLivraison, client.codePostalLivraison, totalTtc])
 
+  // Pré-remplir les infos client depuis le profil connecté
+  useEffect(() => {
+    fetch("/api/customer/me")
+      .then((r) => r.json())
+      .then(async (data) => {
+        if (data.customer) {
+          const res = await fetch("/api/customer/profile")
+          const profData = await res.json()
+          if (profData.customer) {
+            const p = profData.customer
+            setClient((c) => ({
+              ...c,
+              prenom: c.prenom || p.prenom || "",
+              nom: c.nom || p.nom || "",
+              email: c.email || p.email || "",
+              telephone: c.telephone || p.telephone || "",
+              lieuEvenement: c.lieuEvenement || p.adresse || "",
+            }))
+          }
+        }
+      })
+      .catch(() => {})
+  }, [])
+
   const validateDates = () => {
     for (const item of items) {
       const eds = dateEdits[item.productId]

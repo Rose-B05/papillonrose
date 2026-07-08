@@ -668,10 +668,10 @@ export default function PapillonRoseSite() {
     inStockOnly: false,
   })
   const [dynamicStock, setDynamicStock] = useState<Record<number, number>>({})
-  const [customer, setCustomer] = useState<{ email: string; prenom: string; nom: string } | null>(null)
+  const [customer, setCustomer] = useState<{ email: string; prenom: string; nom: string; telephone: string; adresse: string } | null>(null)
 
   const modalVariants = modalProduct ? resolveVariants(modalProduct) : undefined
-  const prevCustomerRef = useRef<{ email: string; prenom: string; nom: string } | null>(null)
+  const prevCustomerRef = useRef<{ email: string; prenom: string; nom: string; telephone: string; adresse: string } | null>(null)
 
   // Load customer session + favorites on mount
   useEffect(() => {

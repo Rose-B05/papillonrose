@@ -8,6 +8,8 @@ export interface Customer {
   email: string
   prenom: string
   nom: string
+  telephone?: string
+  adresse?: string
   passwordHash: string
   createdAt: string
 }
@@ -51,4 +53,21 @@ export async function verifyCustomer(email: string, password: string): Promise<C
   const valid = await bcrypt.compare(password, customer.passwordHash)
   if (!valid) return null
   return customer
+}
+
+export async function updateCustomerProfile(
+  email: string,
+  updates: { prenom?: string; nom?: string; telephone?: string; adresse?: string }
+): Promise<Customer | undefined> {
+  const customer = await getCustomer(email)
+  if (!customer) return undefined
+  const updated: Customer = {
+    ...customer,
+    prenom: updates.prenom?.trim() || customer.prenom,
+    nom: updates.nom?.trim() || customer.nom,
+    telephone: updates.telephone ?? customer.telephone,
+    adresse: updates.adresse ?? customer.adresse,
+  }
+  await kv.set(`customer:${email}`, updated)
+  return updated
 }
