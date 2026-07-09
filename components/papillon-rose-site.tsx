@@ -2161,7 +2161,7 @@ export default function PapillonRoseSite() {
       )}
 
       {cartToast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-white dark:bg-neutral-800 border border-[#C8A97E]/30 dark:border-amber-600/30 px-6 py-3.5 rounded-2xl shadow-lg flex items-center gap-2.5 animate-[fade-in-up_0.3s_ease-out]">
+        <div role="status" aria-live="polite" className="fixed bottom-20 left-1/2 -translate-x-1/2 z-[60] bg-white dark:bg-neutral-800 border border-[#C8A97E]/30 dark:border-amber-600/30 px-6 py-3.5 rounded-2xl shadow-lg flex items-center gap-2.5 animate-[fade-in-up_0.3s_ease-out]">
           <span className="w-6 h-6 rounded-full bg-[#C8A97E]/15 dark:bg-amber-600/15 flex items-center justify-center flex-shrink-0">
             <svg className="w-3.5 h-3.5 text-[#C8A97E] dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
           </span>

@@ -455,20 +455,20 @@ export default function ReservationPage() {
                 Retour à l&apos;accueil
               </button>
             </div>
-            <form onSubmit={(e) => { e.preventDefault(); const errs = validateClientFields(); setFieldErrors(errs); setShowErrors(true); if (Object.keys(errs).length === 0) handleCreateBooking() }} className="space-y-4">
+            <form onSubmit={(e) => { e.preventDefault(); const errs = validateClientFields(); setFieldErrors(errs); setShowErrors(true); if (Object.keys(errs).length > 0) { const firstKey = Object.keys(errs)[0]; document.getElementById(`field-${firstKey}`)?.scrollIntoView({ behavior: "smooth", block: "center" }); } else { handleCreateBooking() } }} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <InputField label="Prénom" value={client.prenom} onChange={(v) => { setClient((c) => ({ ...c, prenom: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.prenom; return n }) }} required error={showErrors ? fieldErrors.prenom : undefined} />
-                <InputField label="Nom" value={client.nom} onChange={(v) => { setClient((c) => ({ ...c, nom: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.nom; return n }) }} required error={showErrors ? fieldErrors.nom : undefined} />
+                <InputField fieldId="field-prenom" label="Prénom" value={client.prenom} onChange={(v) => { setClient((c) => ({ ...c, prenom: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.prenom; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.prenom : undefined} />
+                <InputField fieldId="field-nom" label="Nom" value={client.nom} onChange={(v) => { setClient((c) => ({ ...c, nom: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.nom; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.nom : undefined} />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <InputField label="Email" type="email" value={client.email} onChange={(v) => { setClient((c) => ({ ...c, email: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.email; return n }) }} required error={showErrors ? fieldErrors.email : undefined} />
-                <InputField label="Téléphone" type="tel" value={client.telephone} onChange={(v) => { setClient((c) => ({ ...c, telephone: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.telephone; return n }) }} required error={showErrors ? fieldErrors.telephone : undefined} />
+                <InputField fieldId="field-email" label="Email" type="email" value={client.email} onChange={(v) => { setClient((c) => ({ ...c, email: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.email; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.email : undefined} />
+                <InputField fieldId="field-telephone" label="Téléphone" type="tel" value={client.telephone} onChange={(v) => { setClient((c) => ({ ...c, telephone: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.telephone; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.telephone : undefined} />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <SelectField label="Type d'événement" value={client.typeEvenement} onChange={(v) => { setClient((c) => ({ ...c, typeEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.typeEvenement; return n }) }} options={["Mariage", "Anniversaire", "Baptême", "Soirée d'entreprise", "Séminaire", "Autre"]} required error={showErrors ? fieldErrors.typeEvenement : undefined} />
-                <InputField label="Date de l'événement" type="date" value={client.dateEvenement} onChange={(v) => { setClient((c) => ({ ...c, dateEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.dateEvenement; return n }) }} required error={showErrors ? fieldErrors.dateEvenement : undefined} />
+                <SelectField fieldId="field-typeEvenement" label="Type d'événement" value={client.typeEvenement} onChange={(v) => { setClient((c) => ({ ...c, typeEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.typeEvenement; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} options={["Mariage", "Anniversaire", "Baptême", "Soirée d'entreprise", "Séminaire", "Autre"]} required error={showErrors ? fieldErrors.typeEvenement : undefined} />
+                <InputField fieldId="field-dateEvenement" label="Date de l'événement" type="date" value={client.dateEvenement} onChange={(v) => { setClient((c) => ({ ...c, dateEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.dateEvenement; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.dateEvenement : undefined} />
               </div>
-              <InputField label="Lieu de l'événement (adresse)" value={client.lieuEvenement} onChange={(v) => { setClient((c) => ({ ...c, lieuEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.lieuEvenement; return n }) }} required error={showErrors ? fieldErrors.lieuEvenement : undefined} />
+              <InputField fieldId="field-lieuEvenement" label="Lieu de l'événement (adresse)" value={client.lieuEvenement} onChange={(v) => { setClient((c) => ({ ...c, lieuEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.lieuEvenement; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.lieuEvenement : undefined} />
               <InputField label="Nombre d'invités" type="number" value={String(client.nbInvites || "")} onChange={(v) => setClient((c) => ({ ...c, nbInvites: Number(v) }))} required />
               <div className="space-y-3">
                 {/* Option retrait sur place */}
@@ -825,33 +825,33 @@ function NextButton({ onClick, disabled, label }: { onClick: () => void; disable
   )
 }
 
-function InputField({ label, type = "text", value, onChange, required, error }: {
-  label: string; type?: string; value: string; onChange: (v: string) => void; required?: boolean; error?: string
+function InputField({ label, type = "text", value, onChange, required, error, fieldId, onBlur }: {
+  label: string; type?: string; value: string; onChange: (v: string) => void; required?: boolean; error?: string; fieldId?: string; onBlur?: () => void
 }) {
   return (
     <div>
-      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">{label}{required && <span className="text-red-400 ml-0.5">*</span>}</label>
-      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} required={required}
-        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-300' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
+      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
+      <input id={fieldId} type={type} value={value} onChange={(e) => onChange(e.target.value)} onBlur={onBlur} required={required}
+        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
         style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
-      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+      {error && <p className="text-red-600 dark:text-red-400 text-xs mt-1">{error}</p>}
     </div>
   )
 }
 
-function SelectField({ label, value, onChange, options, required, error }: {
-  label: string; value: string; onChange: (v: string) => void; options: string[]; required?: boolean; error?: string
+function SelectField({ label, value, onChange, options, required, error, fieldId, onBlur }: {
+  label: string; value: string; onChange: (v: string) => void; options: string[]; required?: boolean; error?: string; fieldId?: string; onBlur?: () => void
 }) {
   return (
     <div>
-      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">{label}{required && <span className="text-red-400 ml-0.5">*</span>}</label>
-      <select value={value} onChange={(e) => onChange(e.target.value)} required={required}
-        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-300' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
+      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
+      <select id={fieldId} value={value} onChange={(e) => onChange(e.target.value)} onBlur={onBlur} required={required}
+        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
         style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}>
         <option value="">Sélectionner</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
-      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+      {error && <p className="text-red-600 dark:text-red-400 text-xs mt-1">{error}</p>}
     </div>
   )
 }
