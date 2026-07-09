@@ -102,6 +102,7 @@ export default function AccessibilityPanel() {
   const panelRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const firstFocusRef = useRef<HTMLButtonElement>(null)
+  const wasDarkRef = useRef(false)
 
   // Load from localStorage + apply on mount
   useEffect(() => {
@@ -142,8 +143,13 @@ export default function AccessibilityPanel() {
     const isDark = s.darkMode === true || (s.darkMode === null && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches)
     if (s.darkMode === true) root.classList.add("dark")
     else if (s.darkMode === false) root.classList.add("light")
-    if (isDark) applyDarkOverrides()
-    else removeDarkOverrides()
+    if (isDark) {
+      applyDarkOverrides()
+      wasDarkRef.current = true
+    } else if (wasDarkRef.current) {
+      removeDarkOverrides()
+      wasDarkRef.current = false
+    }
   }
 
   const update = (patch: Partial<A11ySettings>) => {
