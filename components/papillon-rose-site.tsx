@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useMemo, useEffect, useCallback, useRef } from "react"
 import {
@@ -152,9 +152,9 @@ function ProductCard({
   }
   const effectiveStock = dynamicStock?.[product.id] ?? product.stock
   return (
-    <div className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
+    <div className="group relative bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
       <div
-        className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0]"
+        className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0] dark:bg-neutral-900"
         onClick={onView}
       >
         <img
@@ -172,19 +172,19 @@ function ProductCard({
       </div>
       <div className="p-3.5 flex flex-col flex-1">
         <div className="min-w-0">
-          <p className="text-[10px] font-medium text-[#C8A97E] uppercase tracking-wider truncate">
+          <p className="text-[10px] font-medium text-[#C8A97E] dark:text-amber-400 uppercase tracking-wider truncate">
             {product.categorie}
           </p>
-          <h3 className="text-[13px] font-semibold text-[#2E2E2E] leading-snug truncate">
+          <h3 className="text-[13px] font-semibold text-[#2E2E2E] dark:text-neutral-100 leading-snug truncate">
             {product.nom}
           </h3>
           {product.dimension && (
-            <p className="text-[10px] text-gray-400 truncate">{formatDecimalFr(product.dimension)}</p>
+            <p className="text-[10px] text-gray-400 dark:text-neutral-500 truncate">{formatDecimalFr(product.dimension)}</p>
           )}
-          <p className="text-lg font-bold text-[#2E2E2E] mt-0.5">
+          <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
             {product.variants && product.variants.length > 0 ? (
               <>
-                <span className="text-[10px] font-normal text-gray-400 mr-0.5">à partir de</span>
+                <span className="text-[10px] font-normal text-gray-400 dark:text-neutral-500 mr-0.5">à partir de</span>
                 {formatPrix(getStartingPrix(product))} €
               </>
             ) : (
@@ -192,7 +192,7 @@ function ProductCard({
                 {formatPrix(product.prix)} €
               </>
             )}
-            <span className="text-xs font-normal text-gray-400 ml-0.5">/jour</span>
+            <span className="text-xs font-normal text-gray-400 dark:text-neutral-500 ml-0.5">/jour</span>
           </p>
         </div>
         <div className="mt-auto pt-2.5 flex items-center gap-2">
@@ -202,8 +202,8 @@ function ProductCard({
             aria-label={isInCart ? "Déjà dans le panier" : "Ajouter au panier"}
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
               isInCart
-                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : "bg-[#C8A97E] text-white hover:bg-[#B8926E]"
+                ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-neutral-500 cursor-not-allowed"
+                : "bg-[#C8A97E] dark:bg-amber-600 text-white hover:bg-[#B8926E] dark:hover:bg-amber-700"
             }`}
           >
             <ShoppingBag size={13} />
@@ -215,8 +215,8 @@ function ProductCard({
             aria-label="Favoris"
             className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all shadow-sm flex-shrink-0 ${
               isFav
-                ? "border-[#C8A97E] bg-[#C8A97E]/10 text-[#C8A97E]"
-                : "border-gray-200 text-gray-300 hover:text-[#C8A97E] hover:border-[#C8A97E]/30"
+                ? "border-[#C8A97E] bg-[#C8A97E]/10 dark:bg-amber-600/10 text-[#C8A97E] dark:text-amber-400"
+                : "border-gray-200 dark:border-neutral-700 text-gray-300 dark:text-neutral-600 hover:text-[#C8A97E] dark:hover:text-amber-400 hover:border-[#C8A97E]/30"
             }`}
           >
             <Heart size={14} fill={isFav ? "currentColor" : "none"} />
@@ -245,8 +245,8 @@ function CategoryPills({
           onClick={() => onChange(cat)}
           className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
             active === cat
-              ? "bg-[#C8A97E] text-white shadow-sm"
-              : "bg-[#F0EBE3] text-[#2E2E2E]/60 hover:bg-[#C8A97E]/20 hover:text-[#C8A97E]"
+              ? "bg-[#C8A97E] dark:bg-amber-600 text-white shadow-sm"
+              : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 hover:text-[#C8A97E] dark:hover:text-amber-400"
           }`}
         >
           {cat}
@@ -298,14 +298,14 @@ function Breadcrumb({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <nav aria-label="Fil d'Ariane" className="mb-5">
-        <ol className="flex items-center gap-1.5 text-xs text-gray-400 flex-wrap">
+        <ol className="flex items-center gap-1.5 text-xs text-gray-400 dark:text-neutral-500 flex-wrap">
           {items.map((item, i) => {
             const isLast = i === items.length - 1
             return (
               <li key={i} className="flex items-center gap-1.5">
                 {i > 0 && (
                   <svg
-                    className="w-3 h-3 text-gray-300 flex-shrink-0"
+                    className="w-3 h-3 text-gray-300 dark:text-neutral-600 flex-shrink-0"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -315,13 +315,13 @@ function Breadcrumb({
                   </svg>
                 )}
                 {isLast ? (
-                  <span className="text-[#2E2E2E] font-medium truncate max-w-[200px]">
+                  <span className="text-[#2E2E2E] dark:text-neutral-100 font-medium truncate max-w-[200px]">
                     {item.label}
                   </span>
                 ) : (
                   <button
                     onClick={item.onClick}
-                    className="hover:text-[#C8A97E] transition-colors truncate max-w-[180px]"
+                    className="hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors truncate max-w-[180px]"
                   >
                     {item.label}
                   </button>
@@ -351,7 +351,7 @@ function ProductImages({
   const next = useCallback(() => setIdx((i) => (i + 1) % len), [len])
   return (
     <div
-      className="relative bg-white rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none overflow-hidden"
+      className="relative bg-white dark:bg-neutral-800 rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none overflow-hidden"
       style={{ aspectRatio: "1 / 1" }}
     >
       {len > 1 && (
@@ -359,14 +359,14 @@ function ProductImages({
           <button
             onClick={prev}
             aria-label="Image précédente"
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full shadow-md flex items-center justify-center hover:bg-white transition-colors text-[#2E2E2E]/60 hover:text-[#C8A97E]"
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 dark:bg-neutral-900/80 rounded-full shadow-md flex items-center justify-center hover:bg-white transition-colors text-[#2E2E2E]/60 dark:text-neutral-400 hover:text-[#C8A97E] dark:hover:text-amber-400"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
           </button>
           <button
             onClick={next}
             aria-label="Image suivante"
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full shadow-md flex items-center justify-center hover:bg-white transition-colors text-[#2E2E2E]/60 hover:text-[#C8A97E]"
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 dark:bg-neutral-900/80 rounded-full shadow-md flex items-center justify-center hover:bg-white transition-colors text-[#2E2E2E]/60 dark:text-neutral-400 hover:text-[#C8A97E] dark:hover:text-amber-400"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
           </button>
@@ -385,7 +385,7 @@ function ProductImages({
               onClick={() => setIdx(i)}
               aria-label={`Image ${i + 1}`}
               className={`w-2 h-2 rounded-full transition-all ${
-                i === idx ? "bg-[#C8A97E] w-4" : "bg-black/20 hover:bg-black/40"
+                i === idx ? "bg-[#C8A97E] dark:bg-amber-600 w-4" : "bg-black/20 hover:bg-black/40"
               }`}
             />
           ))}
@@ -394,7 +394,7 @@ function ProductImages({
       <button
         onClick={onClose}
         aria-label="Fermer"
-        className="absolute top-4 right-4 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-red-50 hover:text-red-400 transition-colors z-10"
+        className="absolute top-4 right-4 w-9 h-9 bg-white dark:bg-neutral-800 rounded-full shadow-md flex items-center justify-center hover:bg-red-50 hover:text-red-400 transition-colors z-10"
       >
         <X size={16} />
       </button>
@@ -859,9 +859,9 @@ export default function PapillonRoseSite() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F5F0] font-sans text-[#2E2E2E] overflow-x-hidden">
+    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 font-sans text-[#2E2E2E] dark:text-neutral-100 overflow-x-hidden">
       {/* ── Navbar ── */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white/80 backdrop-blur-xl shadow-sm" : "bg-transparent"}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl shadow-sm" : "bg-transparent"}`}>
         <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-16 md:h-20">
           <button onClick={() => navTo("home")} aria-label="Accueil Papillon Rose">
             <img
@@ -882,9 +882,9 @@ export default function PapillonRoseSite() {
                     }}
                     className={`text-sm transition-all duration-300 ${
                       page === p
-                        ? "font-bold " + (scrolled ? "text-[#C8A97E]" : "text-white")
+                        ? "font-bold " + (scrolled ? "text-[#C8A97E] dark:text-amber-400" : "text-white")
                         : scrolled
-                          ? "text-[#2E2E2E]/60 hover:text-[#C8A97E]"
+                          ? "text-[#2E2E2E]/60 dark:text-neutral-400 hover:text-[#C8A97E] dark:hover:text-amber-400"
                           : "text-white/70 hover:text-white"
                     }`}
                   >
@@ -906,61 +906,61 @@ export default function PapillonRoseSite() {
             <button
               onClick={() => navTo("favorites")}
               aria-label="Favoris"
-              className={`relative p-2 transition-colors ${scrolled ? "hover:text-[#C8A97E]" : "hover:text-white"}`}
+              className={`relative p-2 transition-colors ${scrolled ? "hover:text-[#C8A97E] dark:hover:text-amber-400" : "hover:text-white"}`}
             >
               <Heart
                 size={19}
                 fill={favorites.size > 0 ? GOLD : "none"}
                 className={
                   favorites.size > 0
-                    ? "text-[#C8A97E]"
+                    ? "text-[#C8A97E] dark:text-amber-400"
                     : scrolled
-                      ? "text-[#2E2E2E]/40"
+                      ? "text-[#2E2E2E]/40 dark:text-neutral-500"
                       : "text-white/80"
                 }
               />
               {favorites.size > 0 && (
-                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-[#C8A97E] text-white text-[9px] rounded-full flex items-center justify-center font-bold">
+                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-[9px] rounded-full flex items-center justify-center font-bold">
                   {favorites.size}
                 </span>
               )}
             </button>
             <a
               href="/reservation"
-              className="relative p-2 hover:text-[#C8A97E] transition-colors"
+              className="relative p-2 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors"
               aria-label="Panier"
             >
-              <ShoppingBag size={19} className={cartCount > 0 ? "text-[#C8A97E]" : scrolled ? "text-[#2E2E2E]/40" : "text-white/80"} />
+              <ShoppingBag size={19} className={cartCount > 0 ? "text-[#C8A97E] dark:text-amber-400" : scrolled ? "text-[#2E2E2E]/40 dark:text-neutral-500" : "text-white/80"} />
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-[#C8A97E] text-white text-[9px] rounded-full flex items-center justify-center font-bold">
+                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-[9px] rounded-full flex items-center justify-center font-bold">
                   {cartCount}
                 </span>
               )}
             </a>
             <a
               href="/compte"
-              className={`relative p-2 transition-colors ${scrolled ? "hover:text-[#C8A97E]" : "hover:text-white"}`}
+              className={`relative p-2 transition-colors ${scrolled ? "hover:text-[#C8A97E] dark:hover:text-amber-400" : "hover:text-white"}`}
               aria-label={customer ? "Mon compte" : "Se connecter"}
             >
               <User
                 size={19}
                 className={
                   customer
-                    ? "text-[#C8A97E]"
+                    ? "text-[#C8A97E] dark:text-amber-400"
                     : scrolled
-                      ? "text-[#2E2E2E]/40"
+                      ? "text-[#2E2E2E]/40 dark:text-neutral-500"
                       : "text-white/80"
                 }
               />
             </a>
             <button
               onClick={() => setShowQuote(true)}
-              className="relative flex items-center gap-2 bg-[#C8A97E] text-white px-4 py-2 rounded-full text-sm hover:bg-[#B8926E] transition-colors"
+              className="relative flex items-center gap-2 bg-[#C8A97E] dark:bg-amber-600 text-white px-4 py-2 rounded-full text-sm hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors"
             >
               <FileText size={15} />
               <span className="hidden md:inline font-medium">Devis</span>
               {quoteCount > 0 && (
-                <span className="w-5 h-5 bg-white text-[#C8A97E] text-[10px] rounded-full flex items-center justify-center font-bold">
+                <span className="w-5 h-5 bg-white dark:bg-neutral-800 text-[#C8A97E] dark:text-amber-400 text-[10px] rounded-full flex items-center justify-center font-bold">
                   {quoteCount}
                 </span>
               )}
@@ -968,7 +968,7 @@ export default function PapillonRoseSite() {
             <button
               onClick={() => setShowMenu(true)}
               aria-label="Menu"
-              className={`md:hidden p-2 ${scrolled ? "text-[#2E2E2E]/60" : "text-white/80"}`}
+              className={`md:hidden p-2 ${scrolled ? "text-[#2E2E2E]/60 dark:text-neutral-400" : "text-white/80"}`}
             >
               <Menu size={20} />
             </button>
@@ -983,7 +983,7 @@ export default function PapillonRoseSite() {
           onClick={() => setShowMenu(false)}
         >
           <div
-            className="absolute right-0 top-0 bottom-0 w-72 bg-white rounded-l-3xl shadow-2xl p-8 flex flex-col"
+            className="absolute right-0 top-0 bottom-0 w-72 bg-white dark:bg-neutral-800 rounded-l-3xl shadow-2xl p-8 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-10">
@@ -995,7 +995,7 @@ export default function PapillonRoseSite() {
               <button
                 onClick={() => setShowMenu(false)}
                 aria-label="Fermer le menu"
-                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+                className="w-8 h-8 bg-gray-100 dark:bg-neutral-800 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
               >
                 <X size={16} />
               </button>
@@ -1009,7 +1009,7 @@ export default function PapillonRoseSite() {
                       if (p === "panier") { window.location.href = "/reservation"; return }
                       p === "catalogue" ? goToCatalogue() : navTo(p)
                     }}
-                    className={`text-left transition-colors text-lg ${page === p ? "font-bold text-[#C8A97E]" : "text-[#2E2E2E]/70 hover:text-[#C8A97E]"}`}
+                    className={`text-left transition-colors text-lg ${page === p ? "font-bold text-[#C8A97E] dark:text-amber-400" : "text-[#2E2E2E]/70 dark:text-neutral-300 hover:text-[#C8A97E] dark:hover:text-amber-400"}`}
                     style={DP}
                   >
                     {p === "home"
@@ -1052,13 +1052,13 @@ export default function PapillonRoseSite() {
 
             {/* Hero text + Stats */}
             <section className="max-w-7xl mx-auto px-6 md:px-10 mt-6 md:mt-8">
-              <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-10 bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-lg">
+              <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-10 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-lg">
                 {/* Title */}
                 <div className="flex-shrink-0">
-                  <p className="text-[#C8A97E] text-xs tracking-[0.5em] uppercase mb-2 font-medium">
+                  <p className="text-[#C8A97E] dark:text-amber-400 text-xs tracking-[0.5em] uppercase mb-2 font-medium">
                     LOCATION DÉCORATION ÉVÉNEMENT
                   </p>
-                  <h1 style={DP} className="text-[#2E2E2E] text-4xl md:text-6xl font-semibold leading-[1.1]">
+                  <h1 style={DP} className="text-[#2E2E2E] dark:text-neutral-100 text-4xl md:text-6xl font-semibold leading-[1.1]">
                     Papillon
                     <br />
                     <em className="font-normal italic">Rose</em>
@@ -1077,7 +1077,7 @@ export default function PapillonRoseSite() {
                     { val: "Devis", label: "en 24h" },
                   ].map((s) => (
                     <div key={s.val}>
-                      <p style={DP} className="text-xl md:text-2xl font-bold text-[#C8A97E]">
+                      <p style={DP} className="text-xl md:text-2xl font-bold text-[#C8A97E] dark:text-amber-400">
                         {s.val}
                       </p>
                       <p className="text-[10px] md:text-xs text-[#2E2E2E]/45 uppercase tracking-wider">
@@ -1093,12 +1093,12 @@ export default function PapillonRoseSite() {
             <section className="max-w-7xl mx-auto px-5 md:px-10 mt-12 py-8">
               <div className="flex items-end justify-between mb-0">
                 <div>
-                  <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+                  <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                     Explorer par thème
                   </p>
                   <h2
                     style={DP}
-                    className="text-2xl md:text-3xl font-semibold text-[#2E2E2E]"
+                    className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100"
                   >
                     Nos Catégories
                   </h2>
@@ -1184,19 +1184,19 @@ export default function PapillonRoseSite() {
             <section className="max-w-7xl mx-auto px-5 md:px-10 mt-10 md:mt-8">
               <div className="flex items-end justify-between mb-4 md:mb-5">
                 <div>
-                  <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+                  <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                     Sélection du moment
                   </p>
                   <h2
                     style={DP}
-                    className="text-2xl md:text-3xl font-semibold text-[#2E2E2E]"
+                    className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100"
                   >
                     Articles en vedette
                   </h2>
                 </div>
                 <button
                   onClick={() => goToCatalogue()}
-                  className="hidden md:flex items-center gap-1.5 text-sm text-[#C8A97E] font-medium hover:gap-2.5 transition-all"
+                  className="hidden md:flex items-center gap-1.5 text-sm text-[#C8A97E] dark:text-amber-400 font-medium hover:gap-2.5 transition-all"
                 >
                   Tout voir <ArrowRight size={14} />
                 </button>
@@ -1229,7 +1229,7 @@ export default function PapillonRoseSite() {
               <div className="text-center mt-8">
                 <button
                   onClick={() => goToCatalogue()}
-                  className="inline-flex items-center gap-2 bg-[#2E2E2E] text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#C8A97E] transition-colors"
+                  className="inline-flex items-center gap-2 bg-[#2E2E2E] dark:bg-neutral-800 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-[#C8A97E] dark:hover:bg-amber-600 transition-colors"
                 >
                   Voir tout le catalogue <ArrowRight size={15} />
                 </button>
@@ -1239,12 +1239,12 @@ export default function PapillonRoseSite() {
             {/* Comment ça marche ? */}
             <section className="max-w-7xl mx-auto px-5 md:px-10 mt-16">
               <div className="text-center mb-10">
-                <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+                <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                   Simple et rapide
                 </p>
                 <h2
                   style={DP}
-                  className="text-3xl md:text-4xl font-semibold text-[#2E2E2E]"
+                  className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] dark:text-neutral-100"
                 >
                   Comment ça marche&nbsp;?
                 </h2>
@@ -1289,18 +1289,18 @@ export default function PapillonRoseSite() {
                       <div className="hidden lg:block absolute top-7 left-[calc(50%+28px)] w-[calc(100%-56px)] h-px bg-[#C8A97E]/25" />
                     )}
                     {/* Numéro */}
-                    <div className="relative z-10 w-14 h-14 rounded-full bg-[#C8A97E]/10 flex items-center justify-center mb-4 group-hover:bg-[#C8A97E]/20 transition-colors">
+                    <div className="relative z-10 w-14 h-14 rounded-full bg-[#C8A97E]/10 dark:bg-amber-600/10 flex items-center justify-center mb-4 group-hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 transition-colors">
                       <span
                         style={DP}
-                        className="absolute -top-1 -right-1 w-5 h-5 bg-[#C8A97E] text-white text-[10px] font-bold rounded-full flex items-center justify-center"
+                        className="absolute -top-1 -right-1 w-5 h-5 bg-[#C8A97E] dark:bg-amber-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center"
                       >
                         {step}
                       </span>
-                      <Icon size={22} className="text-[#C8A97E]" />
+                      <Icon size={22} className="text-[#C8A97E] dark:text-amber-400" />
                     </div>
                     <h3
                       style={DP}
-                      className="text-sm font-semibold text-[#2E2E2E] mb-1.5"
+                      className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1.5"
                     >
                       {title}
                     </h3>
@@ -1315,12 +1315,12 @@ export default function PapillonRoseSite() {
             {/* Témoignages */}
             <section className="max-w-7xl mx-auto px-5 md:px-10 mt-16">
               <div className="text-center mb-10">
-                <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+                <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                   Ils nous ont fait confiance
                 </p>
                 <h2
                   style={DP}
-                  className="text-3xl md:text-4xl font-semibold text-[#2E2E2E]"
+                  className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] dark:text-neutral-100"
                 >
                   Avis de nos clients
                 </h2>
@@ -1349,7 +1349,7 @@ export default function PapillonRoseSite() {
                 ].map((review) => (
                   <div
                     key={review.name}
-                    className="bg-white rounded-2xl p-6 border border-black/[0.07] shadow-sm flex flex-col"
+                    className="bg-white dark:bg-neutral-800 rounded-2xl p-6 border border-black/[0.07] dark:border-white/[0.08] shadow-sm flex flex-col"
                   >
                     {/* Étoiles */}
                     <div className="flex gap-0.5 mb-3">
@@ -1357,21 +1357,21 @@ export default function PapillonRoseSite() {
                         <Star
                           key={s}
                           size={14}
-                          className="text-[#C8A97E]"
+                          className="text-[#C8A97E] dark:text-amber-400"
                           fill="#C8A97E"
                         />
                       ))}
                     </div>
                     {/* Texte */}
-                    <p className="text-sm text-[#2E2E2E]/70 leading-relaxed italic mb-4 flex-1">
+                    <p className="text-sm text-[#2E2E2E]/70 dark:text-neutral-300 leading-relaxed italic mb-4 flex-1">
                       &ldquo;{review.text}&rdquo;
                     </p>
                     {/* Auteur */}
-                    <div className="border-t border-black/[0.07] pt-3">
-                      <p className="text-sm font-semibold text-[#2E2E2E]">
+                    <div className="border-t border-black/[0.07] dark:border-white/[0.08] pt-3">
+                      <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">
                         {review.name}
                       </p>
-                      <p className="text-[11px] text-[#C8A97E]">
+                      <p className="text-[11px] text-[#C8A97E] dark:text-amber-400">
                         {review.event} — {review.date}
                       </p>
                     </div>
@@ -1384,7 +1384,7 @@ export default function PapillonRoseSite() {
                   href="https://www.instagram.com/papillonrose.g"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-[#C8A97E] font-medium hover:gap-2.5 transition-all"
+                  className="inline-flex items-center gap-2 text-sm text-[#C8A97E] dark:text-amber-400 font-medium hover:gap-2.5 transition-all"
                 >
                   Voir nos réalisations <ArrowRight size={14} />
                 </a>
@@ -1393,7 +1393,7 @@ export default function PapillonRoseSite() {
 
             {/* CTA */}
             <section className="max-w-7xl mx-auto px-5 md:px-10 mt-16">
-              <div className="relative overflow-hidden rounded-3xl bg-[#2E2E2E] px-10 py-16 text-center">
+              <div className="relative overflow-hidden rounded-3xl bg-[#2E2E2E] dark:bg-neutral-800 px-10 py-16 text-center">
                 <div className="absolute inset-0">
                   <img
                     src={img("/images/PROD005.png")}
@@ -1404,7 +1404,7 @@ export default function PapillonRoseSite() {
                   />
                 </div>
                 <div className="relative z-10 max-w-xl mx-auto">
-                  <p className="text-[#C8A97E] text-[10px] tracking-[0.5em] uppercase mb-4 font-medium">
+                  <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.5em] uppercase mb-4 font-medium">
                     Votre événement, notre passion
                   </p>
                   <h2
@@ -1422,7 +1422,7 @@ export default function PapillonRoseSite() {
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <button
                       onClick={() => goToCatalogue()}
-                      className="bg-[#C8A97E] text-white px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#B8926E] transition-colors"
+                      className="bg-[#C8A97E] dark:bg-amber-600 text-white px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors"
                     >
                       Parcourir le catalogue
                     </button>
@@ -1452,12 +1452,12 @@ export default function PapillonRoseSite() {
               }}
             />
             <div className="mb-5 md:mb-7">
-              <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+              <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                 Explorer
               </p>
               <h1
                 style={DP}
-                className="text-3xl md:text-4xl font-semibold text-[#2E2E2E]"
+                className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] dark:text-neutral-100"
               >
                 Catalogue de Location
               </h1>
@@ -1467,14 +1467,14 @@ export default function PapillonRoseSite() {
               <div className="relative flex-1">
                 <Search
                   size={15}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-neutral-500"
                 />
                 <input
                   type="text"
                   placeholder="Rechercher un article…"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-white pl-11 pr-4 py-3 rounded-2xl text-sm outline-none border border-black/[0.07] focus:border-[#C8A97E]/50 transition-colors placeholder:text-gray-400 shadow-sm"
+                  className="w-full bg-white dark:bg-neutral-800 pl-11 pr-4 py-3 rounded-2xl text-sm outline-none border border-black/[0.07] dark:border-white/[0.08] focus:border-[#C8A97E]/50 transition-colors placeholder:text-gray-400 shadow-sm"
                 />
               </div>
             </div>
@@ -1493,15 +1493,15 @@ export default function PapillonRoseSite() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-4 mt-2 md:mb-5 md:mt-3">
-                  <p className="text-sm text-gray-400">
-                    <span className="text-[#2E2E2E] font-semibold">
+                  <p className="text-sm text-gray-400 dark:text-neutral-500">
+                    <span className="text-[#2E2E2E] dark:text-neutral-100 font-semibold">
                       {filtered.length}
                     </span>{" "}
                     résultat{filtered.length > 1 ? "s" : ""}
                     {category !== "Tous" && (
                       <span>
                         {" "}
-                        — <span className="text-[#C8A97E]">{category}</span>
+                        — <span className="text-[#C8A97E] dark:text-amber-400">{category}</span>
                       </span>
                     )}
                   </p>
@@ -1515,7 +1515,7 @@ export default function PapillonRoseSite() {
                     tagFilters.dateDebut) && (
                     <button
                       onClick={resetFilters}
-                      className="text-xs text-gray-400 hover:text-[#C8A97E] transition-colors underline"
+                      className="text-xs text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors underline"
                     >
                       Réinitialiser
                     </button>
@@ -1534,12 +1534,12 @@ export default function PapillonRoseSite() {
               />
             ) : (
               <div className="py-24 text-center">
-                <p className="text-gray-400 text-base mb-5">
+                <p className="text-gray-400 dark:text-neutral-500 text-base mb-5">
                   Aucun produit ne correspond à votre sélection.
                 </p>
                 <button
                   onClick={resetFilters}
-                  className="bg-[#C8A97E] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8926E] transition-colors"
+                  className="bg-[#C8A97E] dark:bg-amber-600 text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors"
                 >
                   Réinitialiser les filtres
                 </button>
@@ -1555,27 +1555,27 @@ export default function PapillonRoseSite() {
         {page === "favorites" && (
           <div className="max-w-7xl mx-auto px-5 md:px-10 pt-24 pb-8 min-h-[60vh]">
             <div className="mb-8">
-              <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+              <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
                 Mes préférences
               </p>
               <h1
                 style={DP}
-                className="text-3xl md:text-4xl font-semibold text-[#2E2E2E]"
+                className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] dark:text-neutral-100"
               >
                 Favoris
               </h1>
             </div>
             {favorites.size === 0 ? (
               <div className="py-24 text-center">
-                <div className="w-20 h-20 bg-[#C8A97E]/10 rounded-full flex items-center justify-center mx-auto mb-5">
+                <div className="w-20 h-20 bg-[#C8A97E]/10 dark:bg-amber-600/10 rounded-full flex items-center justify-center mx-auto mb-5">
                   <Heart size={32} className="text-[#C8A97E]/40" />
                 </div>
-                <p className="text-gray-400 text-base mb-6">
+                <p className="text-gray-400 dark:text-neutral-500 text-base mb-6">
                   Vous n&apos;avez pas encore de favoris.
                 </p>
                 <button
                   onClick={() => goToCatalogue()}
-                  className="bg-[#C8A97E] text-white px-10 py-3.5 rounded-full text-sm font-medium hover:bg-[#B8926E] transition-colors"
+                  className="bg-[#C8A97E] dark:bg-amber-600 text-white px-10 py-3.5 rounded-full text-sm font-medium hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors"
                 >
                   Parcourir le catalogue
                 </button>
@@ -1604,12 +1604,12 @@ export default function PapillonRoseSite() {
           <div>
             <div className="max-w-4xl mx-auto px-5 md:px-10 pt-24 pb-12">
               <div className="text-center mb-14">
-                <p className="text-[#C8A97E] text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
+                <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
                   Parlons de votre projet
                 </p>
                 <h1
                   style={DP}
-                  className="text-3xl sm:text-4xl md:text-5xl font-semibold text-[#2E2E2E]"
+                  className="text-3xl sm:text-4xl md:text-5xl font-semibold text-[#2E2E2E] dark:text-neutral-100"
                 >
                   Contactez-nous
                 </h1>
@@ -1647,30 +1647,30 @@ export default function PapillonRoseSite() {
                       },
                     ].map(({ Icon, label, val, link, note }) => (
                       <div key={label} className="flex items-start gap-4">
-                        <div className="w-11 h-11 bg-[#C8A97E]/12 rounded-2xl flex items-center justify-center flex-shrink-0">
-                          <Icon size={17} className="text-[#C8A97E]" />
+                        <div className="w-11 h-11 bg-[#C8A97E]/12 dark:bg-amber-600/12 rounded-2xl flex items-center justify-center flex-shrink-0">
+                          <Icon size={17} className="text-[#C8A97E] dark:text-amber-400" />
                         </div>
                         <div>
-                          <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-0.5">
+                          <p className="text-[10px] text-gray-400 dark:text-neutral-500 uppercase tracking-widest mb-0.5">
                             {label}
                           </p>
                           {link ? (
-                            <a href={link} target="_blank" rel="noopener noreferrer" className="font-medium text-sm text-[#2E2E2E] hover:text-[#C8A97E] transition-colors">
+                            <a href={link} target="_blank" rel="noopener noreferrer" className="font-medium text-sm text-[#2E2E2E] dark:text-neutral-100 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors">
                               {val}
                             </a>
                           ) : (
-                            <p className="font-medium text-sm whitespace-pre-line text-[#2E2E2E]">
+                            <p className="font-medium text-sm whitespace-pre-line text-[#2E2E2E] dark:text-neutral-100">
                               {val}
                             </p>
                           )}
                           {note && (
-                            <p className="text-xs text-gray-400 mt-0.5">{note}</p>
+                            <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5">{note}</p>
                           )}
                         </div>
                       </div>
                     ))}
                   </div>
-                  <div className="mt-10 p-4 sm:p-6 bg-[#2E2E2E] rounded-3xl text-white">
+                  <div className="mt-10 p-4 sm:p-6 bg-[#2E2E2E] dark:bg-neutral-800 rounded-3xl text-white">
                     <p style={DP} className="text-lg font-semibold mb-3">
                       Horaires
                     </p>
@@ -1704,41 +1704,41 @@ export default function PapillonRoseSite() {
                     },
                   ].map((f) => (
                     <div key={f.label}>
-                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">
+                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
                         {f.label}
                       </label>
                        <input
                         type={f.type}
                         placeholder={f.placeholder}
-                        className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
+                        className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
                         style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
                       />
                     </div>
                   ))}
                   <div>
-                    <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">
+                    <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
                       Date de l&apos;événement
                     </label>
                     <input
                       type="date"
-                      className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
+                      className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
                       style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1.5">
+                    <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
                       Votre message
                     </label>
                     <textarea
                       rows={5}
                       placeholder="Décrivez votre projet, nombre d'invités, lieu…"
-                      className="w-full bg-white border border-black/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm"
+                      className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm"
                       style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-[#C8A97E] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors shadow-md"
+                    className="w-full bg-[#C8A97E] dark:bg-amber-600 text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors shadow-md"
                   >
                     Envoyer ma demande
                   </button>
@@ -1760,7 +1760,7 @@ export default function PapillonRoseSite() {
           onClick={() => setModalProduct(null)}
         >
           <div
-            className="bg-white w-full md:max-w-2xl max-h-[95vh] overflow-y-auto shadow-2xl rounded-t-3xl md:rounded-3xl"
+            className="bg-white dark:bg-neutral-800 w-full md:max-w-2xl max-h-[95vh] overflow-y-auto shadow-2xl rounded-t-3xl md:rounded-3xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="grid md:grid-cols-2">
@@ -1780,28 +1780,28 @@ export default function PapillonRoseSite() {
                     else goToCatalogue()
                   }}
                 />
-                <span className="text-[#C8A97E] text-[10px] tracking-[0.35em] uppercase font-medium mb-2">
+                <span className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.35em] uppercase font-medium mb-2">
                   {modalProduct.categorie}
                 </span>
                 <h2
                   style={DP}
-                  className="text-2xl font-semibold text-[#2E2E2E] mb-3 leading-snug"
+                  className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-3 leading-snug"
                 >
                   {modalProduct.nom}
                 </h2>
-                <div className="space-y-2.5 bg-[#F8F5F0] rounded-2xl p-4 mb-5">
+                <div className="space-y-2.5 bg-[#F8F5F0] dark:bg-neutral-900 rounded-2xl p-4 mb-5">
                   {modalProduct.dimension && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-400 text-[11px] uppercase tracking-wider">
+                      <span className="text-gray-400 dark:text-neutral-500 text-[11px] uppercase tracking-wider">
                         Dimensions
                       </span>
-                      <span className="font-medium text-[#2E2E2E] text-right max-w-[55%] text-sm">
+                      <span className="font-medium text-[#2E2E2E] dark:text-neutral-100 text-right max-w-[55%] text-sm">
                         {modalProduct.dimension}
                       </span>
                     </div>
                   )}
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400 text-[11px] uppercase tracking-wider">
+                    <span className="text-gray-400 dark:text-neutral-500 text-[11px] uppercase tracking-wider">
                       Stock
                     </span>
                     {(() => {
@@ -1828,7 +1828,7 @@ export default function PapillonRoseSite() {
                 <div className="mt-auto">
                   {modalVariants && modalVariants.length > 0 && (
                     <div className="mb-4">
-                      <p className="text-sm text-gray-500 mb-2">Taille</p>
+                      <p className="text-sm text-gray-500 dark:text-neutral-500 mb-2">Taille</p>
                       <div className="flex gap-2">
                         {modalVariants.map((v) => (
                           <button
@@ -1836,8 +1836,8 @@ export default function PapillonRoseSite() {
                             onClick={() => setModalVariant(v.label)}
                             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                               modalVariant === v.label
-                                ? "bg-[#C8A97E] text-white shadow-sm"
-                                : "bg-[#F0EBE3] text-[#2E2E2E]/60 hover:bg-[#C8A97E]/20"
+                                ? "bg-[#C8A97E] dark:bg-amber-600 text-white shadow-sm"
+                                : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20"
                             }`}
                           >
                             {v.label} — {formatPrix(v.prix)} €/jour
@@ -1861,22 +1861,22 @@ export default function PapillonRoseSite() {
                       : 0
                     const total = hasDate ? dayPrix * days * modalQty : 0
                     return (
-                      <p style={DP} className="text-3xl font-bold text-[#2E2E2E] mb-1">
+                      <p style={DP} className="text-3xl font-bold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                         {hasDate
                           ? <>{formatPrix(total)} €</>
                           : <>
-                              <span className="text-[10px] font-normal text-gray-400 mr-0.5">à partir de</span>
+                              <span className="text-[10px] font-normal text-gray-400 dark:text-neutral-500 mr-0.5">à partir de</span>
                               {formatPrix(dayPrix)} €
                             </>
                         }
-                        <span className="text-sm font-normal text-gray-400 ml-1">
+                        <span className="text-sm font-normal text-gray-400 dark:text-neutral-500 ml-1">
                           {hasDate ? `total · ${days} jour${days > 1 ? "s" : ""} × ${modalQty}` : "/ jour"}
                         </span>
                       </p>
                     )
                   })()}
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-sm text-gray-500">Quantité</span>
+                    <span className="text-sm text-gray-500 dark:text-neutral-500">Quantité</span>
                     <div className="flex items-center gap-2">
                       {(() => {
                         const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0)
@@ -1885,7 +1885,7 @@ export default function PapillonRoseSite() {
                           <>
                             <button
                               onClick={() => setModalQty((q) => Math.max(1, q - 1))}
-                              className="w-8 h-8 rounded-full bg-[#F0EBE3] flex items-center justify-center hover:bg-[#C8A97E]/20 transition-colors"
+                              className="w-8 h-8 rounded-full bg-[#F0EBE3] dark:bg-neutral-800 flex items-center justify-center hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 transition-colors"
                             >
                               <Minus size={14} />
                             </button>
@@ -1893,7 +1893,7 @@ export default function PapillonRoseSite() {
                             <button
                               onClick={() => setModalQty((q) => Math.min(effectiveStock, q + 1))}
                               disabled={modalQty >= effectiveStock}
-                              className="w-8 h-8 rounded-full bg-[#F0EBE3] flex items-center justify-center hover:bg-[#C8A97E]/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                              className="w-8 h-8 rounded-full bg-[#F0EBE3] dark:bg-neutral-800 flex items-center justify-center hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                             >
                               <Plus size={14} />
                             </button>
@@ -1904,24 +1904,24 @@ export default function PapillonRoseSite() {
                   </div>
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex-1">
-                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Début</label>
+                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1">Début</label>
                       <input
                         type="date"
                         value={modalDateStart}
                         onChange={(e) => { setModalDateStart(e.target.value); setModalDateEnd("") }}
-                        className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-[#1a1a1a] outline-none focus:border-[#C8A97E]"
+                        className="w-full bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg px-3 py-2 text-sm text-[#1a1a1a] outline-none focus:border-[#C8A97E]"
                         style={{ WebkitTextFillColor: "#1a1a1a" } as React.CSSProperties}
                       />
                     </div>
                     <div className="flex-1">
-                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1">Fin</label>
+                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1">Fin</label>
                       <input
                         type="date"
                         value={modalDateEnd}
                         min={modalDateStart || undefined}
                         onChange={(e) => setModalDateEnd(e.target.value)}
                         disabled={!modalDateStart}
-                        className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-[#1a1a1a] outline-none focus:border-[#C8A97E] disabled:opacity-40"
+                        className="w-full bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg px-3 py-2 text-sm text-[#1a1a1a] outline-none focus:border-[#C8A97E] disabled:opacity-40"
                         style={{ WebkitTextFillColor: "#1a1a1a" } as React.CSSProperties}
                       />
                     </div>
@@ -1946,7 +1946,7 @@ export default function PapillonRoseSite() {
               }
             }}
                       disabled={(() => { const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0); return getEffectiveStock(modalProduct.id) - cartQty <= 0 || (modalVariants && modalVariants.length > 0 && !modalVariant) })()}
-                      className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="w-full bg-[#C8A97E] dark:bg-amber-600 text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       {modalVariants && modalVariants.length > 0 && !modalVariant
                         ? "Sélectionnez une taille"
@@ -1964,7 +1964,7 @@ export default function PapillonRoseSite() {
                             return `Ajouter au panier · ${formatPrix(dayPrix * days * modalQty)} €`
                           })()}
                     </button>
-                    <p className="text-[10px] text-gray-400 text-center -mt-1">
+                    <p className="text-[10px] text-gray-400 dark:text-neutral-500 text-center -mt-1">
                       Sélectionnez 2 dates dans le panier pour valider la disponibilité
                     </p>
                     <button
@@ -1975,7 +1975,7 @@ export default function PapillonRoseSite() {
                         setModalVariant(undefined)
                       }}
                       disabled={(() => { const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0); return getEffectiveStock(modalProduct.id) - cartQty <= 0 })()}
-                      className="w-full bg-[#F0EBE3] text-[#2E2E2E]/60 py-3.5 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="w-full bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 py-3.5 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] dark:hover:bg-neutral-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       Ajouter au devis
                     </button>
@@ -1984,8 +1984,8 @@ export default function PapillonRoseSite() {
                       aria-label="Ajouter aux favoris"
                       className={`w-12 h-12 rounded-2xl border-2 flex items-center justify-center transition-colors ${
                         favorites.has(modalProduct.id)
-                          ? "border-[#C8A97E] bg-[#C8A97E]/10 text-[#C8A97E]"
-                          : "border-gray-200 hover:border-[#C8A97E] hover:text-[#C8A97E]"
+                          ? "border-[#C8A97E] bg-[#C8A97E]/10 dark:bg-amber-600/10 text-[#C8A97E] dark:text-amber-400"
+                          : "border-gray-200 dark:border-neutral-700 hover:border-[#C8A97E] hover:text-[#C8A97E] dark:hover:text-amber-400"
                       }`}
                     >
                       <Heart
@@ -2013,25 +2013,25 @@ export default function PapillonRoseSite() {
           onClick={() => setShowQuote(false)}
         >
           <div
-            className="bg-white w-full max-w-sm h-full flex flex-col shadow-2xl rounded-l-3xl"
+            className="bg-white dark:bg-neutral-800 w-full max-w-sm h-full flex flex-col shadow-2xl rounded-l-3xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-6 py-5 border-b border-black/[0.07]">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-black/[0.07] dark:border-white/[0.08]">
               <div>
                 <h3
                   style={DP}
-                  className="text-xl font-semibold text-[#2E2E2E]"
+                  className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100"
                 >
                   Demande de devis
                 </h3>
-                <p className="text-xs text-gray-400 mt-0.5">
+                <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5">
                   {quoteCount} article{quoteCount > 1 ? "s" : ""}
                 </p>
               </div>
               <button
                 onClick={() => setShowQuote(false)}
                 aria-label="Fermer"
-                className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+                className="w-8 h-8 bg-gray-100 dark:bg-neutral-800 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
               >
                 <X size={16} />
               </button>
@@ -2039,10 +2039,10 @@ export default function PapillonRoseSite() {
 
             {quote.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center p-10 text-center">
-                <div className="w-16 h-16 bg-[#C8A97E]/10 rounded-full flex items-center justify-center mb-4">
+                <div className="w-16 h-16 bg-[#C8A97E]/10 dark:bg-amber-600/10 rounded-full flex items-center justify-center mb-4">
                   <ShoppingBag size={24} className="text-[#C8A97E]/50" />
                 </div>
-                <p className="text-gray-400 mb-5 text-sm">
+                <p className="text-gray-400 dark:text-neutral-500 mb-5 text-sm">
                   Votre sélection est vide.
                 </p>
                 <button
@@ -2050,7 +2050,7 @@ export default function PapillonRoseSite() {
                     setShowQuote(false)
                     goToCatalogue()
                   }}
-                  className="bg-[#C8A97E] text-white px-7 py-2.5 rounded-full text-sm font-medium hover:bg-[#B8926E] transition-colors"
+                  className="bg-[#C8A97E] dark:bg-amber-600 text-white px-7 py-2.5 rounded-full text-sm font-medium hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors"
                 >
                   Parcourir le catalogue
                 </button>
@@ -2061,7 +2061,7 @@ export default function PapillonRoseSite() {
                   {quote.map(({ product: p, qty }) => (
                     <div
                       key={p.id}
-                      className="flex gap-3.5 items-start bg-[#F8F5F0] rounded-2xl p-3"
+                      className="flex gap-3.5 items-start bg-[#F8F5F0] dark:bg-neutral-900 rounded-2xl p-3"
                     >
                       <img
                         src={p.image ? img(p.image) : PLACEHOLDER}
@@ -2069,17 +2069,17 @@ export default function PapillonRoseSite() {
                         className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-xs text-[#2E2E2E] leading-tight line-clamp-2">
+                        <p className="font-semibold text-xs text-[#2E2E2E] dark:text-neutral-100 leading-tight line-clamp-2">
                           {p.nom}
                         </p>
-                        <p className="text-[11px] text-gray-400 mt-0.5">
+                        <p className="text-[11px] text-gray-400 dark:text-neutral-500 mt-0.5">
                           {formatPrix(p.prix)} € / jour
                         </p>
                         <div className="flex items-center gap-2 mt-2">
                           <button
                             onClick={() => updateQty(p.id, -1)}
                             aria-label="Diminuer"
-                            className="w-6 h-6 bg-white rounded-full shadow-sm flex items-center justify-center hover:bg-[#C8A97E] hover:text-white transition-colors"
+                            className="w-6 h-6 bg-white dark:bg-neutral-800 rounded-full shadow-sm flex items-center justify-center hover:bg-[#C8A97E] dark:hover:bg-amber-600 hover:text-white transition-colors"
                           >
                             <Minus size={11} />
                           </button>
@@ -2090,7 +2090,7 @@ export default function PapillonRoseSite() {
                             onClick={() => { if (qty < getEffectiveStock(p.id)) updateQty(p.id, 1) }}
                             disabled={qty >= getEffectiveStock(p.id)}
                             aria-label="Augmenter"
-                            className="w-6 h-6 bg-white rounded-full shadow-sm flex items-center justify-center hover:bg-[#C8A97E] hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                            className="w-6 h-6 bg-white dark:bg-neutral-800 rounded-full shadow-sm flex items-center justify-center hover:bg-[#C8A97E] dark:hover:bg-amber-600 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                           >
                             <Plus size={11} />
                           </button>
@@ -2100,13 +2100,13 @@ export default function PapillonRoseSite() {
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <p className="font-bold text-sm text-[#2E2E2E]">
+                        <p className="font-bold text-sm text-[#2E2E2E] dark:text-neutral-100">
                           {parsePrix(p.prix) * qty} €
                         </p>
                         <button
                           onClick={() => updateQty(p.id, -qty)}
                           aria-label="Supprimer"
-                          className="text-gray-300 hover:text-red-400 transition-colors mt-1.5"
+                          className="text-gray-300 dark:text-neutral-600 hover:text-red-400 transition-colors mt-1.5"
                         >
                           <Trash2 size={13} />
                         </button>
@@ -2114,14 +2114,14 @@ export default function PapillonRoseSite() {
                     </div>
                   ))}
                 </div>
-                <div className="border-t border-black/[0.07] px-5 py-5">
+                <div className="border-t border-black/[0.07] dark:border-white/[0.08] px-5 py-5">
                   <div className="flex justify-between items-center mb-5">
-                    <span className="text-[11px] text-gray-400 uppercase tracking-wider">
+                    <span className="text-[11px] text-gray-400 dark:text-neutral-500 uppercase tracking-wider">
                       Total estimé
                     </span>
                     <span
                       style={DP}
-                      className="text-2xl font-bold text-[#2E2E2E]"
+                      className="text-2xl font-bold text-[#2E2E2E] dark:text-neutral-100"
                     >
                       {quoteTotal} €
                     </span>
@@ -2133,7 +2133,7 @@ export default function PapillonRoseSite() {
                       setTimeout(() => setShowQuoteSent(false), 3000)
                       navTo("contact")
                     }}
-                    className="w-full bg-[#C8A97E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] transition-colors mb-2.5"
+                    className="w-full bg-[#C8A97E] dark:bg-amber-600 text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors mb-2.5"
                   >
                     Envoyer ma demande
                   </button>
@@ -2142,7 +2142,7 @@ export default function PapillonRoseSite() {
                       setShowQuote(false)
                       goToCatalogue()
                     }}
-                    className="w-full bg-[#F0EBE3] text-[#2E2E2E]/70 py-3 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] transition-colors"
+                    className="w-full bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/70 dark:text-neutral-300 py-3 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] dark:hover:bg-neutral-700 transition-colors"
                   >
                     Continuer mes choix
                   </button>
@@ -2154,18 +2154,18 @@ export default function PapillonRoseSite() {
       )}
 
       {showQuoteSent && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#2E2E2E] text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 animate-[fade-in-up_0.3s_ease-out]">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#2E2E2E] dark:bg-neutral-800 text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 animate-[fade-in-up_0.3s_ease-out]">
           <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
           <span className="text-sm font-medium">Demande de devis envoyée avec succès</span>
         </div>
       )}
 
       {cartToast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-white border border-[#C8A97E]/30 px-6 py-3.5 rounded-2xl shadow-lg flex items-center gap-2.5 animate-[fade-in-up_0.3s_ease-out]">
-          <span className="w-6 h-6 rounded-full bg-[#C8A97E]/15 flex items-center justify-center flex-shrink-0">
-            <svg className="w-3.5 h-3.5 text-[#C8A97E]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-white dark:bg-neutral-800 border border-[#C8A97E]/30 dark:border-amber-600/30 px-6 py-3.5 rounded-2xl shadow-lg flex items-center gap-2.5 animate-[fade-in-up_0.3s_ease-out]">
+          <span className="w-6 h-6 rounded-full bg-[#C8A97E]/15 dark:bg-amber-600/15 flex items-center justify-center flex-shrink-0">
+            <svg className="w-3.5 h-3.5 text-[#C8A97E] dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
           </span>
-          <span className="text-sm font-medium text-[#2E2E2E]">{cartToast} ajouté au panier ✓</span>
+          <span className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">{cartToast} ajouté au panier ✓</span>
         </div>
       )}
 

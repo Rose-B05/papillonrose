@@ -1,86 +1,18 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
+import { useTheme } from "@/lib/theme-context"
 
 const STORAGE_KEY = "a11y-settings"
 
 interface A11ySettings {
-  fontSize: number // 100 = default, 110 = +10%, etc.
+  fontSize: number
   highContrast: boolean
   reduceAnimations: boolean
   dyslexiaFont: boolean
-  darkMode: boolean | null // null = follow system preference
 }
 
-const DEFAULTS: A11ySettings = { fontSize: 100, highContrast: false, reduceAnimations: false, dyslexiaFont: false, darkMode: null }
-
-// Map of light background colors (rgb) to dark replacements
-const BG_MAP: Record<string, string> = {
-  "rgb(248, 245, 240)": "#1A1614",
-  "rgb(240, 235, 227)": "#352E28",
-  "rgb(255, 255, 255)": "#2A2420",
-  "rgb(232, 224, 213)": "#3A332D",
-  "rgb(244, 238, 228)": "#2E2822",
-}
-// Map of light text colors (rgb) to dark replacements
-const TEXT_MAP: Record<string, string> = {
-  "rgb(46, 46, 46)": "#F0EBE3",
-  "rgb(0, 0, 0)": "#F0EBE3",
-}
-const TEXT_ALPHA_MAP: [number, string][] = [
-  [0.70, "rgba(240, 235, 227, 0.7)"],
-  [0.60, "rgba(240, 235, 227, 0.6)"],
-  [0.55, "rgba(240, 235, 227, 0.55)"],
-  [0.45, "rgba(240, 235, 227, 0.45)"],
-  [0.40, "rgba(240, 235, 227, 0.4)"],
-  [0.35, "rgba(240, 235, 227, 0.35)"],
-]
-
-function rgbToKey(rgb: string): string { return rgb.replace(/\s+/g, "") }
-
-function applyDarkOverrides() {
-  document.documentElement.style.colorScheme = "dark"
-  document.body.style.backgroundColor = "#1A1614"
-  document.body.style.color = "#F0EBE3"
-  const all = document.querySelectorAll<HTMLElement>("*")
-  for (const el of all) {
-    const cs = getComputedStyle(el)
-    const bg = rgbToKey(cs.backgroundColor)
-    if (BG_MAP[bg]) el.style.backgroundColor = BG_MAP[bg]
-    const tc = rgbToKey(cs.color)
-    if (TEXT_MAP[tc]) el.style.color = TEXT_MAP[tc]
-    else {
-      const m = tc.match(/rgba\(46,\s*46,\s*46,\s*([\d.]+)\)/)
-      if (m) {
-        const a = parseFloat(m[1])
-        for (const [target, replacement] of TEXT_ALPHA_MAP) {
-          if (Math.abs(a - target) < 0.02) { el.style.color = replacement; break }
-        }
-      }
-    }
-    const bc = cs.borderColor
-    if (bc.includes("0, 0, 0") && (cs.borderWidth !== "0px")) {
-      el.style.borderColor = "rgba(255, 255, 255, 0.1)"
-    }
-    if (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.tagName === "SELECT") {
-      el.style.backgroundColor = "#352E28"
-      el.style.color = "#F0EBE3"
-      el.style.borderColor = "rgba(255, 255, 255, 0.1)"
-    }
-  }
-}
-
-function removeDarkOverrides() {
-  document.documentElement.style.colorScheme = ""
-  document.body.style.backgroundColor = ""
-  document.body.style.color = ""
-  const all = document.querySelectorAll<HTMLElement>("*")
-  for (const el of all) {
-    el.style.backgroundColor = ""
-    el.style.color = ""
-    el.style.borderColor = ""
-  }
-}
+const DEFAULTS: A11ySettings = { fontSize: 100, highContrast: false, reduceAnimations: false, dyslexiaFont: false }
 
 function loadSettings(): A11ySettings {
   if (typeof window === "undefined") return DEFAULTS
@@ -97,36 +29,25 @@ function saveSettings(s: A11ySettings) {
 }
 
 export default function AccessibilityPanel() {
+  const { theme, toggleTheme } = useTheme()
   const [open, setOpen] = useState(false)
   const [settings, setSettings] = useState<A11ySettings>(DEFAULTS)
   const panelRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const firstFocusRef = useRef<HTMLButtonElement>(null)
-  const wasDarkRef = useRef(false)
 
-  // Load from localStorage + apply on mount
   useEffect(() => {
     const s = loadSettings()
     setSettings(s)
     applySettings(s)
   }, [])
 
-  // Respect prefers-reduced-motion + system dark mode preference
   useEffect(() => {
     const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)")
     if (mqReduce.matches) {
       setSettings((prev) => {
         const updated = { ...prev, reduceAnimations: true }
         saveSettings(updated)
-        applySettings(updated)
-        return updated
-      })
-    }
-    const mqDark = window.matchMedia("(prefers-color-scheme: dark)")
-    if (mqDark.matches) {
-      setSettings((prev) => {
-        if (prev.darkMode !== null) return prev
-        const updated = { ...prev, darkMode: null }
         applySettings(updated)
         return updated
       })
@@ -139,17 +60,6 @@ export default function AccessibilityPanel() {
     root.classList.toggle("a11y-high-contrast", s.highContrast)
     root.classList.toggle("a11y-reduce-animations", s.reduceAnimations)
     root.classList.toggle("a11y-dyslexia-font", s.dyslexiaFont)
-    root.classList.remove("dark", "light")
-    const isDark = s.darkMode === true || (s.darkMode === null && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches)
-    if (s.darkMode === true) root.classList.add("dark")
-    else if (s.darkMode === false) root.classList.add("light")
-    if (isDark) {
-      applyDarkOverrides()
-      wasDarkRef.current = true
-    } else if (wasDarkRef.current) {
-      removeDarkOverrides()
-      wasDarkRef.current = false
-    }
   }
 
   const update = (patch: Partial<A11ySettings>) => {
@@ -161,7 +71,6 @@ export default function AccessibilityPanel() {
     })
   }
 
-  // Focus trap
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
       setOpen(false)
@@ -182,14 +91,12 @@ export default function AccessibilityPanel() {
     }
   }, [])
 
-  // Focus first element when panel opens
   useEffect(() => {
     if (open) firstFocusRef.current?.focus()
   }, [open])
 
   return (
     <>
-      {/* Floating button */}
       <button
         ref={buttonRef}
         onClick={() => setOpen((o) => !o)}
@@ -208,7 +115,6 @@ export default function AccessibilityPanel() {
         </svg>
       </button>
 
-      {/* Panel */}
       {open && (
         <div
           id="a11y-panel"
@@ -233,51 +139,18 @@ export default function AccessibilityPanel() {
           </div>
 
           <div className="space-y-4">
-            {/* Mode sombre */}
-            <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-2">Mode sombre</p>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => {
-                    const next = settings.darkMode === true ? null : true
-                    update({ darkMode: next })
-                  }}
-                  aria-label={settings.darkMode === true ? "Désactiver le mode sombre" : "Activer le mode sombre"}
-                  className={`flex-1 h-9 rounded-lg border text-sm font-medium flex items-center justify-center gap-1.5 transition-colors ${
-                    settings.darkMode === true
-                      ? "border-[#C8A97E] bg-[#C8A97E]/10 text-[#C8A97E]"
-                      : "border-black/[0.08] dark:border-white/[0.12] text-[#2E2E2E] dark:text-[#F0EBE3] hover:bg-[#F0EBE3] dark:hover:bg-white/10"
-                  }`}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                  </svg>
-                  Sombre
-                </button>
-                <button
-                  onClick={() => {
-                    const next = settings.darkMode === false ? null : false
-                    update({ darkMode: next })
-                  }}
-                  aria-label={settings.darkMode === false ? "Revenir au thème système" : "Forcer le mode clair"}
-                  className={`flex-1 h-9 rounded-lg border text-sm font-medium flex items-center justify-center gap-1.5 transition-colors ${
-                    settings.darkMode === false
-                      ? "border-[#C8A97E] bg-[#C8A97E]/10 text-[#C8A97E]"
-                      : settings.darkMode === true
-                        ? "border-black/[0.08] dark:border-white/[0.12] text-[#2E2E2E] dark:text-[#F0EBE3] hover:bg-[#F0EBE3] dark:hover:bg-white/10"
-                        : "border-[#C8A97E] bg-[#C8A97E]/10 text-[#C8A97E]"
-                  }`}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                  </svg>
-                  Clair
-                </button>
-              </div>
-              <p className="text-[10px] text-gray-400 mt-1">
-                {settings.darkMode === null ? "Thème système" : settings.darkMode ? "Mode sombre forcé" : "Mode clair forcé"}
-              </p>
-            </div>
+            {/* Mode sombre — single toggle */}
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-sm text-[#2E2E2E] dark:text-[#F0EBE3]">Mode sombre</span>
+              <button
+                role="switch"
+                aria-checked={theme === "dark"}
+                onClick={toggleTheme}
+                className={`relative w-10 h-5 rounded-full transition-colors ${theme === "dark" ? "bg-[#C8A97E]" : "bg-gray-200 dark:bg-white/20"}`}
+              >
+                <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${theme === "dark" ? "translate-x-5" : ""}`} />
+              </button>
+            </label>
 
             {/* Taille du texte */}
             <div>

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
@@ -135,13 +135,13 @@ export default function AvailabilityCalendar({
     return (
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold text-[#2E2E2E]">
+          <span className="text-xs font-semibold text-[#2E2E2E] dark:text-neutral-100">
             {MONTHS[m]} {y}
           </span>
         </div>
         <div className="grid grid-cols-7 gap-0.5 mb-1">
           {DAYS.map((d) => (
-            <div key={d} className="text-center text-[9px] text-gray-400 font-medium uppercase tracking-wider py-0.5">
+            <div key={d} className="text-center text-[9px] text-gray-400 dark:text-neutral-500 font-medium uppercase tracking-wider py-0.5">
               {d}
             </div>
           ))}
@@ -162,10 +162,10 @@ export default function AvailabilityCalendar({
                 disabled={disabled}
                 className={`
                   relative w-full text-center text-[11px] py-1.5 rounded-md transition-all
-                  ${disabled ? "text-gray-300 line-through cursor-not-allowed bg-red-50" : "hover:bg-[#F0EBE3] cursor-pointer"}
-                  ${start || end ? "bg-[#C8A97E] text-white font-bold hover:bg-[#B8926E]" : ""}
-                  ${inRange && !start && !end ? "bg-[#C8A97E]/15 text-[#2E2E2E]" : ""}
-                  ${!disabled && !start && !end && !inRange ? "text-[#2E2E2E]" : ""}
+                  ${disabled ? "text-gray-300 dark:text-neutral-600 line-through cursor-not-allowed bg-red-50" : "hover:bg-[#F0EBE3] dark:hover:bg-neutral-700 cursor-pointer"}
+                  ${start || end ? "bg-[#C8A97E] dark:bg-amber-600 text-white font-bold hover:bg-[#B8926E] dark:hover:bg-amber-700" : ""}
+                  ${inRange && !start && !end ? "bg-[#C8A97E]/15 dark:bg-amber-600/15 text-[#2E2E2E] dark:text-neutral-100" : ""}
+                  ${!disabled && !start && !end && !inRange ? "text-[#2E2E2E] dark:text-neutral-100" : ""}
                 `}
               >
                 {day}
@@ -178,18 +178,18 @@ export default function AvailabilityCalendar({
   }
 
   return (
-    <div className="bg-white rounded-2xl p-4 shadow-sm border border-black/[0.07]">
-      <p className="text-xs text-gray-400 text-center mb-3">
+    <div className="bg-white dark:bg-neutral-800 rounded-2xl p-4 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
+      <p className="text-xs text-gray-400 dark:text-neutral-500 text-center mb-3">
         Sélectionnez une date pour une location d&apos;un jour, ou deux dates pour une période plus longue.
       </p>
       <div className="flex items-center justify-between mb-4">
-        <button onClick={prevMonth} className="w-8 h-8 rounded-full hover:bg-[#F0EBE3] flex items-center justify-center transition-colors">
+        <button onClick={prevMonth} className="w-8 h-8 rounded-full hover:bg-[#F0EBE3] dark:hover:bg-neutral-700 flex items-center justify-center transition-colors">
           <ChevronLeft size={16} />
         </button>
-        <span className="text-xs font-semibold text-[#2E2E2E]">
+        <span className="text-xs font-semibold text-[#2E2E2E] dark:text-neutral-100">
           {MONTHS[viewMonth]} {viewYear} — {MONTHS[next.month]} {next.year}
         </span>
-        <button onClick={nextMonth} className="w-8 h-8 rounded-full hover:bg-[#F0EBE3] flex items-center justify-center transition-colors">
+        <button onClick={nextMonth} className="w-8 h-8 rounded-full hover:bg-[#F0EBE3] dark:hover:bg-neutral-700 flex items-center justify-center transition-colors">
           <ChevronRight size={16} />
         </button>
       </div>
@@ -203,14 +203,14 @@ export default function AvailabilityCalendar({
       {error && <p className="text-red-400 text-xs mt-3 text-center">{error}</p>}
 
       {dateStart && !dateEnd && (
-        <p className="text-[#C8A97E] text-[10px] mt-2 text-center font-medium">
+        <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] mt-2 text-center font-medium">
           {getRentalRuleForDate(new Date(dateStart)).description}
         </p>
       )}
 
-      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-black/[0.05] text-[10px] text-gray-400">
+      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-black/[0.05] text-[10px] text-gray-400 dark:text-neutral-500">
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-[#C8A97E]" />
+          <div className="w-3 h-3 rounded bg-[#C8A97E] dark:bg-amber-600" />
           <span>Sélectionné</span>
         </div>
         <div className="flex items-center gap-1.5">
@@ -218,7 +218,7 @@ export default function AvailabilityCalendar({
           <span>Réservé</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-[#C8A97E]/15" />
+          <div className="w-3 h-3 rounded bg-[#C8A97E]/15 dark:bg-amber-600/15" />
           <span>Dans la période</span>
         </div>
       </div>

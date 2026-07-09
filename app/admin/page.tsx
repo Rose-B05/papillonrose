@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
@@ -44,13 +44,13 @@ const STATUT_LABELS: Record<string, string> = {
 }
 
 const STATUT_COLORS: Record<string, string> = {
-  recu: "bg-gray-100 text-gray-600",
+  recu: "bg-gray-100 dark:bg-neutral-800 text-gray-600",
   en_traitement: "bg-blue-50 text-blue-700",
   confirme_stock: "bg-green-50 text-green-700",
   refuse_stock: "bg-red-50 text-red-700",
   envoye: "bg-amber-50 text-amber-700",
   acompte_paye: "bg-emerald-50 text-emerald-700",
-  solde_paye: "bg-[#C8A97E]/10 text-[#C8A97E]",
+  solde_paye: "bg-[#C8A97E]/10 dark:bg-amber-600/10 text-[#C8A97E] dark:text-amber-400",
 }
 
 function formatDate(dateStr: string) {
@@ -113,37 +113,37 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F5F0] p-6 md:p-10">
+    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 p-6 md:p-10">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-semibold text-[#2E2E2E]">Devis</h1>
-            <p className="text-sm text-gray-500 mt-1">
+            <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Devis</h1>
+            <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
               {quotes.length} devis au total
             </p>
           </div>
           <div className="flex items-center gap-4">
             <Link
               href="/admin/returns"
-              className="text-sm text-[#C8A97E] hover:underline"
+              className="text-sm text-[#C8A97E] dark:text-amber-400 hover:underline"
             >
               Restitutions
             </Link>
             <Link
               href="/admin/stats"
-              className="text-sm text-[#C8A97E] hover:underline"
+              className="text-sm text-[#C8A97E] dark:text-amber-400 hover:underline"
             >
               Statistiques
             </Link>
             <Link
               href="/"
-              className="text-sm text-gray-400 hover:text-[#C8A97E] transition-colors"
+              className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors"
             >
               Site
             </Link>
             <button
               onClick={handleLogout}
-              className="text-sm text-gray-400 hover:text-red-500 transition-colors"
+              className="text-sm text-gray-400 dark:text-neutral-500 hover:text-red-500 transition-colors"
             >
               Déconnexion
             </button>
@@ -151,25 +151,25 @@ export default function AdminPage() {
         </div>
 
         {loading ? (
-          <div className="text-center py-16 text-gray-400">Chargement…</div>
+          <div className="text-center py-16 text-gray-400 dark:text-neutral-500">Chargement…</div>
         ) : quotes.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">Aucun devis</div>
+          <div className="text-center py-16 text-gray-400 dark:text-neutral-500">Aucun devis</div>
         ) : (
           <div className="space-y-3">
             {quotes.map((q) => (
               <div
                 key={q.id}
-                className="bg-white rounded-2xl shadow-sm border border-black/[0.07] p-5"
+                className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-5"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="font-semibold text-[#2E2E2E]">
+                      <span className="font-semibold text-[#2E2E2E] dark:text-neutral-100">
                         {q.quoteNumber}
                       </span>
                       <span
                         className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                          STATUT_COLORS[q.statut] || "bg-gray-100 text-gray-600"
+                          STATUT_COLORS[q.statut] || "bg-gray-100 dark:bg-neutral-800 text-gray-600"
                         }`}
                       >
                         {STATUT_LABELS[q.statut] || q.statut}
@@ -180,7 +180,7 @@ export default function AdminPage() {
                       {q.client.prenom} {q.client.nom} — {q.client.email}
                     </p>
 
-                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-400">
+                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-400 dark:text-neutral-500">
                       <span>
                         {q.client.typeEvenement} — {q.client.lieuEvenement}
                       </span>
@@ -188,7 +188,7 @@ export default function AdminPage() {
                       <span>{formatDate(q.createdAt)}</span>
                     </div>
 
-                    <div className="mt-2 text-xs text-gray-500">
+                    <div className="mt-2 text-xs text-gray-500 dark:text-neutral-500">
                       {q.items.map((item, i) => (
                         <span key={i}>
                           {getProductName(item.productId)} ×{item.qty}
@@ -199,7 +199,7 @@ export default function AdminPage() {
                   </div>
 
                   <div className="flex items-center gap-3 sm:flex-shrink-0">
-                    <span className="text-sm font-semibold text-[#C8A97E] whitespace-nowrap">
+                    <span className="text-sm font-semibold text-[#C8A97E] dark:text-amber-400 whitespace-nowrap">
                       {q.totalTtc.toFixed(2)} € TTC
                     </span>
 
@@ -207,7 +207,7 @@ export default function AdminPage() {
                       <button
                         onClick={() => handleSendPaymentLink(q.id)}
                         disabled={sendingId === q.id}
-                        className="text-xs px-3 py-1.5 bg-[#C8A97E] text-white rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50 whitespace-nowrap"
+                        className="text-xs px-3 py-1.5 bg-[#C8A97E] dark:bg-amber-600 text-white rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50 whitespace-nowrap"
                       >
                         {sendingId === q.id ? "Envoi…" : "Envoyer lien solde"}
                       </button>

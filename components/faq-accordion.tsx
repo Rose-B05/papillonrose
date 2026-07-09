@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { ChevronDown } from "lucide-react"
@@ -16,7 +16,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
         return (
           <div
             key={i}
-            className={`bg-white rounded-2xl border border-black/[0.07] overflow-hidden transition-all ${
+            className={`bg-white dark:bg-neutral-800 rounded-2xl border border-black/[0.07] dark:border-white/[0.08] overflow-hidden transition-all ${
               isOpen ? "shadow-sm" : ""
             }`}
           >
@@ -26,13 +26,13 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
             >
               <span
                 style={DP}
-                className="text-sm font-medium text-[#2E2E2E] pr-4"
+                className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 pr-4"
               >
                 {item.question}
               </span>
               <ChevronDown
                 size={16}
-                className={`text-[#C8A97E] flex-shrink-0 transition-transform duration-300 ${
+                className={`text-[#C8A97E] dark:text-amber-400 flex-shrink-0 transition-transform duration-300 ${
                   isOpen ? "rotate-180" : ""
                 }`}
               />
@@ -43,7 +43,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
               }`}
             >
               <div className="overflow-hidden">
-                <p className="px-5 pb-4 text-xs text-[#2E2E2E]/60 leading-relaxed">
+                <p className="px-5 pb-4 text-xs text-[#2E2E2E]/60 dark:text-neutral-400 leading-relaxed">
                   {item.answer}
                 </p>
               </div>

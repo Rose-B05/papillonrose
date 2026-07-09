@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useRef, useState, useCallback } from "react"
 
@@ -44,10 +44,10 @@ export default function BeforeAfterSlider({ before, after, alt }: { before: stri
 
       {/* Divider line */}
       <div
-        className="absolute top-0 bottom-0 w-0.5 bg-white shadow-md z-10"
+        className="absolute top-0 bottom-0 w-0.5 bg-white dark:bg-neutral-800 shadow-md z-10"
         style={{ left: `${pos}%` }}
       >
-        <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
+        <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white dark:bg-neutral-800 rounded-full shadow-lg flex items-center justify-center">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2E2E2E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="11 17 6 12 11 7" />
             <polyline points="18 17 13 12 18 7" />

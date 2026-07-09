@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
@@ -224,10 +224,10 @@ export default function CategoryCoverflow({
                       {cat.name}
                     </p>
                     <div className="flex items-center justify-center gap-1 mt-1">
-                      <span className="text-[#C8A97E] text-[11px] md:text-xs">
+                      <span className="text-[#C8A97E] dark:text-amber-400 text-[11px] md:text-xs">
                         {cat.count} article{cat.count > 1 ? "s" : ""}
                       </span>
-                      <ArrowRight size={11} className="text-[#C8A97E]" />
+                      <ArrowRight size={11} className="text-[#C8A97E] dark:text-amber-400" />
                     </div>
                   </>
                 )}

@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, Crown, ShieldCheck, Heart } from "lucide-react"
 import { getActiveProductsCount } from "@/data/produits"
@@ -38,7 +38,7 @@ const STATS = [
 
 export default function AProposPage() {
   return (
-    <div className="min-h-screen bg-[#F8F5F0]">
+    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900">
       {/* Hero */}
       <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <img
@@ -49,16 +49,16 @@ export default function AProposPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#F8F5F0]/60 to-[#F8F5F0]" />
         <div className="relative z-10 text-center px-6 max-w-2xl">
-          <p className="text-[#C8A97E] text-[10px] tracking-[0.5em] uppercase mb-4 font-medium">
+          <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.5em] uppercase mb-4 font-medium">
             Notre histoire
           </p>
           <h1
             style={DP}
-            className="text-4xl md:text-5xl font-semibold text-[#2E2E2E] leading-tight"
+            className="text-4xl md:text-5xl font-semibold text-[#2E2E2E] dark:text-neutral-100 leading-tight"
           >
             L&apos;élégance au service de vos événements
           </h1>
-          <p className="text-[#2E2E2E]/60 text-base mt-5 leading-relaxed">
+          <p className="text-[#2E2E2E]/60 dark:text-neutral-400 text-base mt-5 leading-relaxed">
             Papillon Rose, c&apos;est l&apos;histoire d&apos;une passion pour la décoration
             et le soin apporté à chaque détail de vos moments précieux.
           </p>
@@ -70,21 +70,21 @@ export default function AProposPage() {
         <section className="mt-12 mb-16">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-[#C8A97E] transition-colors mb-8"
+            className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors mb-8"
           >
             <ArrowLeft size={14} /> Retour a l&apos;accueil
           </Link>
 
-          <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
+          <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
             Notre histoire
           </p>
           <h2
             style={DP}
-            className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] mb-6"
+            className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-6"
           >
             Une passion devenue métier
           </h2>
-          <div className="space-y-4 text-sm text-[#2E2E2E]/70 leading-relaxed">
+          <div className="space-y-4 text-sm text-[#2E2E2E]/70 dark:text-neutral-300 leading-relaxed">
             <p>
               Tout a commencé par un regard posé sur une table de réception, un jour de
               mariage. Ce détail qui transforme un simple buffet en moment de magie : une
@@ -110,12 +110,12 @@ export default function AProposPage() {
 
         {/* Nos valeurs */}
         <section className="mb-16">
-          <p className="text-[#C8A97E] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
+          <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
             Nos valeurs
           </p>
           <h2
             style={DP}
-            className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] mb-8"
+            className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-8"
           >
             Ce qui nous anime
           </h2>
@@ -123,18 +123,18 @@ export default function AProposPage() {
             {VALUES.map(({ Icon, title, text }) => (
               <div
                 key={title}
-                className="bg-white rounded-2xl p-6 border border-black/[0.07] shadow-sm text-center"
+                className="bg-white dark:bg-neutral-800 rounded-2xl p-6 border border-black/[0.07] dark:border-white/[0.08] shadow-sm text-center"
               >
-                <div className="w-12 h-12 bg-[#C8A97E]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Icon size={20} className="text-[#C8A97E]" />
+                <div className="w-12 h-12 bg-[#C8A97E]/10 dark:bg-amber-600/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Icon size={20} className="text-[#C8A97E] dark:text-amber-400" />
                 </div>
                 <h3
                   style={DP}
-                  className="text-lg font-semibold text-[#2E2E2E] mb-2"
+                  className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2"
                 >
                   {title}
                 </h3>
-                <p className="text-xs text-[#2E2E2E]/60 leading-relaxed">
+                <p className="text-xs text-[#2E2E2E]/60 dark:text-neutral-400 leading-relaxed">
                   {text}
                 </p>
               </div>
@@ -144,13 +144,13 @@ export default function AProposPage() {
 
         {/* Chiffres cles */}
         <section className="mb-16">
-          <div className="bg-white rounded-3xl p-8 md:p-10 border border-black/[0.07] shadow-sm">
+          <div className="bg-white dark:bg-neutral-800 rounded-3xl p-8 md:p-10 border border-black/[0.07] dark:border-white/[0.08] shadow-sm">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {STATS.map((s) => (
                 <div key={s.val} className="text-center">
                   <p
                     style={DP}
-                    className="text-3xl md:text-4xl font-bold text-[#C8A97E] mb-1"
+                    className="text-3xl md:text-4xl font-bold text-[#C8A97E] dark:text-amber-400 mb-1"
                   >
                     {s.val}
                   </p>
@@ -165,12 +165,12 @@ export default function AProposPage() {
 
         {/* CTA */}
         <section className="text-center">
-          <p className="text-[#2E2E2E]/60 text-base mb-6">
+          <p className="text-[#2E2E2E]/60 dark:text-neutral-400 text-base mb-6">
             Prêt(e) à sublimer votre événement ?
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 bg-[#C8A97E] text-white px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#B8926E] transition-colors"
+            className="inline-flex items-center gap-2 bg-[#C8A97E] dark:bg-amber-600 text-white px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors"
           >
             Parcourir le catalogue <ArrowRight size={15} />
           </Link>

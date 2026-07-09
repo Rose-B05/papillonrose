@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useRef, useCallback } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
@@ -55,20 +55,20 @@ export default function ProductCarousel({ images, onImageClick }: Props) {
               e.stopPropagation()
               goTo(idx - 1)
             }}
-            className="absolute left-1 top-1/2 -translate-y-1/2 w-6 h-6 md:w-7 md:h-7 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
+            className="absolute left-1 top-1/2 -translate-y-1/2 w-6 h-6 md:w-7 md:h-7 bg-white/80 dark:bg-neutral-900/80 hover:bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
             aria-label="Précédent"
           >
-            <ChevronLeft size={12} className="text-[#2E2E2E]" />
+            <ChevronLeft size={12} className="text-[#2E2E2E] dark:text-neutral-100" />
           </button>
           <button
             onClick={(e) => {
               e.stopPropagation()
               goTo(idx + 1)
             }}
-            className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 md:w-7 md:h-7 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
+            className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 md:w-7 md:h-7 bg-white/80 dark:bg-neutral-900/80 hover:bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
             aria-label="Suivant"
           >
-            <ChevronRight size={12} className="text-[#2E2E2E]" />
+            <ChevronRight size={12} className="text-[#2E2E2E] dark:text-neutral-100" />
           </button>
         </>
       )}
@@ -84,7 +84,7 @@ export default function ProductCarousel({ images, onImageClick }: Props) {
                 goTo(i)
               }}
               className={`w-1.5 h-1.5 rounded-full transition-all ${
-                i === idx ? "bg-white w-3" : "bg-white/50 hover:bg-white/70"
+                i === idx ? "bg-white dark:bg-neutral-800 w-3" : "bg-white/50 hover:bg-white/70"
               }`}
             />
           ))}

@@ -1,8 +1,9 @@
-import { Analytics } from '@vercel/analytics/next'
+﻿import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/components/cart-context'
+import { ThemeProvider } from '@/lib/theme-context'
 import { getActiveProductsCount } from '@/data/produits'
 
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'] })
@@ -79,7 +80,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${inter.variable} ${playfair.variable} bg-[#F8F5F0]`}
+      className={`${inter.variable} ${playfair.variable} bg-[#F8F5F0] dark:bg-neutral-900`}
     >
       <head>
         <script
@@ -89,8 +90,10 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
         <CartProvider>
-          {children}
-          {process.env.NODE_ENV === 'production' && <Analytics />}
+          <ThemeProvider>
+            {children}
+            {process.env.NODE_ENV === 'production' && <Analytics />}
+          </ThemeProvider>
         </CartProvider>
       </body>
     </html>

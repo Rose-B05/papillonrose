@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useCallback, useRef, useState } from "react"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
@@ -98,7 +98,7 @@ export default function GalleryLightbox({
               key={i}
               onClick={(e) => { e.stopPropagation(); setIdx(i) }}
               className={`w-2 h-2 rounded-full transition-all ${
-                i === idx ? "bg-white w-5" : "bg-white/40 hover:bg-white/60"
+                i === idx ? "bg-white dark:bg-neutral-800 w-5" : "bg-white/40 hover:bg-white/60"
               }`}
             />
           ))}

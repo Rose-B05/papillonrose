@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
@@ -12,25 +12,25 @@ export const metadata: Metadata = {
 
 export default function MentionsLegalesPage() {
   return (
-    <div className="min-h-screen bg-[#F8F5F0]">
+    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900">
       <div className="max-w-3xl mx-auto px-5 md:px-10 pt-24 pb-16">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-[#C8A97E] transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors mb-8"
         >
           <ArrowLeft size={14} /> Retour à l&apos;accueil
         </Link>
 
-        <p className="text-[#C8A97E] text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
+        <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
           Informations légales
         </p>
-        <h1 style={DP} className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] mb-10">
+        <h1 style={DP} className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-10">
           Mentions légales
         </h1>
 
-        <div className="space-y-8 text-sm text-[#2E2E2E]/70 leading-relaxed">
+        <div className="space-y-8 text-sm text-[#2E2E2E]/70 dark:text-neutral-300 leading-relaxed">
           <section>
-            <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] mb-3">
+            <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-3">
               Éditeur du site
             </h2>
             <p>
@@ -41,7 +41,7 @@ export default function MentionsLegalesPage() {
           </section>
 
           <section>
-            <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] mb-3">
+            <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-3">
               Hébergeur
             </h2>
             <p>
@@ -50,7 +50,7 @@ export default function MentionsLegalesPage() {
           </section>
 
           <section>
-            <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] mb-3">
+            <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-3">
               Propriété intellectuelle
             </h2>
             <p>
@@ -59,7 +59,7 @@ export default function MentionsLegalesPage() {
           </section>
 
           <section>
-            <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] mb-3">
+            <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-3">
               Données personnelles
             </h2>
             <p>
@@ -68,7 +68,7 @@ export default function MentionsLegalesPage() {
           </section>
 
           <section>
-            <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] mb-3">
+            <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-3">
               Cookies
             </h2>
             <p>
@@ -77,7 +77,7 @@ export default function MentionsLegalesPage() {
           </section>
         </div>
 
-        <p className="text-xs text-gray-400 pt-8 mt-8 border-t border-black/[0.07]">
+        <p className="text-xs text-gray-400 dark:text-neutral-500 pt-8 mt-8 border-t border-black/[0.07] dark:border-white/[0.08]">
           Dernière mise à jour : janvier 2026
         </p>
       </div>

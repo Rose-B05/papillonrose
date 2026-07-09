@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { FAQ_DATA } from "@/lib/faq"
@@ -14,25 +14,25 @@ const DP = { fontFamily: "var(--font-playfair), serif" } as const
 
 export default function FaqPage() {
   return (
-    <div className="min-h-screen bg-[#F8F5F0]">
+    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900">
       <div className="max-w-3xl mx-auto px-5 md:px-10 pt-24 pb-16">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-[#C8A97E] transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors mb-8"
         >
           <ArrowLeft size={14} /> Retour a l&apos;accueil
         </Link>
 
-        <p className="text-[#C8A97E] text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
+        <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
           Aide &amp; informations
         </p>
         <h1
           style={DP}
-          className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] mb-4"
+          className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4"
         >
           Questions fréquentes
         </h1>
-        <p className="text-sm text-[#2E2E2E]/60 mb-10 leading-relaxed">
+        <p className="text-sm text-[#2E2E2E]/60 dark:text-neutral-400 mb-10 leading-relaxed">
           Retrouvez les réponses aux questions les plus souvent posées sur
           notre service de location de décoration événementielle.
         </p>
@@ -42,7 +42,7 @@ export default function FaqPage() {
             <div key={section.theme}>
               <h2
                 style={DP}
-                className="text-lg font-semibold text-[#2E2E2E] mb-4"
+                className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4"
               >
                 {section.theme}
               </h2>
@@ -51,13 +51,13 @@ export default function FaqPage() {
           ))}
         </div>
 
-        <div className="mt-12 text-center bg-white rounded-2xl p-8 border border-black/[0.07] shadow-sm">
-          <p className="text-sm text-[#2E2E2E]/70 mb-4">
+        <div className="mt-12 text-center bg-white dark:bg-neutral-800 rounded-2xl p-8 border border-black/[0.07] dark:border-white/[0.08] shadow-sm">
+          <p className="text-sm text-[#2E2E2E]/70 dark:text-neutral-300 mb-4">
             Vous n&apos;avez pas trouvé votre réponse ?
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 bg-[#C8A97E] text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#B8926E] transition-colors"
+            className="inline-flex items-center gap-2 bg-[#C8A97E] dark:bg-amber-600 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors"
           >
             Contactez-nous
           </Link>

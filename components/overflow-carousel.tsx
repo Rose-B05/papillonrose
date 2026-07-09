@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
@@ -122,14 +122,14 @@ export default function OverflowCarousel({
         <>
           <button
             onClick={(e) => { e.stopPropagation(); goPrev(); resetAuto() }}
-            className="absolute -left-1 md:left-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-[#C8A97E] shadow-md transition-all"
+            className="absolute -left-1 md:left-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 dark:bg-neutral-900/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 shadow-md transition-all"
             aria-label="Précédent"
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); goNext(); resetAuto() }}
-            className="absolute -right-1 md:right-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-[#C8A97E] shadow-md transition-all"
+            className="absolute -right-1 md:right-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 dark:bg-neutral-900/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 shadow-md transition-all"
             aria-label="Suivant"
           >
             <ChevronRight size={20} />
