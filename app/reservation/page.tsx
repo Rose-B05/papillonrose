@@ -9,7 +9,10 @@ import { parsePrix, calcTotalHt, calcTtc, calcDeposit, formatDateFr, getPrixForP
 import { calcRentalDates, calculateLateFee, getRuleSummary, formatDateLong, type RentalDates } from "@/lib/rental-dates"
 import { calcDeliveryFee, type DeliveryResult } from "@/lib/delivery"
 import { ShoppingBag, ArrowRight, ArrowLeft, Check, X, Trash2, Plus, Minus, Loader2, Package, RotateCcw, AlertTriangle, Truck } from "lucide-react"
+import dynamic from "next/dynamic"
 import type { ClientInfo, CartItem } from "@/lib/types"
+
+const DeliveryMap = dynamic(() => import("@/components/delivery-map"), { ssr: false })
 
 type Step = "panier" | "dates" | "client" | "confirmation"
 
@@ -54,6 +57,15 @@ export default function ReservationPage() {
   const [deliveryResult, setDeliveryResult] = useState<DeliveryResult | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [showErrors, setShowErrors] = useState(false)
+  const [isDark, setIsDark] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsDark(document.documentElement.classList.contains("dark"))
+    check()
+    const obs = new MutationObserver(check)
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
+    return () => obs.disconnect()
+  }, [])
 
   // Persist to sessionStorage
   useEffect(() => { sessionStorage.setItem("reservation_step", step) }, [step])
@@ -637,28 +649,24 @@ export default function ReservationPage() {
                     <Truck size={13} />
                     Itinéraire de livraison
                   </p>
-                  <a
-                    href={`https://www.google.com/maps/dir/?api=1&origin=Cr%C3%A9teil+94000+France&destination=${encodeURIComponent(client.adresseLivraison)}&travelmode=driving`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block rounded-xl overflow-hidden border border-black/[0.05] hover:ring-2 hover:ring-[#C8A97E]/30 transition-all"
-                  >
-                    <div className="bg-gradient-to-br from-[#F0EBE3] to-white h-[200px] flex flex-col items-center justify-center relative">
-                      <div className="w-10 h-10 rounded-full bg-[#C8A97E]/15 dark:bg-amber-600/15 flex items-center justify-center mb-3">
-                        <Truck size={18} className="text-[#C8A97E] dark:text-amber-400" />
-                      </div>
-                      <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">Créteil (94)</p>
-                      <div className="flex items-center gap-2 my-1.5">
-                        <div className="w-8 h-px bg-[#C8A97E] dark:bg-amber-600" />
-                        <span className="text-xs text-gray-400 dark:text-neutral-500">{deliveryResult?.distanceKm ? `${deliveryResult.distanceKm} km` : "…"}</span>
-                        <div className="w-8 h-px bg-[#C8A97E] dark:bg-amber-600" />
-                      </div>
-                      <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 truncate max-w-[250px] px-4">{client.adresseLivraison}</p>
-                    </div>
-                  </a>
-                  <p className="text-[10px] text-gray-400 dark:text-neutral-500 mt-2 text-center">
-                    Cliquez pour ouvrir l&apos;itinéraire dans Google Maps
-                  </p>
+                  <DeliveryMap
+                    destination={client.adresseLivraison}
+                    postalCode={client.codePostalLivraison}
+                    isDark={isDark}
+                  />
+                  <div className="flex items-center justify-between mt-2">
+                    <p className="text-[10px] text-gray-400 dark:text-neutral-500">
+                      {deliveryResult?.distanceKm ? `${deliveryResult.distanceKm} km` : ""}
+                    </p>
+                    <a
+                      href={`https://www.google.com/maps/dir/?api=1&origin=Cr%C3%A9teil+94000+France&destination=${encodeURIComponent(client.adresseLivraison + (client.codePostalLivraison ? ", " + client.codePostalLivraison : ""))}&travelmode=driving`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] text-[#C8A97E] dark:text-amber-400 hover:underline"
+                    >
+                      Ouvrir dans Google Maps
+                    </a>
+                  </div>
                 </div>
               )}
 
