@@ -14,6 +14,74 @@ interface A11ySettings {
 
 const DEFAULTS: A11ySettings = { fontSize: 100, highContrast: false, reduceAnimations: false, dyslexiaFont: false, darkMode: null }
 
+// Map of light background colors (rgb) to dark replacements
+const BG_MAP: Record<string, string> = {
+  "rgb(248, 245, 240)": "#1A1614",
+  "rgb(240, 235, 227)": "#352E28",
+  "rgb(255, 255, 255)": "#2A2420",
+  "rgb(232, 224, 213)": "#3A332D",
+  "rgb(244, 238, 228)": "#2E2822",
+}
+// Map of light text colors (rgb) to dark replacements
+const TEXT_MAP: Record<string, string> = {
+  "rgb(46, 46, 46)": "#F0EBE3",
+  "rgb(0, 0, 0)": "#F0EBE3",
+}
+const TEXT_ALPHA_MAP: [number, string][] = [
+  [0.70, "rgba(240, 235, 227, 0.7)"],
+  [0.60, "rgba(240, 235, 227, 0.6)"],
+  [0.55, "rgba(240, 235, 227, 0.55)"],
+  [0.45, "rgba(240, 235, 227, 0.45)"],
+  [0.40, "rgba(240, 235, 227, 0.4)"],
+  [0.35, "rgba(240, 235, 227, 0.35)"],
+]
+
+function rgbToKey(rgb: string): string { return rgb.replace(/\s+/g, "") }
+
+function applyDarkOverrides() {
+  document.documentElement.style.colorScheme = "dark"
+  document.body.style.backgroundColor = "#1A1614"
+  document.body.style.color = "#F0EBE3"
+  const all = document.querySelectorAll<HTMLElement>("*")
+  for (const el of all) {
+    const cs = getComputedStyle(el)
+    const bg = rgbToKey(cs.backgroundColor)
+    if (BG_MAP[bg]) el.style.backgroundColor = BG_MAP[bg]
+    const tc = rgbToKey(cs.color)
+    if (TEXT_MAP[tc]) el.style.color = TEXT_MAP[tc]
+    else {
+      const m = tc.match(/rgba\(46,\s*46,\s*46,\s*([\d.]+)\)/)
+      if (m) {
+        const a = parseFloat(m[1])
+        for (const [target, replacement] of TEXT_ALPHA_MAP) {
+          if (Math.abs(a - target) < 0.02) { el.style.color = replacement; break }
+        }
+      }
+    }
+    const bc = cs.borderColor
+    if (bc.includes("0, 0, 0") && (cs.borderWidth !== "0px")) {
+      el.style.borderColor = "rgba(255, 255, 255, 0.1)"
+    }
+    if (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.tagName === "SELECT") {
+      el.style.backgroundColor = "#352E28"
+      el.style.color = "#F0EBE3"
+      el.style.borderColor = "rgba(255, 255, 255, 0.1)"
+    }
+  }
+}
+
+function removeDarkOverrides() {
+  document.documentElement.style.colorScheme = ""
+  document.body.style.backgroundColor = ""
+  document.body.style.color = ""
+  const all = document.querySelectorAll<HTMLElement>("*")
+  for (const el of all) {
+    el.style.backgroundColor = ""
+    el.style.color = ""
+    el.style.borderColor = ""
+  }
+}
+
 function loadSettings(): A11ySettings {
   if (typeof window === "undefined") return DEFAULTS
   try {
@@ -42,13 +110,22 @@ export default function AccessibilityPanel() {
     applySettings(s)
   }, [])
 
-  // Respect prefers-reduced-motion
+  // Respect prefers-reduced-motion + system dark mode preference
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
-    if (mq.matches) {
+    const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (mqReduce.matches) {
       setSettings((prev) => {
         const updated = { ...prev, reduceAnimations: true }
         saveSettings(updated)
+        applySettings(updated)
+        return updated
+      })
+    }
+    const mqDark = window.matchMedia("(prefers-color-scheme: dark)")
+    if (mqDark.matches) {
+      setSettings((prev) => {
+        if (prev.darkMode !== null) return prev
+        const updated = { ...prev, darkMode: null }
         applySettings(updated)
         return updated
       })
@@ -61,14 +138,12 @@ export default function AccessibilityPanel() {
     root.classList.toggle("a11y-high-contrast", s.highContrast)
     root.classList.toggle("a11y-reduce-animations", s.reduceAnimations)
     root.classList.toggle("a11y-dyslexia-font", s.dyslexiaFont)
-    // Dark mode: null = follow system, true = force dark, false = force light
     root.classList.remove("dark", "light")
-    if (s.darkMode === true) {
-      root.classList.add("dark")
-    } else if (s.darkMode === false) {
-      root.classList.add("light")
-    }
-    // null = no class added → CSS @media prefers-color-scheme handles it via :root:not(.light)
+    const isDark = s.darkMode === true || (s.darkMode === null && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+    if (s.darkMode === true) root.classList.add("dark")
+    else if (s.darkMode === false) root.classList.add("light")
+    if (isDark) applyDarkOverrides()
+    else removeDarkOverrides()
   }
 
   const update = (patch: Partial<A11ySettings>) => {

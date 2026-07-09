@@ -229,17 +229,12 @@
 }
 
 /* Dark mode overrides for custom Papillon Rose colors */
-.dark body,
+/* Note: dark mode for hardcoded colors is handled by injected <style> in accessibility-panel.tsx */
 .dark {
-  --papillon-bg: #1A1614;
-  --papillon-surface: #2A2420;
-  --papillon-text: #F0EBE3;
-  --papillon-muted: #A09890;
-  --papillon-gold: #C8A97E;
-  --papillon-border: rgba(255, 255, 255, 0.08);
+  color-scheme: dark;
 }
 .dark body {
-  background-color: var(--papillon-bg);
-  color: var(--papillon-text);
+  background-color: #1A1614 !important;
+  color: #F0EBE3 !important;
 }
 
