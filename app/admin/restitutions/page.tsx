@@ -1,8 +1,7 @@
-﻿"use client"
+"use client"
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
 import { produits } from "@/data/produits"
 
 interface BookingItem {
@@ -28,7 +27,7 @@ interface Booking {
   returnedAt?: string
 }
 
-export default function AdminReturnsPage() {
+export default function RestitutionsPage() {
   const router = useRouter()
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
@@ -90,33 +89,11 @@ export default function AdminReturnsPage() {
   return (
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 p-6 md:p-10">
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Restitutions</h1>
-            <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
-              {bookings.length} location{bookings.length !== 1 ? "s" : ""} en cours
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/admin"
-              className="text-sm text-[#C8A97E] dark:text-amber-400 hover:underline"
-            >
-              Devis
-            </Link>
-            <Link
-              href="/admin/stats"
-              className="text-sm text-[#C8A97E] dark:text-amber-400 hover:underline"
-            >
-              Statistiques
-            </Link>
-            <Link
-              href="/"
-              className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors"
-            >
-              Site
-            </Link>
-          </div>
+        <div className="mb-8">
+          <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Restitutions</h1>
+          <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
+            {bookings.length} location{bookings.length !== 1 ? "s" : ""} en cours
+          </p>
         </div>
 
         {loading ? (

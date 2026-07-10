@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   FileText,
   LayoutDashboard,
@@ -20,10 +20,15 @@ import {
   Menu,
   X,
   Flower2,
+  PackageCheck,
+  TrendingUp,
+  LogOut,
 } from "lucide-react"
 
 const NAV_ITEMS = [
   { label: "Devis", icon: FileText, href: "/admin" },
+  { label: "Restitutions", icon: PackageCheck, href: "/admin/restitutions" },
+  { label: "Statistiques", icon: TrendingUp, href: "/admin/statistiques" },
   { label: "Dashboard", icon: LayoutDashboard, href: "/admin/dashboard" },
   { label: "SEO", icon: Search, href: "/admin/seo" },
   { label: "Analytics", icon: BarChart3, href: "/admin/analytics" },
@@ -40,11 +45,17 @@ const NAV_ITEMS = [
 
 export default function AdminSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
   const [open, setOpen] = useState(false)
 
   const isActive = (href: string) => {
     if (href === "/admin") return pathname === "/admin"
     return pathname.startsWith(href)
+  }
+
+  async function handleLogout() {
+    await fetch("/api/admin/logout", { method: "POST" })
+    router.push("/admin/login")
   }
 
   return (
@@ -129,13 +140,20 @@ export default function AdminSidebar() {
         </nav>
 
         {/* Footer */}
-        <div className="px-5 py-4 border-t border-black/[0.05] dark:border-white/[0.06]">
+        <div className="px-5 py-4 border-t border-black/[0.05] dark:border-white/[0.06] space-y-3">
           <Link
             href="/"
-            className="text-[11px] text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] transition-colors"
+            className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] transition-colors"
           >
             ← Retour au site
           </Link>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-neutral-500 hover:text-red-500 dark:hover:text-red-400 transition-colors w-full"
+          >
+            <LogOut size={14} />
+            <span>Déconnexion</span>
+          </button>
         </div>
       </aside>
     </>

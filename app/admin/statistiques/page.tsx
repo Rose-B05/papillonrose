@@ -1,7 +1,6 @@
-﻿"use client"
+"use client"
 
 import { useState, useEffect } from "react"
-import Link from "next/link"
 
 interface ProductStat {
   productId: number
@@ -12,7 +11,7 @@ interface ProductStat {
   revenuTotal: number
 }
 
-export default function AdminStatsPage() {
+export default function StatistiquesPage() {
   const [stats, setStats] = useState<ProductStat[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -33,35 +32,13 @@ export default function AdminStatsPage() {
   return (
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 p-6 md:p-10">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">
-              Statistiques de location
-            </h1>
-            <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
-              Produits les plus loués et revenus générés
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/admin"
-              className="text-sm text-[#C8A97E] dark:text-amber-400 hover:underline"
-            >
-              Devis
-            </Link>
-            <Link
-              href="/admin/returns"
-              className="text-sm text-[#C8A97E] dark:text-amber-400 hover:underline"
-            >
-              Restitutions
-            </Link>
-            <Link
-              href="/"
-              className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors"
-            >
-              Site
-            </Link>
-          </div>
+        <div className="mb-8">
+          <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">
+            Statistiques de location
+          </h1>
+          <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
+            Produits les plus loués et revenus générés
+          </p>
         </div>
 
         {loading ? (

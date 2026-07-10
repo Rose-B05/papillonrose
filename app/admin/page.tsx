@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
 import { produits } from "@/data/produits"
 
 interface QuoteItem {
@@ -87,11 +86,6 @@ export default function AdminPage() {
       .catch(() => setLoading(false))
   }, [router])
 
-  async function handleLogout() {
-    await fetch("/api/admin/logout", { method: "POST" })
-    router.push("/admin/login")
-  }
-
   async function handleSendPaymentLink(quoteId: string) {
     setSendingId(quoteId)
     try {
@@ -115,39 +109,11 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 p-6 md:p-10">
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Devis</h1>
-            <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
-              {quotes.length} devis au total
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/admin/returns"
-              className="text-sm text-[#C8A97E] dark:text-amber-400 hover:underline"
-            >
-              Restitutions
-            </Link>
-            <Link
-              href="/admin/stats"
-              className="text-sm text-[#C8A97E] dark:text-amber-400 hover:underline"
-            >
-              Statistiques
-            </Link>
-            <Link
-              href="/"
-              className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors"
-            >
-              Site
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="text-sm text-gray-400 dark:text-neutral-500 hover:text-red-500 transition-colors"
-            >
-              Déconnexion
-            </button>
-          </div>
+        <div className="mb-8">
+          <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Devis</h1>
+          <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
+            {quotes.length} devis au total
+          </p>
         </div>
 
         {loading ? (
