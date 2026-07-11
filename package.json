@@ -11,6 +11,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.106.0",
     "@base-ui/react": "^1.5.0",
+    "@google-analytics/data": "^6.1.0",
     "@vercel/analytics": "1.6.1",
     "@vercel/kv": "^3.0.0",
     "bcryptjs": "^3.0.3",
@@ -25,6 +26,7 @@
     "react-day-picker": "^10.0.1",
     "react-dom": "^19",
     "react-leaflet": "^5.0.0",
+    "recharts": "^3.9.2",
     "shadcn": "^4.8.0",
     "sharp": "^0.35.2",
     "stripe": "^22.3.0",

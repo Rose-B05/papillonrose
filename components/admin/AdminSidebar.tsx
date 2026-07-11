@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import {
   FileText,
   LayoutDashboard,
@@ -45,7 +45,6 @@ const NAV_ITEMS = [
 
 export default function AdminSidebar() {
   const pathname = usePathname()
-  const router = useRouter()
   const [open, setOpen] = useState(false)
 
   const isActive = (href: string) => {
@@ -55,7 +54,7 @@ export default function AdminSidebar() {
 
   async function handleLogout() {
     await fetch("/api/admin/logout", { method: "POST" })
-    router.push("/admin/login")
+    window.location.href = "/admin/login"
   }
 
   return (
