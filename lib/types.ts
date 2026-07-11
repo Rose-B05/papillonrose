@@ -99,3 +99,14 @@ export interface LateAlert {
   destinataires: string[]
   sentAt: string
 }
+
+export interface EmailLog {
+  id: string
+  to: string
+  type: string
+  subject: string
+  status: "sent" | "failed"
+  bookingId?: string
+  error?: string
+  sentAt: string
+}

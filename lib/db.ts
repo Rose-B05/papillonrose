@@ -1,5 +1,5 @@
 import { kv } from "@vercel/kv"
-import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert } from "./types"
+import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog } from "./types"
 
 // ─── Bookings ───
 const BOOKINGS_INDEX = "bookings:index"
@@ -197,4 +197,28 @@ export async function getCustomerFavorites(email: string): Promise<number[]> {
 
 export async function saveCustomerFavorites(email: string, favorites: number[]) {
   await kv.set(`favorites:${email.toLowerCase()}`, favorites)
+}
+
+// ─── Email Logs ───
+const EMAIL_LOGS_INDEX = "email_logs:index"
+
+export async function saveEmailLog(log: EmailLog) {
+  await kv.set(`email_logs:${log.id}`, log)
+  const ids = (await kv.get<string[]>(EMAIL_LOGS_INDEX)) || []
+  if (!ids.includes(log.id)) {
+    ids.push(log.id)
+    await kv.set(EMAIL_LOGS_INDEX, ids)
+  }
+}
+
+export async function getEmailLogs(): Promise<EmailLog[]> {
+  const ids = await kv.get<string[]>(EMAIL_LOGS_INDEX)
+  if (!ids || ids.length === 0) return []
+  const values = await kv.mget<EmailLog[]>(...ids.map((id) => `email_logs:${id}`))
+  return values.filter((v): v is EmailLog => v !== null)
+}
+
+export async function getEmailLogsForBooking(bookingId: string): Promise<EmailLog[]> {
+  const all = await getEmailLogs()
+  return all.filter((l) => l.bookingId === bookingId)
 }
