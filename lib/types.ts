@@ -110,3 +110,12 @@ export interface EmailLog {
   error?: string
   sentAt: string
 }
+
+export interface ProductView {
+  id: string
+  customerEmail: string
+  productId: number
+  viewedAt: string
+  reminderSent: boolean
+  reminderSentAt?: string
+}

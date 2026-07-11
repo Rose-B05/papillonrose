@@ -5,11 +5,12 @@ import { getCustomerFavorites } from "@/lib/db"
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { email, password, prenom, nom } = body as {
+    const { email, password, prenom, nom, marketingConsent } = body as {
       email: string
       password: string
       prenom: string
       nom: string
+      marketingConsent?: boolean
     }
 
     if (!email || !password || !prenom || !nom) {
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Un compte existe déjà avec cet email" }, { status: 409 })
     }
 
-    const customer = await createCustomer(normalizedEmail, prenom, nom, password)
+    const customer = await createCustomer(normalizedEmail, prenom, nom, password, marketingConsent === true)
 
     const favorites = await getCustomerFavorites(customer.email)
 

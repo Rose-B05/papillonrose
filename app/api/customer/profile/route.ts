@@ -19,6 +19,7 @@ export async function GET(request: NextRequest) {
       nom: customer.nom,
       telephone: customer.telephone || "",
       adresse: customer.adresse || "",
+      marketingConsent: customer.marketingConsent ?? false,
     },
   })
 }
@@ -35,14 +36,15 @@ export async function PUT(request: NextRequest) {
   }
 
   const body = await request.json()
-  const { prenom, nom, telephone, adresse } = body as {
+  const { prenom, nom, telephone, adresse, marketingConsent } = body as {
     prenom?: string
     nom?: string
     telephone?: string
     adresse?: string
+    marketingConsent?: boolean
   }
 
-  const updated = await updateCustomerProfile(customer.email, { prenom, nom, telephone, adresse })
+  const updated = await updateCustomerProfile(customer.email, { prenom, nom, telephone, adresse, marketingConsent })
   if (!updated) {
     return NextResponse.json({ error: "Erreur lors de la mise à jour" }, { status: 500 })
   }
@@ -55,6 +57,7 @@ export async function PUT(request: NextRequest) {
       nom: updated.nom,
       telephone: updated.telephone || "",
       adresse: updated.adresse || "",
+      marketingConsent: updated.marketingConsent ?? false,
     },
   })
 }

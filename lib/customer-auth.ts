@@ -11,6 +11,7 @@ export interface Customer {
   telephone?: string
   adresse?: string
   passwordHash: string
+  marketingConsent?: boolean
   createdAt: string
 }
 
@@ -29,13 +30,14 @@ export async function getCustomer(email: string): Promise<Customer | undefined> 
   return c ?? undefined
 }
 
-export async function createCustomer(email: string, prenom: string, nom: string, password: string): Promise<Customer> {
+export async function createCustomer(email: string, prenom: string, nom: string, password: string, marketingConsent = false): Promise<Customer> {
   const passwordHash = await bcrypt.hash(password, 10)
   const customer: Customer = {
     email: email.toLowerCase().trim(),
     prenom: prenom.trim(),
     nom: nom.trim(),
     passwordHash,
+    marketingConsent,
     createdAt: new Date().toISOString(),
   }
   await kv.set(`customer:${customer.email}`, customer)
@@ -57,7 +59,7 @@ export async function verifyCustomer(email: string, password: string): Promise<C
 
 export async function updateCustomerProfile(
   email: string,
-  updates: { prenom?: string; nom?: string; telephone?: string; adresse?: string }
+  updates: { prenom?: string; nom?: string; telephone?: string; adresse?: string; marketingConsent?: boolean }
 ): Promise<Customer | undefined> {
   const customer = await getCustomer(email)
   if (!customer) return undefined
@@ -67,6 +69,7 @@ export async function updateCustomerProfile(
     nom: updates.nom?.trim() || customer.nom,
     telephone: updates.telephone ?? customer.telephone,
     adresse: updates.adresse ?? customer.adresse,
+    marketingConsent: updates.marketingConsent ?? customer.marketingConsent,
   }
   await kv.set(`customer:${email}`, updated)
   return updated

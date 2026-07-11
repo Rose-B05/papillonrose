@@ -1,5 +1,5 @@
 import { kv } from "@vercel/kv"
-import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog } from "./types"
+import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView } from "./types"
 
 // ─── Bookings ───
 const BOOKINGS_INDEX = "bookings:index"
@@ -221,4 +221,66 @@ export async function getEmailLogs(): Promise<EmailLog[]> {
 export async function getEmailLogsForBooking(bookingId: string): Promise<EmailLog[]> {
   const all = await getEmailLogs()
   return all.filter((l) => l.bookingId === bookingId)
+}
+
+// ─── Product Views ───
+const PRODUCT_VIEWS_INDEX = "product_views:index"
+
+export async function saveProductView(view: ProductView) {
+  await kv.set(`product_views:${view.id}`, view)
+  const ids = (await kv.get<string[]>(PRODUCT_VIEWS_INDEX)) || []
+  if (!ids.includes(view.id)) {
+    ids.push(view.id)
+    await kv.set(PRODUCT_VIEWS_INDEX, ids)
+  }
+}
+
+export async function getProductViews(): Promise<ProductView[]> {
+  const ids = await kv.get<string[]>(PRODUCT_VIEWS_INDEX)
+  if (!ids || ids.length === 0) return []
+  const values = await kv.mget<ProductView[]>(...ids.map((id) => `product_views:${id}`))
+  return values.filter((v): v is ProductView => v !== null)
+}
+
+export async function hasRecentProductView(customerEmail: string, productId: number, withinHours = 24): Promise<boolean> {
+  const dedupKey = `product_view_dedup:${customerEmail.toLowerCase()}:${productId}`
+  const existing = await kv.get<string>(dedupKey)
+  return !!existing
+}
+
+export async function setProductViewDedup(customerEmail: string, productId: number, ttlSeconds = 86400) {
+  const dedupKey = `product_view_dedup:${customerEmail.toLowerCase()}:${productId}`
+  await kv.set(dedupKey, "1", { ex: ttlSeconds })
+}
+
+export async function markReminderSent(viewId: string) {
+  const view = await kv.get<ProductView>(`product_views:${viewId}`)
+  if (!view) return
+  view.reminderSent = true
+  view.reminderSentAt = new Date().toISOString()
+  await kv.set(`product_views:${viewId}`, view)
+}
+
+export async function cleanupOldProductViews(maxAgeDays = 90) {
+  const cutoff = new Date()
+  cutoff.setDate(cutoff.getDate() - maxAgeDays)
+  const views = await getProductViews()
+  const ids = await kv.get<string[]>(PRODUCT_VIEWS_INDEX)
+  if (!ids) return 0
+
+  let removed = 0
+  const remaining: string[] = []
+
+  for (const id of ids) {
+    const view = views.find((v) => v.id === id)
+    if (view && new Date(view.viewedAt) < cutoff) {
+      await kv.del(`product_views:${id}`)
+      removed++
+    } else {
+      remaining.push(id)
+    }
+  }
+
+  await kv.set(PRODUCT_VIEWS_INDEX, remaining)
+  return removed
 }
