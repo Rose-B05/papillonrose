@@ -5,6 +5,7 @@ import './globals.css'
 import { CartProvider } from '@/components/cart-context'
 import { ThemeProvider } from '@/lib/theme-context'
 import { getActiveProductsCount } from '@/data/produits'
+import { getRobotsMeta } from '@/lib/site-mode'
 
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'] })
 const playfair = Playfair_Display({
@@ -16,41 +17,45 @@ const nbRef = getActiveProductsCount()
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: 'Papillon Rose — Location mobilier & décoration événements en Île-de-France',
-    template: '%s | Papillon Rose',
-  },
-  description:
-    `Location de mobilier et décoration pour mariages, réceptions et événements en Île-de-France. ${nbRef} références, devis sous 24h, livraison 94/93/95/77/91.`,
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
-  robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-    googleBot: {
-      index: false,
-      follow: false,
+export async function generateMetadata(): Promise<Metadata> {
+  const robots = await getRobotsMeta()
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: 'Papillon Rose — Location mobilier & décoration événements en Île-de-France',
+      template: '%s | Papillon Rose',
     },
-  },
+    description:
+      `Location de mobilier et décoration pour mariages, réceptions et événements en Île-de-France. ${nbRef} références, devis sous 24h, livraison 94/93/95/77/91.`,
+    generator: 'v0.app',
+    icons: {
+      icon: [
+        {
+          url: '/icon-light-32x32.png',
+          media: '(prefers-color-scheme: light)',
+        },
+        {
+          url: '/icon-dark-32x32.png',
+          media: '(prefers-color-scheme: dark)',
+        },
+        {
+          url: '/icon.svg',
+          type: 'image/svg+xml',
+        },
+      ],
+      apple: '/apple-icon.png',
+    },
+    robots: {
+      index: robots.index,
+      follow: robots.follow,
+      nocache: !robots.index,
+      googleBot: {
+        index: robots.index,
+        follow: robots.follow,
+      },
+    },
+  }
 }
 
 export const viewport: Viewport = {

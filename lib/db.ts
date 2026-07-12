@@ -313,3 +313,23 @@ export async function getConfirmedNewsletterSubscribers(): Promise<NewsletterSub
   const all = await getNewsletterSubscribers()
   return all.filter((s) => s.status === "confirmed")
 }
+
+// ─── Site Mode ─────────────────────────────────────────────────────────────
+// "development" = noindex, sitemap vide, robots disallow
+// "production" = indexation activée, sitemap complet, robots allow
+export type SiteMode = "development" | "production"
+
+const SITE_MODE_KEY = "site_mode"
+
+export async function getSiteMode(): Promise<SiteMode> {
+  try {
+    const mode = await kv.get<SiteMode>(SITE_MODE_KEY)
+    return mode || "development"
+  } catch {
+    return "development"
+  }
+}
+
+export async function setSiteMode(mode: SiteMode): Promise<void> {
+  await kv.set(SITE_MODE_KEY, mode)
+}
