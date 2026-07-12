@@ -7,7 +7,7 @@ import { formatPrix } from "./utils"
 import type { ProductView, EmailLog } from "./types"
 
 const FROM = process.env.SMTP_FROM || "papillonrosebertha@gmail.com"
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://papillon-rose.vercel.app"
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
 
 function getTransport() {
   return nodemailer.createTransport({

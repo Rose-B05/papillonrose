@@ -14,7 +14,10 @@ const playfair = Playfair_Display({
 
 const nbRef = getActiveProductsCount()
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Papillon Rose — Location mobilier & décoration événements en Île-de-France',
     template: '%s | Papillon Rose',
@@ -60,7 +63,7 @@ const jsonLd = {
   '@type': 'LocalBusiness',
   name: 'Papillon Rose',
   description: 'Location de mobilier et décoration pour événements en Île-de-France',
-  url: 'https://papillon-rose.vercel.app',
+  url: SITE_URL,
   email: 'papillonrosebertha@gmail.com',
   address: {
     '@type': 'PostalAddress',

@@ -187,7 +187,7 @@ export async function sendWelcomeEmail(to: string, prenom: string) {
         <li style="padding:4px 0">Suivre l&apos;état de vos devis en temps réel</li>
       </ul>
       <p style="text-align:center;margin:24px 0">
-        <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://papillonrose.fr"}" style="background:#C8A97E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Découvrir le catalogue</a>
+        <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"}" style="background:#C8A97E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Découvrir le catalogue</a>
       </p>
       <p style="color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,

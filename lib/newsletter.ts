@@ -18,7 +18,7 @@ function getTransport() {
 }
 
 const FROM = process.env.SMTP_FROM || "papillonrosebertha@gmail.com"
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://papillonrose.fr"
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
 
 function generateToken(): string {
   return crypto.randomBytes(32).toString("hex")
