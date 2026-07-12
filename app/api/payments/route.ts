@@ -5,7 +5,10 @@ import { sendPaymentConfirmation, sendAdminBookingNotification } from "@/lib/ema
 import { formatDateFr, calcTotalHt, calcTtc } from "@/lib/utils"
 import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
+import { sanitizeError } from "@/lib/security"
 import type { PaymentRecord } from "@/lib/types"
+
+export const runtime = "nodejs"
 
 export async function POST(request: NextRequest) {
   try {
@@ -71,7 +74,7 @@ export async function POST(request: NextRequest) {
       bookingId,
       message: "Paiement confirmé. Votre réservation est validée.",
     })
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 })
+  } catch (err: unknown) {
+    return NextResponse.json({ error: sanitizeError(err) }, { status: 500 })
   }
 }

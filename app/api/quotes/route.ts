@@ -7,6 +7,7 @@ import { calcTotalHt, calcTtc, formatDateFr } from "@/lib/utils"
 import { calcDeliveryFee } from "@/lib/delivery"
 import { sendQuoteConfirmation, sendAdminQuoteNotification, sendQuoteStockConfirmed, sendQuoteStockRefused } from "@/lib/email"
 import { CUSTOMER_COOKIE } from "@/lib/customer-auth"
+import { isValidEmail, sanitizeString, sanitizeError } from "@/lib/security"
 import type { QuoteRequest, ClientInfo, CartItem } from "@/lib/types"
 
 export async function POST(request: NextRequest) {
@@ -17,6 +18,22 @@ export async function POST(request: NextRequest) {
     if (!client?.nom || !client?.email) {
       return NextResponse.json({ error: "Nom et email requis" }, { status: 400 })
     }
+
+    if (!isValidEmail(client.email)) {
+      return NextResponse.json({ error: "Adresse email invalide" }, { status: 400 })
+    }
+
+    // Sanitize string inputs
+    client.nom = sanitizeString(client.nom, 100)
+    client.prenom = sanitizeString(client.prenom, 100)
+    client.email = sanitizeString(client.email, 320).toLowerCase()
+    client.telephone = sanitizeString(client.telephone, 20)
+    client.typeEvenement = sanitizeString(client.typeEvenement, 50)
+    client.dateEvenement = sanitizeString(client.dateEvenement, 20)
+    client.lieuEvenement = sanitizeString(client.lieuEvenement, 200)
+    client.message = sanitizeString(client.message || "", 1000)
+    client.adresseLivraison = sanitizeString(client.adresseLivraison || "", 300)
+    client.codePostalLivraison = sanitizeString(client.codePostalLivraison || "", 10)
 
     let items: CartItem[] = []
     if (bookingId) {
@@ -125,7 +142,7 @@ export async function POST(request: NextRequest) {
       quoteNumber,
       message: "Votre demande de devis a été envoyée. Vous recevrez une réponse sous 24h ouvrées.",
     })
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 })
+  } catch (err: unknown) {
+    return NextResponse.json({ error: sanitizeError(err) }, { status: 500 })
   }
 }

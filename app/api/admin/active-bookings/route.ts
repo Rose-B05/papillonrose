@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { getBookings } from "@/lib/db"
 import { COOKIE_NAME } from "@/lib/auth"
 
-export async function GET(request: Request) {
-  const cookie = request.headers.get("cookie") || ""
-  if (!cookie.includes(COOKIE_NAME)) {
+export async function GET(request: NextRequest) {
+  const session = request.cookies.get(COOKIE_NAME)
+  if (!session?.value) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
   }
 

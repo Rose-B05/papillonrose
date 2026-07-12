@@ -422,6 +422,88 @@ function InstagramIcon({ size = 18, className = "" }: { size?: number; className
   )
 }
 
+// ─── Footer Newsletter Form ─────────────────────────────────────────────────
+function FooterNewsletterForm() {
+  const [email, setEmail] = useState("")
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+  const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const nl = params.get("newsletter")
+    if (nl === "confirmed") {
+      setStatus("success")
+      setMessage("Votre inscription est confirmée ! Merci.")
+      window.history.replaceState({}, "", window.location.pathname)
+    } else if (nl === "unsubscribed") {
+      setStatus("success")
+      setMessage("Vous avez bien été désinscrit de la newsletter.")
+      window.history.replaceState({}, "", window.location.pathname)
+    } else if (nl === "error") {
+      setStatus("error")
+      setMessage("Une erreur est survenue. Veuillez réessayer.")
+      window.history.replaceState({}, "", window.location.pathname)
+    }
+  }, [])
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setStatus("loading")
+    try {
+      const res = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setStatus("success")
+        setMessage(data.message || "Inscription réussie !")
+        setEmail("")
+      } else {
+        setStatus("error")
+        setMessage(data.error || "Erreur lors de l'inscription")
+      }
+    } catch {
+      setStatus("error")
+      setMessage("Erreur de connexion")
+    }
+  }
+
+  if (status === "success" && message) {
+    return (
+      <div className="bg-white/10 rounded-xl px-4 py-3 text-sm text-[#C9A96E]">
+        {message}
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      <div className="flex gap-2">
+        <input
+          type="email"
+          required
+          placeholder="votre@email.com"
+          value={email}
+          onChange={(e) => { setEmail(e.target.value); setStatus("idle"); setMessage("") }}
+          className="flex-1 bg-white/10 border border-white/15 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#C9A96E]/50"
+        />
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="bg-[#C9A96E] text-[#1C1A17] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#d4b87a] transition-colors disabled:opacity-50 whitespace-nowrap"
+        >
+          {status === "loading" ? "…" : "OK"}
+        </button>
+      </div>
+      {status === "error" && message && (
+        <p className="text-red-400 text-xs">{message}</p>
+      )}
+    </form>
+  )
+}
+
 // ─── Footer ───────────────────────────────────────────────────────────────────
 function Footer({
   onNav,
@@ -593,6 +675,17 @@ function Footer({
               </ul>
             </div>
           </div>
+        </div>
+
+        {/* Newsletter */}
+        <div className="flex-shrink-0 lg:w-[300px]">
+          <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
+            Newsletter
+          </p>
+          <p className="text-[#D4B896]/70 text-sm mb-4 leading-relaxed">
+            Recevez nos nouveautés et offres exclusives.
+          </p>
+          <FooterNewsletterForm />
         </div>
 
         {/* Scène femme + cage — droite (desktop) */}

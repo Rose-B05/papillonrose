@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { getBookings } from "@/lib/db"
 import { produits } from "@/data/produits"
+import { COOKIE_NAME } from "@/lib/auth"
 import type { Booking } from "@/lib/types"
 
 interface ProductStat {
@@ -12,7 +13,12 @@ interface ProductStat {
   revenuTotal: number
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const session = request.cookies.get(COOKIE_NAME)
+  if (!session?.value) {
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+  }
+
   const bookings = await getBookings()
 
   // Count rentals per product across confirmed/returned bookings

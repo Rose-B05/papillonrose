@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getBooking, saveBooking, unblockDates, getLateAlertsForBooking, getStockOverride, setStockOverride } from "@/lib/db"
 import { produits } from "@/data/produits"
+import { COOKIE_NAME } from "@/lib/auth"
 
 /**
  * POST /api/admin/returned
@@ -8,6 +9,11 @@ import { produits } from "@/data/produits"
  * Body: { bookingId: string }
  */
 export async function POST(request: NextRequest) {
+  const session = request.cookies.get(COOKIE_NAME)
+  if (!session?.value) {
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+  }
+
   try {
     const { bookingId } = (await request.json()) as { bookingId: string }
 
@@ -43,8 +49,8 @@ export async function POST(request: NextRequest) {
     await unblockDates(bookingId)
 
     return NextResponse.json({ success: true, booking })
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 })
+  } catch {
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 })
   }
 }
 
@@ -53,6 +59,11 @@ export async function POST(request: NextRequest) {
  * Récupère l'historique des alertes de retard pour une réservation.
  */
 export async function GET(request: NextRequest) {
+  const session = request.cookies.get(COOKIE_NAME)
+  if (!session?.value) {
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+  }
+
   const bookingId = request.nextUrl.searchParams.get("bookingId")
   if (!bookingId) {
     return NextResponse.json({ error: "bookingId requis" }, { status: 400 })

@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization")
   const cronSecret = process.env.CRON_SECRET
 
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
   }
 
@@ -34,10 +34,9 @@ export async function GET(request: NextRequest) {
         destinataires: a.destinataires,
       })),
     })
-  } catch (err: any) {
-    console.error("Cron late-alerts error:", err)
+  } catch {
     return NextResponse.json(
-      { error: "Erreur lors du traitement des alertes", details: err.message },
+      { error: "Erreur lors du traitement des alertes" },
       { status: 500 },
     )
   }

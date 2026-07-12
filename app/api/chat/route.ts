@@ -88,6 +88,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Validate messages
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return NextResponse.json({ error: "Messages requis" }, { status: 400 })
+    }
+
+    // Limit conversation length and message size
+    if (messages.length > 50) {
+      return NextResponse.json({ error: "Conversation trop longue" }, { status: 400 })
+    }
+
+    const sanitizedMessages = messages.map((m) => ({
+      role: m.role,
+      content: typeof m.content === "string" ? m.content.slice(0, 2000) : "",
+    }))
+
     const res = await fetch("https://api.minimax.io/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -98,7 +113,7 @@ export async function POST(request: NextRequest) {
         model: "MiniMax-M2.7",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          ...messages.map((m) => ({
+          ...sanitizedMessages.map((m) => ({
             role: m.role,
             content: m.content,
           })),
@@ -130,8 +145,7 @@ export async function POST(request: NextRequest) {
     const text = stripThinkingTags(rawText)
 
     return NextResponse.json({ response: text })
-  } catch (err: any) {
-    console.error("Chat API error:", err)
+  } catch {
     return NextResponse.json(
       { error: "Erreur lors de la communication avec l'assistant" },
       { status: 500 },

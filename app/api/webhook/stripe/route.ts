@@ -3,6 +3,8 @@ import Stripe from "stripe"
 import { getQuote, saveQuote } from "@/lib/db"
 import { sendQuoteBalancePaid } from "@/lib/email"
 
+export const runtime = "nodejs"
+
 export async function POST(request: NextRequest) {
   const body = await request.text()
   const signature = request.headers.get("stripe-signature")
@@ -24,9 +26,8 @@ export async function POST(request: NextRequest) {
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
-  } catch (err: any) {
-    console.error("Webhook signature verification failed:", err.message)
-    return NextResponse.json({ error: "Signature invalide" }, { status: 400 })
+  } catch {
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 })
   }
 
   if (event.type === "checkout.session.completed") {

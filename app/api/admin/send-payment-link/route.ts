@@ -3,6 +3,7 @@ import { getQuote } from "@/lib/db"
 import { getStripe } from "@/lib/stripe"
 import { sendBalancePaymentLink } from "@/lib/email"
 import { COOKIE_NAME } from "@/lib/auth"
+import { sanitizeError } from "@/lib/security"
 
 export async function POST(request: NextRequest) {
   const cookie = request.cookies.get(COOKIE_NAME)
@@ -63,7 +64,7 @@ export async function POST(request: NextRequest) {
     await sendBalancePaymentLink(quote.client.email, quote.quoteNumber, checkoutSession.url!, balanceAmount)
 
     return NextResponse.json({ success: true, checkoutUrl: checkoutSession.url })
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 })
+  } catch (err: unknown) {
+    return NextResponse.json({ error: sanitizeError(err) }, { status: 500 })
   }
 }

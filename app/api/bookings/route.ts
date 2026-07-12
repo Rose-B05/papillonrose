@@ -7,6 +7,8 @@ import { calcDeliveryFee } from "@/lib/delivery"
 import { createPaymentIntent } from "@/lib/stripe"
 import { getAvailableStock } from "@/lib/stock"
 import { sendBookingConfirmation } from "@/lib/order-confirmation"
+import { COOKIE_NAME } from "@/lib/auth"
+import { sanitizeError } from "@/lib/security"
 import type { Booking, CartItem } from "@/lib/types"
 
 export async function POST(request: NextRequest) {
@@ -14,8 +16,23 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { items, client } = body as { items: CartItem[]; client?: any }
 
-    if (!items || items.length === 0) {
+    if (!items || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json({ error: "Panier vide" }, { status: 400 })
+    }
+
+    // Limit cart size
+    if (items.length > 50) {
+      return NextResponse.json({ error: "Panier trop volumineux (max 50 articles)" }, { status: 400 })
+    }
+
+    // Validate each item
+    for (const item of items) {
+      if (!item.productId || typeof item.productId !== "number") {
+        return NextResponse.json({ error: "ID produit invalide" }, { status: 400 })
+      }
+      if (!item.qty || item.qty < 1 || item.qty > 100 || typeof item.qty !== "number") {
+        return NextResponse.json({ error: "Quantité invalide" }, { status: 400 })
+      }
     }
 
     // Verify product exists & enforce stock limits per date range
@@ -125,12 +142,18 @@ export async function POST(request: NextRequest) {
       paymentIntent: paymentIntent ? { clientSecret: paymentIntent.client_secret } : null,
       email: emailStatus,
     })
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 })
+  } catch (err: unknown) {
+    return NextResponse.json({ error: sanitizeError(err) }, { status: 500 })
   }
 }
 
 export async function GET(request: NextRequest) {
+  // Only admin can access bookings directly
+  const session = request.cookies.get(COOKIE_NAME)
+  if (!session?.value) {
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+  }
+
   const id = request.nextUrl.searchParams.get("id")
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 })
   const booking = await getBooking(id)

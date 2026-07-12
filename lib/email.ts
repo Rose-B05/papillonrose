@@ -170,6 +170,30 @@ export async function sendBalancePaymentLink(to: string, quoteNumber: string, pa
   })
 }
 
+export async function sendWelcomeEmail(to: string, prenom: string) {
+  const transport = getTransport()
+  await transport.sendMail({
+    from: `"Papillon Rose" <${FROM}>`,
+    to,
+    subject: "Bienvenue chez Papillon Rose 🦋",
+    html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
+      <h2 style="color:#C8A97E">Bienvenue ${prenom} !</h2>
+      <p>Bonjour ${prenom},</p>
+      <p>Merci pour votre inscription sur <strong>Papillon Rose</strong>.</p>
+      <p>Votre compte est maintenant actif. Vous pouvez :</p>
+      <ul style="background:#f8f5f0;padding:12px 20px;border-radius:8px;margin:16px 0">
+        <li style="padding:4px 0">Parcourir notre catalogue de mobilier et décoration</li>
+        <li style="padding:4px 0">Enregistrer vos produits favoris</li>
+        <li style="padding:4px 0">Suivre l&apos;état de vos devis en temps réel</li>
+      </ul>
+      <p style="text-align:center;margin:24px 0">
+        <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://papillonrose.fr"}" style="background:#C8A97E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Découvrir le catalogue</a>
+      </p>
+      <p style="color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+    </div>`,
+  })
+}
+
 export async function sendChatbotLead(data: {
   nom: string
   prenom: string

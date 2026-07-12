@@ -1,5 +1,5 @@
 import { kv } from "@vercel/kv"
-import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView } from "./types"
+import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView, NewsletterSubscriber } from "./types"
 
 // ─── Bookings ───
 const BOOKINGS_INDEX = "bookings:index"
@@ -283,4 +283,33 @@ export async function cleanupOldProductViews(maxAgeDays = 90) {
 
   await kv.set(PRODUCT_VIEWS_INDEX, remaining)
   return removed
+}
+
+// ─── Newsletter Subscribers ───
+const NEWSLETTER_INDEX = "newsletter:index"
+
+export async function getNewsletterSubscriber(email: string): Promise<NewsletterSubscriber | undefined> {
+  const s = await kv.get<NewsletterSubscriber>(`newsletter:${email.toLowerCase()}`)
+  return s ?? undefined
+}
+
+export async function saveNewsletterSubscriber(subscriber: NewsletterSubscriber) {
+  await kv.set(`newsletter:${subscriber.email.toLowerCase()}`, subscriber)
+  const ids = (await kv.get<string[]>(NEWSLETTER_INDEX)) || []
+  if (!ids.includes(subscriber.email.toLowerCase())) {
+    ids.push(subscriber.email.toLowerCase())
+    await kv.set(NEWSLETTER_INDEX, ids)
+  }
+}
+
+export async function getNewsletterSubscribers(): Promise<NewsletterSubscriber[]> {
+  const ids = await kv.get<string[]>(NEWSLETTER_INDEX)
+  if (!ids || ids.length === 0) return []
+  const values = await kv.mget<NewsletterSubscriber[]>(...ids.map((id) => `newsletter:${id}`))
+  return values.filter((v): v is NewsletterSubscriber => v !== null)
+}
+
+export async function getConfirmedNewsletterSubscribers(): Promise<NewsletterSubscriber[]> {
+  const all = await getNewsletterSubscribers()
+  return all.filter((s) => s.status === "confirmed")
 }

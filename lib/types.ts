@@ -119,3 +119,12 @@ export interface ProductView {
   reminderSent: boolean
   reminderSentAt?: string
 }
+
+export interface NewsletterSubscriber {
+  email: string
+  status: "pending" | "confirmed" | "unsubscribed"
+  confirmToken: string
+  subscribedAt: string
+  confirmedAt?: string
+  unsubscribedAt?: string
+}

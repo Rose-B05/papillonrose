@@ -41,6 +41,81 @@ const STATUT_COLORS: Record<string, string> = {
   solde_paye: "bg-emerald-50 text-emerald-700",
 }
 
+// ─── Newsletter Toggle ─────────────────────────────────────────────────────
+function NewsletterToggle({ customerEmail }: { customerEmail: string }) {
+  const [status, setStatus] = useState<"loading" | "subscribed" | "not_subscribed" | "error">("loading")
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    fetch(`/api/newsletter/subscribe`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: customerEmail }),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.success) {
+          setStatus(data.alreadyConfirmed ? "subscribed" : "not_subscribed")
+        } else {
+          setStatus("not_subscribed")
+        }
+      })
+      .catch(() => setStatus("not_subscribed"))
+  }, [customerEmail])
+
+  async function handleToggle() {
+    setLoading(true)
+    setMessage("")
+    try {
+      const res = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: customerEmail }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setStatus("subscribed")
+        setMessage(data.message || "Inscription confirmée !")
+      } else {
+        setMessage(data.error || "Erreur")
+      }
+    } catch {
+      setMessage("Erreur de connexion")
+    }
+    setLoading(false)
+  }
+
+  if (status === "loading") {
+    return <p className="text-sm text-gray-400 dark:text-neutral-500">Vérification…</p>
+  }
+
+  return (
+    <div>
+      {status === "subscribed" ? (
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-green-600 dark:text-green-400 font-medium">Inscrit à la newsletter</span>
+          <a
+            href={`/api/newsletter/unsubscribe?email=${encodeURIComponent(customerEmail)}`}
+            className="text-xs text-gray-400 dark:text-neutral-500 hover:text-red-500 dark:hover:text-red-400 transition-colors underline"
+          >
+            Se désinscrire
+          </a>
+        </div>
+      ) : (
+        <button
+          onClick={handleToggle}
+          disabled={loading}
+          className="px-5 py-2 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50"
+        >
+          {loading ? "Inscription…" : "S'inscrire à la newsletter"}
+        </button>
+      )}
+      {message && <p className="text-sm text-gray-500 dark:text-neutral-400 mt-2">{message}</p>}
+    </div>
+  )
+}
+
 export default function ComptePage() {
   const [customer, setCustomer] = useState<Customer | null>(null)
   const [loading, setLoading] = useState(true)
@@ -60,6 +135,7 @@ export default function ComptePage() {
   const [regPassword2, setRegPassword2] = useState("")
   const [regError, setRegError] = useState("")
   const [regLoading, setRegLoading] = useState(false)
+  const [regNewsletter, setRegNewsletter] = useState(false)
 
   // Profile (logged in)
   const [profile, setProfile] = useState<Customer | null>(null)
@@ -177,7 +253,7 @@ export default function ComptePage() {
       const res = await fetch("/api/customer/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: regEmail, password: regPassword, prenom: regPrenom, nom: regNom }),
+        body: JSON.stringify({ email: regEmail, password: regPassword, prenom: regPrenom, nom: regNom, newsletterConsent: regNewsletter }),
       })
       const data = await res.json()
       if (!res.ok) {
@@ -310,6 +386,17 @@ export default function ComptePage() {
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Confirmer le mot de passe</label>
                   <input type="password" required minLength={6} value={regPassword2} onChange={(e) => setRegPassword2(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
                 </div>
+                <label className="flex items-start gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={regNewsletter}
+                    onChange={(e) => setRegNewsletter(e.target.checked)}
+                    className="mt-0.5 rounded border-gray-300 text-[#C8A97E] focus:ring-[#C8A97E]/50"
+                  />
+                  <span className="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">
+                    Je souhaite recevoir la newsletter Papillon Rose (nouveautés, offres exclusives)
+                  </span>
+                </label>
                 {regError && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{regError}</p>}
                 <button type="submit" disabled={regLoading} className="w-full py-2.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50">
                   {regLoading ? "Inscription…" : "Créer mon compte"}
@@ -472,6 +559,15 @@ export default function ComptePage() {
               })}
             </div>
           )}
+        </section>
+
+        {/* ─── Newsletter ─── */}
+        <section className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6 mt-6">
+          <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Newsletter</h2>
+          <p className="text-sm text-gray-400 dark:text-neutral-500 mb-4">
+            Recevez nos nouveautés et offres exclusives directement dans votre boîte mail.
+          </p>
+          <NewsletterToggle customerEmail={customer.email} />
         </section>
 
         <p className="text-center text-xs text-gray-400 dark:text-neutral-500 mt-6">
