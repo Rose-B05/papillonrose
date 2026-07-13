@@ -96,10 +96,9 @@ export function getProductImage(product: Produit): string {
   if (product.image && !product.image.includes("placeholder")) {
     return BASE + product.image
   }
-  if (product.gallerie && product.gallerie.length > 0) {
-    return BASE + product.gallerie[0]
-  }
-  return BASE + "/placeholder.svg"
+  // Fallback: try PROD{id}.png if image is placeholder
+  const fallbackPath = `/images/PROD${String(product.id).padStart(3, "0")}.png`
+  return BASE + fallbackPath
 }
 
 export function getAllProductImages(product: Produit): { src: string; alt: string }[] {
