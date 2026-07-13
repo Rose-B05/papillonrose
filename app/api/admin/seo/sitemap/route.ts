@@ -5,7 +5,12 @@ import { generateSitemapInfo, addSeoHistoryEntry } from "@/lib/seo-center"
 
 export const runtime = "nodejs"
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const session = request.cookies.get(COOKIE_NAME)
+  if (!session?.value) {
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+  }
+
   try {
     const mode = await getSiteMode()
     const info = generateSitemapInfo(mode)

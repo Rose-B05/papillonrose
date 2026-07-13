@@ -17,7 +17,12 @@ export const runtime = "nodejs"
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const session = request.cookies.get(COOKIE_NAME)
+  if (!session?.value) {
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+  }
+
   try {
     const mode = await getSiteMode()
     const pages = PAGE_DEFINITIONS.map((p) => ({
