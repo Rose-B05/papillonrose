@@ -519,13 +519,13 @@ function Footer({
   const [showNavigation, setShowNavigation] = useState(false)
   const [showContact, setShowContact] = useState(false)
   return (
-    <footer className="bg-[#1C1A17] text-white pt-20 pb-8 mt-16 relative">
-      <div className="max-w-[1400px] mx-auto px-5 md:px-[70px] relative z-10 mb-14 overflow-visible">
+    <footer className="bg-[#1C1A17] text-white pt-20 pb-8 mt-16 relative overflow-x-clip">
+      <div className="max-w-[1400px] mx-auto px-5 md:px-[70px] relative z-10 mb-14">
         {/* Grid 4 colonnes — desktop */}
         <div className="hidden lg:grid grid-cols-[256px_240px_240px_1fr] gap-x-[88px] gap-y-10">
           {/* Colonne 1 — Identité */}
           <div>
-            <img src={LOGO} alt="Papillon Rose" className="h-10 w-auto brightness-0 invert opacity-90 mb-4" />
+            <img src={LOGO} alt="Papillon Rose" className="h-10 md:h-12 w-auto brightness-0 invert opacity-90 mb-4" />
             <p className="text-[#A89880] text-sm leading-relaxed mb-6">
               Location de mobilier et décoration pour événements, mariages et réceptions.
             </p>
@@ -705,7 +705,7 @@ function Footer({
         <div className="lg:hidden flex flex-col gap-10">
           {/* Colonne 1 — Identité */}
           <div>
-            <img src={LOGO} alt="Papillon Rose" className="h-10 w-auto brightness-0 invert opacity-90 mb-4" />
+            <img src={LOGO} alt="Papillon Rose" className="h-10 md:h-12 w-auto brightness-0 invert opacity-90 mb-4" />
             <p className="text-[#A89880] text-sm leading-relaxed mb-6">
               Location de mobilier et décoration pour événements, mariages et réceptions.
             </p>
