@@ -562,7 +562,7 @@ function Footer({
                     { label: "Accueil", page: "home" as Page },
                     { label: "Catalogue", page: "catalogue" as Page },
                     { label: "Panier", href: "/reservation" },
-                    { label: "Favoris", page: "favorites" as Page },
+                    { label: "Favoris", href: "/favoris" },
                     { label: "Contact", page: "contact" as Page },
                   ]).map((item) => (
                     <li key={item.label}>
@@ -735,7 +735,7 @@ function Footer({
                     { label: "Accueil", page: "home" as Page },
                     { label: "Catalogue", page: "catalogue" as Page },
                     { label: "Panier", href: "/reservation" },
-                    { label: "Favoris", page: "favorites" as Page },
+                    { label: "Favoris", href: "/favoris" },
                     { label: "Contact", page: "contact" as Page },
                   ]).map((item) => (
                     <li key={item.label}>
@@ -1056,7 +1056,7 @@ export default function PapillonRoseSite() {
               { page: "home", label: "Accueil", href: "/" },
               { page: "catalogue", label: "Catalogue", href: "/catalogue" },
               { page: "panier", label: "Panier", href: "/reservation" },
-              { page: "favorites", label: "Favoris", href: "/catalogue" },
+              { page: "favorites", label: "Favoris", href: "/favoris" },
               { page: "contact", label: "Contact", href: "/contact" },
             ] as const).map(
                 (item) => (
@@ -1083,7 +1083,7 @@ export default function PapillonRoseSite() {
 
           <div className="flex items-center gap-1.5">
             <Link
-              href="/catalogue"
+              href="/favoris"
               aria-label="Favoris"
               className={`relative p-2 transition-colors ${scrolled ? "hover:text-[#C8A97E] dark:hover:text-amber-400" : "hover:text-white"}`}
             >
@@ -1184,7 +1184,7 @@ export default function PapillonRoseSite() {
                 { page: "home", label: "Accueil", href: "/" },
                 { page: "catalogue", label: "Catalogue", href: "/catalogue" },
                 { page: "panier", label: "Panier", href: "/reservation" },
-                { page: "favorites", label: "Favoris", href: "/catalogue" },
+                { page: "favorites", label: "Favoris", href: "/favoris" },
                 { page: "contact", label: "Contact", href: "/contact" },
               ] as const).map(
                 (item) => (
