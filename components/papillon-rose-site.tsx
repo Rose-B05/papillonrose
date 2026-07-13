@@ -495,7 +495,7 @@ function FooterNewsletterForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="bg-[#C9A96E] text-[#1C1A17] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#d4b87a] transition-colors disabled:opacity-50 whitespace-nowrap"
+          className="bg-[#C9A96E] text-[#1C1A17] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#d4b87a] transition-colors disabled:opacity-50 whitespace-nowrap shrink-0"
         >
           {status === "loading" ? "…" : "Je m'inscris"}
         </button>
@@ -520,9 +520,9 @@ function Footer({
   const [showContact, setShowContact] = useState(false)
   return (
     <footer className="bg-[#1C1A17] text-white pt-20 pb-8 mt-16 relative overflow-x-clip">
-      <div className="max-w-[1400px] mx-auto px-5 md:px-[70px] relative z-10 mb-14">
+      <div className="max-w-[1600px] mx-auto px-5 md:px-10 lg:px-[70px] relative z-10 mb-14">
         {/* Grid 4 colonnes — desktop */}
-        <div className="hidden lg:grid grid-cols-[256px_240px_240px_1fr] gap-x-[88px] gap-y-10">
+        <div className="hidden lg:grid grid-cols-[256px_240px_240px_1fr] gap-x-12 gap-y-10">
           {/* Colonne 1 — Identité */}
           <div>
             <img src={LOGO} alt="Papillon Rose" className="h-10 md:h-12 w-auto brightness-0 invert opacity-90 mb-4" />
@@ -688,14 +688,14 @@ function Footer({
           </div>
 
           {/* Colonne 4 — Illustration femme + cage */}
-          <div className="flex justify-end">
-            <div className="relative w-[580px] h-[700px] -mt-[340px] z-20 pointer-events-none">
+          <div className="flex justify-end overflow-visible">
+            <div className="relative -mt-[340px] z-20 pointer-events-none">
               <img
                 src={img("/images/PROD086.png")}
                 alt=""
                 aria-hidden
                 loading="lazy"
-                className="w-full h-full object-contain drop-shadow-[0_4px_24px_rgba(201,169,110,0.15)]"
+                className="w-full max-w-[580px] h-auto max-h-[700px] object-contain drop-shadow-[0_4px_24px_rgba(201,169,110,0.15)]"
               />
             </div>
           </div>
@@ -818,7 +818,7 @@ function Footer({
       </div>
 
       {/* Barre copyright */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-[70px] relative z-10 pt-6 border-t border-white/10">
+      <div className="max-w-[1600px] mx-auto px-5 md:px-10 lg:px-[70px] relative z-10 pt-6 border-t border-white/10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-[#A89880]/60 text-xs">
             © 2026 Papillon Rose — Location décoration événements · Tous droits réservés
