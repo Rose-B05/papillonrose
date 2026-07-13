@@ -543,7 +543,7 @@ function Footer({
             <div>
               <button
                 onClick={() => setShowNavigation(!showNavigation)}
-                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
               >
                 Navigation
                 <svg
@@ -603,7 +603,7 @@ function Footer({
             <div>
               <button
                 onClick={() => setShowCategories(!showCategories)}
-                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
               >
                 Catégories
                 <svg
@@ -636,7 +636,7 @@ function Footer({
             <div>
               <button
                 onClick={() => setShowContact(!showContact)}
-                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
               >
                 Contact
                 <svg
@@ -678,7 +678,7 @@ function Footer({
 
           {/* Colonne 3 — Newsletter */}
           <div>
-            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#C9A96E]/30 pb-2">
               Newsletter
             </p>
             <p className="text-[#D4B896]/70 text-sm mb-4 leading-relaxed">
@@ -722,7 +722,7 @@ function Footer({
             <div>
               <button
                 onClick={() => setShowNavigation(!showNavigation)}
-                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
               >
                 Navigation
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${showNavigation ? "rotate-180" : ""}`}>
@@ -753,7 +753,7 @@ function Footer({
               </div>
             </div>
             <div>
-              <button onClick={() => setShowCategories(!showCategories)} className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors">
+              <button onClick={() => setShowCategories(!showCategories)} className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2">
                 Catégories
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${showCategories ? "rotate-180" : ""}`}>
                   <polyline points="6 9 12 15 18 9" />
@@ -770,7 +770,7 @@ function Footer({
               </div>
             </div>
             <div>
-              <button onClick={() => setShowContact(!showContact)} className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors">
+              <button onClick={() => setShowContact(!showContact)} className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2">
                 Contact
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${showContact ? "rotate-180" : ""}`}>
                   <polyline points="6 9 12 15 18 9" />
@@ -799,7 +799,7 @@ function Footer({
 
           {/* Colonne 3 — Newsletter */}
           <div>
-            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">Newsletter</p>
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#C9A96E]/30 pb-2">Newsletter</p>
             <p className="text-[#D4B896]/70 text-sm mb-4 leading-relaxed">Recevez nos nouveautés et offres exclusives.</p>
             <FooterNewsletterForm />
           </div>
