@@ -1,6 +1,7 @@
 ﻿"use client"
 
 import { useState, useMemo, useEffect, useCallback, useRef } from "react"
+import Link from "next/link"
 import {
   Search,
   ShoppingBag,
@@ -24,6 +25,8 @@ import {
 } from "lucide-react"
 import { produits, type Produit, hasRealPhoto, getActiveProductsCount } from "@/data/produits"
 import { useCart } from "@/components/cart-context"
+import { useFavorites } from "@/components/favorites-context"
+import { getCategorySlug } from "@/lib/product-helpers"
 import CatalogGallery from "@/components/catalog-gallery"
 import CatalogFilters from "@/components/catalog-filters"
 import OverflowCarousel from "@/components/overflow-carousel"
@@ -494,7 +497,7 @@ function FooterNewsletterForm() {
           disabled={status === "loading"}
           className="bg-[#C9A96E] text-[#1C1A17] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#d4b87a] transition-colors disabled:opacity-50 whitespace-nowrap"
         >
-          {status === "loading" ? "…" : "OK"}
+          {status === "loading" ? "…" : "Je m'inscris"}
         </button>
       </div>
       {status === "error" && message && (
@@ -514,12 +517,12 @@ function Footer({
 }) {
   const [showCategories, setShowCategories] = useState(false)
   const [showNavigation, setShowNavigation] = useState(false)
-  const [showDelivery, setShowDelivery] = useState(false)
+  const [showContact, setShowContact] = useState(false)
   return (
-    <footer className="bg-[#1C1A17] text-white pt-16 pb-8 mt-16 relative">
-      <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-8 mb-12 overflow-visible">
+    <footer className="bg-[#1C1A17] text-white pt-20 pb-8 mt-16 relative">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10 flex flex-col lg:flex-row gap-12 lg:gap-10 mb-14 overflow-visible">
         {/* Colonnes de texte — gauche */}
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 lg:gap-8">
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-12 lg:gap-10">
           {/* Colonne 1 — Identité */}
           <div className="lg:col-span-1">
             <img src={LOGO} alt="Papillon Rose" className="h-10 w-auto brightness-0 invert opacity-90 mb-4" />
@@ -532,13 +535,10 @@ function Footer({
             >
               Demander un devis
             </a>
-            <p className="text-[#C9A96E]/70 text-[10px] mt-2 tracking-wide">
-              Réponse sous 24h
-            </p>
           </div>
 
           {/* Colonne 2 — Menus empilés : Navigation → Catégories → Contact */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-10">
             {/* Navigation (accordion) */}
             <div>
               <button
@@ -620,59 +620,59 @@ function Footer({
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 text-sm pb-2">
                   {CATEGORIES.slice(1).map((cat) => (
                     <li key={cat}>
-                      <button
-                        onClick={() => onCatalogue(cat)}
-                        className="text-[#D4B896] hover:text-white transition-colors text-left"
+                      <Link
+                        href={`/categorie/${getCategorySlug(cat)}`}
+                        className="text-[#D4B896] hover:text-white transition-colors"
                       >
                         {cat}
-                      </button>
+                      </Link>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
 
-            {/* Contact */}
+            {/* Contact (accordion) */}
             <div>
-              <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
+              <button
+                onClick={() => setShowContact(!showContact)}
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
+              >
                 Contact
-              </p>
-              <ul className="space-y-3.5 text-sm">
-                <li className="flex items-start gap-2.5">
-                  <Phone size={13} className="text-[#C8A97E]/50 mt-0.5 flex-shrink-0" />
-                  <span className="text-[#D4B896]/60 text-xs italic">
-                    Téléphone temporairement indisponible
-                    <br />
-                    <span className="not-italic">Contactez-nous par email ou Instagram</span>
-                  </span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <Mail size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
-                  <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors">
-                    papillonrosebertha@gmail.com
-                  </a>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <MapPin size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
-                  <span className="text-[#D4B896]">
-                    Île-de-France
-                    <br />
-                    Créteil (94)
-                  </span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <Send size={13} className="text-[#C9A96E] flex-shrink-0" />
-                  <a href="https://t.me/PapillonRose" target="_blank" rel="noopener noreferrer" className="text-[#D4B896] hover:text-white transition-colors">
-                    @PapillonRose
-                  </a>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <a href="https://www.instagram.com/papillonrose.g" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors">
-                    <InstagramIcon size={18} />
-                    @papillonrose.g
-                  </a>
-                </li>
-              </ul>
+                <svg
+                  width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                  className={`transition-transform duration-200 ${showContact ? "rotate-180" : ""}`}
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div
+                className="overflow-hidden transition-all duration-300"
+                style={{ maxHeight: showContact ? "500px" : "0px" }}
+              >
+                <ul className="space-y-3.5 text-sm pb-2">
+                  <li className="flex items-start gap-2.5">
+                    <Mail size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
+                    <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors">
+                      papillonrosebertha@gmail.com
+                    </a>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <MapPin size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
+                    <span className="text-[#D4B896]">
+                      Île-de-France
+                      <br />
+                      Créteil (94)
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <a href="https://www.instagram.com/papillonrose.g" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors">
+                      <InstagramIcon size={18} />
+                      @papillonrose.g
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -690,7 +690,7 @@ function Footer({
 
         {/* Scène femme + cage — droite (desktop) */}
         <div className="hidden lg:block flex-shrink-0">
-          <div className="relative w-[580px] h-[700px] -mt-[140px]">
+          <div className="relative w-[580px] h-[700px] -mt-[220px]">
             <img
               src={img("/images/PROD086.png")}
               alt=""
@@ -708,7 +708,7 @@ function Footer({
             alt=""
             aria-hidden
             loading="lazy"
-            className="w-[350px] max-w-[90vw] h-auto object-contain opacity-90 -mt-[60px]"
+            className="w-[350px] max-w-[90vw] h-auto object-contain opacity-90 -mt-[100px]"
           />
         </div>
       </div>
@@ -736,6 +736,7 @@ function Footer({
 // ─── Main ──────────────────────────────────────────────────────────────────────
 export default function PapillonRoseSite() {
   const { items: cartItems, addItem: addCartItem, itemCount: cartCount } = useCart()
+  const { favorites, toggleFavorite } = useFavorites()
   const [page, setPage] = useState<Page>("home")
   const [category, setCategory] = useState("Tous")
   const [search, setSearch] = useState("")
@@ -745,7 +746,6 @@ export default function PapillonRoseSite() {
   const [modalDateStart, setModalDateStart] = useState("")
   const [modalDateEnd, setModalDateEnd] = useState("")
   const [quote, setQuote] = useState<QuoteItem[]>([])
-  const [favorites, setFavorites] = useState<Set<number>>(new Set())
   const [showQuote, setShowQuote] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [priceMax, setPriceMax] = useState(200)
@@ -767,42 +767,27 @@ export default function PapillonRoseSite() {
   const modalVariants = modalProduct ? resolveVariants(modalProduct) : undefined
   const prevCustomerRef = useRef<{ email: string; prenom: string; nom: string; telephone: string; adresse: string } | null>(null)
 
-  // Load customer session + favorites on mount
+  // Load customer session on mount
   useEffect(() => {
     fetch("/api/customer/me")
       .then((r) => r.json())
       .then(async (data) => {
         if (data.customer) {
           setCustomer(data.customer)
-          const favRes = await fetch("/api/customer/favorites")
-          const favData = await favRes.json()
-          if (favData.favorites) {
-            setFavorites(new Set(favData.favorites))
-          }
         }
       })
       .catch(() => {})
   }, [])
 
-  // When customer logs in (state changes null → logged in), merge local + server favorites
+  // When customer logs in, sync favorites to server
   useEffect(() => {
     if (customer && !prevCustomerRef.current) {
-      // Just logged in — merge local favorites with server favorites
-      const localFavs = Array.from(favorites)
-      fetch("/api/customer/favorites")
-        .then((r) => r.json())
-        .then(async (data) => {
-          const serverFavs: number[] = data.favorites || []
-          const merged = Array.from(new Set([...serverFavs, ...localFavs]))
-          setFavorites(new Set(merged))
-          // Save merged to server
-          await fetch("/api/customer/favorites", {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ favorites: merged }),
-          })
-        })
-        .catch(() => {})
+      // Just logged in — push current local favorites to server
+      fetch("/api/customer/favorites", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ favorites: Array.from(favorites) }),
+      }).catch(() => {})
     }
     prevCustomerRef.current = customer
   }, [customer])
@@ -896,20 +881,18 @@ export default function PapillonRoseSite() {
   }
 
   const toggleFav = (id: number) => {
-    setFavorites((prev) => {
-      const n = new Set(prev)
-      if (n.has(id)) n.delete(id)
-      else n.add(id)
-      // Save to server if logged in
-      if (customer) {
-        fetch("/api/customer/favorites", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ favorites: Array.from(n) }),
-        }).catch(() => {})
-      }
-      return n
-    })
+    toggleFavorite(id)
+    // Save to server if logged in
+    if (customer) {
+      const newFavs = favorites.has(id)
+        ? Array.from(favorites).filter((f) => f !== id)
+        : Array.from(favorites).concat(id)
+      fetch("/api/customer/favorites", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ favorites: newFavs }),
+      }).catch(() => {})
+    }
   }
 
   const addToCartWithToast = (productId: number, qty: number = 1, variantLabel?: string) => {
@@ -965,39 +948,38 @@ export default function PapillonRoseSite() {
           </button>
 
           <div className="hidden md:flex items-center gap-8 mr-8">
-            {(["home", "catalogue", "panier", "favorites", "contact"] as Page[]).map(
-                (p) => (
-                  <button
-                    key={p}
+            {([
+              { page: "home", label: "Accueil", href: "/" },
+              { page: "catalogue", label: "Catalogue", href: "/catalogue" },
+              { page: "panier", label: "Panier", href: "/reservation" },
+              { page: "favorites", label: "Favoris", href: "/catalogue" },
+              { page: "contact", label: "Contact", href: "/contact" },
+            ] as const).map(
+                (item) => (
+                  <Link
+                    key={item.page}
+                    href={item.href}
                     onClick={() => {
-                      if (p === "panier") { window.location.href = "/reservation"; return }
-                      p === "catalogue" ? goToCatalogue() : navTo(p)
+                      setShowMenu(false)
+                      if (item.page === "home") window.scrollTo(0, 0)
                     }}
                     className={`text-sm transition-all duration-300 ${
-                      page === p
+                      page === item.page
                         ? "font-bold " + (scrolled ? "text-[#C8A97E] dark:text-amber-400" : "text-white")
                         : scrolled
                           ? "text-[#2E2E2E]/60 dark:text-neutral-400 hover:text-[#C8A97E] dark:hover:text-amber-400"
                           : "text-white/70 hover:text-white"
                     }`}
                   >
-                    {p === "home"
-                      ? "Accueil"
-                      : p === "catalogue"
-                        ? "Catalogue"
-                        : p === "panier"
-                          ? "Panier"
-                          : p === "favorites"
-                            ? "Favoris"
-                            : "Contact"}
-                  </button>
+                    {item.label}
+                  </Link>
               ),
             )}
           </div>
 
           <div className="flex items-center gap-1.5">
-            <button
-              onClick={() => navTo("favorites")}
+            <Link
+              href="/catalogue"
               aria-label="Favoris"
               className={`relative p-2 transition-colors ${scrolled ? "hover:text-[#C8A97E] dark:hover:text-amber-400" : "hover:text-white"}`}
             >
@@ -1017,7 +999,7 @@ export default function PapillonRoseSite() {
                   {favorites.size}
                 </span>
               )}
-            </button>
+            </Link>
             <a
               href="/reservation"
               className="relative p-2 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors"
@@ -1094,27 +1076,26 @@ export default function PapillonRoseSite() {
               </button>
             </div>
             <div className="flex flex-col gap-5">
-              {(["home", "catalogue", "panier", "favorites", "contact"] as Page[]).map(
-                (p) => (
-                  <button
-                    key={p}
+              {([
+                { page: "home", label: "Accueil", href: "/" },
+                { page: "catalogue", label: "Catalogue", href: "/catalogue" },
+                { page: "panier", label: "Panier", href: "/reservation" },
+                { page: "favorites", label: "Favoris", href: "/catalogue" },
+                { page: "contact", label: "Contact", href: "/contact" },
+              ] as const).map(
+                (item) => (
+                  <Link
+                    key={item.page}
+                    href={item.href}
                     onClick={() => {
-                      if (p === "panier") { window.location.href = "/reservation"; return }
-                      p === "catalogue" ? goToCatalogue() : navTo(p)
+                      setShowMenu(false)
+                      if (item.page === "home") window.scrollTo(0, 0)
                     }}
-                    className={`text-left transition-colors text-lg ${page === p ? "font-bold text-[#C8A97E] dark:text-amber-400" : "text-[#2E2E2E]/70 dark:text-neutral-300 hover:text-[#C8A97E] dark:hover:text-amber-400"}`}
+                    className={`text-left transition-colors text-lg ${page === item.page ? "font-bold text-[#C8A97E] dark:text-amber-400" : "text-[#2E2E2E]/70 dark:text-neutral-300 hover:text-[#C8A97E] dark:hover:text-amber-400"}`}
                     style={DP}
                   >
-                    {p === "home"
-                      ? "Accueil"
-                      : p === "catalogue"
-                        ? "Catalogue"
-                        : p === "panier"
-                          ? "Panier"
-                          : p === "favorites"
-                            ? "Favoris"
-                            : "Contact"}
-                  </button>
+                    {item.label}
+                  </Link>
                 ),
               )}
             </div>
@@ -1287,12 +1268,12 @@ export default function PapillonRoseSite() {
                     Articles en vedette
                   </h2>
                 </div>
-                <button
-                  onClick={() => goToCatalogue()}
+                <Link
+                  href="/catalogue"
                   className="hidden md:flex items-center gap-1.5 text-sm text-[#C8A97E] dark:text-amber-400 font-medium hover:gap-2.5 transition-all"
                 >
                   Tout voir <ArrowRight size={14} />
-                </button>
+                </Link>
               </div>
 
               <div className="mb-5 md:mb-6">

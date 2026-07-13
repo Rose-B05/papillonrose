@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/components/cart-context'
+import { FavoritesProvider } from '@/components/favorites-context'
 import { ThemeProvider } from '@/lib/theme-context'
 import { getActiveProductsCount } from '@/data/produits'
 import { getRobotsMeta } from '@/lib/site-mode'
@@ -19,6 +20,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.f
 
 export async function generateMetadata(): Promise<Metadata> {
   const robots = await getRobotsMeta()
+
+  const ogImage = `${SITE_URL}/papillon-rose-logo.png`
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -45,6 +48,31 @@ export async function generateMetadata(): Promise<Metadata> {
         },
       ],
       apple: '/apple-icon.png',
+    },
+    openGraph: {
+      title: 'Papillon Rose — Location mobilier & décoration événements en Île-de-France',
+      description:
+        `Location de mobilier et décoration pour mariages, réceptions et événements en Île-de-France. ${nbRef} références, devis sous 24h, livraison 94/93/95/77/91.`,
+      url: SITE_URL,
+      siteName: 'Papillon Rose',
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: 'Papillon Rose — Location mobilier & décoration événements',
+          type: 'image/png',
+        },
+      ],
+      locale: 'fr_FR',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Papillon Rose — Location mobilier & décoration événements en Île-de-France',
+      description:
+        `Location de mobilier et décoration pour mariages, réceptions et événements en Île-de-France. ${nbRef} références, devis sous 24h, livraison 94/93/95/77/91.`,
+      images: [ogImage],
     },
     robots: {
       index: robots.index,
@@ -98,10 +126,12 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
         <CartProvider>
-          <ThemeProvider>
-            {children}
-            {process.env.NODE_ENV === 'production' && <Analytics />}
-          </ThemeProvider>
+          <FavoritesProvider>
+            <ThemeProvider>
+              {children}
+              {process.env.NODE_ENV === 'production' && <Analytics />}
+            </ThemeProvider>
+          </FavoritesProvider>
         </CartProvider>
       </body>
     </html>

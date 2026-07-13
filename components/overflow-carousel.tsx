@@ -1,7 +1,9 @@
 ﻿"use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
+import Link from "next/link"
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
+import { getCategorySlug } from "@/lib/product-helpers"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
@@ -155,10 +157,10 @@ export default function OverflowCarousel({
           const cardHeight = isMobile ? 185 : 310
 
           return (
-            <div
+            <Link
               key={card.categorie}
-              onClick={() => { onSelect(card.categorie) }}
-              className="absolute top-[18%] md:top-[28%] cursor-pointer"
+              href={`/categorie/${getCategorySlug(card.categorie)}`}
+              className="absolute top-[18%] md:top-[28%] cursor-pointer block"
               style={{
                 ...s,
                 transition: "all 0.4s ease-in-out",
@@ -241,7 +243,7 @@ export default function OverflowCarousel({
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           )
         })}
       </div>
