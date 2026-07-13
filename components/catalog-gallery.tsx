@@ -1,10 +1,12 @@
 ﻿"use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import type { Produit } from "@/data/produits"
 import type { CartItem } from "@/lib/types"
 import GalleryLightbox from "./gallery-lightbox"
 import { Heart, ShoppingBag } from "lucide-react"
+import { getProductSlug } from "@/lib/product-helpers"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
@@ -42,9 +44,9 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
               key={p.id}
               className="group relative bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col"
             >
-              <div
-                className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0] dark:bg-neutral-900"
-                onClick={() => onView ? onView(p) : setLightbox({ product: p, index: 0 })}
+              <Link
+                href={`/produit/${getProductSlug(p)}`}
+                className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0] dark:bg-neutral-900 block"
               >
                 <img
                   src={img(getSrc(p))}
@@ -60,7 +62,7 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                     Unique
                   </span>
                 )}
-              </div>
+              </Link>
 
               <div className="p-3.5 flex flex-col flex-1">
                 <div className="min-w-0">

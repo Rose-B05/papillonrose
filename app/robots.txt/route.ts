@@ -22,7 +22,23 @@ Sitemap: https://www.papillonrose.fr/sitemap.xml
   }
 
   // Development / préproduction — block all crawling
-  const body = `User-agent: *
+  // but allow social bots for link preview thumbnails
+  const body = `User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: *
 Disallow: /
 `
   return new NextResponse(body, {
