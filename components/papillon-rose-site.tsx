@@ -690,7 +690,7 @@ function Footer({
 
         {/* Scène femme + cage — droite (desktop) */}
         <div className="hidden lg:block flex-shrink-0">
-          <div className="relative w-[580px] h-[700px] -mt-[220px]">
+          <div className="relative w-[580px] h-[700px] -mt-[340px] z-20 pointer-events-none">
             <img
               src={img("/images/PROD086.png")}
               alt=""
@@ -708,7 +708,7 @@ function Footer({
             alt=""
             aria-hidden
             loading="lazy"
-            className="w-[350px] max-w-[90vw] h-auto object-contain opacity-90 -mt-[100px]"
+            className="w-[350px] max-w-[90vw] h-auto object-contain opacity-90 -mt-[160px] relative z-20"
           />
         </div>
       </div>
