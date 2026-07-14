@@ -289,7 +289,7 @@ export default function ReservationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900">
+    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 pt-16 md:pt-20">
       <div className="bg-white dark:bg-neutral-800 shadow-sm">
         <div className="max-w-4xl mx-auto px-5 py-4 flex items-center justify-between">
           <button onClick={handleBack} className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors">← Retour</button>
