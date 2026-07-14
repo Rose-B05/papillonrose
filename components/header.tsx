@@ -46,11 +46,14 @@ export default function Header() {
     return pathname.startsWith(href)
   }
 
+  const isHome = pathname === "/"
+  const opaque = isHome ? scrolled : true
+
   return (
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
+          opaque
             ? "bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl shadow-sm"
             : "bg-transparent"
         }`}
@@ -61,7 +64,7 @@ export default function Header() {
               src={LOGO || PLACEHOLDER}
               alt="Papillon Rose"
               className={`h-10 md:h-12 w-auto transition-all duration-500 ${
-                scrolled ? "" : "brightness-0 invert"
+                opaque ? "" : "brightness-0 invert"
               }`}
             />
           </Link>
@@ -74,10 +77,10 @@ export default function Header() {
                 className={`text-sm transition-all duration-300 ${
                   isActive(item.href)
                     ? "font-bold " +
-                      (scrolled
+                      (opaque
                         ? "text-[#C8A97E] dark:text-amber-400"
                         : "text-white")
-                    : scrolled
+                    : opaque
                       ? "text-[#2E2E2E]/60 dark:text-neutral-400 hover:text-[#C8A97E] dark:hover:text-amber-400"
                       : "text-white/70 hover:text-white"
                 }`}
@@ -92,7 +95,7 @@ export default function Header() {
               href="/favoris"
               aria-label="Favoris"
               className={`relative p-2 transition-colors ${
-                scrolled
+                opaque
                   ? "hover:text-[#C8A97E] dark:hover:text-amber-400"
                   : "hover:text-white"
               }`}
@@ -103,7 +106,7 @@ export default function Header() {
                 className={
                   favorites.size > 0
                     ? "text-[#C8A97E] dark:text-amber-400"
-                    : scrolled
+                    : opaque
                       ? "text-[#2E2E2E]/40 dark:text-neutral-500"
                       : "text-white/80"
                 }
@@ -124,7 +127,7 @@ export default function Header() {
                 className={
                   cartCount > 0
                     ? "text-[#C8A97E] dark:text-amber-400"
-                    : scrolled
+                    : opaque
                       ? "text-[#2E2E2E]/40 dark:text-neutral-500"
                       : "text-white/80"
                 }
@@ -138,7 +141,7 @@ export default function Header() {
             <a
               href="/compte"
               className={`relative p-2 transition-colors ${
-                scrolled
+                opaque
                   ? "hover:text-[#C8A97E] dark:hover:text-amber-400"
                   : "hover:text-white"
               }`}
@@ -147,7 +150,7 @@ export default function Header() {
               <User
                 size={19}
                 className={
-                  scrolled
+                  opaque
                     ? "text-[#2E2E2E]/40 dark:text-neutral-500"
                     : "text-white/80"
                 }
@@ -157,7 +160,7 @@ export default function Header() {
               onClick={() => setShowMenu(true)}
               aria-label="Menu"
               className={`md:hidden p-2 ${
-                scrolled
+                opaque
                   ? "text-[#2E2E2E]/60 dark:text-neutral-400"
                   : "text-white/80"
               }`}
