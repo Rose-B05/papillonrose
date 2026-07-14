@@ -11,12 +11,8 @@ import {
   Minus,
   Menu,
   ArrowRight,
-  Phone,
-  Mail,
-  MapPin,
   Trash2,
   FileText,
-  Send,
   Clock,
   Package,
   RotateCcw,
@@ -29,6 +25,7 @@ import { useFavorites } from "@/components/favorites-context"
 import { getCategorySlug } from "@/lib/product-helpers"
 import CatalogGallery from "@/components/catalog-gallery"
 import CatalogFilters from "@/components/catalog-filters"
+import ContactView from "@/components/contact-view"
 import OverflowCarousel from "@/components/overflow-carousel"
 
 import Chatbot from "@/components/chatbot"
@@ -402,25 +399,6 @@ function ProductImages({
         <X size={16} />
       </button>
     </div>
-  )
-}
-
-function InstagramIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" className={className}>
-      <defs>
-        <linearGradient id="ig-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#FEDA75" />
-          <stop offset="20%" stopColor="#FA7E1E" />
-          <stop offset="45%" stopColor="#D62976" />
-          <stop offset="70%" stopColor="#962FBF" />
-          <stop offset="100%" stopColor="#4F5BD4" />
-        </linearGradient>
-      </defs>
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="url(#ig-gradient)" />
-      <circle cx="12" cy="12" r="5" fill="none" stroke="white" strokeWidth="2" />
-      <circle cx="17.5" cy="6.5" r="1.5" fill="white" />
-    </svg>
   )
 }
 
@@ -1196,153 +1174,7 @@ export default function PapillonRoseSite() {
         )}
 
         {/* ─── CONTACT ─── */}
-        {page === "contact" && (
-          <div>
-            <div className="max-w-4xl mx-auto px-5 md:px-10 pt-24 pb-12">
-              <div className="text-center mb-14">
-                <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
-                  Parlons de votre projet
-                </p>
-                <h1
-                  style={DP}
-                  className="text-3xl sm:text-4xl md:text-5xl font-semibold text-[#2E2E2E] dark:text-neutral-100"
-                >
-                  Contactez-nous
-                </h1>
-              </div>
-              <div className="grid sm:grid-cols-2 gap-8 sm:gap-12">
-                <div>
-                  <div className="space-y-7">
-                    {[
-                      {
-                        Icon: Phone,
-                        label: "Téléphone",
-                        val: "Temporairement indisponible",
-                        note: "Contactez-nous par email ou Instagram",
-                      },
-                      {
-                        Icon: Mail,
-                        label: "Email",
-                        val: "papillonrosebertha@gmail.com",
-                      },
-                      {
-                        Icon: MapPin,
-                        label: "Zone",
-                        val: "Île-de-France\nCréteil (94)",
-                      },
-                      {
-                        Icon: Send,
-                        label: "Telegram",
-                        val: "@PapillonRose",
-                      },
-                      {
-                        Icon: InstagramIcon,
-                        label: "Instagram",
-                        val: "papillonrose.g",
-                        link: "https://www.instagram.com/papillonrose.g",
-                      },
-                    ].map(({ Icon, label, val, link, note }) => (
-                      <div key={label} className="flex items-start gap-4">
-                        <div className="w-11 h-11 bg-[#C8A97E]/12 dark:bg-amber-600/12 rounded-2xl flex items-center justify-center flex-shrink-0">
-                          <Icon size={17} className="text-[#C8A97E] dark:text-amber-400" />
-                        </div>
-                        <div>
-                          <p className="text-[10px] text-gray-400 dark:text-neutral-500 uppercase tracking-widest mb-0.5">
-                            {label}
-                          </p>
-                          {link ? (
-                            <a href={link} target="_blank" rel="noopener noreferrer" className="font-medium text-sm text-[#2E2E2E] dark:text-neutral-100 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors">
-                              {val}
-                            </a>
-                          ) : (
-                            <p className="font-medium text-sm whitespace-pre-line text-[#2E2E2E] dark:text-neutral-100">
-                              {val}
-                            </p>
-                          )}
-                          {note && (
-                            <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5">{note}</p>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-10 p-4 sm:p-6 bg-[#2E2E2E] dark:bg-neutral-800 rounded-3xl text-white">
-                    <p style={DP} className="text-lg font-semibold mb-3">
-                      Horaires
-                    </p>
-                    <div className="space-y-2 text-sm text-white/60">
-                      <div className="flex justify-between">
-                        <span>Lundi – Vendredi</span>
-                        <span className="text-white/90">9h – 18h</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Samedi</span>
-                        <span className="text-white/90">10h – 16h</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Dimanche</span>
-                        <span className="text-white/35">Fermé</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
-                  {[
-                    {
-                      label: "Nom complet",
-                      type: "text",
-                      placeholder: "Marie Dupont",
-                    },
-                    {
-                      label: "Adresse email",
-                      type: "email",
-                      placeholder: "marie@exemple.fr",
-                    },
-                  ].map((f) => (
-                    <div key={f.label}>
-                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
-                        {f.label}
-                      </label>
-                       <input
-                        type={f.type}
-                        placeholder={f.placeholder}
-                        className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
-                        style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
-                      />
-                    </div>
-                  ))}
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
-                      Date de l&apos;événement
-                    </label>
-                    <input
-                      type="date"
-                      className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
-                      style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
-                      Votre message
-                    </label>
-                    <textarea
-                      rows={5}
-                      placeholder="Décrivez votre projet, nombre d'invités, lieu…"
-                      className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm"
-                      style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-[#C8A97E] dark:bg-amber-600 text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors shadow-md"
-                  >
-                    Envoyer ma demande
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        )}
+        {page === "contact" && <ContactView />}
       </div>
 
       {/* ── Product Modal ── */}
