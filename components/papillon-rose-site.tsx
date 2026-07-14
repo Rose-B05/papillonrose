@@ -495,7 +495,7 @@ function FooterNewsletterForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="bg-[#C9A96E] text-[#1C1A17] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#d4b87a] transition-colors disabled:opacity-50 whitespace-nowrap"
+          className="bg-[#C9A96E] text-[#1C1A17] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#d4b87a] transition-colors disabled:opacity-50 whitespace-nowrap shrink-0"
         >
           {status === "loading" ? "…" : "Je m'inscris"}
         </button>
@@ -519,13 +519,13 @@ function Footer({
   const [showNavigation, setShowNavigation] = useState(false)
   const [showContact, setShowContact] = useState(false)
   return (
-    <footer className="bg-[#1C1A17] text-white pt-20 pb-8 mt-16 relative">
-      <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10 flex flex-col lg:flex-row gap-12 lg:gap-10 mb-14 overflow-visible">
-        {/* Colonnes de texte — gauche */}
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-12 lg:gap-10">
+    <footer className="bg-[#1C1A17] text-white pt-20 pb-8 mt-16 relative overflow-x-clip">
+      <div className="max-w-[1600px] mx-auto px-5 md:px-10 lg:px-[70px] relative z-10 mb-14">
+        {/* Grid 4 colonnes — desktop */}
+        <div className="hidden lg:grid grid-cols-[256px_240px_240px_1fr] gap-x-12 gap-y-10">
           {/* Colonne 1 — Identité */}
-          <div className="lg:col-span-1">
-            <img src={LOGO} alt="Papillon Rose" className="h-10 w-auto brightness-0 invert opacity-90 mb-4" />
+          <div>
+            <img src={LOGO} alt="Papillon Rose" className="h-10 md:h-12 w-auto brightness-0 invert opacity-90 mb-4" />
             <p className="text-[#A89880] text-sm leading-relaxed mb-6">
               Location de mobilier et décoration pour événements, mariages et réceptions.
             </p>
@@ -543,7 +543,7 @@ function Footer({
             <div>
               <button
                 onClick={() => setShowNavigation(!showNavigation)}
-                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
               >
                 Navigation
                 <svg
@@ -562,7 +562,7 @@ function Footer({
                     { label: "Accueil", page: "home" as Page },
                     { label: "Catalogue", page: "catalogue" as Page },
                     { label: "Panier", href: "/reservation" },
-                    { label: "Favoris", page: "favorites" as Page },
+                    { label: "Favoris", href: "/favoris" },
                     { label: "Contact", page: "contact" as Page },
                   ]).map((item) => (
                     <li key={item.label}>
@@ -603,7 +603,7 @@ function Footer({
             <div>
               <button
                 onClick={() => setShowCategories(!showCategories)}
-                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
               >
                 Catégories
                 <svg
@@ -617,7 +617,7 @@ function Footer({
                 className="overflow-hidden transition-all duration-300"
                 style={{ maxHeight: showCategories ? "500px" : "0px" }}
               >
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 text-sm pb-2">
+                <ul className="grid grid-cols-1 gap-y-2.5 text-sm pb-2">
                   {CATEGORIES.slice(1).map((cat) => (
                     <li key={cat}>
                       <Link
@@ -636,7 +636,7 @@ function Footer({
             <div>
               <button
                 onClick={() => setShowContact(!showContact)}
-                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors"
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
               >
                 Contact
                 <svg
@@ -675,46 +675,150 @@ function Footer({
               </div>
             </div>
           </div>
+
+          {/* Colonne 3 — Newsletter */}
+          <div>
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#C9A96E]/30 pb-2">
+              Newsletter
+            </p>
+            <p className="text-[#D4B896]/70 text-sm mb-4 leading-relaxed">
+              Recevez nos nouveautés et offres exclusives.
+            </p>
+            <FooterNewsletterForm />
+          </div>
+
+          {/* Colonne 4 — Illustration femme + cage */}
+          <div className="flex justify-end overflow-visible">
+            <div className="relative -mt-[340px] z-20 pointer-events-none">
+              <img
+                src={img("/images/PROD086.png")}
+                alt=""
+                aria-hidden
+                loading="lazy"
+                className="w-full max-w-[580px] h-auto max-h-[700px] object-contain drop-shadow-[0_4px_24px_rgba(201,169,110,0.15)]"
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Newsletter */}
-        <div className="flex-shrink-0 lg:w-[300px]">
-          <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium">
-            Newsletter
-          </p>
-          <p className="text-[#D4B896]/70 text-sm mb-4 leading-relaxed">
-            Recevez nos nouveautés et offres exclusives.
-          </p>
-          <FooterNewsletterForm />
-        </div>
+        {/* Mobile — colonnes empilées */}
+        <div className="lg:hidden flex flex-col gap-10">
+          {/* Colonne 1 — Identité */}
+          <div>
+            <img src={LOGO} alt="Papillon Rose" className="h-10 md:h-12 w-auto brightness-0 invert opacity-90 mb-4" />
+            <p className="text-[#A89880] text-sm leading-relaxed mb-6">
+              Location de mobilier et décoration pour événements, mariages et réceptions.
+            </p>
+            <a
+              href="/reservation"
+              className="inline-flex items-center gap-2 bg-[#C9A96E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#d4b87a] transition-colors whitespace-nowrap"
+            >
+              Demander un devis
+            </a>
+          </div>
 
-        {/* Scène femme + cage — droite (desktop) */}
-        <div className="hidden lg:block flex-shrink-0">
-          <div className="relative w-[580px] h-[700px] -mt-[220px]">
+          {/* Colonne 2 — Menus empilés */}
+          <div className="flex flex-col gap-10">
+            <div>
+              <button
+                onClick={() => setShowNavigation(!showNavigation)}
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
+              >
+                Navigation
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${showNavigation ? "rotate-180" : ""}`}>
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div className="overflow-hidden transition-all duration-300" style={{ maxHeight: showNavigation ? "500px" : "0px" }}>
+                <ul className="space-y-3 text-sm pb-2">
+                  {([
+                    { label: "Accueil", page: "home" as Page },
+                    { label: "Catalogue", page: "catalogue" as Page },
+                    { label: "Panier", href: "/reservation" },
+                    { label: "Favoris", href: "/favoris" },
+                    { label: "Contact", page: "contact" as Page },
+                  ]).map((item) => (
+                    <li key={item.label}>
+                      {"href" in item ? (
+                        <a href={item.href} className="text-[#D4B896] hover:text-white transition-colors">{item.label}</a>
+                      ) : (
+                        <button onClick={() => onNav(item.page)} className="text-[#D4B896] hover:text-white transition-colors text-left">{item.label}</button>
+                      )}
+                    </li>
+                  ))}
+                  <li><a href="/a-propos" className="text-[#D4B896] hover:text-white transition-colors">À propos</a></li>
+                  <li><a href="/faq" className="text-[#D4B896] hover:text-white transition-colors">FAQ</a></li>
+                  <li><a href="/conditions-location" className="text-[#D4B896] hover:text-white transition-colors">Conditions de location</a></li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <button onClick={() => setShowCategories(!showCategories)} className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2">
+                Catégories
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${showCategories ? "rotate-180" : ""}`}>
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div className="overflow-hidden transition-all duration-300" style={{ maxHeight: showCategories ? "500px" : "0px" }}>
+                <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm pb-2">
+                  {CATEGORIES.slice(1).map((cat) => (
+                    <li key={cat}>
+                      <Link href={`/categorie/${getCategorySlug(cat)}`} className="text-[#D4B896] hover:text-white transition-colors">{cat}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div>
+              <button onClick={() => setShowContact(!showContact)} className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2">
+                Contact
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${showContact ? "rotate-180" : ""}`}>
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div className="overflow-hidden transition-all duration-300" style={{ maxHeight: showContact ? "500px" : "0px" }}>
+                <ul className="space-y-3.5 text-sm pb-2">
+                  <li className="flex items-start gap-2.5">
+                    <Mail size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
+                    <a href="mailto:papillonrosebertha@gmail.com" className="text-[#D4B896] hover:text-white transition-colors">papillonrosebertha@gmail.com</a>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <MapPin size={13} className="text-[#C9A96E] mt-0.5 flex-shrink-0" />
+                    <span className="text-[#D4B896]">Île-de-France<br />Créteil (94)</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <a href="https://www.instagram.com/papillonrose.g" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors">
+                      <InstagramIcon size={18} />
+                      @papillonrose.g
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Colonne 3 — Newsletter */}
+          <div>
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#C9A96E]/30 pb-2">Newsletter</p>
+            <p className="text-[#D4B896]/70 text-sm mb-4 leading-relaxed">Recevez nos nouveautés et offres exclusives.</p>
+            <FooterNewsletterForm />
+          </div>
+
+          {/* Scène mobile */}
+          <div className="flex justify-center overflow-visible">
             <img
               src={img("/images/PROD086.png")}
               alt=""
               aria-hidden
               loading="lazy"
-              className="w-full h-full object-contain drop-shadow-[0_4px_24px_rgba(201,169,110,0.15)]"
+              className="w-[350px] max-w-[90vw] h-auto object-contain opacity-90 -mt-[160px] relative z-20"
             />
           </div>
-        </div>
-
-        {/* Scène mobile — empilée sous les colonnes */}
-        <div className="lg:hidden flex justify-center mt-4 overflow-visible">
-          <img
-            src={img("/images/PROD086.png")}
-            alt=""
-            aria-hidden
-            loading="lazy"
-            className="w-[350px] max-w-[90vw] h-auto object-contain opacity-90 -mt-[100px]"
-          />
         </div>
       </div>
 
       {/* Barre copyright */}
-      <div className="max-w-7xl mx-auto px-5 md:px-10 relative z-10 pt-6 border-t border-white/10">
+      <div className="max-w-[1600px] mx-auto px-5 md:px-10 lg:px-[70px] relative z-10 pt-6 border-t border-white/10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-[#A89880]/60 text-xs">
             © 2026 Papillon Rose — Location décoration événements · Tous droits réservés
@@ -952,7 +1056,7 @@ export default function PapillonRoseSite() {
               { page: "home", label: "Accueil", href: "/" },
               { page: "catalogue", label: "Catalogue", href: "/catalogue" },
               { page: "panier", label: "Panier", href: "/reservation" },
-              { page: "favorites", label: "Favoris", href: "/catalogue" },
+              { page: "favorites", label: "Favoris", href: "/favoris" },
               { page: "contact", label: "Contact", href: "/contact" },
             ] as const).map(
                 (item) => (
@@ -979,7 +1083,7 @@ export default function PapillonRoseSite() {
 
           <div className="flex items-center gap-1.5">
             <Link
-              href="/catalogue"
+              href="/favoris"
               aria-label="Favoris"
               className={`relative p-2 transition-colors ${scrolled ? "hover:text-[#C8A97E] dark:hover:text-amber-400" : "hover:text-white"}`}
             >
@@ -1080,7 +1184,7 @@ export default function PapillonRoseSite() {
                 { page: "home", label: "Accueil", href: "/" },
                 { page: "catalogue", label: "Catalogue", href: "/catalogue" },
                 { page: "panier", label: "Panier", href: "/reservation" },
-                { page: "favorites", label: "Favoris", href: "/catalogue" },
+                { page: "favorites", label: "Favoris", href: "/favoris" },
                 { page: "contact", label: "Contact", href: "/contact" },
               ] as const).map(
                 (item) => (
