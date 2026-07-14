@@ -61,7 +61,7 @@ export default async function ProductPage({ params }: Props) {
   const price = formatPrix(product.prix)
 
   return (
-    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900">
+    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 pt-16 md:pt-20">
       {/* Breadcrumb */}
       <nav className="max-w-7xl mx-auto px-5 md:px-10 pt-6 pb-2">
         <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-neutral-500 flex-wrap">

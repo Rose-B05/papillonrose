@@ -328,7 +328,7 @@ export default function ComptePage() {
   // ─── Not logged in ───
   if (!customer) {
     return (
-      <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 flex items-center justify-center p-6">
+      <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 flex items-center justify-center p-6 pt-20 md:pt-24">
         <div className="w-full max-w-sm">
           <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-8">
             <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 text-center mb-1">
@@ -414,7 +414,7 @@ export default function ComptePage() {
 
   // ─── Logged in ───
   return (
-    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 p-6 md:p-10">
+    <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 px-6 md:px-10 pt-20 md:pt-24 pb-6 md:pb-10">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
