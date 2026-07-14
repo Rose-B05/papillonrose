@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic"
 export async function GET() {
   const mode = await getSiteMode()
 
-  if (mode === "production") {
+  if (mode === "production" || mode === "seo_audit") {
     const body = `User-agent: *
 Allow: /
 
@@ -21,7 +21,7 @@ Sitemap: https://www.papillonrose.fr/sitemap.xml
     })
   }
 
-  // Development / préproduction — block all crawling
+  // Development — block all crawling
   // but allow social bots for link preview thumbnails
   const body = `User-agent: facebookexternalhit
 Allow: /

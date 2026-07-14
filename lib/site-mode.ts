@@ -6,8 +6,10 @@ export async function getRobotsMeta(): Promise<{ index: boolean; follow: boolean
     if (mode === "production") {
       return { index: true, follow: true }
     }
+    // development + seo_audit → noindex, nofollow
+    return { index: false, follow: false }
   } catch {
     // KV unavailable during build — default to safe mode (noindex)
+    return { index: false, follow: false }
   }
-  return { index: false, follow: false }
 }

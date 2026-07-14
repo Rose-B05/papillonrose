@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Search, Globe, Lock, AlertTriangle, CheckCircle, ExternalLink, FileText, Download, BarChart3 } from "lucide-react"
+import { Search, Globe, Lock, AlertTriangle, CheckCircle, ExternalLink, FileText, Download, BarChart3, Shield } from "lucide-react"
 import SeoAlerts from "@/components/admin/seo/SeoAlerts"
 import SecurityChecks from "@/components/admin/seo/SecurityChecks"
 import ScoreDisplay from "@/components/admin/seo/ScoreDisplay"
@@ -11,7 +11,7 @@ import PageControl from "@/components/admin/seo/PageControl"
 import QuickActions from "@/components/admin/seo/QuickActions"
 import HistoryPanel from "@/components/admin/seo/HistoryPanel"
 
-type SiteMode = "development" | "production"
+type SiteMode = "development" | "seo_audit" | "production"
 
 interface SeoData {
   mode: SiteMode
@@ -101,6 +101,8 @@ export default function SeoPage() {
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState("")
   const [activeTab, setActiveTab] = useState<"overview" | "robots" | "sitemap" | "pages" | "history">("overview")
+  const [showConfirmProd, setShowConfirmProd] = useState(false)
+  const [pendingMode, setPendingMode] = useState<SiteMode | null>(null)
 
   useEffect(() => {
     Promise.all([
@@ -115,9 +117,8 @@ export default function SeoPage() {
       .catch(() => setLoading(false))
   }, [])
 
-  async function toggleMode() {
+  async function switchMode(newMode: SiteMode) {
     if (!data) return
-    const newMode: SiteMode = data.mode === "production" ? "development" : "production"
     setSaving(true)
     setMsg("")
     try {
@@ -129,8 +130,12 @@ export default function SeoPage() {
       const result = await res.json()
       if (res.ok) {
         setData((prev) => prev ? { ...prev, mode: result.mode } : prev)
-        setMsg(result.mode === "production" ? "Mode Production activé." : "Mode Développement activé.")
-        // Refresh data
+        const labels: Record<SiteMode, string> = {
+          development: "Mode Développement activé.",
+          seo_audit: "Mode Audit SEO activé.",
+          production: "Mode Production activé.",
+        }
+        setMsg(labels[result.mode as SiteMode] || "Mode changé.")
         const fresh = await fetch("/api/admin/seo").then((r) => r.json())
         setData(fresh)
         const hist = await fetch("/api/admin/seo/history").then((r) => r.json())
@@ -146,6 +151,17 @@ export default function SeoPage() {
       setMsg("Erreur de connexion")
     }
     setSaving(false)
+    setShowConfirmProd(false)
+    setPendingMode(null)
+  }
+
+  function handleModeChange(newMode: SiteMode) {
+    if (newMode === "production" && data?.mode !== "production") {
+      setPendingMode(newMode)
+      setShowConfirmProd(true)
+    } else {
+      switchMode(newMode)
+    }
   }
 
   async function handleExport(format: string) {
@@ -179,54 +195,119 @@ export default function SeoPage() {
     )
   }
 
-  const isProduction = data.mode === "production"
+  const modeConfig: Record<SiteMode, { label: string; description: string; color: string; bgColor: string; borderColor: string; icon: typeof Globe }> = {
+    development: {
+      label: "Développement",
+      description: "Le site est totalement invisible. Aucun crawl, aucune indexation.",
+      color: "text-amber-700 dark:text-amber-400",
+      bgColor: "bg-amber-50 dark:bg-amber-950/30",
+      borderColor: "border-amber-200 dark:border-amber-800",
+      icon: Lock,
+    },
+    seo_audit: {
+      label: "Audit SEO",
+      description: "Crawl autorisé (Screaming Frog, Lighthouse), indexation désactivée.",
+      color: "text-blue-700 dark:text-blue-400",
+      bgColor: "bg-blue-50 dark:bg-blue-950/30",
+      borderColor: "border-blue-200 dark:border-blue-800",
+      icon: Search,
+    },
+    production: {
+      label: "Production",
+      description: "Le site est visible par les moteurs de recherche (Google, Bing, etc.).",
+      color: "text-green-700 dark:text-green-400",
+      bgColor: "bg-green-50 dark:bg-green-950/30",
+      borderColor: "border-green-200 dark:border-green-800",
+      icon: Globe,
+    },
+  }
+
+  const currentMode = data.mode as SiteMode
+  const cfg = modeConfig[currentMode]
+  const ModeIcon = cfg.icon
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      {/* Mode Toggle Card — EXISTING DESIGN KEPT */}
-      <div className={`rounded-2xl border p-6 ${isProduction ? "bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800" : "bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800"}`}>
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-start gap-3">
-            {isProduction ? (
-              <Globe size={22} className="text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-            ) : (
-              <Lock size={22} className="text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-            )}
-            <div>
-              <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">
-                {isProduction ? "Mode Production" : "Mode Développement"}
-              </h2>
-              <p className="text-sm text-gray-500 dark:text-neutral-400 mt-1">
-                {isProduction
-                  ? "Le site est visible par les moteurs de recherche (Google, Bing, etc.)."
-                  : "Le site est masqué des moteurs de recherche. Aucune page n'est indexée."}
-              </p>
+      {/* Confirmation Dialog */}
+      {showConfirmProd && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl p-6 max-w-md w-full mx-4 border border-black/[0.07] dark:border-white/[0.08]">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-950/50 flex items-center justify-center">
+                <Shield size={20} className="text-green-600 dark:text-green-400" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">Activer le mode Production</h3>
+                <p className="text-sm text-gray-500 dark:text-neutral-400">Cette action est irréversible sans intervention manuelle.</p>
+              </div>
+            </div>
+            <p className="text-sm text-[#2E2E2E]/70 dark:text-neutral-300 mb-6 leading-relaxed">
+              Le site deviendra <strong>indexable par Google</strong> et tous les moteurs de recherche. Les pages seront crawlées et référencées dans les résultats de recherche.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => { setShowConfirmProd(false); setPendingMode(null) }}
+                className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-neutral-400 hover:text-[#2E2E2E] dark:hover:text-neutral-100 transition-colors"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={() => pendingMode && switchMode(pendingMode)}
+                disabled={saving}
+                className="px-5 py-2 text-sm font-medium bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
+              >
+                {saving ? "Activation…" : "Confirmer"}
+              </button>
             </div>
           </div>
-          <button
-            onClick={toggleMode}
-            disabled={saving}
-            className={`relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-              isProduction
-                ? "bg-green-600 focus:ring-green-500"
-                : "bg-gray-300 dark:bg-neutral-600 focus:ring-amber-500"
-            } disabled:opacity-50`}
-            role="switch"
-            aria-checked={isProduction}
-          >
-            <span
-              className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${
-                isProduction ? "translate-x-5" : "translate-x-0"
-              }`}
-            />
-          </button>
+        </div>
+      )}
+
+      {/* Mode Toggle Card */}
+      <div className={`rounded-2xl border p-6 ${cfg.bgColor} ${cfg.borderColor}`}>
+        <div className="flex items-start gap-3 mb-5">
+          <ModeIcon size={22} className={`${cfg.color} mt-0.5 flex-shrink-0`} />
+          <div>
+            <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">
+              Mode {cfg.label}
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-1">
+              {cfg.description}
+            </p>
+          </div>
         </div>
 
-        {/* Banner */}
-        <div className={`mt-4 px-3 py-2 rounded-lg text-sm font-medium ${isProduction ? "bg-green-100/50 dark:bg-green-950/20 text-green-700 dark:text-green-400" : "bg-amber-100/50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400"}`}>
-          {isProduction
-            ? "✓ Le site est prêt à être indexé."
-            : "⚠ Le site est invisible des moteurs de recherche."}
+        {/* 3 Radio Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          {(["development", "seo_audit", "production"] as SiteMode[]).map((m) => {
+            const mc = modeConfig[m]
+            const McIcon = mc.icon
+            const isActive = currentMode === m
+            return (
+              <button
+                key={m}
+                onClick={() => handleModeChange(m)}
+                disabled={saving || isActive}
+                className={`flex-1 flex items-center gap-3 p-3 rounded-xl border-2 transition-all text-left ${
+                  isActive
+                    ? `${mc.borderColor} ${mc.bgColor}`
+                    : "border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:border-gray-300 dark:hover:border-neutral-600"
+                } ${saving ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+              >
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isActive ? mc.bgColor : "bg-gray-100 dark:bg-neutral-700"}`}>
+                  <McIcon size={16} className={isActive ? mc.color : "text-gray-400 dark:text-neutral-500"} />
+                </div>
+                <div>
+                  <p className={`text-sm font-semibold ${isActive ? "text-[#2E2E2E] dark:text-neutral-100" : "text-gray-600 dark:text-neutral-400"}`}>
+                    {mc.label}
+                  </p>
+                  {isActive && (
+                    <p className="text-[10px] text-[#2E2E2E]/50 dark:text-neutral-500 mt-0.5">Actif</p>
+                  )}
+                </div>
+              </button>
+            )
+          })}
         </div>
 
         {msg && (
@@ -236,23 +317,67 @@ export default function SeoPage() {
         )}
       </div>
 
-      {/* Status Grid — EXISTING DESIGN KEPT */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {/* Status Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatusCard
           label="robots.txt"
-          value={isProduction ? "Allow All" : "Disallow All"}
-          ok={isProduction}
+          value={currentMode === "development" ? "Disallow All" : "Allow All"}
+          ok={currentMode !== "development"}
         />
         <StatusCard
           label="sitemap.xml"
-          value={isProduction ? `${data.sitemap.urlCount} pages` : "Vide"}
-          ok={isProduction}
+          value={currentMode === "development" ? "Vide" : `${data.sitemap.urlCount} pages`}
+          ok={currentMode !== "development"}
         />
         <StatusCard
-          label="Meta robots"
-          value={isProduction ? "index, follow" : "noindex"}
-          ok={isProduction}
+          label="Meta Robots"
+          value={currentMode === "production" ? "index, follow" : "noindex, nofollow"}
+          ok={currentMode === "production"}
         />
+        <StatusCard
+          label="Crawl Google"
+          value={currentMode === "production" ? "Autorisé" : currentMode === "seo_audit" ? "Bloqué*" : "Bloqué"}
+          ok={currentMode === "production"}
+        />
+      </div>
+
+      {/* Mode Summary Table */}
+      <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-5">
+        <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Tableau récapitulatif</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-gray-100 dark:border-neutral-700">
+                <th className="text-left py-2 pr-4 text-xs text-gray-500 dark:text-neutral-400 font-medium">État</th>
+                <th className="text-center py-2 px-3 text-xs font-medium text-amber-700 dark:text-amber-400">Développement</th>
+                <th className="text-center py-2 px-3 text-xs font-medium text-blue-700 dark:text-blue-400">Audit SEO</th>
+                <th className="text-center py-2 px-3 text-xs font-medium text-green-700 dark:text-green-400">Production</th>
+              </tr>
+            </thead>
+            <tbody className="text-[#2E2E2E]/70 dark:text-neutral-300">
+              {[
+                { label: "robots.txt", dev: "Disallow /", audit: "Allow /", prod: "Allow /" },
+                { label: "Meta Robots", dev: "noindex", audit: "noindex", prod: "index, follow" },
+                { label: "Sitemap", dev: "Vide", audit: "Complet", prod: "Complet" },
+                { label: "Canonical", dev: "Actif", audit: "Actif", prod: "Actif" },
+                { label: "Crawl autorisé", dev: "Non", audit: "Oui", prod: "Oui" },
+                { label: "Indexation Google", dev: "Non", audit: "Non", prod: "Oui" },
+              ].map((row) => (
+                <tr key={row.label} className="border-b border-gray-50 dark:border-neutral-800 last:border-0">
+                  <td className="py-2.5 pr-4 font-medium text-xs">{row.label}</td>
+                  <td className="py-2.5 px-3 text-center text-xs">{row.dev}</td>
+                  <td className="py-2.5 px-3 text-center text-xs">{row.audit}</td>
+                  <td className="py-2.5 px-3 text-center text-xs">{row.prod}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {currentMode === "seo_audit" && (
+          <p className="text-[10px] text-blue-600 dark:text-blue-400 mt-3">
+            * En mode Audit SEO, le crawl est autorisé pour les outils (Screaming Frog, Lighthouse) mais Google ne peut pas indexer les pages grâce au meta noindex.
+          </p>
+        )}
       </div>
 
       {/* Tabs */}
@@ -290,7 +415,7 @@ export default function SeoPage() {
 
           <SeoAlerts alerts={data.alerts} />
 
-          <QuickActions mode={data.mode} onToggleMode={toggleMode} />
+          <QuickActions mode={data.mode} onToggleMode={() => handleModeChange(currentMode === "production" ? "development" : "production")} />
 
           {/* Export */}
           <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-5">

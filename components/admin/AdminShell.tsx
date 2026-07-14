@@ -14,7 +14,7 @@ export default function AdminShell({ children, title, action }: AdminShellProps)
   const [siteMode, setSiteMode] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch("/api/admin/site-mode")
+    fetch("/api/admin/seo")
       .then((r) => r.json())
       .then((data) => setSiteMode(data.mode))
       .catch(() => {})
@@ -31,6 +31,15 @@ export default function AdminShell({ children, title, action }: AdminShellProps)
             <AlertTriangle size={15} />
             <span>Mode Développement — Le site est masqué des moteurs de recherche</span>
             <a href="/admin/seo" className="ml-auto underline text-amber-100 hover:text-white text-xs">
+              Changer →
+            </a>
+          </div>
+        )}
+        {siteMode === "seo_audit" && (
+          <div className="bg-blue-500 text-white px-4 py-2 text-sm font-medium flex items-center gap-2 flex-shrink-0">
+            <AlertTriangle size={15} />
+            <span>Mode Audit SEO — Crawl autorisé, indexation désactivée</span>
+            <a href="/admin/seo" className="ml-auto underline text-blue-100 hover:text-white text-xs">
               Changer →
             </a>
           </div>

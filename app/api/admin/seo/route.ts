@@ -61,7 +61,7 @@ export async function PUT(request: NextRequest) {
   try {
     const { mode } = (await request.json()) as { mode: SiteMode }
 
-    if (mode !== "development" && mode !== "production") {
+    if (mode !== "development" && mode !== "seo_audit" && mode !== "production") {
       return NextResponse.json({ error: "Mode invalide" }, { status: 400 })
     }
 
@@ -85,8 +85,8 @@ export async function PUT(request: NextRequest) {
 
     await addSeoHistoryEntry({
       user: session.value.split("@")[0] || "admin",
-      action: `Passage en mode ${mode === "production" ? "Production" : "Développement"}`,
-      result: mode === "production" ? "Site indexé" : "Site masqué",
+      action: `Passage en mode ${mode === "production" ? "Production" : mode === "seo_audit" ? "Audit SEO" : "Développement"}`,
+      result: mode === "production" ? "Site indexé" : mode === "seo_audit" ? "Crawl autorisé, indexation désactivée" : "Site masqué",
       rollbackAvailable: true,
     })
 
