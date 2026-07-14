@@ -3,7 +3,7 @@ import { getSiteMode } from "./db"
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-export type SiteMode = "development" | "production"
+export type SiteMode = "development" | "seo_audit" | "production"
 
 export interface PageSeoInfo {
   path: string
@@ -265,6 +265,9 @@ export function calculateSeoScore(
   if (mode === "development") {
     indexationScore = 0
     blockingIssues.push("Mode Développement actif — site noindex")
+  } else if (mode === "seo_audit") {
+    indexationScore = 5
+    recommendations.push("Mode Audit SEO actif — crawling autorisé, indexation désactivée")
   } else {
     const criticalNoindex = pages.filter((p) => p.critical && p.robots.includes("noindex"))
     if (criticalNoindex.length > 0) {
@@ -324,6 +327,17 @@ export function generateAlerts(
       category: "robots.txt",
       message: "robots.txt bloque l'exploration (Disallow All)",
       action: "Basculer en mode Production pour autoriser l'exploration",
+      timestamp: now,
+    })
+  }
+
+  // SEO Audit mode info
+  if (mode === "seo_audit") {
+    alerts.push({
+      id: "seo-audit-active",
+      type: "info",
+      category: "Mode",
+      message: "Mode Audit SEO actif — crawl autorisé, indexation désactivée",
       timestamp: now,
     })
   }
@@ -407,12 +421,14 @@ export function getIndexationStats(
   pages: PageSeoInfo[]
 ): IndexationStats {
   const isProduction = mode === "production"
+  const isAudit = mode === "seo_audit"
   const indexablePages = pages.filter((p) => p.indexable).length
   const noindexPages = pages.filter((p) => !p.indexable).length
   const indexedPages = isProduction ? indexablePages : 0
   const nonIndexedPages = isProduction ? noindexPages : pages.length
   const excludedPages = pages.filter((p) => p.robots.includes("noindex")).length
   const blockedPages = mode === "development" ? pages.length : 0
+  const crawlablePages = isProduction || isAudit ? pages.length : 0
 
   return {
     totalPages: pages.length,
@@ -433,7 +449,7 @@ export function getIndexationStats(
 export function generateRobotsContent(mode: SiteMode): RobotsInfo {
   const now = new Date().toISOString()
 
-  if (mode === "production") {
+  if (mode === "production" || mode === "seo_audit") {
     return {
       content: `User-agent: *
 Allow: /
@@ -442,7 +458,7 @@ Sitemap: https://www.papillonrose.fr/sitemap.xml`,
       lastModified: now,
       isValid: true,
       errors: [],
-      warnings: [],
+      warnings: mode === "seo_audit" ? ["Mode Audit SEO — crawl autorisé, indexation désactivée"] : [],
     }
   }
 
@@ -459,8 +475,8 @@ Disallow: /`,
 // ─── Sitemap ────────────────────────────────────────────────────────────────
 
 export function generateSitemapInfo(mode: SiteMode): SitemapInfo {
-  const isProduction = mode === "production"
-  const pages = isProduction ? PAGE_DEFINITIONS.filter((p) => p.indexable) : []
+  const hasSitemap = mode === "production" || mode === "seo_audit"
+  const pages = hasSitemap ? PAGE_DEFINITIONS.filter((p) => p.indexable) : []
 
   const urls = pages.map((p) => {
     const priority = p.path === "/" ? "1.0" : p.critical ? "0.8" : "0.5"
@@ -480,7 +496,7 @@ ${urls.join("\n")}
     urlCount: pages.length,
     lastGenerated: new Date().toISOString(),
     sizeBytes: new TextEncoder().encode(content).length,
-    status: isProduction ? "valid" : "empty",
+    status: hasSitemap ? "valid" : "empty",
     content,
   }
 }

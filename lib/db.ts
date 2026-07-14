@@ -316,8 +316,9 @@ export async function getConfirmedNewsletterSubscribers(): Promise<NewsletterSub
 
 // ─── Site Mode ─────────────────────────────────────────────────────────────
 // "development" = noindex, sitemap vide, robots disallow
+// "seo_audit" = noindex, sitemap complet, robots allow (pour outils SEO)
 // "production" = indexation activée, sitemap complet, robots allow
-export type SiteMode = "development" | "production"
+export type SiteMode = "development" | "seo_audit" | "production"
 
 const SITE_MODE_KEY = "site_mode"
 
