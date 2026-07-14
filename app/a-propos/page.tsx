@@ -1,6 +1,6 @@
 ﻿import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, Crown, ShieldCheck, Heart } from "lucide-react"
+import { ArrowRight, Crown, ShieldCheck, Heart } from "lucide-react"
 import { getActiveProductsCount } from "@/data/produits"
 
 export const metadata: Metadata = {
@@ -66,15 +66,17 @@ export default function AProposPage() {
       </section>
 
       <div className="max-w-4xl mx-auto px-5 md:px-10 pb-16">
-        {/* Notre histoire */}
-        <section className="mt-12 mb-16">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors mb-8"
-          >
-            <ArrowLeft size={14} /> Retour a l&apos;accueil
-          </Link>
+        {/* Breadcrumb */}
+        <nav className="pt-6 pb-2">
+          <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-neutral-500">
+            <li><Link href="/" className="hover:text-[#C8A97E] transition-colors">Accueil</Link></li>
+            <li>/</li>
+            <li className="text-[#2E2E2E] dark:text-neutral-100 font-medium">À propos</li>
+          </ol>
+        </nav>
 
+        {/* Notre histoire */}
+        <section className="mt-8 mb-16">
           <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
             Notre histoire
           </p>
@@ -82,28 +84,56 @@ export default function AProposPage() {
             style={DP}
             className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-6"
           >
-            Une passion devenue métier
+            L&apos;histoire de Papillon Rose
           </h2>
           <div className="space-y-4 text-sm text-[#2E2E2E]/70 dark:text-neutral-300 leading-relaxed">
             <p>
-              Tout a commencé par un regard posé sur une table de réception, un jour de
-              mariage. Ce détail qui transforme un simple buffet en moment de magie : une
-              nappe aux couleurs parfaites, un photophore qui capte la lumière, une fleur
-              disposée avec soin. C&apos;est cette émotion que Papillon Rose veut reproduire
-              pour chaque événement.
+              Papillon Rose est avant tout une histoire de passion.
             </p>
             <p>
-              Née d&apos;une passion pour la décoration d&apos;intérieur et l&apos;organisation
-              d&apos;événements, Papillon Rose a pour vocation de rendre accessible à tous des
-              pièces de qualité, soigneusement sélectionnées pour leur elegance et leur
-              charme. Chaque article du catalogue raconte une histoire et contribue a
-              créer l&apos;atmosphere unique que vous recherchez.
+              Tout a commencé lors de la préparation de mon propre mariage.
+              Passionnée par la décoration, j&apos;ai imaginé et réalisé un univers qui me
+              ressemblait, en accordant une attention particulière à chaque détail afin de
+              créer une ambiance chaleureuse et harmonieuse.
             </p>
             <p>
-              Aujourd&apos;hui, Papillon Rose accompagne mariages, baptêmes, anniversaires
-              et soirées d&apos;entreprise a travers toute l&apos;Île-de-France. Notre
-              ambition reste la même : offrir un service attentionné, un stock fiable et
-              des creations qui font briller vos plus beaux souvenirs.
+              Les nombreux compliments reçus ce jour-là m&apos;ont donné envie d&apos;aller
+              plus loin. J&apos;ai alors commencé à décorer les événements de mes proches,
+              puis ceux de particuliers. Au fil des années, cette passion s&apos;est
+              transformée en une véritable activité.
+            </p>
+            <p>
+              Depuis 2016, j&apos;ai eu le plaisir de concevoir et de décorer plus de 30
+              événements privés : mariages, anniversaires, baptêmes, baby showers et autres
+              moments de vie. Chaque projet m&apos;a permis de développer une conviction
+              forte : une décoration réussie ne consiste pas seulement à embellir un lieu,
+              mais à créer une ambiance qui reflète l&apos;histoire, les envies et les
+              émotions de chaque client.
+            </p>
+            <p>
+              Très rapidement, une même question revenait après chaque prestation :{" "}
+              <em className="text-[#C8A97E] dark:text-amber-400 not-italic font-medium">
+                &laquo;&nbsp;Est-ce que vous louez aussi votre décoration ?&nbsp;&raquo;
+              </em>
+            </p>
+            <p>
+              Pendant longtemps, je n&apos;ai pas donné suite à cette idée. La gestion
+              d&apos;un parc de location me semblait représenter une charge de travail
+              importante et je préférais me concentrer sur la décoration
+              d&apos;événements.
+            </p>
+            <p>
+              Puis, en juillet 2026, en décidant de créer le site internet de Papillon
+              Rose, cette idée s&apos;est imposée comme une évidence. J&apos;ai réalisé
+              qu&apos;il était possible d&apos;allier ma passion pour la décoration à une
+              offre de location, permettant à chacun de créer un événement élégant,
+              personnalisé et responsable, quel que soit son budget.
+            </p>
+            <p>
+              C&apos;est ainsi qu&apos;est née la nouvelle identité de Papillon Rose : un
+              concept dédié à la location de décoration événementielle, inspiré par
+              l&apos;expérience, la créativité et l&apos;envie de rendre chaque
+              célébration unique.
             </p>
           </div>
         </section>

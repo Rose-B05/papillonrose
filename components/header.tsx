@@ -20,6 +20,7 @@ const NAV_ITEMS = [
   { label: "Panier", href: "/reservation" },
   { label: "Favoris", href: "/favoris" },
   { label: "Contact", href: "/contact" },
+  { label: "À propos", href: "/a-propos" },
 ] as const
 
 export default function Header() {
@@ -69,7 +70,7 @@ export default function Header() {
             />
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 mr-8">
+          <div className="hidden md:flex items-center gap-6 mr-8">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
