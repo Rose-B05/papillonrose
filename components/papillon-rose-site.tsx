@@ -605,8 +605,6 @@ export default function PapillonRoseSite() {
 
   return (
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 font-sans text-[#2E2E2E] dark:text-neutral-100 overflow-x-hidden">
-      <div className="h-16 md:h-20" />
-
       <div>
         {/* ─── HOME ─── */}
         {page === "home" && (

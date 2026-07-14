@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ShoppingBag, Heart, User, Menu, X } from "lucide-react"
+import { ShoppingBag, Heart, User, Menu, X, FileText } from "lucide-react"
 import { useCart } from "@/components/cart-context"
 import { useFavorites } from "@/components/favorites-context"
 
@@ -156,6 +156,13 @@ export default function Header() {
                 }
               />
             </a>
+            <Link
+              href="/reservation"
+              className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors bg-[#C8A97E]/90 dark:bg-amber-600/90 text-white hover:bg-[#B8926E] dark:hover:bg-amber-700"
+            >
+              <FileText size={15} />
+              <span className="font-medium">Devis</span>
+            </Link>
             <button
               onClick={() => setShowMenu(true)}
               aria-label="Menu"
