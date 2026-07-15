@@ -77,6 +77,24 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: "/admin/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
+        source: "/api/admin/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
     ]
   },
 }

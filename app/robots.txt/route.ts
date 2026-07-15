@@ -10,6 +10,7 @@ export async function GET() {
   if (mode === "production" || mode === "seo_audit") {
     const body = `User-agent: *
 Allow: /
+Disallow: /admin/
 
 Sitemap: https://www.papillonrose.fr/sitemap.xml
 `
@@ -39,6 +40,7 @@ User-agent: WhatsApp
 Allow: /
 
 User-agent: *
+Disallow: /admin/
 Disallow: /
 `
   return new NextResponse(body, {

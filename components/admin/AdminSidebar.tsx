@@ -23,6 +23,7 @@ import {
   PackageCheck,
   TrendingUp,
   LogOut,
+  KeyRound,
 } from "lucide-react"
 
 const NAV_ITEMS = [
@@ -39,6 +40,7 @@ const NAV_ITEMS = [
   { label: "Formulaires", icon: Inbox, href: "/admin/formulaires" },
   { label: "Utilisateurs", icon: Users, href: "/admin/utilisateurs" },
   { label: "Paramètres", icon: Settings, href: "/admin/parametres" },
+  { label: "Mot de passe", icon: KeyRound, href: "/admin/parametres/mot-de-passe" },
   { label: "Audit", icon: ClipboardCheck, href: "/admin/audit" },
   { label: "Notifications", icon: Bell, href: "/admin/notifications" },
 ] as const
