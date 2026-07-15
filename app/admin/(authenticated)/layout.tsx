@@ -15,6 +15,7 @@ const PAGE_TITLES: Record<string, string> = {
   "/admin/formulaires": "Formulaires",
   "/admin/utilisateurs": "Utilisateurs",
   "/admin/parametres": "Paramètres",
+  "/admin/parametres/mot-de-passe": "Mot de passe",
   "/admin/audit": "Audit",
   "/admin/notifications": "Notifications",
   "/admin/restitutions": "Restitutions",
