@@ -9,11 +9,12 @@ export function getAdminEmail(): string {
 }
 
 export async function getAdminPasswordHash(): Promise<string> {
+  const envHash = process.env.ADMIN_PASSWORD_HASH || ""
   try {
     const kvHash = await kv.get<string>("admin_password_hash")
-    if (kvHash) return kvHash
+    if (kvHash && kvHash !== envHash) return kvHash
   } catch {}
-  return process.env.ADMIN_PASSWORD_HASH || ""
+  return envHash
 }
 
 export async function verifyAdmin(email: string, password: string): Promise<boolean> {
