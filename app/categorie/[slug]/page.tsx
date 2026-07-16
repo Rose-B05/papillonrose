@@ -8,6 +8,7 @@ import {
   getProductsByCategory,
   getCategoryImage,
   getProductImage,
+  getProductSlug,
   CATEGORY_DESCRIPTIONS,
 } from "@/lib/product-helpers"
 import { getRobotsMeta } from "@/lib/site-mode"
@@ -93,7 +94,7 @@ export default async function CategoryPage({ params }: Props) {
           {products.map((p) => (
             <Link
               key={p.id}
-              href={`/produit/${getCategorySlug(p.categorie)}`}
+              href={`/produit/${getProductSlug(p)}`}
               className="group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col"
             >
               <div className="relative overflow-hidden aspect-square bg-[#F8F5F0] dark:bg-neutral-900">
