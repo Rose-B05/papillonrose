@@ -9,6 +9,7 @@ import { getActiveProductsCount } from '@/data/produits'
 import { getRobotsMeta } from '@/lib/site-mode'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'] })
 const playfair = Playfair_Display({
@@ -127,6 +128,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
+        <GoogleAnalytics gaId="G-R10JKQ1YJ3" />
         <CartProvider>
           <FavoritesProvider>
             <ThemeProvider>
