@@ -1,6 +1,103 @@
 import { kv } from "@vercel/kv"
 import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView, NewsletterSubscriber } from "./types"
 
+// ─── Media Library ───
+export interface MediaItem {
+  id: string
+  url: string
+  nomFichier: string
+  dateUpload: string
+  utilisePar: number[]
+}
+
+const MEDIA_INDEX = "media_library:index"
+
+export async function getMediaLibrary(): Promise<MediaItem[]> {
+  const ids = await kv.get<string[]>(MEDIA_INDEX)
+  if (!ids || ids.length === 0) return []
+  const values = await kv.mget<MediaItem[]>(...ids.map((id) => `media:${id}`))
+  return values.filter((v): v is MediaItem => v !== null)
+}
+
+export async function getMediaItem(id: string): Promise<MediaItem | undefined> {
+  const item = await kv.get<MediaItem>(`media:${id}`)
+  return item ?? undefined
+}
+
+export async function saveMediaItem(item: MediaItem): Promise<void> {
+  await kv.set(`media:${item.id}`, item)
+  const ids = (await kv.get<string[]>(MEDIA_INDEX)) || []
+  if (!ids.includes(item.id)) {
+    ids.push(item.id)
+    await kv.set(MEDIA_INDEX, ids)
+  }
+}
+
+export async function deleteMediaItem(id: string): Promise<void> {
+  await kv.del(`media:${id}`)
+  const ids = (await kv.get<string[]>(MEDIA_INDEX)) || []
+  const filtered = ids.filter((i) => i !== id)
+  await kv.set(MEDIA_INDEX, filtered)
+}
+
+// ─── Admin Products (managed via KV) ───
+export type AdminProductStatus = "brouillon" | "publie"
+
+export interface AdminProduct {
+  id: number
+  nom: string
+  categorie: string
+  stock: number
+  dimension?: string
+  prix: number | string
+  image: string
+  gallerie?: string[]
+  description?: string
+  pieceUnique?: boolean
+  tagsThemes?: string[]
+  tagsCouleurs?: string[]
+  status: AdminProductStatus
+  dateCreation: string
+  dateModification: string
+}
+
+const ADMIN_PRODUCTS_INDEX = "admin_products:index"
+
+export async function getAdminProducts(): Promise<AdminProduct[]> {
+  const ids = await kv.get<string[]>(ADMIN_PRODUCTS_INDEX)
+  if (!ids || ids.length === 0) return []
+  const values = await kv.mget<AdminProduct[]>(...ids.map((id) => `admin_product:${id}`))
+  return values.filter((v): v is AdminProduct => v !== null)
+}
+
+export async function getAdminProduct(id: number): Promise<AdminProduct | undefined> {
+  const product = await kv.get<AdminProduct>(`admin_product:${id}`)
+  return product ?? undefined
+}
+
+export async function saveAdminProduct(product: AdminProduct): Promise<void> {
+  await kv.set(`admin_product:${product.id}`, product)
+  const ids = (await kv.get<string[]>(ADMIN_PRODUCTS_INDEX)) || []
+  const idStr = String(product.id)
+  if (!ids.includes(idStr)) {
+    ids.push(idStr)
+    await kv.set(ADMIN_PRODUCTS_INDEX, ids)
+  }
+}
+
+export async function deleteAdminProduct(id: number): Promise<void> {
+  await kv.del(`admin_product:${id}`)
+  const ids = (await kv.get<string[]>(ADMIN_PRODUCTS_INDEX)) || []
+  const filtered = ids.filter((i) => i !== String(id))
+  await kv.set(ADMIN_PRODUCTS_INDEX, filtered)
+}
+
+export async function getNextAdminProductId(): Promise<number> {
+  const products = await getAdminProducts()
+  if (products.length === 0) return 1000
+  return Math.max(...products.map((p) => p.id)) + 1
+}
+
 // ─── Bookings ───
 const BOOKINGS_INDEX = "bookings:index"
 

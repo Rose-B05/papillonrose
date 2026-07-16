@@ -1,13 +1,5 @@
-import ModulePlaceholder from "@/components/admin/ModulePlaceholder"
-import { FileEdit } from "lucide-react"
+import { redirect } from "next/navigation"
 
 export default function ContenuPage() {
-  return (
-    <ModulePlaceholder
-      title="Contenu"
-      description="Gestion des pages, médias et catégories"
-      icon={FileEdit}
-      phase="Phase 1"
-    />
-  )
+  redirect("/admin/contenu/produits")
 }

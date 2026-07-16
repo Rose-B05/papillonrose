@@ -36,7 +36,7 @@ const NAV_ITEMS = [
   { label: "Google Ads", icon: Megaphone, href: "/admin/ads" },
   { label: "Performance", icon: Gauge, href: "/admin/performance" },
   { label: "Sécurité", icon: Shield, href: "/admin/securite" },
-  { label: "Contenu", icon: FileEdit, href: "/admin/contenu" },
+  { label: "Produits", icon: FileEdit, href: "/admin/contenu/produits" },
   { label: "Formulaires", icon: Inbox, href: "/admin/formulaires" },
   { label: "Utilisateurs", icon: Users, href: "/admin/utilisateurs" },
   { label: "Paramètres", icon: Settings, href: "/admin/parametres" },
