@@ -1,22 +1,13 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-} from "recharts"
-import { BarChart3, Users, Eye, MousePointerClick, RefreshCw, AlertTriangle } from "lucide-react"
 
-interface Ga4Data {
-  totals: { activeUsers: number; sessions: number; screenPageViews: number; keyEvents: number }
-  timeline: { date: string; sessions: number }[]
-  channels: { channel: string; sessions: number; keyEvents: number }[]
-  pages: { pagePath: string; pageTitle: string; screenPageViews: number; activeUsers: number }[]
+import { BarChart3, Users, Eye, RefreshCw, AlertTriangle } from "lucide-react"
+
+interface AnalyticsData {
+  visitors: number
+  pageViews: number
+  topPages: { page: string; views: number }[]
 }
 
 type Period = "7" | "30" | "90"
@@ -26,11 +17,6 @@ const PERIOD_OPTIONS: { value: Period; label: string }[] = [
   { value: "30", label: "30 jours" },
   { value: "90", label: "90 jours" },
 ]
-
-function formatDate(dateStr: string) {
-  if (dateStr.length !== 8) return dateStr
-  return `${dateStr.slice(6, 8)}/${dateStr.slice(4, 6)}`
-}
 
 function formatNumber(n: number) {
   return n.toLocaleString("fr-FR")
@@ -46,7 +32,7 @@ const TABLE_CELL = "px-5 py-3 text-sm"
 
 export default function AnalyticsPage() {
   const [period, setPeriod] = useState<Period>("30")
-  const [data, setData] = useState<Ga4Data | null>(null)
+  const [data, setData] = useState<AnalyticsData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -82,7 +68,7 @@ export default function AnalyticsPage() {
               Analytics
             </h1>
             <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
-              Trafic, sessions et comportement visiteurs — Google Analytics 4
+              Trafic et visiteurs — Vercel Web Analytics
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -116,7 +102,7 @@ export default function AnalyticsPage() {
             <AlertTriangle className="w-8 h-8 text-red-400 mx-auto mb-3" />
             <p className="text-red-700 dark:text-red-300 font-medium">{error}</p>
             <p className="text-sm text-red-500 dark:text-red-400 mt-1">
-              Vérifiez la configuration GA4 dans les variables d&apos;environnement.
+              Vérifiez la configuration Vercel Analytics dans les variables d&apos;environnement.
             </p>
           </div>
         )}
@@ -130,176 +116,57 @@ export default function AnalyticsPage() {
         {data && !error && (
           <>
             {/* KPI Cards */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 gap-4 mb-8">
               <KpiCard
-                label="Utilisateurs actifs"
-                value={formatNumber(data.totals.activeUsers)}
+                label="Visiteurs"
+                value={formatNumber(data.visitors)}
                 icon={Users}
               />
               <KpiCard
-                label="Sessions"
-                value={formatNumber(data.totals.sessions)}
-                icon={MousePointerClick}
-              />
-              <KpiCard
                 label="Pages vues"
-                value={formatNumber(data.totals.screenPageViews)}
+                value={formatNumber(data.pageViews)}
                 icon={Eye}
               />
-              <KpiCard
-                label="Événements clés"
-                value={formatNumber(data.totals.keyEvents)}
-                icon={BarChart3}
-              />
             </div>
 
-            {/* Sessions Timeline */}
+            {/* Top Pages */}
             <div className={`${CARD_STYLES} mb-8`}>
               <h2 className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-4">
-                Évolution des sessions
+                Top pages visitées
               </h2>
-              {data.timeline.length > 0 ? (
-                <div className="h-72">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={data.timeline}>
-                      <defs>
-                        <linearGradient id="colorSessions" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#C8A97E" stopOpacity={0.3} />
-                          <stop offset="95%" stopColor="#C8A97E" stopOpacity={0} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
-                      <XAxis
-                        dataKey="date"
-                        tickFormatter={formatDate}
-                        tick={{ fontSize: 12, fill: "#9ca3af" }}
-                        axisLine={false}
-                        tickLine={false}
-                      />
-                      <YAxis
-                        tick={{ fontSize: 12, fill: "#9ca3af" }}
-                        axisLine={false}
-                        tickLine={false}
-                        allowDecimals={false}
-                      />
-                      <Tooltip
-                        labelFormatter={(v: string) => formatDate(String(v))}
-                        contentStyle={{
-                          background: "#fff",
-                          border: "1px solid rgba(0,0,0,0.08)",
-                          borderRadius: 12,
-                          fontSize: 13,
-                        }}
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="sessions"
-                        stroke="#C8A97E"
-                        strokeWidth={2}
-                        fill="url(#colorSessions)"
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
+              {data.topPages.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-black/[0.07] dark:border-white/[0.08]">
+                        <th className={`text-left ${TABLE_CELL} ${TABLE_HEADER}`}>Page</th>
+                        <th className={`text-right ${TABLE_CELL} ${TABLE_HEADER}`}>Vues</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.topPages.map((p) => (
+                        <tr
+                          key={p.page}
+                          className="border-b border-black/[0.03] hover:bg-[#F8F5F0] dark:hover:bg-neutral-700/50 transition-colors"
+                        >
+                          <td className={`${TABLE_CELL} max-w-[400px] truncate`}>
+                            <span className="font-medium text-[#2E2E2E] dark:text-neutral-100 block truncate">
+                              {p.page}
+                            </span>
+                          </td>
+                          <td className={`${TABLE_CELL} text-right text-gray-500 dark:text-neutral-400`}>
+                            {formatNumber(p.views)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               ) : (
-                <p className="text-center py-10 text-gray-400 dark:text-neutral-500 text-sm">
-                  Aucune donnée de trafic sur cette période.
+                <p className="text-center py-8 text-gray-400 dark:text-neutral-500 text-sm">
+                  Aucune donnée de pages sur cette période.
                 </p>
               )}
-            </div>
-
-            {/* Tables grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Channels */}
-              <div className={CARD_STYLES}>
-                <h2 className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-4">
-                  Canaux d&apos;acquisition
-                </h2>
-                {data.channels.length > 0 ? (
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="border-b border-black/[0.07] dark:border-white/[0.08]">
-                          <th className={`text-left ${TABLE_CELL} ${TABLE_HEADER}`}>Canal</th>
-                          <th className={`text-right ${TABLE_CELL} ${TABLE_HEADER}`}>Sessions</th>
-                          <th className={`text-right ${TABLE_CELL} ${TABLE_HEADER}`}>Événements</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.channels.map((ch) => (
-                          <tr
-                            key={ch.channel}
-                            className="border-b border-black/[0.03] hover:bg-[#F8F5F0] dark:hover:bg-neutral-700/50 transition-colors"
-                          >
-                            <td className={`${TABLE_CELL} font-medium text-[#2E2E2E] dark:text-neutral-100`}>
-                              {ch.channel}
-                            </td>
-                            <td className={`${TABLE_CELL} text-right text-gray-500 dark:text-neutral-400`}>
-                              {formatNumber(ch.sessions)}
-                            </td>
-                            <td className={`${TABLE_CELL} text-right text-gray-500 dark:text-neutral-400`}>
-                              {formatNumber(ch.keyEvents)}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <p className="text-center py-8 text-gray-400 dark:text-neutral-500 text-sm">
-                    Aucune donnée de canaux.
-                  </p>
-                )}
-              </div>
-
-              {/* Pages */}
-              <div className={CARD_STYLES}>
-                <h2 className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-4">
-                  Top 10 pages
-                </h2>
-                {data.pages.length > 0 ? (
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="border-b border-black/[0.07] dark:border-white/[0.08]">
-                          <th className={`text-left ${TABLE_CELL} ${TABLE_HEADER}`}>Page</th>
-                          <th className={`text-right ${TABLE_CELL} ${TABLE_HEADER}`}>Vues</th>
-                          <th className={`text-right ${TABLE_CELL} ${TABLE_HEADER}`}>Visiteurs</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.pages.map((p) => (
-                          <tr
-                            key={p.pagePath}
-                            className="border-b border-black/[0.03] hover:bg-[#F8F5F0] dark:hover:bg-neutral-700/50 transition-colors"
-                          >
-                            <td className={`${TABLE_CELL} max-w-[200px] truncate`}>
-                              <span className="font-medium text-[#2E2E2E] dark:text-neutral-100 block truncate">
-                                {p.pageTitle || p.pagePath}
-                              </span>
-                              {p.pageTitle && p.pagePath !== p.pageTitle && (
-                                <span className="text-xs text-gray-400 dark:text-neutral-500 block truncate">
-                                  {p.pagePath}
-                                </span>
-                              )}
-                            </td>
-                            <td className={`${TABLE_CELL} text-right text-gray-500 dark:text-neutral-400`}>
-                              {formatNumber(p.screenPageViews)}
-                            </td>
-                            <td className={`${TABLE_CELL} text-right text-gray-500 dark:text-neutral-400`}>
-                              {formatNumber(p.activeUsers)}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <p className="text-center py-8 text-gray-400 dark:text-neutral-500 text-sm">
-                    Aucune donnée de pages.
-                  </p>
-                )}
-              </div>
             </div>
           </>
         )}

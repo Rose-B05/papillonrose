@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { COOKIE_NAME } from "@/lib/auth"
-import { getGa4Dashboard } from "@/lib/ga4-reports"
+import { getVercelAnalytics } from "@/lib/vercel-analytics"
 
 export const runtime = "nodejs"
 
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   const period = request.nextUrl.searchParams.get("period") || "30"
 
   try {
-    const data = await getGa4Dashboard(period)
+    const data = await getVercelAnalytics(period)
 
     return NextResponse.json(data, {
       headers: {
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
       },
     })
   } catch (error: any) {
-    console.error("Erreur GA4:", error?.message || error)
+    console.error("Erreur Vercel Analytics:", error?.message || error)
     return NextResponse.json(
       {
         error: "Impossible de récupérer les données analytics.",
