@@ -7,8 +7,7 @@ import { FavoritesProvider } from '@/components/favorites-context'
 import { ThemeProvider } from '@/lib/theme-context'
 import { getActiveProductsCount } from '@/data/produits'
 import { getRobotsMeta } from '@/lib/site-mode'
-import Header from '@/components/header'
-import Footer from '@/components/footer'
+import LayoutWrapper from '@/components/layout-wrapper'
 import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'] })
@@ -132,9 +131,9 @@ export default function RootLayout({
         <CartProvider>
           <FavoritesProvider>
             <ThemeProvider>
-              <Header />
-              {children}
-              <Footer />
+              <LayoutWrapper>
+                {children}
+              </LayoutWrapper>
               {process.env.NODE_ENV === 'production' && <Analytics />}
             </ThemeProvider>
           </FavoritesProvider>
