@@ -146,7 +146,7 @@ function ProductCard({
   dynamicStock?: Record<number, number>
 }) {
   const getSrc = () => {
-    if (product.image && product.image !== "/placeholder.png") return product.image
+    if (product.image && !product.image.includes("placeholder")) return product.image
     if (product.gallerie && product.gallerie.length > 0) return product.gallerie[0]
     return "/placeholder.svg"
   }

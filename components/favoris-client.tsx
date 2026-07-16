@@ -51,7 +51,7 @@ export default function FavorisClient() {
             const slug = getProductSlug(p)
             const isInCart = cartItems.some((i) => i.productId === p.id)
             const getSrc = () => {
-              if (p.image && p.image !== "/placeholder.png") return p.image
+              if (p.image && !p.image.includes("placeholder")) return p.image
               if (p.gallerie && p.gallerie.length > 0) return p.gallerie[0]
               return "/placeholder.svg"
             }

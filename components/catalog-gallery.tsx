@@ -25,7 +25,7 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
   const [lightbox, setLightbox] = useState<{ product: Produit; index: number } | null>(null)
 
   const getSrc = (p: Produit) => {
-    if (p.image && p.image !== "/placeholder.png") return p.image
+    if (p.image && !p.image.includes("placeholder")) return p.image
     if (p.gallerie && p.gallerie.length > 0) return p.gallerie[0]
     return "/placeholder.svg"
   }

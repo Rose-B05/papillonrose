@@ -7,6 +7,7 @@ import {
   getCategorySlug,
   getProductsByCategory,
   getCategoryImage,
+  getProductImage,
   CATEGORY_DESCRIPTIONS,
 } from "@/lib/product-helpers"
 import { getRobotsMeta } from "@/lib/site-mode"
@@ -97,7 +98,7 @@ export default async function CategoryPage({ params }: Props) {
             >
               <div className="relative overflow-hidden aspect-square bg-[#F8F5F0] dark:bg-neutral-900">
                 <img
-                  src={p.image && !p.image.includes("placeholder") ? p.image : "/placeholder.svg"}
+                  src={getProductImage(p)}
                   alt={p.nom}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"

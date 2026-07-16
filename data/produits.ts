@@ -51,7 +51,7 @@ export const produits: Produit[] = [
     stock: 1,
     dimension: "200 x 200 cm",
     prix: 60,
-    image: "/images/placeholder.png",
+    image: "/images/PROD002.png",
   },
   {
     id: 3,
@@ -105,7 +105,7 @@ export const produits: Produit[] = [
     stock: 15,
     dimension: "6.5 - 24 cm",
     prix: "0.50 - 0.80",
-    image: "/images/placeholder.png",
+    image: "/images/PROD008.png",
   },
   {
     id: 9,
@@ -139,7 +139,7 @@ export const produits: Produit[] = [
     categorie: "Figurines & Jeux",
     stock: 1,
     prix: 20,
-    image: "/images/placeholder.png",
+    image: "/images/PROD012.png",
   },
   {
     id: 13,
@@ -147,7 +147,7 @@ export const produits: Produit[] = [
     categorie: "Figurines & Jeux",
     stock: 1,
     prix: 10,
-    image: "/images/placeholder.png",
+    image: "/images/PROD013.png",
   },
   {
     id: 14,
@@ -279,7 +279,7 @@ export const produits: Produit[] = [
     categorie: "Bougeoirs & Lustres",
     stock: 2,
     prix: 30,
-    image: "/images/placeholder.png",
+    image: "/images/PROD026.png",
   },
   {
     id: 27,
@@ -349,7 +349,7 @@ export const produits: Produit[] = [
     categorie: "Verreries",
     stock: 71,
     prix: 0.50,
-    image: "/images/placeholder.png",
+    image: "/images/PROD034.png",
   },
   {
     id: 35,
@@ -375,7 +375,7 @@ export const produits: Produit[] = [
     stock: 2,
     dimension: "5.5 L",
     prix: 15,
-    image: "/images/placeholder.png",
+    image: "/images/PROD037.png",
   },
   {
     id: 38,
@@ -383,7 +383,7 @@ export const produits: Produit[] = [
     categorie: "Verreries",
     stock: 1,
     prix: 4,
-    image: "/images/placeholder.png",
+    image: "/images/PROD038.png",
   },
 
   // ── CADRES ──
@@ -403,7 +403,7 @@ export const produits: Produit[] = [
     stock: 2,
     dimension: "18 x 13 cm",
     prix: 2.50,
-    image: "/images/placeholder.png",
+    image: "/images/PROD040.png",
   },
   {
     id: 41,
@@ -789,6 +789,6 @@ export const produits: Produit[] = [
     categorie: "Fleurs & Feuillages",
     stock: 3,
     prix: 15,
-    image: "/images/placeholder.png",
+    image: "/images/PROD084.png",
   },
 ];
