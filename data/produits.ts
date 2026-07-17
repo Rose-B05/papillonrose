@@ -139,7 +139,7 @@ export const produits: Produit[] = [
     categorie: "Figurines & Jeux",
     stock: 1,
     prix: 20,
-    image: "/images/PROD012.png",
+    image: "/images/prod012.png",
   },
   {
     id: 13,
@@ -147,7 +147,7 @@ export const produits: Produit[] = [
     categorie: "Figurines & Jeux",
     stock: 1,
     prix: 10,
-    image: "/images/PROD013.png",
+    image: "/images/prod013.png",
   },
   {
     id: 14,
