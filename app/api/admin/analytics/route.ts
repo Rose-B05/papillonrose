@@ -7,19 +7,17 @@ const VERCEL_TOKEN = process.env.VERCEL_API_TOKEN
 const PROJECT_ID = process.env.VERCEL_PROJECT_ID || "prj_QNrSDgSIf4VZRr7a8GYdkWNO0YlI"
 const TEAM_ID = "team_pc8K2oDR9AzAzsZwuoFvqNjk"
 
-async function queryVercelAnalytics(endpoint: string, params: Record<string, string>) {
+async function queryVercel(endpoint: string, params: Record<string, string>) {
   const qs = new URLSearchParams(params).toString()
   const url = `https://api.vercel.com${endpoint}?${qs}`
-
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${VERCEL_TOKEN}` },
   })
-
   if (!res.ok) {
     const body = await res.text()
-    throw new Error(`Vercel API ${res.status}: ${body}`)
+    console.error(`Vercel API ${res.status}: ${body}`)
+    return { data: [] }
   }
-
   return res.json()
 }
 
@@ -28,7 +26,6 @@ export async function GET(request: NextRequest) {
   if (!session?.value) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
   }
-
   if (!VERCEL_TOKEN) {
     return NextResponse.json({ error: "VERCEL_API_TOKEN non configuré" }, { status: 500 })
   }
@@ -38,122 +35,59 @@ export async function GET(request: NextRequest) {
   let since: Date
 
   switch (period) {
-    case "7d":
-      since = new Date(now.getTime() - 7 * 86400000)
-      break
-    case "90d":
-      since = new Date(now.getTime() - 90 * 86400000)
-      break
-    case "365d":
-      since = new Date(now.getTime() - 365 * 86400000)
-      break
-    default:
-      since = new Date(now.getTime() - 30 * 86400000)
+    case "7d": since = new Date(now.getTime() - 7 * 86400000); break
+    case "90d": since = new Date(now.getTime() - 90 * 86400000); break
+    case "365d": since = new Date(now.getTime() - 365 * 86400000); break
+    default: since = new Date(now.getTime() - 30 * 86400000)
   }
 
   const sinceStr = since.toISOString()
   const untilStr = now.toISOString()
+  const baseParams = { projectId: PROJECT_ID, teamId: TEAM_ID, since: sinceStr, until: untilStr }
 
   try {
     const [byDay, topPages, topReferrers, byCountry, byDevice] = await Promise.all([
-      queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
-        projectId: PROJECT_ID,
-        teamId: TEAM_ID,
-        by: "day",
-        since: sinceStr,
-        until: untilStr,
-        limit: "100",
-      }),
-      queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
-        projectId: PROJECT_ID,
-        teamId: TEAM_ID,
-        by: "requestPath",
-        since: sinceStr,
-        until: untilStr,
-        limit: "25",
-      }),
-      queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
-        projectId: PROJECT_ID,
-        teamId: TEAM_ID,
-        by: "referrerHostname",
-        since: sinceStr,
-        until: untilStr,
-        limit: "15",
-      }),
-      queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
-        projectId: PROJECT_ID,
-        teamId: TEAM_ID,
-        by: "country",
-        since: sinceStr,
-        until: untilStr,
-        limit: "15",
-      }),
-      queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
-        projectId: PROJECT_ID,
-        teamId: TEAM_ID,
-        by: "deviceType",
-        since: sinceStr,
-        until: untilStr,
-        limit: "5",
-      }),
+      queryVercel("/v1/query/web-analytics/visits/aggregate", { ...baseParams, by: "day", limit: "100" }),
+      queryVercel("/v1/query/web-analytics/visits/aggregate", { ...baseParams, by: "requestPath", limit: "25" }),
+      queryVercel("/v1/query/web-analytics/visits/aggregate", { ...baseParams, by: "referrerHostname", limit: "15" }),
+      queryVercel("/v1/query/web-analytics/visits/aggregate", { ...baseParams, by: "country", limit: "15" }),
+      queryVercel("/v1/query/web-analytics/visits/aggregate", { ...baseParams, by: "deviceType", limit: "5" }),
     ])
 
     const dayData = byDay.data || []
+    const pageData = topPages.data || []
+    const refData = topReferrers.data || []
 
-    const sample = dayData[0] || {}
-    const sampleKeys = Object.keys(sample)
-
-    const totals = {
-      pageviews: dayData.reduce((sum: number, d: any) => sum + (d.pageviews || d.count || 0), 0),
-      visitors: dayData.reduce((sum: number, d: any) => sum + (d.visitors || d.uniqueVisitors || 0), 0),
+    const byDayTotals = {
+      pageviews: dayData.reduce((sum: number, d: any) => sum + (d.pageviews || 0), 0),
+      visitors: dayData.reduce((sum: number, d: any) => sum + (d.visitors || 0), 0),
     }
 
-    const normalizedDay = dayData.map((d: any) => ({
-      timestamp: d.timestamp,
-      pageviews: d.pageviews || d.count || 0,
-      visitors: d.visitors || d.uniqueVisitors || 0,
-    }))
+    const pageTotals = {
+      pageviews: pageData.reduce((sum: number, p: any) => sum + (p.pageviews || 0), 0),
+      visitors: refData.reduce((sum: number, r: any) => sum + (r.visitors || 0), 0),
+    }
 
-    const normalizedPages = (topPages.data || []).map((p: any) => ({
-      requestPath: p.requestPath || p.route || p.path || "",
-      pageviews: p.pageviews || p.count || 0,
-      visitors: p.visitors || p.uniqueVisitors || 0,
-    }))
-
-    const normalizedReferrers = (topReferrers.data || []).map((r: any) => ({
-      referrerHostname: r.referrerHostname || r.referrer || "",
-      pageviews: r.pageviews || r.count || 0,
-      visitors: r.visitors || r.uniqueVisitors || 0,
-    }))
-
-    const normalizedCountries = (byCountry.data || []).map((c: any) => ({
-      country: c.country || c.clientIpCountry || "",
-      pageviews: c.pageviews || c.count || 0,
-      visitors: c.visitors || c.uniqueVisitors || 0,
-    }))
-
-    const normalizedDevices = (byDevice.data || []).map((d: any) => ({
-      deviceType: d.deviceType || "",
-      pageviews: d.pageviews || d.count || 0,
-      visitors: d.visitors || d.uniqueVisitors || 0,
-    }))
+    const totals = {
+      pageviews: Math.max(byDayTotals.pageviews, pageTotals.pageviews),
+      visitors: Math.max(byDayTotals.visitors, pageTotals.visitors),
+    }
 
     return NextResponse.json({
       period,
       since: sinceStr,
       until: untilStr,
       totals,
-      _debug: { sampleKeys, sample, dayCount: dayData.length },
-      byDay: normalizedDay,
-      topPages: normalizedPages,
-      topReferrers: normalizedReferrers,
-      byCountry: normalizedCountries,
-      byDevice: normalizedDevices,
+      byDay: dayData,
+      topPages: pageData,
+      topReferrers: refData,
+      byCountry: byCountry.data,
+      byDevice: byDevice.data,
     })
   } catch (error: any) {
     console.error("Analytics API error:", error?.message)
     return NextResponse.json(
-      { error: "Erreur lors de la récupération des analytics: " + (error?.message || "Inconnue") },
+      { error: "Erreur analytics: " + (error?.message || "Inconnue") },
       { status: 500 }
     )
   }
