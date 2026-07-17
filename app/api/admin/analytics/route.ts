@@ -99,21 +99,56 @@ export async function GET(request: NextRequest) {
     ])
 
     const dayData = byDay.data || []
+
+    const sample = dayData[0] || {}
+    const sampleKeys = Object.keys(sample)
+
     const totals = {
-      pageviews: dayData.reduce((sum: number, d: any) => sum + (d.pageviews || 0), 0),
-      visitors: dayData.reduce((sum: number, d: any) => sum + (d.visitors || 0), 0),
+      pageviews: dayData.reduce((sum: number, d: any) => sum + (d.pageviews || d.count || 0), 0),
+      visitors: dayData.reduce((sum: number, d: any) => sum + (d.visitors || d.uniqueVisitors || 0), 0),
     }
+
+    const normalizedDay = dayData.map((d: any) => ({
+      timestamp: d.timestamp,
+      pageviews: d.pageviews || d.count || 0,
+      visitors: d.visitors || d.uniqueVisitors || 0,
+    }))
+
+    const normalizedPages = (topPages.data || []).map((p: any) => ({
+      requestPath: p.requestPath || p.route || p.path || "",
+      pageviews: p.pageviews || p.count || 0,
+      visitors: p.visitors || p.uniqueVisitors || 0,
+    }))
+
+    const normalizedReferrers = (topReferrers.data || []).map((r: any) => ({
+      referrerHostname: r.referrerHostname || r.referrer || "",
+      pageviews: r.pageviews || r.count || 0,
+      visitors: r.visitors || r.uniqueVisitors || 0,
+    }))
+
+    const normalizedCountries = (byCountry.data || []).map((c: any) => ({
+      country: c.country || c.clientIpCountry || "",
+      pageviews: c.pageviews || c.count || 0,
+      visitors: c.visitors || c.uniqueVisitors || 0,
+    }))
+
+    const normalizedDevices = (byDevice.data || []).map((d: any) => ({
+      deviceType: d.deviceType || "",
+      pageviews: d.pageviews || d.count || 0,
+      visitors: d.visitors || d.uniqueVisitors || 0,
+    }))
 
     return NextResponse.json({
       period,
       since: sinceStr,
       until: untilStr,
       totals,
-      byDay: byDay.data,
-      topPages: topPages.data,
-      topReferrers: topReferrers.data,
-      byCountry: byCountry.data,
-      byDevice: byDevice.data,
+      _debug: { sampleKeys, sample, dayCount: dayData.length },
+      byDay: normalizedDay,
+      topPages: normalizedPages,
+      topReferrers: normalizedReferrers,
+      byCountry: normalizedCountries,
+      byDevice: normalizedDevices,
     })
   } catch (error: any) {
     console.error("Analytics API error:", error?.message)
