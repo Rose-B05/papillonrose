@@ -72,9 +72,10 @@ export default function AnalyticsPage() {
 
   useEffect(() => { fetchData() }, [fetchData])
 
-  const totals = data?.totals?.[0] || { pageviews: 0, visitors: 0 }
+  const totals = data?.totals || { pageviews: 0, visitors: 0 }
+  const publicPages = (data?.topPages || []).filter((p: any) => !p.requestPath?.startsWith("/admin"))
   const maxDay = Math.max(...(data?.byDay || []).map((d: any) => d.pageviews || 0), 1)
-  const maxPage = Math.max(...(data?.topPages || []).map((p: any) => p.pageviews || 0), 1)
+  const maxPage = Math.max(...publicPages.map((p: any) => p.pageviews || 0), 1)
   const maxRef = Math.max(...(data?.topReferrers || []).map((r: any) => r.pageviews || 0), 1)
 
   const exportCSV = () => {
@@ -98,7 +99,7 @@ export default function AnalyticsPage() {
     rows.push("")
     rows.push("=== TOP PAGES ===")
     rows.push("Page,Page vues,Visiteurs")
-    for (const p of data.topPages || []) {
+    for (const p of publicPages) {
       rows.push(`"${(p.requestPath || "").replace(/"/g, '""')}",${p.pageviews || 0},${p.visitors || 0}`)
     }
     rows.push("")
@@ -238,11 +239,11 @@ export default function AnalyticsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Top Pages */}
-              {data.topPages && data.topPages.length > 0 && (
+              {publicPages.length > 0 && (
                 <div className="bg-white dark:bg-neutral-800 rounded-2xl p-6 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
                   <h2 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Top pages</h2>
                   <div className="space-y-2">
-                    {data.topPages.slice(0, 10).map((p: any, i: number) => (
+                    {publicPages.slice(0, 10).map((p: any, i: number) => (
                       <BarHorizontal key={i} label={p.requestPath} value={p.pageviews || 0} max={maxPage} />
                     ))}
                   </div>

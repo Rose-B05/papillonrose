@@ -55,15 +55,7 @@ export async function GET(request: NextRequest) {
   const untilStr = now.toISOString()
 
   try {
-    const [totals, byDay, topPages, topReferrers, byCountry, byDevice] = await Promise.all([
-      queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
-        projectId: PROJECT_ID,
-        teamId: TEAM_ID,
-        by: "day",
-        since: sinceStr,
-        until: untilStr,
-        limit: "1",
-      }),
+    const [byDay, topPages, topReferrers, byCountry, byDevice] = await Promise.all([
       queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
         projectId: PROJECT_ID,
         teamId: TEAM_ID,
@@ -78,7 +70,7 @@ export async function GET(request: NextRequest) {
         by: "requestPath",
         since: sinceStr,
         until: untilStr,
-        limit: "20",
+        limit: "25",
       }),
       queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
         projectId: PROJECT_ID,
@@ -106,11 +98,17 @@ export async function GET(request: NextRequest) {
       }),
     ])
 
+    const dayData = byDay.data || []
+    const totals = {
+      pageviews: dayData.reduce((sum: number, d: any) => sum + (d.pageviews || 0), 0),
+      visitors: dayData.reduce((sum: number, d: any) => sum + (d.visitors || 0), 0),
+    }
+
     return NextResponse.json({
       period,
       since: sinceStr,
       until: untilStr,
-      totals: totals.data,
+      totals,
       byDay: byDay.data,
       topPages: topPages.data,
       topReferrers: topReferrers.data,
