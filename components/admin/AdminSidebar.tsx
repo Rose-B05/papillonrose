@@ -19,7 +19,6 @@ import {
   Bell,
   Menu,
   X,
-  Flower2,
   PackageCheck,
   TrendingUp,
   LogOut,
@@ -97,17 +96,14 @@ export default function AdminSidebar() {
         {/* Brand */}
         <div className="px-5 py-5 border-b border-black/[0.05] dark:border-white/[0.06]">
           <Link href="/admin" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
-            <div className="w-8 h-8 rounded-lg bg-[#C8A97E]/15 flex items-center justify-center">
-              <Flower2 size={16} className="text-[#C8A97E]" />
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
-                Papillon Rose
-              </p>
-              <p className="text-[10px] text-gray-400 dark:text-neutral-500 uppercase tracking-wider">
-                Administration
-              </p>
-            </div>
+            <img
+              src="/papillon-rose-logo.png"
+              alt="Papillon Rose"
+              className="h-10 w-auto"
+            />
+            <p className="text-[10px] text-gray-400 dark:text-neutral-500 uppercase tracking-wider">
+              Administration
+            </p>
           </Link>
         </div>
 
