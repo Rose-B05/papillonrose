@@ -78,7 +78,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
   const [selectedMedia, setSelectedMedia] = useState<Set<string>>(new Set())
   const [uploadProgress, setUploadProgress] = useState<string>("")
   const [uploadError, setUploadError] = useState<string>("")
-  const [previews, setPreviews] = useState<{ url: string; tempId: string }[]>([])
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const updateField = <K extends keyof ProductFormData>(key: K, value: ProductFormData[K]) => {
@@ -134,35 +134,45 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
     }
   }
 
+  const fileToDataUrl = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = reject
+      reader.readAsDataURL(file)
+    })
+
   const handleFiles = async (files: FileList | File[]) => {
     setUploading(true)
     setUploadError("")
     const fileArray = Array.from(files)
 
-    const newPreviews = fileArray.map((file) => ({
-      url: URL.createObjectURL(file),
-      tempId: `temp_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-    }))
-    setPreviews((prev) => [...prev, ...newPreviews])
-
     for (let i = 0; i < fileArray.length; i++) {
       const file = fileArray[i]
       setUploadProgress(`Upload de ${file.name} (${i + 1}/${fileArray.length})...`)
+
+      const dataUrl = await fileToDataUrl(file)
+      setForm((prev) => {
+        const newGallerie = [...prev.gallerie, dataUrl]
+        return {
+          ...prev,
+          gallerie: newGallerie,
+          image: prev.image || dataUrl,
+        }
+      })
+
       const media = await uploadFile(file)
       if (media) {
-        const tempPreview = newPreviews[i]
         setForm((prev) => {
-          const newGallerie = [...prev.gallerie, media.url]
+          const newGallerie = prev.gallerie.map((url) => (url === dataUrl ? media.url : url))
           return {
             ...prev,
             gallerie: newGallerie,
-            image: prev.image || media.url,
+            image: prev.image === dataUrl ? media.url : prev.image,
           }
         })
-        setPreviews((prev) => prev.filter((p) => p.tempId !== tempPreview.tempId))
       } else {
-        setUploadError(`Échec de l'upload de ${file.name}. Vérifiez la taille (max 10 Mo) et le format (JPEG, PNG, WebP).`)
-        setPreviews((prev) => prev.filter((p) => p.tempId !== newPreviews[i].tempId))
+        setUploadError(`Upload cloud échoué pour ${file.name}. L'image est sauvegardée localement.`)
       }
     }
 
@@ -549,14 +559,25 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             </button>
 
             {/* Photo Grid */}
-            {(form.gallerie.length > 0 || previews.length > 0) && (
+            {form.gallerie.length > 0 && (
               <div className="grid grid-cols-2 gap-2">
                 {form.gallerie.map((url, idx) => (
                   <div
                     key={`g_${idx}`}
                     className="relative group aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-700"
                   >
-                    <img src={url} alt="" className="w-full h-full object-cover" />
+                    {imageErrors.has(url) ? (
+                      <div className="w-full h-full flex items-center justify-center text-[10px] text-gray-400 p-1 text-center">
+                        Image non disponible
+                      </div>
+                    ) : (
+                      <img
+                        src={url}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        onError={() => setImageErrors((prev) => new Set(prev).add(url))}
+                      />
+                    )}
                     {url === form.image && (
                       <div className="absolute top-1 left-1 bg-[#C8A97E] text-white text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5">
                         <Star className="w-2.5 h-2.5" fill="currentColor" />
@@ -582,17 +603,6 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                       >
                         <X className="w-3 h-3" />
                       </button>
-                    </div>
-                  </div>
-                ))}
-                {previews.map((p) => (
-                  <div
-                    key={p.tempId}
-                    className="relative aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-700"
-                  >
-                    <img src={p.url} alt="" className="w-full h-full object-cover opacity-60" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-5 h-5 border-2 border-[#C8A97E] border-t-transparent rounded-full animate-spin" />
                     </div>
                   </div>
                 ))}
