@@ -18,6 +18,7 @@ interface AdminProduct {
   tagsThemes?: string[]
   tagsCouleurs?: string[]
   status: "brouillon" | "publie"
+  isStatic?: boolean
   dateCreation: string
   dateModification: string
 }
@@ -82,6 +83,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         tagsThemes: product.tagsThemes || [],
         tagsCouleurs: product.tagsCouleurs || [],
         status: product.status,
+        isStatic: product.isStatic,
       }}
     />
   )

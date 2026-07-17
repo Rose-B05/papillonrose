@@ -39,10 +39,33 @@ export async function GET(request: NextRequest) {
   const id = request.nextUrl.searchParams.get("id")
   if (id) {
     const product = await getAdminProduct(Number(id))
-    if (!product) {
-      return NextResponse.json({ error: "Produit introuvable" }, { status: 404 })
+    if (product) {
+      return NextResponse.json({ product: { ...product, isStatic: false } })
     }
-    return NextResponse.json({ product })
+    const staticProduct = produits.find((p) => p.id === Number(id))
+    if (staticProduct) {
+      return NextResponse.json({
+        product: {
+          id: staticProduct.id,
+          nom: staticProduct.nom,
+          categorie: staticProduct.categorie,
+          stock: staticProduct.stock,
+          dimension: staticProduct.dimension || "",
+          prix: staticProduct.prix,
+          image: staticProduct.image || "",
+          gallerie: [],
+          description: "",
+          pieceUnique: false,
+          tagsThemes: [],
+          tagsCouleurs: [],
+          status: "publie" as const,
+          isStatic: true,
+          dateCreation: staticProduct.dateAjout || "",
+          dateModification: staticProduct.dateAjout || "",
+        },
+      })
+    }
+    return NextResponse.json({ error: "Produit introuvable" }, { status: 404 })
   }
 
   const products = await getAdminProducts()
@@ -88,7 +111,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Validation échouée", details: errors }, { status: 400 })
     }
 
-    const id = body.id || await getNextAdminProductId()
+    const existingAdmin = body.id ? await getAdminProduct(body.id) : null
+    const id = existingAdmin?.id || body.id || await getNextAdminProductId()
     const now = new Date().toISOString()
 
     const product: AdminProduct = {

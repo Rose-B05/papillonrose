@@ -262,7 +262,8 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
 
     setSaving(true)
     try {
-      const method = form.id ? "PUT" : "POST"
+      const isExistingAdmin = form.id && !initialData?.isStatic
+      const method = isExistingAdmin ? "PUT" : "POST"
       const res = await fetch("/api/admin/products", {
         method,
         headers: { "Content-Type": "application/json" },
@@ -298,7 +299,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             {form.id ? "Modifier le produit" : "Nouveau produit"}
           </h1>
           {form.id && (
-            <div className="mt-2">
+            <div className="mt-2 flex items-center gap-2">
               <span
                 className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                   form.status === "publie"
@@ -308,6 +309,11 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
               >
                 {form.status === "publie" ? "Publié" : "Brouillon"}
               </span>
+              {initialData?.isStatic && (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+                  Catalogue statique → sera copié en admin
+                </span>
+              )}
             </div>
           )}
         </div>

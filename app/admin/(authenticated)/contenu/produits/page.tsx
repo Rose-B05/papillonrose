@@ -208,27 +208,21 @@ export default function ProductsListPage() {
                     </td>
                     <td className="px-5 py-3 text-right">
                       <div className="flex items-center justify-end gap-1">
-                        {p.isStatic ? (
-                          <span className="text-[10px] text-gray-400 dark:text-neutral-500 italic px-2">
-                            Catalogue statique
-                          </span>
-                        ) : (
-                          <>
-                            <Link
-                              href={`/admin/contenu/produits/${p.id}`}
-                              className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] transition-colors"
-                              title="Modifier"
-                            >
-                              <Edit className="w-4 h-4" />
-                            </Link>
-                            <button
-                              onClick={() => handleDelete(p.id, p.nom, p.isStatic)}
-                              className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-neutral-500 hover:text-red-500 transition-colors"
-                              title="Supprimer"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </>
+                        <Link
+                          href={`/admin/contenu/produits/${p.id}`}
+                          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] transition-colors"
+                          title={p.isStatic ? "Modifier (créera une copie admin)" : "Modifier"}
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Link>
+                        {!p.isStatic && (
+                          <button
+                            onClick={() => handleDelete(p.id, p.nom, p.isStatic)}
+                            className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-neutral-500 hover:text-red-500 transition-colors"
+                            title="Supprimer"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
                         )}
                       </div>
                     </td>
