@@ -12,6 +12,8 @@ import {
   CATEGORY_DESCRIPTIONS,
 } from "@/lib/product-helpers"
 import { getRobotsMeta } from "@/lib/site-mode"
+import { getAdminProducts } from "@/lib/db"
+import ProductImage from "@/components/product-image"
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
 
@@ -50,7 +52,13 @@ export default async function CategoryPage({ params }: Props) {
   const category = getCategoryBySlug(slug)
   if (!category) notFound()
 
-  const products = getProductsByCategory(category)
+  const allProducts = getProductsByCategory(category)
+  let maskedIds = new Set<number>()
+  try {
+    const adminProducts = await getAdminProducts()
+    maskedIds = new Set(adminProducts.filter((p) => p.status === "masque").map((p) => p.id))
+  } catch {}
+  const products = allProducts.filter((p) => !maskedIds.has(p.id))
   const categoryImage = getCategoryImage(category)
   const description = CATEGORY_DESCRIPTIONS[category] || ""
 
@@ -98,11 +106,10 @@ export default async function CategoryPage({ params }: Props) {
               className="group bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col"
             >
               <div className="relative overflow-hidden aspect-square bg-[#F8F5F0] dark:bg-neutral-900">
-                <img
+                <ProductImage
                   src={getProductImage(p)}
                   alt={p.nom}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
                 />
               </div>
               <div className="p-3.5 flex flex-col flex-1">

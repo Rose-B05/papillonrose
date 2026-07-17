@@ -31,7 +31,7 @@ import OverflowCarousel from "@/components/overflow-carousel"
 import Chatbot from "@/components/chatbot"
 import WhatsAppButton from "@/components/whatsapp-button"
 import AccessibilityPanel from "@/components/accessibility-panel"
-import { getThemes, getCouleurs, type FilterState } from "@/lib/product-tags"
+import { getTagsForProduct, type FilterState } from "@/lib/product-tags"
 import { FEATURED_IDS } from "@/lib/scenes"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
@@ -106,7 +106,7 @@ const CATEGORIES = [
 const PRODUCTS = produits
 
 /** Produits visibles sur le site (ayant une vraie photo et non archivés) */
-const VISIBLE_PRODUCTS = PRODUCTS.filter((p) => hasRealPhoto(p) && p.actif !== false)
+const BASE_VISIBLE_PRODUCTS = PRODUCTS.filter((p) => hasRealPhoto(p) && p.actif !== false)
 
 let CATEGORY_IMAGES: Record<string, string> = {
   Mobilier: "/images/PROD005.png",
@@ -150,6 +150,7 @@ function ProductCard({
     if (product.gallerie && product.gallerie.length > 0) return product.gallerie[0]
     return "/placeholder.svg"
   }
+  const [imgError, setImgError] = useState(false)
   const effectiveStock = dynamicStock?.[product.id] ?? product.stock
   return (
     <div className="group relative bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
@@ -162,7 +163,13 @@ function ProductCard({
           alt={product.nom}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           loading="lazy"
+          onError={(e) => { e.currentTarget.style.display = "none"; setImgError(true) }}
         />
+        {imgError && (
+          <div className="absolute inset-0 flex items-center justify-center bg-[#F0EBE3] dark:bg-neutral-700">
+            <span className="text-xs text-gray-400 dark:text-neutral-500 text-center px-2">{product.nom}</span>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         {effectiveStock === 1 && (
           <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10">
@@ -422,8 +429,9 @@ export default function PapillonRoseSite() {
   const [showQuoteSent, setShowQuoteSent] = useState(false)
   const [cartToast, setCartToast] = useState<string | null>(null)
   const [tagFilters, setTagFilters] = useState<FilterState>({
-    themes: [],
-    couleurs: [],
+    occasions: [],
+    styles: [],
+    ambiances: [],
     budgetMin: 0,
     budgetMax: Infinity,
     dateDebut: "",
@@ -432,6 +440,7 @@ export default function PapillonRoseSite() {
   })
   const [dynamicStock, setDynamicStock] = useState<Record<number, number>>({})
   const [customer, setCustomer] = useState<{ email: string; prenom: string; nom: string; telephone: string; adresse: string } | null>(null)
+  const [maskedIds, setMaskedIds] = useState<Set<number>>(new Set())
 
   const modalVariants = modalProduct ? resolveVariants(modalProduct) : undefined
   const prevCustomerRef = useRef<{ email: string; prenom: string; nom: string; telephone: string; adresse: string } | null>(null)
@@ -447,6 +456,21 @@ export default function PapillonRoseSite() {
       })
       .catch(() => {})
   }, [])
+
+  // Load masked product IDs
+  useEffect(() => {
+    fetch("/api/catalogue-status")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.maskedIds) setMaskedIds(new Set(data.maskedIds))
+      })
+      .catch(() => {})
+  }, [])
+
+  const VISIBLE_PRODUCTS = useMemo(
+    () => BASE_VISIBLE_PRODUCTS.filter((p) => !maskedIds.has(p.id)),
+    [maskedIds]
+  )
 
   // When customer logs in, sync favorites to server
   useEffect(() => {
@@ -493,8 +517,7 @@ export default function PapillonRoseSite() {
   const filtered = useMemo(
     () =>
       VISIBLE_PRODUCTS.filter((p) => {
-        const pThemes = getThemes(p)
-        const pCouleurs = getCouleurs(p)
+        const pTags = getTagsForProduct(p.id)
         const pPrix = parsePrix(p.prix)
 
         const matchCategory = category === "Tous" || p.categorie === category
@@ -505,12 +528,15 @@ export default function PapillonRoseSite() {
         const matchPrice = pPrix <= priceMax
         const matchStock = !tagFilters.inStockOnly || getEffectiveStock(p.id) > 0
 
-        const matchTheme =
-          tagFilters.themes.length === 0 ||
-          tagFilters.themes.some((t) => pThemes.includes(t))
-        const matchCouleur =
-          tagFilters.couleurs.length === 0 ||
-          tagFilters.couleurs.some((c) => pCouleurs.includes(c))
+        const matchOccasion =
+          tagFilters.occasions.length === 0 ||
+          tagFilters.occasions.some((t) => pTags.occasions.includes(t))
+        const matchStyle =
+          tagFilters.styles.length === 0 ||
+          tagFilters.styles.some((s) => pTags.styles.includes(s))
+        const matchAmbiance =
+          tagFilters.ambiances.length === 0 ||
+          tagFilters.ambiances.some((a) => pTags.ambiances.includes(a))
         const matchBudget =
           pPrix >= tagFilters.budgetMin && pPrix <= tagFilters.budgetMax
 
@@ -519,8 +545,9 @@ export default function PapillonRoseSite() {
           matchSearch &&
           matchPrice &&
           matchStock &&
-          matchTheme &&
-          matchCouleur &&
+          matchOccasion &&
+          matchStyle &&
+          matchAmbiance &&
           matchBudget
         )
       }),
@@ -593,8 +620,9 @@ export default function PapillonRoseSite() {
     setCategory("Tous")
     setPriceMax(200)
     setTagFilters({
-      themes: [],
-      couleurs: [],
+      occasions: [],
+      styles: [],
+      ambiances: [],
       budgetMin: 0,
       budgetMax: Infinity,
       dateDebut: "",
@@ -1081,8 +1109,9 @@ export default function PapillonRoseSite() {
                     category !== "Tous" ||
                     priceMax < 200 ||
                     tagFilters.inStockOnly ||
-                    tagFilters.themes.length > 0 ||
-                    tagFilters.couleurs.length > 0 ||
+                    tagFilters.occasions.length > 0 ||
+                    tagFilters.styles.length > 0 ||
+                    tagFilters.ambiances.length > 0 ||
                     tagFilters.budgetMin > 0 ||
                     tagFilters.dateDebut) && (
                     <button

@@ -12,8 +12,10 @@ export async function getAdminPasswordHash(): Promise<string> {
   const envHash = process.env.ADMIN_PASSWORD_HASH || ""
   try {
     const kvHash = await kv.get<string>("admin_password_hash")
-    if (kvHash && kvHash !== envHash) return kvHash
-  } catch {}
+    if (kvHash) return kvHash
+  } catch (err) {
+    console.error("Failed to read admin_password_hash from KV:", err)
+  }
   return envHash
 }
 

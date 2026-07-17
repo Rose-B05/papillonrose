@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Plus, Search, Eye, EyeOff, Edit, Trash2, Filter, Image as ImageIcon } from "lucide-react"
+import { Plus, Search, Eye, EyeOff, Edit, Trash2, Filter, Image as ImageIcon, EyeClosed } from "lucide-react"
 
 interface AdminProduct {
   id: number
@@ -11,13 +11,13 @@ interface AdminProduct {
   stock: number
   prix: number | string
   image: string
-  status: "brouillon" | "publie"
+  status: "brouillon" | "publie" | "masque"
   isStatic?: boolean
   dateCreation: string
   dateModification: string
 }
 
-type StatusFilter = "tous" | "brouillon" | "publie"
+type StatusFilter = "tous" | "brouillon" | "publie" | "masque"
 
 export default function ProductsListPage() {
   const [products, setProducts] = useState<AdminProduct[]>([])
@@ -52,6 +52,22 @@ export default function ProductsListPage() {
     } catch {}
   }
 
+  const handleToggleStatus = async (product: AdminProduct) => {
+    const nextStatus = product.status === "publie" ? "masque" : "publie"
+    try {
+      const res = await fetch("/api/admin/products", {
+        method: product.isStatic ? "POST" : "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: product.id, status: nextStatus }),
+      })
+      if (res.ok) {
+        setProducts((prev) =>
+          prev.map((p) => (p.id === product.id ? { ...p, status: nextStatus } : p))
+        )
+      }
+    } catch {}
+  }
+
   const filtered = products.filter((p) => {
     if (statusFilter !== "tous" && p.status !== statusFilter) return false
     if (search) {
@@ -68,6 +84,7 @@ export default function ProductsListPage() {
     tous: products.length,
     brouillon: products.filter((p) => p.status === "brouillon").length,
     publie: products.filter((p) => p.status === "publie").length,
+    masque: products.filter((p) => p.status === "masque").length,
   }
 
   return (
@@ -105,7 +122,7 @@ export default function ProductsListPage() {
             />
           </div>
           <div className="flex gap-1 bg-white dark:bg-neutral-800 rounded-xl border border-black/[0.07] dark:border-white/[0.08] p-1">
-            {(["tous", "brouillon", "publie"] as StatusFilter[]).map((f) => (
+            {(["tous", "publie", "brouillon", "masque"] as StatusFilter[]).map((f) => (
               <button
                 key={f}
                 onClick={() => setStatusFilter(f)}
@@ -115,7 +132,7 @@ export default function ProductsListPage() {
                     : "text-gray-500 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700"
                 }`}
               >
-                {f === "tous" ? "Tous" : f === "brouillon" ? "Brouillons" : "Publiés"}
+                {f === "tous" ? "Tous" : f === "brouillon" ? "Brouillons" : f === "publie" ? "Publiés" : "Masqués"}
                 <span className="ml-1 text-[10px] opacity-70">({counts[f]})</span>
               </button>
             ))}
@@ -163,12 +180,23 @@ export default function ProductsListPage() {
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-700 flex-shrink-0">
                           {p.image && !p.image.includes("placeholder") ? (
-                            <img src={p.image} alt="" className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-300">
-                              <ImageIcon className="w-4 h-4" />
-                            </div>
-                          )}
+                            <img
+                              src={p.image}
+                              alt=""
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                const target = e.currentTarget
+                                target.style.display = "none"
+                                const fallback = target.nextElementSibling as HTMLElement
+                                if (fallback) fallback.style.display = "flex"
+                              }}
+                            />
+                          ) : null}
+                          <div
+                            className={`w-full h-full items-center justify-center text-gray-300 ${p.image && !p.image.includes("placeholder") ? "hidden" : "flex"}`}
+                          >
+                            <ImageIcon className="w-4 h-4" />
+                          </div>
                         </div>
                         <div>
                           <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
@@ -196,11 +224,15 @@ export default function ProductsListPage() {
                         className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${
                           p.status === "publie"
                             ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                            : p.status === "masque"
+                            ? "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400"
                             : "bg-gray-100 text-gray-500 dark:bg-neutral-700 dark:text-neutral-400"
                         }`}
                       >
                         {p.status === "publie" ? (
                           <><Eye className="w-3 h-3 mr-0.5" /> Publié</>
+                        ) : p.status === "masque" ? (
+                          <><EyeClosed className="w-3 h-3 mr-0.5" /> Masqué</>
                         ) : (
                           <><EyeOff className="w-3 h-3 mr-0.5" /> Brouillon</>
                         )}
@@ -208,6 +240,17 @@ export default function ProductsListPage() {
                     </td>
                     <td className="px-5 py-3 text-right">
                       <div className="flex items-center justify-end gap-1">
+                        <button
+                          onClick={() => handleToggleStatus(p)}
+                          className={`p-1.5 rounded-lg transition-colors ${
+                            p.status === "publie"
+                              ? "hover:bg-orange-50 dark:hover:bg-orange-900/20 text-green-500 hover:text-orange-500"
+                              : "hover:bg-green-50 dark:hover:bg-green-900/20 text-orange-400 hover:text-green-500"
+                          }`}
+                          title={p.status === "publie" ? "Masquer" : "Publier"}
+                        >
+                          {p.status === "publie" ? <Eye className="w-4 h-4" /> : <EyeClosed className="w-4 h-4" />}
+                        </button>
                         <Link
                           href={`/admin/contenu/produits/${p.id}`}
                           className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] transition-colors"

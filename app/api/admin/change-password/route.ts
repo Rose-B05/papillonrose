@@ -66,7 +66,20 @@ export async function POST(request: NextRequest) {
     }
 
     const newHash = await bcrypt.hash(newPassword, 10)
-    await kv.set("admin_password_hash", newHash)
+
+    try {
+      await kv.set("admin_password_hash", newHash)
+    } catch (kvErr) {
+      console.error("KV write failed for admin_password_hash:", kvErr)
+      return NextResponse.json({ error: "Erreur de sauvegarde. Vérifiez la connexion à la base de données." }, { status: 500 })
+    }
+
+    const verifyHash = await getAdminPasswordHash()
+    const verifyOk = await bcrypt.compare(newPassword, verifyHash)
+    if (!verifyOk) {
+      console.error("Password hash verification failed after save")
+      return NextResponse.json({ error: "Erreur de sauvegarde — le mot de passe n'a pas été enregistré. Réessayez." }, { status: 500 })
+    }
 
     const response = NextResponse.json({ success: true, message: "Mot de passe modifié. Veuillez vous reconnecter." })
     response.cookies.set("admin_session", "", {

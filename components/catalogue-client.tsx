@@ -1,15 +1,20 @@
 "use client"
 
-import { useState, useMemo, useCallback } from "react"
+import { useState, useMemo, useCallback, useEffect } from "react"
 import { Search } from "lucide-react"
 import { produits, type Produit, hasRealPhoto } from "@/data/produits"
 import { useCart } from "@/components/cart-context"
 import { useFavorites } from "@/components/favorites-context"
 import CatalogGallery from "@/components/catalog-gallery"
 import CatalogFilters from "@/components/catalog-filters"
-import type { FilterState } from "@/lib/product-tags"
+import { getTagsForProduct, type FilterState } from "@/lib/product-tags"
 
-const VISIBLE_PRODUCTS = produits.filter((p) => hasRealPhoto(p) && p.actif !== false)
+interface AdminProductStatus {
+  id: number
+  status: "brouillon" | "publie" | "masque"
+}
+
+const STATIC_VISIBLE = produits.filter((p) => hasRealPhoto(p) && p.actif !== false)
 
 const CATEGORIES = [
   "Tous",
@@ -58,15 +63,28 @@ export default function CatalogueClient() {
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState("Tous")
   const [modalProduct, setModalProduct] = useState<Produit | null>(null)
+  const [maskedIds, setMaskedIds] = useState<Set<number>>(new Set())
   const [tagFilters, setTagFilters] = useState<FilterState>({
-    themes: [],
-    couleurs: [],
+    occasions: [],
+    styles: [],
+    ambiances: [],
     budgetMin: 0,
     budgetMax: Infinity,
     dateDebut: "",
     dateFin: "",
     inStockOnly: false,
   })
+
+  useEffect(() => {
+    fetch("/api/catalogue-status")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.maskedIds) {
+          setMaskedIds(new Set(data.maskedIds))
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   const parsePrix = (p: string | number): number => {
     const val = typeof p === "number" ? p : parseFloat(String(p).replace(/[^\d.,]/g, "").replace(",", "."))
@@ -88,8 +106,9 @@ export default function CatalogueClient() {
     setSearch("")
     setCategory("Tous")
     setTagFilters({
-      themes: [],
-      couleurs: [],
+      occasions: [],
+      styles: [],
+      ambiances: [],
       budgetMin: 0,
       budgetMax: Infinity,
       dateDebut: "",
@@ -97,6 +116,11 @@ export default function CatalogueClient() {
       inStockOnly: false,
     })
   }
+
+  const VISIBLE_PRODUCTS = useMemo(
+    () => STATIC_VISIBLE.filter((p) => !maskedIds.has(p.id)),
+    [maskedIds]
+  )
 
   const filtered = useMemo(
     () =>
@@ -114,13 +138,11 @@ export default function CatalogueClient() {
         const prix = parsePrix(p.prix)
         if (prix < tagFilters.budgetMin || prix > tagFilters.budgetMax) return false
         if (tagFilters.inStockOnly && p.stock <= 0) return false
-        if (tagFilters.themes.length > 0) {
-          const pTags = (p as any).tags || []
-          if (!tagFilters.themes.some((t) => pTags.includes(t))) return false
-        }
-        if (tagFilters.couleurs.length > 0) {
-          const pCouleurs = (p as any).couleurs || []
-          if (!tagFilters.couleurs.some((c) => pCouleurs.includes(c))) return false
+        if (tagFilters.occasions.length > 0 || tagFilters.styles.length > 0 || tagFilters.ambiances.length > 0) {
+          const tags = getTagsForProduct(p.id)
+          if (tagFilters.occasions.length > 0 && !tagFilters.occasions.some((t) => tags.occasions.includes(t))) return false
+          if (tagFilters.styles.length > 0 && !tagFilters.styles.some((s) => tags.styles.includes(s))) return false
+          if (tagFilters.ambiances.length > 0 && !tagFilters.ambiances.some((a) => tags.ambiances.includes(a))) return false
         }
         return true
       }),
@@ -186,8 +208,9 @@ export default function CatalogueClient() {
             {(search ||
               category !== "Tous" ||
               tagFilters.inStockOnly ||
-              tagFilters.themes.length > 0 ||
-              tagFilters.couleurs.length > 0 ||
+              tagFilters.occasions.length > 0 ||
+              tagFilters.styles.length > 0 ||
+              tagFilters.ambiances.length > 0 ||
               tagFilters.budgetMin > 0 ||
               tagFilters.dateDebut) && (
               <button

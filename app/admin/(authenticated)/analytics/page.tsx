@@ -74,7 +74,8 @@ export default function AnalyticsPage() {
 
   const totals = data?.totals || { pageviews: 0, visitors: 0 }
   const publicPages = (data?.topPages || []).filter((p: any) => !p.requestPath?.startsWith("/admin"))
-  const maxDay = Math.max(...(data?.byDay || []).map((d: any) => d.pageviews || 0), 1)
+  const byDayFiltered = (data?.byDay || []).filter((d: any) => (d.pageviews || 0) > 0)
+  const maxDay = Math.max(...byDayFiltered.map((d: any) => d.pageviews || 0), 1)
   const maxPage = Math.max(...publicPages.map((p: any) => p.pageviews || 0), 1)
   const maxRef = Math.max(...(data?.topReferrers || []).map((r: any) => r.pageviews || 0), 1)
 
@@ -93,7 +94,7 @@ export default function AnalyticsPage() {
     rows.push("")
     rows.push("=== VISITES PAR JOUR ===")
     rows.push("Date,Page vues,Visiteurs")
-    for (const d of data.byDay || []) {
+    for (const d of byDayFiltered) {
       rows.push(`${d.timestamp?.split("T")[0] || ""},${d.pageviews || 0},${d.visitors || 0}`)
     }
     rows.push("")
@@ -215,11 +216,11 @@ export default function AnalyticsPage() {
             </div>
 
             {/* Chart: by day */}
-            {data.byDay && data.byDay.length > 0 && (
+            {byDayFiltered.length > 0 && (
               <div className="bg-white dark:bg-neutral-800 rounded-2xl p-6 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
                 <h2 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Visites par jour</h2>
                 <div className="flex items-end gap-1 h-32">
-                  {data.byDay.map((d: any, i: number) => {
+                  {byDayFiltered.map((d: any, i: number) => {
                     const h = maxDay > 0 ? ((d.pageviews || 0) / maxDay) * 100 : 0
                     return (
                       <div key={i} className="flex-1 flex flex-col items-center gap-1" title={`${d.timestamp?.split("T")[0]}: ${d.pageviews || 0} vues`}>
@@ -231,8 +232,8 @@ export default function AnalyticsPage() {
                   })}
                 </div>
                 <div className="flex justify-between mt-2 text-[10px] text-gray-400 dark:text-neutral-500">
-                  <span>{data.byDay[0]?.timestamp?.split("T")[0]}</span>
-                  <span>{data.byDay[data.byDay.length - 1]?.timestamp?.split("T")[0]}</span>
+                  <span>{byDayFiltered[0]?.timestamp?.split("T")[0]}</span>
+                  <span>{byDayFiltered[byDayFiltered.length - 1]?.timestamp?.split("T")[0]}</span>
                 </div>
               </div>
             )}

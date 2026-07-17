@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Heart, ShoppingBag } from "lucide-react"
 import { useFavorites } from "@/components/favorites-context"
@@ -7,16 +8,28 @@ import { useCart } from "@/components/cart-context"
 import { produits, hasRealPhoto } from "@/data/produits"
 import { getProductSlug } from "@/lib/product-helpers"
 import { formatPrix } from "@/lib/utils"
+import ProductImage from "@/components/product-image"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
 
-const VISIBLE_PRODUCTS = produits.filter((p) => hasRealPhoto(p) && p.actif !== false)
+const STATIC_VISIBLE = produits.filter((p) => hasRealPhoto(p) && p.actif !== false)
 
 export default function FavorisClient() {
   const { favorites, toggleFavorite } = useFavorites()
   const { items: cartItems, addItem } = useCart()
+  const [maskedIds, setMaskedIds] = useState<Set<number>>(new Set())
 
+  useEffect(() => {
+    fetch("/api/catalogue-status")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.maskedIds) setMaskedIds(new Set(data.maskedIds))
+      })
+      .catch(() => {})
+  }, [])
+
+  const VISIBLE_PRODUCTS = STATIC_VISIBLE.filter((p) => !maskedIds.has(p.id))
   const favProducts = VISIBLE_PRODUCTS.filter((p) => favorites.has(p.id))
 
   return (
@@ -64,11 +77,10 @@ export default function FavorisClient() {
                   href={`/produit/${slug}`}
                   className="relative overflow-hidden aspect-square bg-[#F8F5F0] dark:bg-neutral-900 block"
                 >
-                  <img
+                  <ProductImage
                     src={img(getSrc())}
                     alt={p.nom}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   {p.stock === 1 && (

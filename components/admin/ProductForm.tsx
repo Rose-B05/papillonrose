@@ -21,7 +21,7 @@ import { CATEGORIES } from "@/lib/product-helpers"
 const THEMES_TAGS = ["Mariage", "Anniversaire", "Événement pro", "Baptême", "Baby shower", "Noël"]
 const COULEURS_TAGS = ["Blanc", "Doré", "Rose", "Naturel", "Rouge", "Noir", "Bleu", "Vert"]
 
-type ProductStatus = "brouillon" | "publie"
+type ProductStatus = "brouillon" | "publie" | "masque"
 
 interface ProductFormData {
   id?: number
@@ -304,10 +304,12 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                 className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                   form.status === "publie"
                     ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                    : form.status === "masque"
+                    ? "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400"
                     : "bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-neutral-400"
                 }`}
               >
-                {form.status === "publie" ? "Publié" : "Brouillon"}
+                {form.status === "publie" ? "Publié" : form.status === "masque" ? "Masqué" : "Brouillon"}
               </span>
               {initialData?.isStatic && (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
@@ -325,6 +327,14 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
           >
             <Save className="w-4 h-4" />
             Enregistrer brouillon
+          </button>
+          <button
+            onClick={() => handleSave("masque")}
+            disabled={saving}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-orange-300 dark:border-orange-700 text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors disabled:opacity-50"
+          >
+            <EyeOff className="w-4 h-4" />
+            Masquer
           </button>
           <button
             onClick={() => handleSave("publie")}

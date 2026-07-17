@@ -7,6 +7,7 @@ import type { CartItem } from "@/lib/types"
 import GalleryLightbox from "./gallery-lightbox"
 import { Heart, ShoppingBag } from "lucide-react"
 import { getProductSlug } from "@/lib/product-helpers"
+import ProductImage from "@/components/product-image"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
@@ -48,11 +49,10 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                 href={`/produit/${getProductSlug(p)}`}
                 className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0] dark:bg-neutral-900 block"
               >
-                <img
+                <ProductImage
                   src={img(getSrc(p))}
                   alt={p.nom}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

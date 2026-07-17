@@ -1,8 +1,8 @@
 ﻿"use client"
 
 import { useState } from "react"
-import { ChevronDown, ChevronUp, X, Filter, Calendar, SlidersHorizontal } from "lucide-react"
-import { THEMES, COULEURS, BUDGET_RANGES, type FilterState } from "@/lib/product-tags"
+import { ChevronDown, ChevronUp, X, Filter, Calendar, SlidersHorizontal, Sparkles, Palette, Sun } from "lucide-react"
+import { OCCASIONS, STYLES, AMBIANCES, BUDGET_RANGES, type FilterState } from "@/lib/product-tags"
 
 interface Props {
   filters: FilterState
@@ -13,36 +13,46 @@ interface Props {
 export default function CatalogFilters({ filters, onChange, resultCount }: Props) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [sections, setSections] = useState<Record<string, boolean>>({
-    theme: true,
-    couleur: true,
-    budget: true,
-    date: true,
+    occasion: true,
+    style: false,
+    ambiance: false,
+    budget: false,
+    date: false,
   })
 
   const toggle = (key: string) =>
     setSections((s) => ({ ...s, [key]: !s[key] }))
 
   const activeCount =
-    (filters.themes?.length || 0) +
-    (filters.couleurs?.length || 0) +
+    (filters.occasions?.length || 0) +
+    (filters.styles?.length || 0) +
+    (filters.ambiances?.length || 0) +
     (filters.budgetMin > 0 || filters.budgetMax < Infinity ? 1 : 0) +
     (filters.dateDebut || filters.dateFin ? 1 : 0) +
     (filters.inStockOnly ? 1 : 0)
 
-  const toggleTheme = (t: string) =>
+  const toggleOccasion = (t: string) =>
     onChange({
       ...filters,
-      themes: filters.themes.includes(t)
-        ? filters.themes.filter((x) => x !== t)
-        : [...filters.themes, t],
+      occasions: filters.occasions.includes(t)
+        ? filters.occasions.filter((x) => x !== t)
+        : [...filters.occasions, t],
     })
 
-  const toggleCouleur = (c: string) =>
+  const toggleStyle = (s: string) =>
     onChange({
       ...filters,
-      couleurs: filters.couleurs.includes(c)
-        ? filters.couleurs.filter((x) => x !== c)
-        : [...filters.couleurs, c],
+      styles: filters.styles.includes(s)
+        ? filters.styles.filter((x) => x !== s)
+        : [...filters.styles, s],
+    })
+
+  const toggleAmbiance = (a: string) =>
+    onChange({
+      ...filters,
+      ambiances: filters.ambiances.includes(a)
+        ? filters.ambiances.filter((x) => x !== a)
+        : [...filters.ambiances, a],
     })
 
   const setBudget = (min: number, max: number) =>
@@ -80,21 +90,23 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
         } md:block space-y-3`}
       >
         <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-black/[0.07] dark:border-white/[0.08] shadow-sm overflow-hidden">
-          {/* Thème */}
+
+          {/* Occasions / Thèmes */}
           <SectionHeader
-            label="Thème"
-            count={filters.themes.length}
-            open={sections.theme}
-            onToggle={() => toggle("theme")}
+            label="Occasion / Thème"
+            icon={<Sparkles size={12} className="text-[#C8A97E] dark:text-amber-400" />}
+            count={filters.occasions.length}
+            open={sections.occasion}
+            onToggle={() => toggle("occasion")}
           />
-          {sections.theme && (
+          {sections.occasion && (
             <div className="px-5 pb-4 flex flex-wrap gap-1.5">
-              {THEMES.map((t) => (
+              {OCCASIONS.map((t) => (
                 <button
                   key={t}
-                  onClick={() => toggleTheme(t)}
+                  onClick={() => toggleOccasion(t)}
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
-                    filters.themes.includes(t)
+                    filters.occasions.includes(t)
                       ? "bg-[#C8A97E] dark:bg-amber-600 text-white shadow-sm"
                       : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 hover:text-[#C8A97E] dark:hover:text-amber-400"
                   }`}
@@ -107,26 +119,55 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
 
           <Divider />
 
-          {/* Couleur */}
+          {/* Styles */}
           <SectionHeader
-            label="Couleur"
-            count={filters.couleurs.length}
-            open={sections.couleur}
-            onToggle={() => toggle("couleur")}
+            label="Style"
+            icon={<Sun size={12} className="text-[#C8A97E] dark:text-amber-400" />}
+            count={filters.styles.length}
+            open={sections.style}
+            onToggle={() => toggle("style")}
           />
-          {sections.couleur && (
+          {sections.style && (
             <div className="px-5 pb-4 flex flex-wrap gap-1.5">
-              {COULEURS.map((c) => (
+              {STYLES.map((s) => (
                 <button
-                  key={c}
-                  onClick={() => toggleCouleur(c)}
+                  key={s}
+                  onClick={() => toggleStyle(s)}
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
-                    filters.couleurs.includes(c)
+                    filters.styles.includes(s)
                       ? "bg-[#C8A97E] dark:bg-amber-600 text-white shadow-sm"
                       : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 hover:text-[#C8A97E] dark:hover:text-amber-400"
                   }`}
                 >
-                  {c}
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <Divider />
+
+          {/* Ambiances / Couleurs */}
+          <SectionHeader
+            label="Ambiance / Couleur"
+            icon={<Palette size={12} className="text-[#C8A97E] dark:text-amber-400" />}
+            count={filters.ambiances.length}
+            open={sections.ambiance}
+            onToggle={() => toggle("ambiance")}
+          />
+          {sections.ambiance && (
+            <div className="px-5 pb-4 flex flex-wrap gap-1.5">
+              {AMBIANCES.map((a) => (
+                <button
+                  key={a}
+                  onClick={() => toggleAmbiance(a)}
+                  className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
+                    filters.ambiances.includes(a)
+                      ? "bg-[#C8A97E] dark:bg-amber-600 text-white shadow-sm"
+                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 hover:text-[#C8A97E] dark:hover:text-amber-400"
+                  }`}
+                >
+                  {a}
                 </button>
               ))}
             </div>
@@ -218,18 +259,22 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
       </div>
 
       {/* Active filter tags */}
-      {(filters.themes.length > 0 ||
-        filters.couleurs.length > 0 ||
+      {(filters.occasions.length > 0 ||
+        filters.styles.length > 0 ||
+        filters.ambiances.length > 0 ||
         activeBudget ||
         filters.dateDebut ||
         filters.dateFin ||
         filters.inStockOnly) && (
         <div className="flex flex-wrap gap-2 mt-3">
-          {filters.themes.map((t) => (
-            <Tag key={`th-${t}`} label={t} onRemove={() => toggleTheme(t)} />
+          {filters.occasions.map((t) => (
+            <Tag key={`oc-${t}`} label={t} onRemove={() => toggleOccasion(t)} />
           ))}
-          {filters.couleurs.map((c) => (
-            <Tag key={`co-${c}`} label={c} onRemove={() => toggleCouleur(c)} />
+          {filters.styles.map((s) => (
+            <Tag key={`st-${s}`} label={s} onRemove={() => toggleStyle(s)} />
+          ))}
+          {filters.ambiances.map((a) => (
+            <Tag key={`am-${a}`} label={a} onRemove={() => toggleAmbiance(a)} />
           ))}
           {activeBudget && (
             <Tag label={`Budget: ${activeBudget.label}`} onRemove={() => setBudget(0, Infinity)} />
@@ -251,11 +296,13 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
 
 function SectionHeader({
   label,
+  icon,
   count,
   open,
   onToggle,
 }: {
   label: string
+  icon?: React.ReactNode
   count: number
   open: boolean
   onToggle: () => void
@@ -266,6 +313,7 @@ function SectionHeader({
       className="w-full flex items-center justify-between px-5 py-3 text-xs font-semibold text-[#2E2E2E] dark:text-neutral-100 uppercase tracking-wider hover:bg-[#F8F5F0] transition-colors"
     >
       <span className="flex items-center gap-2">
+        {icon}
         {label}
         {count > 0 && (
           <span className="bg-[#C8A97E] dark:bg-amber-600 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">

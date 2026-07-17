@@ -41,7 +41,7 @@ export async function deleteMediaItem(id: string): Promise<void> {
 }
 
 // ─── Admin Products (managed via KV) ───
-export type AdminProductStatus = "brouillon" | "publie"
+export type AdminProductStatus = "brouillon" | "publie" | "masque"
 
 export interface AdminProduct {
   id: number

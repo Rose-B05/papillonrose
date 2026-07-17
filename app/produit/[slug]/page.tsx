@@ -11,6 +11,8 @@ import {
   getAllProductImages,
 } from "@/lib/product-helpers"
 import { getRobotsMeta } from "@/lib/site-mode"
+import { getAdminProducts } from "@/lib/db"
+import ProductImage from "@/components/product-image"
 import AddToCartButton from "./AddToCartButton"
 import FavoriteButton from "./FavoriteButton"
 
@@ -56,6 +58,13 @@ export default async function ProductPage({ params }: Props) {
   const product = getProductBySlug(slug)
   if (!product) notFound()
 
+  let isMasked = false
+  try {
+    const adminProducts = await getAdminProducts()
+    isMasked = adminProducts.some((p) => p.id === product.id && p.status === "masque")
+  } catch {}
+  if (isMasked) notFound()
+
   const categorySlug = getCategorySlug(product.categorie)
   const images = getAllProductImages(product)
   const price = formatPrix(product.prix)
@@ -81,7 +90,7 @@ export default async function ProductPage({ params }: Props) {
           {/* Images */}
           <div className="flex-1">
             <div className="relative aspect-square bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden">
-              <img
+              <ProductImage
                 src={images[0]?.src || "/placeholder.svg"}
                 alt={product.nom}
                 className="w-full h-full object-contain"
@@ -91,7 +100,7 @@ export default async function ProductPage({ params }: Props) {
               <div className="flex gap-2 mt-3 overflow-x-auto">
                 {images.map((img, i) => (
                   <div key={i} className="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700">
-                    <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
+                    <ProductImage src={img.src} alt={img.alt} className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>
