@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { COOKIE_NAME } from "@/lib/auth"
+import { produits } from "@/data/produits"
 import {
   getAdminProducts,
   getAdminProduct,
@@ -45,10 +46,33 @@ export async function GET(request: NextRequest) {
   }
 
   const products = await getAdminProducts()
-  const sorted = [...products].sort(
-    (a, b) => new Date(b.dateModification).getTime() - new Date(a.dateModification).getTime()
+
+  const staticProducts = produits
+    .filter((p) => p.actif !== false)
+    .map((p) => ({
+      id: p.id,
+      nom: p.nom,
+      categorie: p.categorie,
+      stock: p.stock,
+      dimension: p.dimension || "",
+      prix: p.prix,
+      image: p.image || "",
+      status: "publie" as const,
+      isStatic: true,
+      dateCreation: p.dateAjout || "",
+      dateModification: p.dateAjout || "",
+    }))
+
+  const adminProducts = products.map((p) => ({
+    ...p,
+    isStatic: false,
+  }))
+
+  const all = [...adminProducts, ...staticProducts].sort((a, b) =>
+    (b.dateModification || "").localeCompare(a.dateModification || "")
   )
-  return NextResponse.json({ products: sorted })
+
+  return NextResponse.json({ products: all })
 }
 
 export async function POST(request: NextRequest) {

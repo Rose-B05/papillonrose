@@ -77,6 +77,8 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
   const [showMediaLibrary, setShowMediaLibrary] = useState(false)
   const [selectedMedia, setSelectedMedia] = useState<Set<string>>(new Set())
   const [uploadProgress, setUploadProgress] = useState<string>("")
+  const [uploadError, setUploadError] = useState<string>("")
+  const [previews, setPreviews] = useState<{ url: string; tempId: string }[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const updateField = <K extends keyof ProductFormData>(key: K, value: ProductFormData[K]) => {
@@ -134,13 +136,21 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
 
   const handleFiles = async (files: FileList | File[]) => {
     setUploading(true)
-    setUploadProgress(`Upload de ${files.length} fichier(s)...`)
+    setUploadError("")
+    const fileArray = Array.from(files)
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i]
-      setUploadProgress(`Upload de ${file.name} (${i + 1}/${files.length})...`)
+    const newPreviews = fileArray.map((file) => ({
+      url: URL.createObjectURL(file),
+      tempId: `temp_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    }))
+    setPreviews((prev) => [...prev, ...newPreviews])
+
+    for (let i = 0; i < fileArray.length; i++) {
+      const file = fileArray[i]
+      setUploadProgress(`Upload de ${file.name} (${i + 1}/${fileArray.length})...`)
       const media = await uploadFile(file)
       if (media) {
+        const tempPreview = newPreviews[i]
         setForm((prev) => {
           const newGallerie = [...prev.gallerie, media.url]
           return {
@@ -149,6 +159,10 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             image: prev.image || media.url,
           }
         })
+        setPreviews((prev) => prev.filter((p) => p.tempId !== tempPreview.tempId))
+      } else {
+        setUploadError(`Échec de l'upload de ${file.name}. Vérifiez la taille (max 10 Mo) et le format (JPEG, PNG, WebP).`)
+        setPreviews((prev) => prev.filter((p) => p.tempId !== newPreviews[i].tempId))
       }
     }
 
@@ -517,6 +531,13 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
               <div className="text-xs text-[#C8A97E] mb-4 text-center">{uploadProgress}</div>
             )}
 
+            {uploadError && (
+              <div className="text-xs text-red-500 mb-4 text-center bg-red-50 dark:bg-red-900/20 rounded-lg p-2">
+                {uploadError}
+                <button onClick={() => setUploadError("")} className="ml-2 underline">Fermer</button>
+              </div>
+            )}
+
             {/* Browse Library Button */}
             <button
               type="button"
@@ -528,11 +549,11 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             </button>
 
             {/* Photo Grid */}
-            {form.gallerie.length > 0 && (
+            {(form.gallerie.length > 0 || previews.length > 0) && (
               <div className="grid grid-cols-2 gap-2">
                 {form.gallerie.map((url, idx) => (
                   <div
-                    key={idx}
+                    key={`g_${idx}`}
                     className="relative group aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-700"
                   >
                     <img src={url} alt="" className="w-full h-full object-cover" />
@@ -561,6 +582,17 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                       >
                         <X className="w-3 h-3" />
                       </button>
+                    </div>
+                  </div>
+                ))}
+                {previews.map((p) => (
+                  <div
+                    key={p.tempId}
+                    className="relative aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-700"
+                  >
+                    <img src={p.url} alt="" className="w-full h-full object-cover opacity-60" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-5 h-5 border-2 border-[#C8A97E] border-t-transparent rounded-full animate-spin" />
                     </div>
                   </div>
                 ))}
