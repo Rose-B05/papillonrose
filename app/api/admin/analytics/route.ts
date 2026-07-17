@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
       queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
         projectId: PROJECT_ID,
         teamId: TEAM_ID,
-        by: "pageviews,visitors",
+        by: "day",
         since: sinceStr,
         until: untilStr,
         limit: "1",
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
       queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
         projectId: PROJECT_ID,
         teamId: TEAM_ID,
-        by: "day,pageviews,visitors",
+        by: "day",
         since: sinceStr,
         until: untilStr,
         limit: "100",
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
       queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
         projectId: PROJECT_ID,
         teamId: TEAM_ID,
-        by: "requestPath,pageviews,visitors",
+        by: "requestPath",
         since: sinceStr,
         until: untilStr,
         limit: "20",
@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
       queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
         projectId: PROJECT_ID,
         teamId: TEAM_ID,
-        by: "referrerHostname,pageviews,visitors",
+        by: "referrerHostname",
         since: sinceStr,
         until: untilStr,
         limit: "15",
@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
       queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
         projectId: PROJECT_ID,
         teamId: TEAM_ID,
-        by: "country,pageviews,visitors",
+        by: "country",
         since: sinceStr,
         until: untilStr,
         limit: "15",
@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
       queryVercelAnalytics("/v1/query/web-analytics/visits/aggregate", {
         projectId: PROJECT_ID,
         teamId: TEAM_ID,
-        by: "deviceType,pageviews,visitors",
+        by: "deviceType",
         since: sinceStr,
         until: untilStr,
         limit: "5",
