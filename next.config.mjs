@@ -5,7 +5,7 @@ const CSP_DIRECTIVES = [
   "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data: blob: https://*.tile.openstreetmap.org https://unpkg.com",
+  "img-src 'self' data: blob: https://*.tile.openstreetmap.org https://unpkg.com https://*.public.blob.vercel-storage.com",
   "media-src 'self' blob:",
   "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://api.minimax.io https://vitals.vercel-insights.com",
   "frame-ancestors 'none'",
