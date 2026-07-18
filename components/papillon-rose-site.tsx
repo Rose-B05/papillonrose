@@ -105,8 +105,8 @@ const CATEGORIES = [
 
 const PRODUCTS = produits
 
-/** Produits visibles sur le site (ayant une vraie photo et non archivés) */
-const BASE_VISIBLE_PRODUCTS = PRODUCTS.filter((p) => hasRealPhoto(p) && p.actif !== false)
+/** Produits visibles sur le site (ayant une vraie photo et non archivés) — overridden by fetched data */
+let BASE_VISIBLE_PRODUCTS = produits.filter((p) => hasRealPhoto(p) && p.actif !== false)
 
 let CATEGORY_IMAGES: Record<string, string> = {
   Mobilier: "/images/PROD005.png",
@@ -441,6 +441,7 @@ export default function PapillonRoseSite() {
   const [dynamicStock, setDynamicStock] = useState<Record<number, number>>({})
   const [customer, setCustomer] = useState<{ email: string; prenom: string; nom: string; telephone: string; adresse: string } | null>(null)
   const [maskedIds, setMaskedIds] = useState<Set<number>>(new Set())
+  const [fetchedProducts, setFetchedProducts] = useState<Produit[]>([])
 
   const modalVariants = modalProduct ? resolveVariants(modalProduct) : undefined
   const prevCustomerRef = useRef<{ email: string; prenom: string; nom: string; telephone: string; adresse: string } | null>(null)
@@ -467,9 +468,24 @@ export default function PapillonRoseSite() {
       .catch(() => {})
   }, [])
 
+  // Fetch merged products (static + admin overrides)
+  useEffect(() => {
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.products) {
+          setFetchedProducts(data.products.filter((p: Produit) => hasRealPhoto(p) && p.actif !== false))
+        }
+      })
+      .catch(() => {})
+  }, [])
+
   const VISIBLE_PRODUCTS = useMemo(
-    () => BASE_VISIBLE_PRODUCTS.filter((p) => !maskedIds.has(p.id)),
-    [maskedIds]
+    () => {
+      const base = fetchedProducts.length > 0 ? fetchedProducts : BASE_VISIBLE_PRODUCTS
+      return base.filter((p) => !maskedIds.has(p.id))
+    },
+    [maskedIds, fetchedProducts]
   )
 
   // When customer logs in, sync favorites to server
@@ -510,9 +526,10 @@ export default function PapillonRoseSite() {
   }, [page])
 
   const getEffectiveStock = useCallback((id: number) => {
-    const p = produits.find((prod) => prod.id === id)
+    const all = fetchedProducts.length > 0 ? fetchedProducts : produits
+    const p = all.find((prod) => prod.id === id)
     return dynamicStock[id] ?? p?.stock ?? 0
-  }, [dynamicStock])
+  }, [dynamicStock, fetchedProducts])
 
   const filtered = useMemo(
     () =>
@@ -592,7 +609,8 @@ export default function PapillonRoseSite() {
   }
 
   const addToCartWithToast = (productId: number, qty: number = 1, variantLabel?: string) => {
-    const p = produits.find((x) => x.id === productId)
+    const all = fetchedProducts.length > 0 ? fetchedProducts : produits
+    const p = all.find((x) => x.id === productId)
     const added = addCartItem({ productId, qty, dateStart: "", dateEnd: "", variantLabel })
     if (added && p) {
       const label = variantLabel ? `${p.nom} — ${variantLabel}` : p.nom
