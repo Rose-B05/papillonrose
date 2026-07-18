@@ -70,9 +70,10 @@ export async function GET(request: NextRequest) {
   }
 
   const products = await getAdminProducts()
+  const adminIds = new Set(products.map((p) => p.id))
 
   const staticProducts = produits
-    .filter((p) => p.actif !== false)
+    .filter((p) => p.actif !== false && !adminIds.has(p.id))
     .map((p) => ({
       id: p.id,
       nom: p.nom,
