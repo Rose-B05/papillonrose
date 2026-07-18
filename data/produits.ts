@@ -96,7 +96,7 @@ export const produits: Produit[] = [
     stock: 4,
     dimension: "4 cm",
     prix: 0.20,
-    image: "/images/placeholder.png",
+    image: "/images/prod007.png",
   },
   {
     id: 8,
@@ -168,7 +168,7 @@ export const produits: Produit[] = [
     stock: 1,
     dimension: "300 cm",
     prix: 5,
-    image: "/images/placeholder.png",
+    image: "/images/prod015.png",
   },
 
   // ── BOUGEOIRS, LUSTRES, CHANDELIERS ET LANTERNES ──
@@ -179,7 +179,7 @@ export const produits: Produit[] = [
     stock: 1,
     dimension: "13 cm",
     prix: 4,
-    image: "/images/placeholder.png",
+    image: "/images/prod016.png",
   },
   {
     id: 17,
@@ -262,7 +262,7 @@ export const produits: Produit[] = [
     stock: 2,
     dimension: "75 x 113 x 75 cm - 4 kg",
     prix: 80,
-    image: "/images/placeholder.png",
+    image: "/images/lustre-12-branches.png",
   },
   {
     id: 25,
@@ -288,7 +288,7 @@ export const produits: Produit[] = [
     stock: 17,
     dimension: "26 cm",
     prix: 9,
-    image: "/images/placeholder.png",
+    image: "/images/bougeoire-etincelle.png",
   },
 
   // ── VERRERIES ──
@@ -781,7 +781,7 @@ export const produits: Produit[] = [
     categorie: "Fleurs & Feuillages",
     stock: 2,
     prix: 10,
-    image: "/images/placeholder.png",
+    image: "/images/gazon-artificiel.png",
   },
   {
     id: 84,
