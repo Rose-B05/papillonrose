@@ -6,6 +6,11 @@ import { getAdminPasswordHash } from "@/lib/auth"
 
 const RATE_LIMIT_KEY = "admin:reset-password"
 
+interface ResetData {
+  token: string
+  email: string
+}
+
 function validatePasswordStrength(pwd: string): string | null {
   if (pwd.length < 12) return "Le mot de passe doit contenir au moins 12 caractères"
   if (!/[A-Z]/.test(pwd)) return "Le mot de passe doit contenir au moins une majuscule"
@@ -41,9 +46,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Tous les champs sont requis" }, { status: 400 })
     }
 
-    const storedToken = await kv.get<string>("admin:reset_token")
-    if (!storedToken || storedToken !== resetToken) {
+    const raw = await kv.get<string>("admin:reset")
+    if (!raw) {
       return NextResponse.json({ error: "Token invalide ou expiré. Recommencez la procédure." }, { status: 400 })
+    }
+
+    let resetData: ResetData
+    try {
+      resetData = typeof raw === "string" ? JSON.parse(raw) : raw as unknown as ResetData
+    } catch {
+      return NextResponse.json({ error: "Données corrompues. Recommencez." }, { status: 400 })
+    }
+
+    if (resetData.token !== resetToken) {
+      return NextResponse.json({ error: "Token invalide. Recommencez la procédure." }, { status: 400 })
     }
 
     if (newPassword !== confirmPassword) {
@@ -75,7 +91,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Erreur de sauvegarde — le mot de passe n'a pas été enregistré." }, { status: 500 })
     }
 
-    await kv.del("admin:reset_token", "admin:reset_email")
+    await kv.del("admin:reset")
 
     return NextResponse.json({ success: true, message: "Mot de passe réinitialisé. Vous pouvez vous connecter." })
   } catch (err) {

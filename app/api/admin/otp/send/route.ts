@@ -46,10 +46,10 @@ export async function POST(request: NextRequest) {
 
     const otp = generateOtp()
     const expiresAt = Date.now() + 10 * 60 * 1000
+    const emailNorm = email.toLowerCase().trim()
 
-    await kv.set("admin:otp:code", otp, { ex: 600 })
-    await kv.set("admin:otp:expires", expiresAt, { ex: 600 })
-    await kv.set("admin:otp:email", email.toLowerCase().trim(), { ex: 600 })
+    const otpData = JSON.stringify({ code: otp, email: emailNorm, expires: expiresAt })
+    await kv.set("admin:otp", otpData, { ex: 600 })
 
     const transport = getTransport()
     await transport.sendMail({
