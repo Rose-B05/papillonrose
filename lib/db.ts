@@ -75,7 +75,19 @@ export async function getAdminProduct(id: number): Promise<AdminProduct | undefi
   return product ?? undefined
 }
 
+function hasDataUrl(urls: string[]): string | null {
+  for (const url of urls) {
+    if (url.startsWith("data:")) return url.slice(0, 50) + "..."
+  }
+  return null
+}
+
 export async function saveAdminProduct(product: AdminProduct): Promise<void> {
+  const blocked = hasDataUrl([product.image, ...(product.gallerie || [])])
+  if (blocked) {
+    throw new Error("Image locale non supportée en base. Seules les URLs cloud sont acceptées.")
+  }
+
   await kv.set(`admin_product:${product.id}`, product)
   const ids = (await kv.get<string[]>(ADMIN_PRODUCTS_INDEX)) || []
   const idStr = String(product.id)

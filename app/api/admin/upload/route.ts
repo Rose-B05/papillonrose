@@ -6,6 +6,15 @@ import { saveMediaItem } from "@/lib/db"
 export const runtime = "nodejs"
 export const maxDuration = 60
 
+async function verifyBlobUrl(url: string): Promise<boolean> {
+  try {
+    const res = await fetch(url, { method: "HEAD" })
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
 export async function POST(request: NextRequest) {
   const session = request.cookies.get(COOKIE_NAME)
   if (!session?.value) {
@@ -40,6 +49,14 @@ export async function POST(request: NextRequest) {
       access: "public",
       addRandomSuffix: false,
     })
+
+    const reachable = await verifyBlobUrl(blob.url)
+    if (!reachable) {
+      return NextResponse.json(
+        { error: "Upload terminé mais l'image n'est pas accessible publiquement. Réessayez." },
+        { status: 500 }
+      )
+    }
 
     const mediaId = `media_${timestamp}_${Math.random().toString(36).slice(2, 8)}`
     const mediaItem = {

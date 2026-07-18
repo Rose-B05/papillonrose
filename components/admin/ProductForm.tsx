@@ -6,15 +6,12 @@ import {
   Upload,
   Image as ImageIcon,
   X,
-  ChevronLeft,
-  ChevronRight,
   Star,
   AlertTriangle,
   Eye,
   EyeOff,
-  Plus,
-  Trash2,
   Library,
+  RefreshCw,
 } from "lucide-react"
 import { CATEGORIES } from "@/lib/product-helpers"
 
@@ -79,7 +76,10 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
   const [uploadProgress, setUploadProgress] = useState<string>("")
   const [uploadError, setUploadError] = useState<string>("")
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
+  const [pendingUploads, setPendingUploads] = useState<Set<string>>(new Set())
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const hasPendingImages = pendingUploads.size > 0
 
   const updateField = <K extends keyof ProductFormData>(key: K, value: ProductFormData[K]) => {
     setForm((prev) => {
@@ -171,13 +171,70 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             image: prev.image === dataUrl ? media.url : prev.image,
           }
         })
+        setPendingUploads((prev) => {
+          const next = new Set(prev)
+          next.delete(dataUrl)
+          return next
+        })
       } else {
-        setUploadError(`Upload cloud échoué pour ${file.name}. L'image est sauvegardée localement.`)
+        setPendingUploads((prev) => new Set(prev).add(dataUrl))
+        setUploadError(`Upload cloud échoué pour ${file.name}. L'image est sauvegardée localement. Cliquez "Réessayer" pour réessayer l'envoi.`)
       }
     }
 
     setUploading(false)
     setUploadProgress("")
+  }
+
+  const retryUpload = async (dataUrl: string) => {
+    const idx = form.gallerie.indexOf(dataUrl)
+    if (idx === -1) return
+
+    setPendingUploads((prev) => {
+      const next = new Set(prev)
+      next.delete(dataUrl)
+      return next
+    })
+    setUploadProgress("Réessai de l'upload...")
+
+    const blob = dataUrlToBlob(dataUrl)
+    if (!blob) {
+      setPendingUploads((prev) => new Set(prev).add(dataUrl))
+      setUploadProgress("")
+      setUploadError("Impossible de reconstituer le fichier pour réessayer.")
+      return
+    }
+
+    const file = new File([blob], `retry_${Date.now()}.png`, { type: blob.type })
+    const media = await uploadFile(file)
+
+    if (media) {
+      setForm((prev) => {
+        const newGallerie = prev.gallerie.map((url) => (url === dataUrl ? media.url : url))
+        return {
+          ...prev,
+          gallerie: newGallerie,
+          image: prev.image === dataUrl ? media.url : prev.image,
+        }
+      })
+    } else {
+      setPendingUploads((prev) => new Set(prev).add(dataUrl))
+      setUploadError("Le réessai a échoué. Réessayez plus tard.")
+    }
+    setUploadProgress("")
+  }
+
+  function dataUrlToBlob(dataUrl: string): Blob | null {
+    try {
+      const [header, data] = dataUrl.split(",")
+      const mime = header.match(/:(.*?);/)?.[1] || "image/png"
+      const binary = atob(data)
+      const array = new Uint8Array(binary.length)
+      for (let i = 0; i < binary.length; i++) array[i] = binary.charCodeAt(i)
+      return new Blob([array], { type: mime })
+    } catch {
+      return null
+    }
   }
 
   const handleDrop = useCallback(
@@ -235,12 +292,18 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
 
   const removePhoto = (index: number) => {
     setForm((prev) => {
+      const removedUrl = prev.gallerie[index]
       const newGallerie = prev.gallerie.filter((_, i) => i !== index)
       return {
         ...prev,
         gallerie: newGallerie,
-        image: prev.image === prev.gallerie[index] ? newGallerie[0] || "" : prev.image,
+        image: prev.image === removedUrl ? newGallerie[0] || "" : prev.image,
       }
+    })
+    setPendingUploads((prev) => {
+      const next = new Set(prev)
+      next.delete(form.gallerie[index])
+      return next
     })
   }
 
@@ -259,6 +322,17 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
 
   const handleSave = async (status: ProductStatus) => {
     if (!validate()) return
+
+    if (status === "publie" && hasPendingImages) {
+      setErrors(["Image en attente de synchronisation cloud, réessayez avant de publier."])
+      return
+    }
+
+    const hasDataUrls = form.gallerie.some((u) => u.startsWith("data:")) || form.image.startsWith("data:")
+    if (status === "publie" && hasDataUrls) {
+      setErrors(["Image en attente de synchronisation cloud, réessayez avant de publier."])
+      return
+    }
 
     setSaving(true)
     try {
@@ -338,14 +412,27 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
           </button>
           <button
             onClick={() => handleSave("publie")}
-            disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#C8A97E] dark:bg-amber-600 text-white hover:bg-[#b8996e] dark:hover:bg-amber-500 transition-colors disabled:opacity-50"
+            disabled={saving || hasPendingImages}
+            title={hasPendingImages ? "Image en attente de synchronisation cloud" : undefined}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#C8A97E] dark:bg-amber-600 text-white hover:bg-[#b8996e] dark:hover:bg-amber-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Eye className="w-4 h-4" />
             Publier au catalogue
           </button>
         </div>
       </div>
+
+      {/* Pending images banner */}
+      {hasPendingImages && (
+        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-4 mb-6">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0" />
+            <p className="text-sm text-amber-700 dark:text-amber-300">
+              Image en attente de synchronisation cloud, réessayez avant de publier.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Errors */}
       {errors.length > 0 && (
@@ -577,51 +664,71 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             {/* Photo Grid */}
             {form.gallerie.length > 0 && (
               <div className="grid grid-cols-2 gap-2">
-                {form.gallerie.map((url, idx) => (
-                  <div
-                    key={`g_${idx}`}
-                    className="relative group aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-700"
-                  >
-                    {imageErrors.has(url) ? (
-                      <div className="w-full h-full flex items-center justify-center text-[10px] text-gray-400 p-1 text-center">
-                        Image non disponible
-                      </div>
-                    ) : (
-                      <img
-                        src={url}
-                        alt=""
-                        className="w-full h-full object-cover"
-                        onError={() => setImageErrors((prev) => new Set(prev).add(url))}
-                      />
-                    )}
-                    {url === form.image && (
-                      <div className="absolute top-1 left-1 bg-[#C8A97E] text-white text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                        <Star className="w-2.5 h-2.5" fill="currentColor" />
-                        Principale
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100">
-                      {url !== form.image && (
+                {form.gallerie.map((url, idx) => {
+                  const isPending = pendingUploads.has(url)
+                  return (
+                    <div
+                      key={`g_${idx}`}
+                      className="relative group aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-700"
+                    >
+                      {imageErrors.has(url) ? (
+                        <div className="w-full h-full flex items-center justify-center text-[10px] text-gray-400 p-1 text-center">
+                          Image non disponible
+                        </div>
+                      ) : (
+                        <img
+                          src={url}
+                          alt=""
+                          className="w-full h-full object-cover"
+                          onError={() => setImageErrors((prev) => new Set(prev).add(url))}
+                        />
+                      )}
+
+                      {isPending && (
+                        <div className="absolute inset-0 bg-amber-900/40 flex flex-col items-center justify-center gap-1">
+                          <RefreshCw className="w-4 h-4 text-white animate-spin" />
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              retryUpload(url)
+                            }}
+                            className="text-[10px] font-medium text-white bg-[#C8A97E] hover:bg-[#b8996e] px-2 py-1 rounded-md transition-colors"
+                          >
+                            Réessayer
+                          </button>
+                        </div>
+                      )}
+
+                      {url === form.image && (
+                        <div className="absolute top-1 left-1 bg-[#C8A97E] text-white text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                          <Star className="w-2.5 h-2.5" fill="currentColor" />
+                          Principale
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100">
+                        {!isPending && url !== form.image && (
+                          <button
+                            type="button"
+                            onClick={() => setPrincipal(url)}
+                            className="p-1 rounded-full bg-white/90 text-gray-700 hover:bg-white"
+                            title="Définir comme principale"
+                          >
+                            <Star className="w-3 h-3" />
+                          </button>
+                        )}
                         <button
                           type="button"
-                          onClick={() => setPrincipal(url)}
-                          className="p-1 rounded-full bg-white/90 text-gray-700 hover:bg-white"
-                          title="Définir comme principale"
+                          onClick={() => removePhoto(idx)}
+                          className="p-1 rounded-full bg-white/90 text-red-600 hover:bg-white"
+                          title="Retirer"
                         >
-                          <Star className="w-3 h-3" />
+                          <X className="w-3 h-3" />
                         </button>
-                      )}
-                      <button
-                        type="button"
-                        onClick={() => removePhoto(idx)}
-                        className="p-1 rounded-full bg-white/90 text-red-600 hover:bg-white"
-                        title="Retirer"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             )}
           </div>
