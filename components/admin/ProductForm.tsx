@@ -713,18 +713,31 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                       )}
 
                       {isPending && (
-                        <div className="absolute inset-0 bg-amber-900/40 flex flex-col items-center justify-center gap-1">
+                        <div className="absolute inset-0 bg-amber-900/40 flex flex-col items-center justify-center gap-1.5">
                           <RefreshCw className="w-4 h-4 text-white animate-spin" />
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              retryUpload(url)
-                            }}
-                            className="text-[10px] font-medium text-white bg-[#C8A97E] hover:bg-[#b8996e] px-2 py-1 rounded-md transition-colors"
-                          >
-                            Réessayer
-                          </button>
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                retryUpload(url)
+                              }}
+                              className="text-[10px] font-medium text-white bg-[#C8A97E] hover:bg-[#b8996e] px-2 py-1 rounded-md transition-colors"
+                            >
+                              Réessayer
+                            </button>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                removePhoto(idx)
+                              }}
+                              className="p-1 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors"
+                              title="Retirer"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
                         </div>
                       )}
 
@@ -734,26 +747,28 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                           Principale
                         </div>
                       )}
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100">
-                        {!isPending && url !== form.image && (
+                      {!isPending && (
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100">
+                          {url !== form.image && (
+                            <button
+                              type="button"
+                              onClick={() => setPrincipal(url)}
+                              className="p-1 rounded-full bg-white/90 text-gray-700 hover:bg-white"
+                              title="Définir comme principale"
+                            >
+                              <Star className="w-3 h-3" />
+                            </button>
+                          )}
                           <button
                             type="button"
-                            onClick={() => setPrincipal(url)}
-                            className="p-1 rounded-full bg-white/90 text-gray-700 hover:bg-white"
-                            title="Définir comme principale"
+                            onClick={() => removePhoto(idx)}
+                            className="p-1 rounded-full bg-white/90 text-red-600 hover:bg-white"
+                            title="Retirer"
                           >
-                            <Star className="w-3 h-3" />
+                            <X className="w-3 h-3" />
                           </button>
-                        )}
-                        <button
-                          type="button"
-                          onClick={() => removePhoto(idx)}
-                          className="p-1 rounded-full bg-white/90 text-red-600 hover:bg-white"
-                          title="Retirer"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
-                      </div>
+                        </div>
+                      )}
                     </div>
                   )
                 })}
