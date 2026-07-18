@@ -351,14 +351,14 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
   const handleSave = async (status: ProductStatus) => {
     if (!validate()) return
 
-    if (status === "publie" && hasPendingImages) {
-      setErrors(["Image en attente de synchronisation cloud, réessayez avant de publier."])
+    if (hasPendingImages) {
+      setErrors(["Image en attente de synchronisation cloud, réessayez avant de sauvegarder."])
       return
     }
 
     const hasDataUrls = form.gallerie.some((u) => u.startsWith("data:")) || form.image.startsWith("data:")
-    if (status === "publie" && hasDataUrls) {
-      setErrors(["Image en attente de synchronisation cloud, réessayez avant de publier."])
+    if (hasDataUrls) {
+      setErrors(["Image locale non synchronisée. Réessayez l'upload avant de sauvegarder."])
       return
     }
 

@@ -82,10 +82,17 @@ function hasDataUrl(urls: string[]): string | null {
   return null
 }
 
+export class ValidationError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = "ValidationError"
+  }
+}
+
 export async function saveAdminProduct(product: AdminProduct): Promise<void> {
   const blocked = hasDataUrl([product.image, ...(product.gallerie || [])])
   if (blocked) {
-    throw new Error("Image locale non supportée en base. Seules les URLs cloud sont acceptées.")
+    throw new ValidationError("Image locale non supportée en base. Seules les URLs cloud sont acceptées.")
   }
 
   await kv.set(`admin_product:${product.id}`, product)

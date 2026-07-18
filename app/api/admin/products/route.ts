@@ -7,6 +7,7 @@ import {
   saveAdminProduct,
   deleteAdminProduct,
   getNextAdminProductId,
+  ValidationError,
   type AdminProduct,
   type AdminProductStatus,
 } from "@/lib/db"
@@ -138,6 +139,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ product, message: "Produit enregistré" })
   } catch (error: any) {
     console.error("Erreur sauvegarde produit:", error?.message || error)
+    if (error instanceof ValidationError) {
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 })
   }
 }
@@ -187,6 +191,9 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ product, message: "Produit mis à jour" })
   } catch (error: any) {
     console.error("Erreur mise à jour produit:", error?.message || error)
+    if (error instanceof ValidationError) {
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 })
   }
 }
