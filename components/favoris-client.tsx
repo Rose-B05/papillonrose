@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Heart, ShoppingBag } from "lucide-react"
+import { Heart, ShoppingBag, Loader2 } from "lucide-react"
 import { useFavorites } from "@/components/favorites-context"
 import { useCart } from "@/components/cart-context"
-import { produits, hasRealPhoto } from "@/data/produits"
+import { type Produit } from "@/data/produits"
 import { getProductSlug } from "@/lib/product-helpers"
 import { formatPrix } from "@/lib/utils"
 import ProductImage from "@/components/product-image"
@@ -13,24 +13,23 @@ import ProductImage from "@/components/product-image"
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
 
-const STATIC_VISIBLE = produits.filter((p) => hasRealPhoto(p) && p.actif !== false)
-
 export default function FavorisClient() {
   const { favorites, toggleFavorite } = useFavorites()
   const { items: cartItems, addItem } = useCart()
-  const [maskedIds, setMaskedIds] = useState<Set<number>>(new Set())
+  const [allProducts, setAllProducts] = useState<Produit[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("/api/catalogue-status")
+    fetch("/api/products")
       .then((res) => res.json())
       .then((data) => {
-        if (data.maskedIds) setMaskedIds(new Set(data.maskedIds))
+        if (data.products) setAllProducts(data.products)
       })
       .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
-  const VISIBLE_PRODUCTS = STATIC_VISIBLE.filter((p) => !maskedIds.has(p.id))
-  const favProducts = VISIBLE_PRODUCTS.filter((p) => favorites.has(p.id))
+  const favProducts = allProducts.filter((p) => favorites.has(p.id))
 
   return (
     <div className="max-w-7xl mx-auto px-5 md:px-10 pt-24 pb-8 min-h-[60vh]">
@@ -43,7 +42,12 @@ export default function FavorisClient() {
         </h1>
       </div>
 
-      {favProducts.length === 0 ? (
+      {loading ? (
+        <div className="py-24 text-center">
+          <Loader2 className="animate-spin mx-auto mb-4 text-[#C8A97E]" size={32} />
+          <p className="text-gray-400 dark:text-neutral-500 text-sm">Chargement…</p>
+        </div>
+      ) : favProducts.length === 0 ? (
         <div className="py-24 text-center">
           <div className="w-20 h-20 bg-[#C8A97E]/10 dark:bg-amber-600/10 rounded-full flex items-center justify-center mx-auto mb-5">
             <Heart size={32} className="text-[#C8A97E]/40" />

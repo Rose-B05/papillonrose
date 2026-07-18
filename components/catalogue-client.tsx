@@ -1,20 +1,13 @@
 "use client"
 
 import { useState, useMemo, useCallback, useEffect } from "react"
-import { Search } from "lucide-react"
-import { produits, type Produit, hasRealPhoto } from "@/data/produits"
+import { Search, Loader2 } from "lucide-react"
+import { type Produit } from "@/data/produits"
 import { useCart } from "@/components/cart-context"
 import { useFavorites } from "@/components/favorites-context"
 import CatalogGallery from "@/components/catalog-gallery"
 import CatalogFilters from "@/components/catalog-filters"
 import { getTagsForProduct, type FilterState } from "@/lib/product-tags"
-
-interface AdminProductStatus {
-  id: number
-  status: "brouillon" | "publie" | "masque"
-}
-
-const STATIC_VISIBLE = produits.filter((p) => hasRealPhoto(p) && p.actif !== false)
 
 const CATEGORIES = [
   "Tous",
@@ -63,7 +56,8 @@ export default function CatalogueClient() {
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState("Tous")
   const [modalProduct, setModalProduct] = useState<Produit | null>(null)
-  const [maskedIds, setMaskedIds] = useState<Set<number>>(new Set())
+  const [allProducts, setAllProducts] = useState<Produit[]>([])
+  const [loading, setLoading] = useState(true)
   const [tagFilters, setTagFilters] = useState<FilterState>({
     occasions: [],
     styles: [],
@@ -76,14 +70,15 @@ export default function CatalogueClient() {
   })
 
   useEffect(() => {
-    fetch("/api/catalogue-status")
+    fetch("/api/products")
       .then((res) => res.json())
       .then((data) => {
-        if (data.maskedIds) {
-          setMaskedIds(new Set(data.maskedIds))
+        if (data.products) {
+          setAllProducts(data.products)
         }
       })
       .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const parsePrix = (p: string | number): number => {
@@ -117,10 +112,7 @@ export default function CatalogueClient() {
     })
   }
 
-  const VISIBLE_PRODUCTS = useMemo(
-    () => STATIC_VISIBLE.filter((p) => !maskedIds.has(p.id)),
-    [maskedIds]
-  )
+  const VISIBLE_PRODUCTS = useMemo(() => allProducts, [allProducts])
 
   const filtered = useMemo(
     () =>
@@ -222,7 +214,12 @@ export default function CatalogueClient() {
             )}
           </div>
 
-          {filtered.length > 0 ? (
+          {loading ? (
+            <div className="py-24 text-center">
+              <Loader2 className="animate-spin mx-auto mb-4 text-[#C8A97E]" size={32} />
+              <p className="text-gray-400 dark:text-neutral-500 text-sm">Chargement du catalogue…</p>
+            </div>
+          ) : filtered.length > 0 ? (
             <CatalogGallery
               produits={filtered}
               favorites={favorites}

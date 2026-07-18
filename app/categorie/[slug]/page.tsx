@@ -10,6 +10,7 @@ import {
   getProductImage,
   getProductSlug,
   CATEGORY_DESCRIPTIONS,
+  getMergedProducts,
 } from "@/lib/product-helpers"
 import { getRobotsMeta } from "@/lib/site-mode"
 import { getAdminProducts } from "@/lib/db"
@@ -52,13 +53,13 @@ export default async function CategoryPage({ params }: Props) {
   const category = getCategoryBySlug(slug)
   if (!category) notFound()
 
-  const allProducts = getProductsByCategory(category)
-  let maskedIds = new Set<number>()
+  let adminProducts: Awaited<ReturnType<typeof getAdminProducts>> = []
   try {
-    const adminProducts = await getAdminProducts()
-    maskedIds = new Set(adminProducts.filter((p) => p.status === "masque").map((p) => p.id))
+    adminProducts = await getAdminProducts()
   } catch {}
-  const products = allProducts.filter((p) => !maskedIds.has(p.id))
+
+  const allMerged = getMergedProducts(adminProducts)
+  const products = allMerged.filter((p) => p.categorie === category && p.actif !== false)
   const categoryImage = getCategoryImage(category)
   const description = CATEGORY_DESCRIPTIONS[category] || ""
 
