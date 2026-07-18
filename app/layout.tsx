@@ -137,8 +137,9 @@ export default function RootLayout({
               {process.env.NODE_ENV === 'production' && <Analytics />}
             </ThemeProvider>
           </FavoritesProvider>
-        </CartProvider>
+         </CartProvider>
       </body>
     </html>
   )
 }
+// gh CLI validation test
