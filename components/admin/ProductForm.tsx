@@ -163,19 +163,25 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
 
       const media = await uploadFile(file)
       if (media) {
-        setForm((prev) => {
-          const newGallerie = prev.gallerie.map((url) => (url === dataUrl ? media.url : url))
-          return {
-            ...prev,
-            gallerie: newGallerie,
-            image: prev.image === dataUrl ? media.url : prev.image,
-          }
-        })
-        setPendingUploads((prev) => {
-          const next = new Set(prev)
-          next.delete(dataUrl)
-          return next
-        })
+        const loaded = await preloadImage(media.url)
+        if (loaded) {
+          setForm((prev) => {
+            const newGallerie = prev.gallerie.map((url) => (url === dataUrl ? media.url : url))
+            return {
+              ...prev,
+              gallerie: newGallerie,
+              image: prev.image === dataUrl ? media.url : prev.image,
+            }
+          })
+          setPendingUploads((prev) => {
+            const next = new Set(prev)
+            next.delete(dataUrl)
+            return next
+          })
+        } else {
+          setPendingUploads((prev) => new Set(prev).add(dataUrl))
+          setUploadError(`Image cloud non disponible après upload pour ${file.name}. L'aperçu local est conservé. Cliquez "Réessayer" pour réessayer.`)
+        }
       } else {
         setPendingUploads((prev) => new Set(prev).add(dataUrl))
         setUploadError(`Upload cloud échoué pour ${file.name}. L'image est sauvegardée localement. Cliquez "Réessayer" pour réessayer l'envoi.`)
@@ -209,14 +215,20 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
     const media = await uploadFile(file)
 
     if (media) {
-      setForm((prev) => {
-        const newGallerie = prev.gallerie.map((url) => (url === dataUrl ? media.url : url))
-        return {
-          ...prev,
-          gallerie: newGallerie,
-          image: prev.image === dataUrl ? media.url : prev.image,
-        }
-      })
+      const loaded = await preloadImage(media.url)
+      if (loaded) {
+        setForm((prev) => {
+          const newGallerie = prev.gallerie.map((url) => (url === dataUrl ? media.url : url))
+          return {
+            ...prev,
+            gallerie: newGallerie,
+            image: prev.image === dataUrl ? media.url : prev.image,
+          }
+        })
+      } else {
+        setPendingUploads((prev) => new Set(prev).add(dataUrl))
+        setUploadError("Image cloud non disponible après réessai. L'aperçu local est conservé.")
+      }
     } else {
       setPendingUploads((prev) => new Set(prev).add(dataUrl))
       setUploadError("Le réessai a échoué. Réessayez plus tard.")
@@ -235,6 +247,22 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
     } catch {
       return null
     }
+  }
+
+  const preloadImage = (url: string, attempts = 0): Promise<boolean> => {
+    const delays = [800, 1600, 3200]
+    return new Promise((resolve) => {
+      const img = new Image()
+      img.onload = () => resolve(true)
+      img.onerror = () => {
+        if (attempts < delays.length) {
+          setTimeout(() => preloadImage(url, attempts + 1).then(resolve), delays[attempts])
+        } else {
+          resolve(false)
+        }
+      }
+      img.src = url
+    })
   }
 
   const handleDrop = useCallback(
