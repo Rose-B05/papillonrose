@@ -9,6 +9,7 @@ import {
   formatPrix,
   getProductImage,
   getAllProductImages,
+  mergeAdminProduct,
 } from "@/lib/product-helpers"
 import { getRobotsMeta } from "@/lib/site-mode"
 import { getAdminProducts } from "@/lib/db"
@@ -55,15 +56,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params
-  const product = getProductBySlug(slug)
-  if (!product) notFound()
+  const staticProduct = getProductBySlug(slug)
+  if (!staticProduct) notFound()
 
+  let product = staticProduct
   let isMasked = false
   try {
     const adminProducts = await getAdminProducts()
-    isMasked = adminProducts.some((p) => p.id === product.id && p.status === "masque")
+    const adminOverride = adminProducts.find((p) => p.id === staticProduct.id)
+    if (adminOverride) {
+      if (adminOverride.status === "masque") {
+        notFound()
+      }
+      if (adminOverride.status === "publie") {
+        product = mergeAdminProduct(staticProduct, adminOverride)
+      }
+    }
   } catch {}
-  if (isMasked) notFound()
 
   const categorySlug = getCategorySlug(product.categorie)
   const images = getAllProductImages(product)

@@ -1,4 +1,5 @@
 import { produits, type Produit } from "@/data/produits"
+import { type AdminProduct } from "@/lib/db"
 
 // ─── Slug Generation ────────────────────────────────────────────────────────
 
@@ -143,4 +144,61 @@ export const CATEGORY_DESCRIPTIONS: Record<string, string> = {
   "Vases & Pots": "Vases et pots en laiton, porcelaine et terre cuite.",
   Décoration: "Horloges, boas, parasols et objets déco originaux.",
   "Fleurs & Feuillages": "Guirlandes, bouquets et feuillages artificiels.",
+}
+
+// ─── Admin Product Merge ─────────────────────────────────────────────────────
+
+export function mergeAdminProduct(staticProduct: Produit, adminOverride: AdminProduct): Produit {
+  return {
+    ...staticProduct,
+    nom: adminOverride.nom || staticProduct.nom,
+    categorie: adminOverride.categorie || staticProduct.categorie,
+    stock: adminOverride.stock ?? staticProduct.stock,
+    dimension: adminOverride.dimension || staticProduct.dimension,
+    prix: adminOverride.prix ?? staticProduct.prix,
+    image: adminOverride.image || staticProduct.image,
+    gallerie: adminOverride.gallerie?.length ? adminOverride.gallerie : staticProduct.gallerie,
+    description: adminOverride.description || staticProduct.description,
+  }
+}
+
+export function getMergedProducts(adminProducts: AdminProduct[]): Produit[] {
+  const adminMap = new Map<number, AdminProduct>()
+  for (const ap of adminProducts) {
+    if (ap.status === "publie") {
+      adminMap.set(ap.id, ap)
+    }
+  }
+
+  const merged: Produit[] = []
+  for (const sp of produits) {
+    if (sp.actif === false) continue
+    const adminOverride = adminMap.get(sp.id)
+    if (adminOverride) {
+      merged.push(mergeAdminProduct(sp, adminOverride))
+      adminMap.delete(sp.id)
+    } else {
+      merged.push(sp)
+    }
+  }
+
+  for (const ap of adminMap.values()) {
+    if (ap.status === "publie") {
+      merged.push({
+        id: ap.id,
+        nom: ap.nom,
+        categorie: ap.categorie,
+        stock: ap.stock,
+        dimension: ap.dimension || "",
+        prix: ap.prix,
+        image: ap.image || "",
+        gallerie: ap.gallerie || [],
+        description: ap.description || "",
+        dateAjout: ap.dateCreation || "",
+        actif: true,
+      } as Produit)
+    }
+  }
+
+  return merged
 }
