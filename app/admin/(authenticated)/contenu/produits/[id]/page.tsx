@@ -67,6 +67,9 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
     )
   }
 
+  const galleryFromImage = product.image && !product.image.includes("placeholder") ? [product.image] : []
+  const fullGallerie = [...galleryFromImage, ...((product.gallerie || []).filter((g) => !galleryFromImage.includes(g)))]
+
   return (
     <ProductForm
       initialData={{
@@ -77,7 +80,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         dimension: product.dimension || "",
         prix: product.prix,
         image: product.image,
-        gallerie: product.gallerie || [],
+        gallerie: fullGallerie,
         description: product.description || "",
         pieceUnique: product.pieceUnique || false,
         tagsThemes: product.tagsThemes || [],
