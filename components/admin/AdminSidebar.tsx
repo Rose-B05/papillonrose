@@ -26,7 +26,7 @@ import {
 } from "lucide-react"
 
 const NAV_ITEMS = [
-  { label: "Devis", icon: FileText, href: "/admin" },
+  { label: "Devis", icon: FileText, href: "/admin/devis" },
   { label: "Restitutions", icon: PackageCheck, href: "/admin/restitutions" },
   { label: "Statistiques", icon: TrendingUp, href: "/admin/statistiques" },
   { label: "Dashboard", icon: LayoutDashboard, href: "/admin/dashboard" },
@@ -49,7 +49,7 @@ export default function AdminSidebar() {
   const [open, setOpen] = useState(false)
 
   const isActive = (href: string) => {
-    if (href === "/admin") return pathname === "/admin"
+    if (href === "/admin/devis") return pathname === "/admin/devis" || pathname === "/admin"
     return pathname.startsWith(href)
   }
 
