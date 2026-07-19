@@ -36,6 +36,7 @@ const NAV_ITEMS = [
   { label: "Performance", icon: Gauge, href: "/admin/performance" },
   { label: "Sécurité", icon: Shield, href: "/admin/securite" },
   { label: "Produits", icon: FileEdit, href: "/admin/contenu/produits" },
+  { label: "Nouveautés", icon: FileEdit, href: "/admin/nouveautes" },
   { label: "Formulaires", icon: Inbox, href: "/admin/formulaires" },
   { label: "Utilisateurs", icon: Users, href: "/admin/utilisateurs" },
   { label: "Paramètres", icon: Settings, href: "/admin/parametres" },
