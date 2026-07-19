@@ -32,7 +32,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
             <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">
               Alertes
             </h3>
-            <p className="text-xs text-gray-500 dark:text-neutral-400">
+            <p className="text-xs text-gray-500 dark:text-white/70">
               {errors} erreur(s), {warnings} avertissement(s)
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
           </div>
 
           {filtered.length === 0 ? (
-            <p className="text-sm text-gray-400 dark:text-neutral-500 text-center py-4">
+            <p className="text-sm text-gray-400 dark:text-white/60 text-center py-4">
               Aucune alerte
             </p>
           ) : (
@@ -87,7 +87,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
                       {alert.message}
                     </p>
                     {alert.page && (
-                      <p className="text-xs text-gray-500 dark:text-neutral-400 mt-0.5">
+                      <p className="text-xs text-gray-500 dark:text-white/70 mt-0.5">
                         {alert.page}
                       </p>
                     )}

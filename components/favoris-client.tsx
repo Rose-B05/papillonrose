@@ -45,14 +45,14 @@ export default function FavorisClient() {
       {loading ? (
         <div className="py-24 text-center">
           <Loader2 className="animate-spin mx-auto mb-4 text-[#C9948E]" size={32} />
-          <p className="text-gray-400 dark:text-neutral-500 text-sm">Chargement…</p>
+          <p className="text-gray-400 dark:text-white/60 text-sm">Chargement…</p>
         </div>
       ) : favProducts.length === 0 ? (
         <div className="py-24 text-center">
           <div className="w-20 h-20 bg-[#C9948E]/10 dark:bg-[#C9948E]/10 rounded-full flex items-center justify-center mx-auto mb-5">
             <Heart size={32} className="text-[#C9948E]/40" />
           </div>
-          <p className="text-gray-400 dark:text-neutral-500 text-base mb-6">
+          <p className="text-gray-400 dark:text-white/60 text-base mb-6">
             Vous n&apos;avez pas encore de favoris.
           </p>
           <Link
@@ -103,7 +103,7 @@ export default function FavorisClient() {
                     </h3>
                     <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
                       {formatPrix(p.prix)}€
-                      <span className="text-xs font-normal text-gray-400 dark:text-neutral-500 ml-0.5">/jour</span>
+                      <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">/jour</span>
                     </p>
                   </div>
                   <div className="mt-auto pt-2.5 flex items-center gap-2">
@@ -112,7 +112,7 @@ export default function FavorisClient() {
                       disabled={isInCart}
                       className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
                         isInCart
-                          ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-neutral-500 cursor-not-allowed"
+                          ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-white/60 cursor-not-allowed"
                           : "bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#B8807A]"
                       }`}
                     >

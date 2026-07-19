@@ -23,7 +23,7 @@ export default function ModulePlaceholder({
         {title}
       </h2>
 
-      <p className="text-sm text-gray-500 dark:text-neutral-400 max-w-sm mb-4">
+      <p className="text-sm text-gray-500 dark:text-white/70 max-w-sm mb-4">
         {description}
       </p>
 

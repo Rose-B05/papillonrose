@@ -36,25 +36,25 @@ export default function StatistiquesPage() {
           <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">
             Statistiques de location
           </h1>
-          <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-white/60 mt-1">
             Produits les plus loués et revenus générés
           </p>
         </div>
 
         {loading ? (
-          <div className="text-center py-16 text-gray-400 dark:text-neutral-500">Chargement…</div>
+          <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
         ) : (
           <>
             {/* Summary cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
               <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
-                <p className="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider mb-1">
+                <p className="text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider mb-1">
                   Total locations
                 </p>
                 <p className="text-2xl font-bold text-[#2E2E2E] dark:text-neutral-100">{totalLocations}</p>
               </div>
               <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
-                <p className="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider mb-1">
+                <p className="text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider mb-1">
                   Revenu total
                 </p>
                 <p className="text-2xl font-bold text-[#C9948E] dark:text-[#E8B4AE]">
@@ -62,7 +62,7 @@ export default function StatistiquesPage() {
                 </p>
               </div>
               <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
-                <p className="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider mb-1">
+                <p className="text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider mb-1">
                   Produits actifs
                 </p>
                 <p className="text-2xl font-bold text-[#2E2E2E] dark:text-neutral-100">{stats.length}</p>
@@ -74,22 +74,22 @@ export default function StatistiquesPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-black/[0.07] dark:border-white/[0.08]">
-                    <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium">
+                    <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
                       #
                     </th>
-                    <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium">
+                    <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
                       Produit
                     </th>
-                    <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium hidden sm:table-cell">
+                    <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium hidden sm:table-cell">
                       Catégorie
                     </th>
-                    <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium">
+                    <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
                       Stock
                     </th>
-                    <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium">
+                    <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
                       Locations
                     </th>
-                    <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium">
+                    <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
                       Revenu
                     </th>
                   </tr>
@@ -99,7 +99,7 @@ export default function StatistiquesPage() {
                     <tr>
                       <td
                         colSpan={6}
-                        className="text-center py-10 text-gray-400 dark:text-neutral-500"
+                        className="text-center py-10 text-gray-400 dark:text-white/60"
                       >
                         Aucune location enregistrée
                       </td>
@@ -110,14 +110,14 @@ export default function StatistiquesPage() {
                         key={s.productId}
                         className="border-b border-black/[0.03] hover:bg-[#F8F5F0] transition-colors"
                       >
-                        <td className="px-5 py-3 text-gray-400 dark:text-neutral-500">{i + 1}</td>
+                        <td className="px-5 py-3 text-gray-400 dark:text-white/60">{i + 1}</td>
                         <td className="px-5 py-3 font-medium text-[#2E2E2E] dark:text-neutral-100">
                           {s.nom}
                         </td>
-                        <td className="px-5 py-3 text-gray-500 dark:text-neutral-500 hidden sm:table-cell">
+                        <td className="px-5 py-3 text-gray-500 dark:text-white/60 hidden sm:table-cell">
                           {s.categorie}
                         </td>
-                        <td className="px-5 py-3 text-right text-gray-500 dark:text-neutral-500">
+                        <td className="px-5 py-3 text-right text-gray-500 dark:text-white/60">
                           {s.stock}
                         </td>
                         <td className="px-5 py-3 text-right font-semibold text-[#C9948E] dark:text-[#E8B4AE]">

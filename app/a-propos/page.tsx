@@ -58,7 +58,7 @@ export default function AProposPage() {
           >
             L&apos;élégance au service de vos événements
           </h1>
-          <p className="text-[#2E2E2E]/60 dark:text-neutral-400 text-base mt-5 leading-relaxed">
+          <p className="text-[#2E2E2E]/60 dark:text-white/70 text-base mt-5 leading-relaxed">
             Papillon Rose, c&apos;est l&apos;histoire d&apos;une passion pour la décoration
             et le soin apporté à chaque détail de vos moments précieux.
           </p>
@@ -68,7 +68,7 @@ export default function AProposPage() {
       <div className="max-w-4xl mx-auto px-5 md:px-10 pb-16">
         {/* Breadcrumb */}
         <nav className="pt-6 pb-2">
-          <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-neutral-500">
+          <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-white/60">
             <li><Link href="/" className="hover:text-[#C9948E] transition-colors">Accueil</Link></li>
             <li>/</li>
             <li className="text-[#2E2E2E] dark:text-neutral-100 font-medium">À propos</li>
@@ -164,7 +164,7 @@ export default function AProposPage() {
                 >
                   {title}
                 </h3>
-                <p className="text-xs text-[#2E2E2E]/60 dark:text-neutral-400 leading-relaxed">
+                <p className="text-xs text-[#2E2E2E]/60 dark:text-white/70 leading-relaxed">
                   {text}
                 </p>
               </div>
@@ -195,7 +195,7 @@ export default function AProposPage() {
 
         {/* CTA */}
         <section className="text-center">
-          <p className="text-[#2E2E2E]/60 dark:text-neutral-400 text-base mb-6">
+          <p className="text-[#2E2E2E]/60 dark:text-white/70 text-base mb-6">
             Prêt(e) à sublimer votre événement ?
           </p>
           <Link

@@ -18,7 +18,7 @@ export default function FaqPage() {
       <div className="max-w-3xl mx-auto px-5 md:px-10 pt-24 pb-16">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors mb-8"
         >
           <ArrowLeft size={14} /> Retour a l&apos;accueil
         </Link>
@@ -32,7 +32,7 @@ export default function FaqPage() {
         >
           Questions fréquentes
         </h1>
-        <p className="text-sm text-[#2E2E2E]/60 dark:text-neutral-400 mb-10 leading-relaxed">
+        <p className="text-sm text-[#2E2E2E]/60 dark:text-white/70 mb-10 leading-relaxed">
           Retrouvez les réponses aux questions les plus souvent posées sur
           notre service de location de décoration événementielle.
         </p>

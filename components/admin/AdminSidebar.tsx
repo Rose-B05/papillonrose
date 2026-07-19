@@ -101,7 +101,7 @@ export default function AdminSidebar() {
               alt="Papillon Rose"
               className="h-10 w-auto"
             />
-            <p className="text-[10px] text-gray-400 dark:text-neutral-500 uppercase tracking-wider">
+            <p className="text-[10px] text-gray-400 dark:text-white/60 uppercase tracking-wider">
               Administration
             </p>
           </Link>
@@ -123,7 +123,7 @@ export default function AdminSidebar() {
                       ${
                         active
                           ? "bg-[#C9948E]/10 text-[#C9948E] font-medium"
-                          : "text-gray-500 dark:text-neutral-400 hover:bg-black/[0.03] dark:hover:bg-white/[0.04] hover:text-[#2E2E2E] dark:hover:text-neutral-100"
+                          : "text-gray-500 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04] hover:text-[#2E2E2E] dark:hover:text-neutral-100"
                       }
                     `}
                   >
@@ -140,13 +140,13 @@ export default function AdminSidebar() {
         <div className="px-5 py-4 border-t border-black/[0.05] dark:border-white/[0.06] space-y-3">
           <Link
             href="/"
-            className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] transition-colors"
+            className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-white/60 hover:text-[#C9948E] transition-colors"
           >
             ← Retour au site
           </Link>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-neutral-500 hover:text-red-500 dark:hover:text-red-400 transition-colors w-full"
+            className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-white/60 hover:text-red-500 dark:hover:text-red-400 transition-colors w-full"
           >
             <LogOut size={14} />
             <span>Déconnexion</span>

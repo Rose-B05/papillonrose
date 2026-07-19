@@ -187,7 +187,7 @@ function LoginForm() {
               <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 text-center mb-1">
                 Administration
               </h1>
-              <p className="text-sm text-gray-400 dark:text-neutral-500 text-center mb-6">
+              <p className="text-sm text-gray-400 dark:text-white/60 text-center mb-6">
                 Papillon Rose
               </p>
 
@@ -270,7 +270,7 @@ function LoginForm() {
               <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                 Mot de passe oublié
               </h1>
-              <p className="text-sm text-gray-400 dark:text-neutral-500 mb-6">
+              <p className="text-sm text-gray-400 dark:text-white/60 mb-6">
                 Un code de vérification sera envoyé à votre email.
               </p>
 
@@ -327,7 +327,7 @@ function LoginForm() {
               <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                 Vérification
               </h1>
-              <p className="text-sm text-gray-400 dark:text-neutral-500 mb-6">
+              <p className="text-sm text-gray-400 dark:text-white/60 mb-6">
                 Entrez le code à 6 chiffres envoyé à <strong>{email}</strong>
               </p>
 
@@ -393,7 +393,7 @@ function LoginForm() {
               <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                 Nouveau mot de passe
               </h1>
-              <p className="text-sm text-gray-400 dark:text-neutral-500 mb-6">
+              <p className="text-sm text-gray-400 dark:text-white/60 mb-6">
                 Choisissez un mot de passe sécurisé.
               </p>
 
@@ -475,7 +475,7 @@ function LoginForm() {
               <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">
                 Mot de passe réinitialisé
               </h1>
-              <p className="text-sm text-gray-400 dark:text-neutral-500 mb-6">
+              <p className="text-sm text-gray-400 dark:text-white/60 mb-6">
                 Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.
               </p>
               <button
@@ -494,7 +494,7 @@ function LoginForm() {
 
 export default function AdminLoginPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 flex items-center justify-center text-gray-400 dark:text-neutral-500">Chargement…</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 flex items-center justify-center text-gray-400 dark:text-white/60">Chargement…</div>}>
       <LoginForm />
     </Suspense>
   )

@@ -87,7 +87,7 @@ function NewsletterToggle({ customerEmail }: { customerEmail: string }) {
   }
 
   if (status === "loading") {
-    return <p className="text-sm text-gray-400 dark:text-neutral-500">Vérification…</p>
+    return <p className="text-sm text-gray-400 dark:text-white/60">Vérification…</p>
   }
 
   return (
@@ -97,7 +97,7 @@ function NewsletterToggle({ customerEmail }: { customerEmail: string }) {
           <span className="text-sm text-green-600 dark:text-green-400 font-medium">Inscrit à la newsletter</span>
           <a
             href={`/api/newsletter/unsubscribe?email=${encodeURIComponent(customerEmail)}`}
-            className="text-xs text-gray-400 dark:text-neutral-500 hover:text-red-500 dark:hover:text-red-400 transition-colors underline"
+            className="text-xs text-gray-400 dark:text-white/60 hover:text-red-500 dark:hover:text-red-400 transition-colors underline"
           >
             Se désinscrire
           </a>
@@ -111,7 +111,7 @@ function NewsletterToggle({ customerEmail }: { customerEmail: string }) {
           {loading ? "Inscription…" : "S'inscrire à la newsletter"}
         </button>
       )}
-      {message && <p className="text-sm text-gray-500 dark:text-neutral-400 mt-2">{message}</p>}
+      {message && <p className="text-sm text-gray-500 dark:text-white/70 mt-2">{message}</p>}
     </div>
   )
 }
@@ -320,7 +320,7 @@ export default function ComptePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 flex items-center justify-center">
-        <p className="text-gray-400 dark:text-neutral-500">Chargement…</p>
+        <p className="text-gray-400 dark:text-white/60">Chargement…</p>
       </div>
     )
   }
@@ -334,13 +334,13 @@ export default function ComptePage() {
             <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 text-center mb-1">
               {mode === "login" ? "Connexion" : "Créer un compte"}
             </h1>
-            <p className="text-sm text-gray-400 dark:text-neutral-500 text-center mb-6">Papillon Rose</p>
+            <p className="text-sm text-gray-400 dark:text-white/60 text-center mb-6">Papillon Rose</p>
 
             <div className="flex bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg p-0.5 mb-6">
-              <button onClick={() => { setMode("login"); setLoginError(""); setRegError("") }} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "login" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-gray-400 dark:text-neutral-500 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}>
+              <button onClick={() => { setMode("login"); setLoginError(""); setRegError("") }} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "login" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-gray-400 dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}>
                 Se connecter
               </button>
-              <button onClick={() => { setMode("register"); setLoginError(""); setRegError("") }} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "register" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-gray-400 dark:text-neutral-500 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}>
+              <button onClick={() => { setMode("register"); setLoginError(""); setRegError("") }} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "register" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-gray-400 dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}>
                 S&apos;inscrire
               </button>
             </div>
@@ -393,7 +393,7 @@ export default function ComptePage() {
                     onChange={(e) => setRegNewsletter(e.target.checked)}
                     className="mt-0.5 rounded border-gray-300 text-[#C9948E] focus:ring-[#C9948E]/50"
                   />
-                  <span className="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">
+                  <span className="text-xs text-gray-500 dark:text-white/70 leading-relaxed">
                     Je souhaite recevoir la newsletter Papillon Rose (nouveautés, offres exclusives)
                   </span>
                 </label>
@@ -404,7 +404,7 @@ export default function ComptePage() {
               </form>
             )}
           </div>
-          <p className="text-center text-xs text-gray-400 dark:text-neutral-500 mt-4">
+          <p className="text-center text-xs text-gray-400 dark:text-white/60 mt-4">
             <Link href="/" className="hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">← Retour au site</Link>
           </p>
         </div>
@@ -420,11 +420,11 @@ export default function ComptePage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Mon compte</h1>
-            <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">{customer.prenom} {customer.nom}</p>
+            <p className="text-sm text-gray-500 dark:text-white/60 mt-1">{customer.prenom} {customer.nom}</p>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">Site</Link>
-            <button onClick={handleLogout} className="text-sm text-gray-400 dark:text-neutral-500 hover:text-red-500 transition-colors">
+            <Link href="/" className="text-sm text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">Site</Link>
+            <button onClick={handleLogout} className="text-sm text-gray-400 dark:text-white/60 hover:text-red-500 transition-colors">
               Déconnexion
             </button>
           </div>
@@ -450,20 +450,20 @@ export default function ComptePage() {
           {!profileEditing ? (
             <div className="space-y-3">
               <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3">
-                <p className="text-xs text-gray-400 dark:text-neutral-500 mb-0.5">Nom complet</p>
+                <p className="text-xs text-gray-400 dark:text-white/60 mb-0.5">Nom complet</p>
                 <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">{profile?.prenom} {profile?.nom}</p>
               </div>
               <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3">
-                <p className="text-xs text-gray-400 dark:text-neutral-500 mb-0.5">Email</p>
+                <p className="text-xs text-gray-400 dark:text-white/60 mb-0.5">Email</p>
                 <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">{profile?.email}</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3">
-                  <p className="text-xs text-gray-400 dark:text-neutral-500 mb-0.5">Téléphone</p>
+                  <p className="text-xs text-gray-400 dark:text-white/60 mb-0.5">Téléphone</p>
                   <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">{profile?.telephone || "—"}</p>
                 </div>
                 <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3">
-                  <p className="text-xs text-gray-400 dark:text-neutral-500 mb-0.5">Adresse</p>
+                  <p className="text-xs text-gray-400 dark:text-white/60 mb-0.5">Adresse</p>
                   <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">{profile?.adresse || "—"}</p>
                 </div>
               </div>
@@ -482,7 +482,7 @@ export default function ComptePage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Email</label>
-                <input type="email" value={profile?.email} disabled className="w-full px-3 py-2 bg-gray-50 border border-gray-200 dark:border-neutral-700 rounded-lg text-sm text-gray-400 dark:text-neutral-500 cursor-not-allowed" />
+                <input type="email" value={profile?.email} disabled className="w-full px-3 py-2 bg-gray-50 border border-gray-200 dark:border-neutral-700 rounded-lg text-sm text-gray-400 dark:text-white/60 cursor-not-allowed" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Téléphone</label>
@@ -496,7 +496,7 @@ export default function ComptePage() {
                 <button onClick={handleSaveProfile} disabled={profileSaving} className="px-5 py-2 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50">
                   {profileSaving ? "Enregistrement…" : "Enregistrer"}
                 </button>
-                <button onClick={() => { setProfileEditing(false); if (profile) setProfileForm({ prenom: profile.prenom, nom: profile.nom, telephone: profile.telephone || "", adresse: profile.adresse || "" }) }} className="px-5 py-2 border border-gray-200 dark:border-neutral-700 text-gray-500 dark:text-neutral-500 text-sm font-medium rounded-lg hover:border-gray-300 transition-colors">
+                <button onClick={() => { setProfileEditing(false); if (profile) setProfileForm({ prenom: profile.prenom, nom: profile.nom, telephone: profile.telephone || "", adresse: profile.adresse || "" }) }} className="px-5 py-2 border border-gray-200 dark:border-neutral-700 text-gray-500 dark:text-white/60 text-sm font-medium rounded-lg hover:border-gray-300 transition-colors">
                   Annuler
                 </button>
               </div>
@@ -508,16 +508,16 @@ export default function ComptePage() {
         <section className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6 mb-6">
           <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Mes devis</h2>
           {quotesLoading ? (
-            <p className="text-sm text-gray-400 dark:text-neutral-500">Chargement…</p>
+            <p className="text-sm text-gray-400 dark:text-white/60">Chargement…</p>
           ) : quotes.length === 0 ? (
-            <p className="text-sm text-gray-400 dark:text-neutral-500">Aucun devis pour le moment.</p>
+            <p className="text-sm text-gray-400 dark:text-white/60">Aucun devis pour le moment.</p>
           ) : (
             <div className="space-y-3">
               {quotes.map((q) => (
                 <div key={q.id} className="flex items-center justify-between bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3">
                   <div>
                     <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">{q.quoteNumber}</p>
-                    <p className="text-xs text-gray-400 dark:text-neutral-500">{formatDate(q.createdAt)} — {q.itemCount} article{q.itemCount > 1 ? "s" : ""}</p>
+                    <p className="text-xs text-gray-400 dark:text-white/60">{formatDate(q.createdAt)} — {q.itemCount} article{q.itemCount > 1 ? "s" : ""}</p>
                   </div>
                   <div className="text-right">
                     <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-medium ${STATUT_COLORS[q.statut] || "bg-gray-100 dark:bg-neutral-800 text-gray-600"}`}>
@@ -535,9 +535,9 @@ export default function ComptePage() {
         <section className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
           <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Mes favoris</h2>
           {favLoading ? (
-            <p className="text-sm text-gray-400 dark:text-neutral-500">Chargement…</p>
+            <p className="text-sm text-gray-400 dark:text-white/60">Chargement…</p>
           ) : favorites.length === 0 ? (
-            <p className="text-sm text-gray-400 dark:text-neutral-500">Aucun produit en favori.</p>
+            <p className="text-sm text-gray-400 dark:text-white/60">Aucun produit en favori.</p>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {favorites.map((id) => {
@@ -564,13 +564,13 @@ export default function ComptePage() {
         {/* ─── Newsletter ─── */}
         <section className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6 mt-6">
           <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Newsletter</h2>
-          <p className="text-sm text-gray-400 dark:text-neutral-500 mb-4">
+          <p className="text-sm text-gray-400 dark:text-white/60 mb-4">
             Recevez nos nouveautés et offres exclusives directement dans votre boîte mail.
           </p>
           <NewsletterToggle customerEmail={customer.email} />
         </section>
 
-        <p className="text-center text-xs text-gray-400 dark:text-neutral-500 mt-6">
+        <p className="text-center text-xs text-gray-400 dark:text-white/60 mt-6">
           <Link href="/" className="hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">← Retour au site</Link>
         </p>
       </div>

@@ -19,7 +19,7 @@ export default function HistoryPanel({ history }: { history: SeoHistoryEntry[] }
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">Historique</h3>
-            <p className="text-xs text-gray-500 dark:text-neutral-400">{history.length} entrée(s)</p>
+            <p className="text-xs text-gray-500 dark:text-white/70">{history.length} entrée(s)</p>
           </div>
         </div>
         {expanded ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
@@ -28,7 +28,7 @@ export default function HistoryPanel({ history }: { history: SeoHistoryEntry[] }
       {expanded && (
         <div className="px-5 pb-5">
           {history.length === 0 ? (
-            <p className="text-sm text-gray-400 dark:text-neutral-500 text-center py-4">
+            <p className="text-sm text-gray-400 dark:text-white/60 text-center py-4">
               Aucune action enregistrée
             </p>
           ) : (
@@ -41,13 +41,13 @@ export default function HistoryPanel({ history }: { history: SeoHistoryEntry[] }
                   <div className="flex-1 min-w-0">
                     <p className="text-sm text-[#2E2E2E] dark:text-neutral-100">{entry.action}</p>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-xs text-gray-500 dark:text-neutral-400">
+                      <span className="text-xs text-gray-500 dark:text-white/70">
                         {new Date(entry.date).toLocaleDateString("fr-FR")} {new Date(entry.date).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
                       </span>
-                      <span className="text-xs text-gray-400 dark:text-neutral-500">•</span>
-                      <span className="text-xs text-gray-500 dark:text-neutral-400">{entry.user}</span>
-                      <span className="text-xs text-gray-400 dark:text-neutral-500">•</span>
-                      <span className="text-xs text-gray-500 dark:text-neutral-400">{entry.result}</span>
+                      <span className="text-xs text-gray-400 dark:text-white/60">•</span>
+                      <span className="text-xs text-gray-500 dark:text-white/70">{entry.user}</span>
+                      <span className="text-xs text-gray-400 dark:text-white/60">•</span>
+                      <span className="text-xs text-gray-500 dark:text-white/70">{entry.result}</span>
                     </div>
                   </div>
                   {entry.rollbackAvailable && (

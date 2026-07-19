@@ -141,7 +141,7 @@ export default function AvailabilityCalendar({
         </div>
         <div className="grid grid-cols-7 gap-0.5 mb-1">
           {DAYS.map((d) => (
-            <div key={d} className="text-center text-[9px] text-gray-400 dark:text-neutral-500 font-medium uppercase tracking-wider py-0.5">
+            <div key={d} className="text-center text-[9px] text-gray-400 dark:text-white/60 font-medium uppercase tracking-wider py-0.5">
               {d}
             </div>
           ))}
@@ -179,7 +179,7 @@ export default function AvailabilityCalendar({
 
   return (
     <div className="bg-white dark:bg-neutral-800 rounded-2xl p-4 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
-      <p className="text-xs text-gray-400 dark:text-neutral-500 text-center mb-3">
+      <p className="text-xs text-gray-400 dark:text-white/60 text-center mb-3">
         Sélectionnez une date pour une location d&apos;un jour, ou deux dates pour une période plus longue.
       </p>
       <div className="flex items-center justify-between mb-4">
@@ -208,7 +208,7 @@ export default function AvailabilityCalendar({
         </p>
       )}
 
-      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-black/[0.05] text-[10px] text-gray-400 dark:text-neutral-500">
+      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-black/[0.05] text-[10px] text-gray-400 dark:text-white/60">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded bg-[#C9948E] dark:bg-[#C9948E]" />
           <span>Sélectionné</span>

@@ -31,14 +31,14 @@ export default function PageControl({ pages }: { pages: PageSeoInfo[] }) {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-200 dark:border-neutral-700">
-                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-neutral-400">Page</th>
-                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-neutral-400">Title</th>
-                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-neutral-400">Description</th>
-                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-neutral-400">Robots</th>
-                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-neutral-400">H1</th>
-                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-neutral-400">Status</th>
-                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-neutral-400">Indexable</th>
-                  <th className="text-right py-2 px-2 text-xs font-medium text-gray-500 dark:text-neutral-400">Lien</th>
+                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-white/70">Page</th>
+                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-white/70">Title</th>
+                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-white/70">Description</th>
+                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-white/70">Robots</th>
+                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-white/70">H1</th>
+                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-white/70">Status</th>
+                  <th className="text-left py-2 px-2 text-xs font-medium text-gray-500 dark:text-white/70">Indexable</th>
+                  <th className="text-right py-2 px-2 text-xs font-medium text-gray-500 dark:text-white/70">Lien</th>
                 </tr>
               </thead>
               <tbody>
@@ -53,7 +53,7 @@ export default function PageControl({ pages }: { pages: PageSeoInfo[] }) {
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5">{page.path}</p>
+                      <p className="text-xs text-gray-400 dark:text-white/60 mt-0.5">{page.path}</p>
                     </td>
                     <td className="py-2.5 px-2">
                       <span className={`text-xs ${page.title ? "text-gray-600 dark:text-neutral-300" : "text-red-500"}`}>

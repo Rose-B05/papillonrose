@@ -109,7 +109,7 @@ export default function ContactView() {
                   <Icon size={17} className="text-[#C9948E] dark:text-[#E8B4AE]" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-gray-400 dark:text-neutral-500 uppercase tracking-widest mb-0.5">
+                  <p className="text-[10px] text-gray-400 dark:text-white/60 uppercase tracking-widest mb-0.5">
                     {label}
                   </p>
                   {link ? (
@@ -127,7 +127,7 @@ export default function ContactView() {
                     </p>
                   )}
                   {note && (
-                    <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5">{note}</p>
+                    <p className="text-xs text-gray-400 dark:text-white/60 mt-0.5">{note}</p>
                   )}
                 </div>
               </div>
@@ -168,7 +168,7 @@ export default function ContactView() {
             </div>
           )}
           <div>
-            <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
+            <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
               Nom complet
             </label>
             <input
@@ -182,7 +182,7 @@ export default function ContactView() {
             />
           </div>
           <div>
-            <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
+            <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
               Adresse email
             </label>
             <input
@@ -196,7 +196,7 @@ export default function ContactView() {
             />
           </div>
           <div>
-            <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
+            <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
               Date de l&apos;événement
             </label>
             <input
@@ -208,7 +208,7 @@ export default function ContactView() {
             />
           </div>
           <div>
-            <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
+            <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
               Votre message
             </label>
             <textarea

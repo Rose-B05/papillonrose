@@ -167,7 +167,7 @@ function ProductCard({
         />
         {imgError && (
           <div className="absolute inset-0 flex items-center justify-center bg-[#F0EBE3] dark:bg-neutral-700">
-            <span className="text-xs text-gray-400 dark:text-neutral-500 text-center px-2">{product.nom}</span>
+            <span className="text-xs text-gray-400 dark:text-white/60 text-center px-2">{product.nom}</span>
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -186,12 +186,12 @@ function ProductCard({
             {product.nom}
           </h3>
           {product.dimension && (
-            <p className="text-[10px] text-gray-400 dark:text-neutral-500 truncate">{formatDecimalFr(product.dimension)}</p>
+            <p className="text-[10px] text-gray-400 dark:text-white/60 truncate">{formatDecimalFr(product.dimension)}</p>
           )}
           <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
             {product.variants && product.variants.length > 0 ? (
               <>
-                <span className="text-[10px] font-normal text-gray-400 dark:text-neutral-500 mr-0.5">à partir de</span>
+                <span className="text-[10px] font-normal text-gray-400 dark:text-white/60 mr-0.5">à partir de</span>
                 {formatPrix(getStartingPrix(product))} €
               </>
             ) : (
@@ -199,7 +199,7 @@ function ProductCard({
                 {formatPrix(product.prix)} €
               </>
             )}
-            <span className="text-xs font-normal text-gray-400 dark:text-neutral-500 ml-0.5">/jour</span>
+            <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">/jour</span>
           </p>
         </div>
         <div className="mt-auto pt-2.5 flex items-center gap-2">
@@ -209,7 +209,7 @@ function ProductCard({
             aria-label={isInCart ? "Déjà dans le panier" : "Ajouter au panier"}
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
               isInCart
-                ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-neutral-500 cursor-not-allowed"
+                ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-white/60 cursor-not-allowed"
                 : "bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#B8807A]"
             }`}
           >
@@ -253,7 +253,7 @@ function CategoryPills({
           className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
             active === cat
               ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
-              : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+              : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
           }`}
         >
           {cat}
@@ -305,7 +305,7 @@ function Breadcrumb({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <nav aria-label="Fil d'Ariane" className="mb-5">
-        <ol className="flex items-center gap-1.5 text-xs text-gray-400 dark:text-neutral-500 flex-wrap">
+        <ol className="flex items-center gap-1.5 text-xs text-gray-400 dark:text-white/60 flex-wrap">
           {items.map((item, i) => {
             const isLast = i === items.length - 1
             return (
@@ -366,14 +366,14 @@ function ProductImages({
           <button
             onClick={prev}
             aria-label="Image précédente"
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 dark:bg-neutral-900/80 rounded-full shadow-md flex items-center justify-center hover:bg-white transition-colors text-[#2E2E2E]/60 dark:text-neutral-400 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 dark:bg-neutral-900/80 rounded-full shadow-md flex items-center justify-center hover:bg-white transition-colors text-[#2E2E2E]/60 dark:text-white/70 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
           </button>
           <button
             onClick={next}
             aria-label="Image suivante"
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 dark:bg-neutral-900/80 rounded-full shadow-md flex items-center justify-center hover:bg-white transition-colors text-[#2E2E2E]/60 dark:text-neutral-400 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 dark:bg-neutral-900/80 rounded-full shadow-md flex items-center justify-center hover:bg-white transition-colors text-[#2E2E2E]/60 dark:text-white/70 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
           </button>
@@ -1085,7 +1085,7 @@ export default function PapillonRoseSite() {
               <div className="relative flex-1">
                 <Search
                   size={15}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-neutral-500"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white/60"
                 />
                 <input
                   type="text"
@@ -1111,7 +1111,7 @@ export default function PapillonRoseSite() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-4 mt-2 md:mb-5 md:mt-3">
-                  <p className="text-sm text-gray-400 dark:text-neutral-500">
+                  <p className="text-sm text-gray-400 dark:text-white/60">
                     <span className="text-[#2E2E2E] dark:text-neutral-100 font-semibold">
                       {filtered.length}
                     </span>{" "}
@@ -1134,7 +1134,7 @@ export default function PapillonRoseSite() {
                     tagFilters.dateDebut) && (
                     <button
                       onClick={resetFilters}
-                      className="text-xs text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors underline"
+                      className="text-xs text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors underline"
                     >
                       Réinitialiser
                     </button>
@@ -1153,7 +1153,7 @@ export default function PapillonRoseSite() {
               />
             ) : (
               <div className="py-24 text-center">
-                <p className="text-gray-400 dark:text-neutral-500 text-base mb-5">
+                <p className="text-gray-400 dark:text-white/60 text-base mb-5">
                   Aucun produit ne correspond à votre sélection.
                 </p>
                 <button
@@ -1189,7 +1189,7 @@ export default function PapillonRoseSite() {
                 <div className="w-20 h-20 bg-[#C9948E]/10 dark:bg-[#C9948E]/10 rounded-full flex items-center justify-center mx-auto mb-5">
                   <Heart size={32} className="text-[#C9948E]/40" />
                 </div>
-                <p className="text-gray-400 dark:text-neutral-500 text-base mb-6">
+                <p className="text-gray-400 dark:text-white/60 text-base mb-6">
                   Vous n&apos;avez pas encore de favoris.
                 </p>
                 <button
@@ -1263,7 +1263,7 @@ export default function PapillonRoseSite() {
                 <div className="space-y-2.5 bg-[#F8F5F0] dark:bg-neutral-900 rounded-2xl p-4 mb-5">
                   {modalProduct.dimension && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-400 dark:text-neutral-500 text-[11px] uppercase tracking-wider">
+                      <span className="text-gray-400 dark:text-white/60 text-[11px] uppercase tracking-wider">
                         Dimensions
                       </span>
                       <span className="font-medium text-[#2E2E2E] dark:text-neutral-100 text-right max-w-[55%] text-sm">
@@ -1272,7 +1272,7 @@ export default function PapillonRoseSite() {
                     </div>
                   )}
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400 dark:text-neutral-500 text-[11px] uppercase tracking-wider">
+                    <span className="text-gray-400 dark:text-white/60 text-[11px] uppercase tracking-wider">
                       Stock
                     </span>
                     {(() => {
@@ -1299,7 +1299,7 @@ export default function PapillonRoseSite() {
                 <div className="mt-auto">
                   {modalVariants && modalVariants.length > 0 && (
                     <div className="mb-4">
-                      <p className="text-sm text-gray-500 dark:text-neutral-500 mb-2">Taille</p>
+                      <p className="text-sm text-gray-500 dark:text-white/60 mb-2">Taille</p>
                       <div className="flex gap-2">
                         {modalVariants.map((v) => (
                           <button
@@ -1308,7 +1308,7 @@ export default function PapillonRoseSite() {
                             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                               modalVariant === v.label
                                 ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
-                                : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20"
+                                : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20"
                             }`}
                           >
                             {v.label} — {formatPrix(v.prix)} €/jour
@@ -1336,18 +1336,18 @@ export default function PapillonRoseSite() {
                         {hasDate
                           ? <>{formatPrix(total)} €</>
                           : <>
-                              <span className="text-[10px] font-normal text-gray-400 dark:text-neutral-500 mr-0.5">à partir de</span>
+                              <span className="text-[10px] font-normal text-gray-400 dark:text-white/60 mr-0.5">à partir de</span>
                               {formatPrix(dayPrix)} €
                             </>
                         }
-                        <span className="text-sm font-normal text-gray-400 dark:text-neutral-500 ml-1">
+                        <span className="text-sm font-normal text-gray-400 dark:text-white/60 ml-1">
                           {hasDate ? `total · ${days} jour${days > 1 ? "s" : ""} × ${modalQty}` : "/ jour"}
                         </span>
                       </p>
                     )
                   })()}
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-sm text-gray-500 dark:text-neutral-500">Quantité</span>
+                    <span className="text-sm text-gray-500 dark:text-white/60">Quantité</span>
                     <div className="flex items-center gap-2">
                       {(() => {
                         const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0)
@@ -1375,7 +1375,7 @@ export default function PapillonRoseSite() {
                   </div>
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex-1">
-                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1">Début</label>
+                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1">Début</label>
                       <input
                         type="date"
                         value={modalDateStart}
@@ -1385,7 +1385,7 @@ export default function PapillonRoseSite() {
                       />
                     </div>
                     <div className="flex-1">
-                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1">Fin</label>
+                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1">Fin</label>
                       <input
                         type="date"
                         value={modalDateEnd}
@@ -1435,7 +1435,7 @@ export default function PapillonRoseSite() {
                             return `Ajouter au panier · ${formatPrix(dayPrix * days * modalQty)} €`
                           })()}
                     </button>
-                    <p className="text-[10px] text-gray-400 dark:text-neutral-500 text-center -mt-1">
+                    <p className="text-[10px] text-gray-400 dark:text-white/60 text-center -mt-1">
                       Sélectionnez 2 dates dans le panier pour valider la disponibilité
                     </p>
                     <button
@@ -1446,7 +1446,7 @@ export default function PapillonRoseSite() {
                         setModalVariant(undefined)
                       }}
                       disabled={(() => { const cartQty = cartItems.filter((i) => i.productId === modalProduct.id).reduce((s, i) => s + i.qty, 0); return getEffectiveStock(modalProduct.id) - cartQty <= 0 })()}
-                      className="w-full bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 py-3.5 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] dark:hover:bg-neutral-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="w-full bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 py-3.5 rounded-2xl text-sm font-medium hover:bg-[#E8E0D5] dark:hover:bg-neutral-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       Ajouter au devis
                     </button>
@@ -1495,7 +1495,7 @@ export default function PapillonRoseSite() {
                 >
                   Demande de devis
                 </h3>
-                <p className="text-xs text-gray-400 dark:text-neutral-500 mt-0.5">
+                <p className="text-xs text-gray-400 dark:text-white/60 mt-0.5">
                   {quoteCount} article{quoteCount > 1 ? "s" : ""}
                 </p>
               </div>
@@ -1513,7 +1513,7 @@ export default function PapillonRoseSite() {
                 <div className="w-16 h-16 bg-[#C9948E]/10 dark:bg-[#C9948E]/10 rounded-full flex items-center justify-center mb-4">
                   <ShoppingBag size={24} className="text-[#C9948E]/50" />
                 </div>
-                <p className="text-gray-400 dark:text-neutral-500 mb-5 text-sm">
+                <p className="text-gray-400 dark:text-white/60 mb-5 text-sm">
                   Votre sélection est vide.
                 </p>
                 <button
@@ -1543,7 +1543,7 @@ export default function PapillonRoseSite() {
                         <p className="font-semibold text-xs text-[#2E2E2E] dark:text-neutral-100 leading-tight line-clamp-2">
                           {p.nom}
                         </p>
-                        <p className="text-[11px] text-gray-400 dark:text-neutral-500 mt-0.5">
+                        <p className="text-[11px] text-gray-400 dark:text-white/60 mt-0.5">
                           {formatPrix(p.prix)} € / jour
                         </p>
                         <div className="flex items-center gap-2 mt-2">
@@ -1587,7 +1587,7 @@ export default function PapillonRoseSite() {
                 </div>
                 <div className="border-t border-black/[0.07] dark:border-white/[0.08] px-5 py-5">
                   <div className="flex justify-between items-center mb-5">
-                    <span className="text-[11px] text-gray-400 dark:text-neutral-500 uppercase tracking-wider">
+                    <span className="text-[11px] text-gray-400 dark:text-white/60 uppercase tracking-wider">
                       Total estimé
                     </span>
                     <span

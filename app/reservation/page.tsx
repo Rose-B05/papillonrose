@@ -272,9 +272,9 @@ export default function ReservationPage() {
             <Check size={32} className="text-green-500" />
           </div>
           <h1 style={DP} className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Demande envoyée</h1>
-          <p className="text-gray-500 dark:text-neutral-500 text-sm mb-1">Votre numéro de demande :</p>
+          <p className="text-gray-500 dark:text-white/60 text-sm mb-1">Votre numéro de demande :</p>
           <p className="text-[#C9948E] dark:text-[#E8B4AE] font-bold text-2xl mb-6">#{bookingId}</p>
-          <p className="text-gray-500 dark:text-neutral-500 text-sm mb-6">
+          <p className="text-gray-500 dark:text-white/60 text-sm mb-6">
             Votre demande de devis a bien été enregistrée. Nous vous enverrons votre devis personnalisé sous <strong className="text-[#C9948E] dark:text-[#E8B4AE]">24h ouvrées</strong>.
           </p>
           <button
@@ -292,7 +292,7 @@ export default function ReservationPage() {
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 pt-16 md:pt-20">
       <div className="bg-white dark:bg-neutral-800 shadow-sm">
         <div className="max-w-4xl mx-auto px-5 py-4 flex items-center justify-between">
-          <button onClick={handleBack} className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">← Retour</button>
+          <button onClick={handleBack} className="text-sm text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">← Retour</button>
           <h1 style={DP} className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">Réservation</h1>
           <div className="w-16" />
         </div>
@@ -328,7 +328,7 @@ export default function ReservationPage() {
                 <div className="w-16 h-16 bg-[#C9948E]/10 dark:bg-[#C9948E]/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <ShoppingBag size={24} className="text-[#C9948E]/40" />
                 </div>
-                <p className="text-gray-400 dark:text-neutral-500 mb-5">Votre panier est vide</p>
+                <p className="text-gray-400 dark:text-white/60 mb-5">Votre panier est vide</p>
                 <a href="/" className="bg-[#C9948E] dark:bg-[#C9948E] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors inline-block">
                   Découvrir le catalogue
                 </a>
@@ -347,7 +347,7 @@ export default function ReservationPage() {
                         <div className="flex-1 min-w-0">
                           <p className="font-medium text-sm text-[#2E2E2E] dark:text-neutral-100">{p?.nom}</p>
                           {item.variantLabel && <p className="text-[11px] text-[#C9948E] dark:text-[#E8B4AE] font-medium">{item.variantLabel}</p>}
-                          <p className="text-[11px] text-gray-400 dark:text-neutral-500 mt-0.5">{parsePrix(itemPrix)} € / jour</p>
+                          <p className="text-[11px] text-gray-400 dark:text-white/60 mt-0.5">{parsePrix(itemPrix)} € / jour</p>
                           <div className="flex items-center gap-2 mt-2">
                             <button onClick={() => updateItem(item.productId, item.variantLabel, { qty: Math.max(1, item.qty - 1) })} className="w-6 h-6 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm"><Minus size={10} /></button>
                             <span className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 w-7 text-center">{item.qty}</span>
@@ -370,7 +370,7 @@ export default function ReservationPage() {
                 <Totals totalHt={totalHt} totalTtc={totalTtc} deposit={deposit} deliveryFee={deliveryFee} />
 
                 <div className="flex gap-3">
-                  <button onClick={clearCart} className="flex-1 border border-[#C9948E] text-gray-500 dark:text-neutral-500 py-3 rounded-2xl text-sm font-medium hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition-colors">Vider le panier</button>
+                  <button onClick={clearCart} className="flex-1 border border-[#C9948E] text-gray-500 dark:text-white/60 py-3 rounded-2xl text-sm font-medium hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition-colors">Vider le panier</button>
                   <button onClick={() => setStep("dates")} className="flex-1 bg-[#C9948E] dark:bg-[#C9948E] text-white py-3 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors flex items-center justify-center gap-2">
                     Choisir les dates <ArrowRight size={14} />
                   </button>
@@ -532,7 +532,7 @@ export default function ReservationPage() {
                 {client.besoinLivraison && (
                   <div className="bg-white dark:bg-neutral-800 rounded-2xl p-4 sm:p-5 border border-black/[0.07] dark:border-white/[0.08] shadow-sm space-y-4">
                     <div>
-                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">Code postal de livraison</label>
+                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">Code postal de livraison</label>
                       <input
                         type="text"
                         value={client.codePostalLivraison || ""}
@@ -562,14 +562,14 @@ export default function ReservationPage() {
                         {deliveryResult.freeDelivery ? (
                           <div className="text-center py-2">
                             <p className="text-sm font-semibold text-green-600 mb-1">Livraison gratuite</p>
-                            <p className="text-xs text-gray-400 dark:text-neutral-500">Commande &ge; 150&euro; — frais offerts</p>
-                            <p className="text-[10px] text-gray-400 dark:text-neutral-500 mt-1">
+                            <p className="text-xs text-gray-400 dark:text-white/60">Commande &ge; 150&euro; — frais offerts</p>
+                            <p className="text-[10px] text-gray-400 dark:text-white/60 mt-1">
                               📍 Depuis Créteil (94) — {deliveryResult.zoneLabel} ({deliveryResult.distanceKm} km)
                             </p>
                           </div>
                         ) : (
                           <>
-                            <p className="text-xs text-gray-400 dark:text-neutral-500 mb-2">Frais de livraison estimés</p>
+                            <p className="text-xs text-gray-400 dark:text-white/60 mb-2">Frais de livraison estimés</p>
                             <div className="space-y-1.5 text-sm">
                               <div className="flex justify-between">
                                 <span className="text-[#2E2E2E] dark:text-neutral-100">Forfait de base</span>
@@ -584,7 +584,7 @@ export default function ReservationPage() {
                                 <span>{deliveryResult.totalFee.toFixed(2)} €</span>
                               </div>
                             </div>
-                            <p className="text-[10px] text-gray-400 dark:text-neutral-500 mt-2">
+                            <p className="text-[10px] text-gray-400 dark:text-white/60 mt-2">
                               📍 Depuis Créteil (94) — {deliveryResult.zoneLabel}
                             </p>
                           </>
@@ -601,20 +601,20 @@ export default function ReservationPage() {
                 )}
               </div>
               <div>
-                <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">Message (optionnel)</label>
+                <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">Message (optionnel)</label>
                 <textarea value={client.message || ""} onChange={(e) => setClient((c) => ({ ...c, message: e.target.value }))} rows={3} placeholder="Informations complémentaires..." className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors resize-none shadow-sm" style={{ WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
               </div>
 
               {/* Recap */}
               <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-2xl p-5">
-                <p className="text-xs text-gray-400 dark:text-neutral-500 mb-2">Récapitulatif</p>
+                <p className="text-xs text-gray-400 dark:text-white/60 mb-2">Récapitulatif</p>
                 {items.map((i) => {
                   const p = getProduct(i.productId)
                   const eds = dateEdits[i.productId]
                   return (
                     <div key={`${i.productId}:${i.variantLabel || ""}`} className="flex justify-between text-sm text-[#2E2E2E] dark:text-neutral-100">
                       <span>{p?.nom}{i.variantLabel ? ` (${i.variantLabel})` : ""} × {i.qty}</span>
-                      <span className="text-gray-500 dark:text-neutral-500">{eds?.start ? formatDateFr(eds.start) : "..."} → {eds?.end ? formatDateFr(eds.end) : "..."}</span>
+                      <span className="text-gray-500 dark:text-white/60">{eds?.start ? formatDateFr(eds.start) : "..."} → {eds?.end ? formatDateFr(eds.end) : "..."}</span>
                     </div>
                   )
                 })}
@@ -655,7 +655,7 @@ export default function ReservationPage() {
                     isDark={isDark}
                   />
                   <div className="flex items-center justify-between mt-2">
-                    <p className="text-[10px] text-gray-400 dark:text-neutral-500">
+                    <p className="text-[10px] text-gray-400 dark:text-white/60">
                       {deliveryResult?.distanceKm ? `${deliveryResult.distanceKm} km` : ""}
                     </p>
                     <a
@@ -683,19 +683,19 @@ export default function ReservationPage() {
                       return (
                         <div key={productId} className="flex items-start gap-3 text-sm">
                           <div className="flex-1">
-                            {prod && <p className="text-[10px] text-gray-400 dark:text-neutral-500 mb-0.5">{prod.nom}</p>}
+                            {prod && <p className="text-[10px] text-gray-400 dark:text-white/60 mb-0.5">{prod.nom}</p>}
                             <div className="flex items-center gap-2 mb-1">
                               <RotateCcw size={12} className="text-[#C9948E] dark:text-[#E8B4AE]" />
                               <span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Retrait</span>
                             </div>
-                            <p className="text-xs text-gray-500 dark:text-neutral-500 ml-5">{formatDateLong(rd.pickupDate)}</p>
+                            <p className="text-xs text-gray-500 dark:text-white/60 ml-5">{formatDateLong(rd.pickupDate)}</p>
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
                               <RotateCcw size={12} className="text-red-400" />
                               <span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Restitution</span>
                             </div>
-                            <p className="text-xs text-gray-500 dark:text-neutral-500 ml-5">Avant 12h le {formatDateLong(rd.returnDeadline)}</p>
+                            <p className="text-xs text-gray-500 dark:text-white/60 ml-5">Avant 12h le {formatDateLong(rd.returnDeadline)}</p>
                           </div>
                         </div>
                       )
@@ -735,7 +735,7 @@ export default function ReservationPage() {
                 </div>
               )}
 
-              <p className="text-xs text-gray-400 dark:text-neutral-500 text-center">
+              <p className="text-xs text-gray-400 dark:text-white/60 text-center">
                 Vous recevrez votre devis sous <strong className="text-[#C9948E] dark:text-[#E8B4AE]">24h ouvrées</strong>
               </p>
 
@@ -810,7 +810,7 @@ export default function ReservationPage() {
 
 function BackButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (
-    <button onClick={onClick} className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors mb-6">
+    <button onClick={onClick} className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors mb-6">
       <ArrowLeft size={14} /> {label}
     </button>
   )
@@ -830,7 +830,7 @@ function InputField({ label, type = "text", value, onChange, required, error, fi
 }) {
   return (
     <div>
-      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
+      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
       <input id={fieldId} type={type} value={value} onChange={(e) => onChange(e.target.value)} onBlur={onBlur} required={required}
         className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
         style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
@@ -844,7 +844,7 @@ function SelectField({ label, value, onChange, options, required, error, fieldId
 }) {
   return (
     <div>
-      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
+      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
       <select id={fieldId} value={value} onChange={(e) => onChange(e.target.value)} onBlur={onBlur} required={required}
         className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
         style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}>
@@ -864,16 +864,16 @@ function Totals({ totalHt, totalTtc, deposit, deliveryFee }: { totalHt: number; 
   return (
     <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 shadow-sm border border-black/[0.07] dark:border-white/[0.08] mb-6">
       <div className="flex justify-between text-sm mb-2">
-        <span className="text-gray-500 dark:text-neutral-400">Total HT</span>
+        <span className="text-gray-500 dark:text-white/70">Total HT</span>
         <span className="font-semibold">{fmt(totalHt)}</span>
       </div>
       <div className="flex justify-between text-sm mb-2">
-        <span className="text-gray-500 dark:text-neutral-400">TVA (20%)</span>
+        <span className="text-gray-500 dark:text-white/70">TVA (20%)</span>
         <span className="font-semibold">{fmt(totalTtc - totalHt)}</span>
       </div>
       {deliveryFee && deliveryFee > 0 && (
         <div className="flex justify-between text-sm mb-2">
-          <span className="text-gray-400 dark:text-neutral-500 flex items-center gap-1.5">
+          <span className="text-gray-400 dark:text-white/60 flex items-center gap-1.5">
             <Truck size={12} /> Livraison
           </span>
           <span className="font-semibold text-[#C9948E] dark:text-[#E8B4AE]">{fmt(deliveryFee)}</span>
@@ -902,15 +902,15 @@ function RentalDatesCard({ rd, montantTotal }: { rd: RentalDates; montantTotal: 
       <p className="text-[10px] uppercase tracking-wider text-[#C9948E] dark:text-[#E8B4AE] font-semibold mb-2">{rd.ruleLabel}</p>
       <div className="grid grid-cols-2 gap-3 text-xs">
         <div>
-          <p className="text-gray-400 dark:text-neutral-500 mb-0.5">Retrait</p>
+          <p className="text-gray-400 dark:text-white/60 mb-0.5">Retrait</p>
           <p className="font-medium text-[#2E2E2E] dark:text-neutral-100">{formatDateLong(rd.pickupDate)}</p>
         </div>
         <div>
-          <p className="text-gray-400 dark:text-neutral-500 mb-0.5">Restitution avant 12h</p>
+          <p className="text-gray-400 dark:text-white/60 mb-0.5">Restitution avant 12h</p>
           <p className="font-medium text-[#2E2E2E] dark:text-neutral-100">{formatDateLong(rd.returnDeadline)}</p>
         </div>
       </div>
-      <div className="mt-2 pt-2 border-t border-black/[0.05] text-[10px] text-gray-400 dark:text-neutral-500">
+      <div className="mt-2 pt-2 border-t border-black/[0.05] text-[10px] text-gray-400 dark:text-white/60">
         <span className="text-amber-600 font-medium">Retard :</span> +{fee1.taux * 100}%jour 1 ({fee1.montant.toFixed(2)}€) → +{fee2.taux * 100}%jour 2 ({fee2.montant.toFixed(2)}€) → plafond {feeMax.taux * 100}% ({feeMax.montant.toFixed(2)}€)
       </div>
     </div>
