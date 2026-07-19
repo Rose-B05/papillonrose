@@ -31,7 +31,7 @@ export default function RobotsEditor({ info }: { info: RobotsInfo }) {
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">robots.txt</h3>
-            <p className="text-xs text-gray-500 dark:text-neutral-400">
+            <p className="text-xs text-gray-500 dark:text-white/70">
               Modifié le {new Date(info.lastModified).toLocaleDateString("fr-FR")}
             </p>
           </div>

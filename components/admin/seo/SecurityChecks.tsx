@@ -18,7 +18,7 @@ export default function SecurityChecks({ checks }: { checks: SecurityCheck[] }) 
           <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">
             Vérifications pré-production
           </h3>
-          <p className="text-xs text-gray-500 dark:text-neutral-400">
+          <p className="text-xs text-gray-500 dark:text-white/70">
             {passed}/{checks.length} vérifications passées
           </p>
         </div>
@@ -41,7 +41,7 @@ export default function SecurityChecks({ checks }: { checks: SecurityCheck[] }) 
             )}
             <div className="flex-1 min-w-0">
               <p className="text-sm text-[#2E2E2E] dark:text-neutral-100">{check.label}</p>
-              <p className="text-xs text-gray-500 dark:text-neutral-400">{check.message}</p>
+              <p className="text-xs text-gray-500 dark:text-white/70">{check.message}</p>
             </div>
           </div>
         ))}

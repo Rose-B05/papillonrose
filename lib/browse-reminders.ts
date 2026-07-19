@@ -82,7 +82,7 @@ function buildReminderEmail(
   return `
 <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;max-width:650px;margin:auto;padding:20px;background:#fff;color:#2E2E2E">
   <div style="text-align:center;padding:20px 0;border-bottom:2px solid #C9948E">
-    <h1 style="color:#C9948E;font-size:24px;margin:0">🦋 Papillon Rose</h1>
+    <h1 style="color:#C9948E;font-size:24px;margin:0"><img src="https://www.papillonrose.fr/papillon-rose-logo.png" alt="Papillon Rose" height="40" style="vertical-align:middle;margin-right:8px"> Papillon Rose</h1>
     <p style="color:#999;font-size:12px;margin:4px 0 0">Location mobilier & décoration événements</p>
   </div>
 

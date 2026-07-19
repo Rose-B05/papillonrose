@@ -123,14 +123,14 @@ export default function DeliveryMap({ destination, postalCode, isDark = false }:
         <div className="h-[200px] bg-gradient-to-br from-[#F0EBE3] to-white dark:from-neutral-800 dark:to-neutral-900 flex items-center justify-center">
           <div className="flex flex-col items-center gap-2">
             <div className="w-5 h-5 border-2 border-[#C9948E] border-t-transparent rounded-full animate-spin" />
-            <p className="text-xs text-gray-400 dark:text-neutral-500">Chargement de la carte…</p>
+            <p className="text-xs text-gray-400 dark:text-white/60">Chargement de la carte…</p>
           </div>
         </div>
       )}
 
       {error && (
         <div className="h-[200px] bg-gradient-to-br from-[#F0EBE3] to-white dark:from-neutral-800 dark:to-neutral-900 flex items-center justify-center">
-          <p className="text-xs text-gray-400 dark:text-neutral-500">Adresse non localisable</p>
+          <p className="text-xs text-gray-400 dark:text-white/60">Adresse non localisable</p>
         </div>
       )}
 

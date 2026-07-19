@@ -408,7 +408,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                     ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
                     : form.status === "masque"
                     ? "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400"
-                    : "bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-neutral-400"
+                    : "bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-white/70"
                 }`}
               >
                 {form.status === "publie" ? "Publié" : form.status === "masque" ? "Masqué" : "Brouillon"}
@@ -425,7 +425,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
           <button
             onClick={() => handleSave("brouillon")}
             disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-600 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-600 dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             Enregistrer brouillon
@@ -598,7 +598,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                     form.tagsThemes.includes(tag)
                       ? "bg-[#C9948E] dark:bg-[#C9948E] text-white"
-                      : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-neutral-400 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#C9948E]/50"
+                      : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-white/70 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#C9948E]/50"
                   }`}
                 >
                   {tag}
@@ -621,7 +621,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                     form.tagsCouleurs.includes(tag)
                       ? "bg-[#C9948E] dark:bg-[#C9948E] text-white"
-                      : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-neutral-400 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#C9948E]/50"
+                      : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-white/70 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#C9948E]/50"
                   }`}
                 >
                   {tag}
@@ -652,10 +652,10 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
               }`}
             >
               <Upload className="w-6 h-6 text-gray-400 mx-auto mb-2" />
-              <p className="text-xs text-gray-500 dark:text-neutral-400">
+              <p className="text-xs text-gray-500 dark:text-white/70">
                 Glisser-déposer ou cliquer pour upload
               </p>
-              <p className="text-[10px] text-gray-400 dark:text-neutral-500 mt-1">
+              <p className="text-[10px] text-gray-400 dark:text-white/60 mt-1">
                 JPEG, PNG, WebP • Max 10 Mo
               </p>
             </div>
@@ -683,7 +683,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             <button
               type="button"
               onClick={openMediaLibrary}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-500 dark:text-neutral-400 hover:border-[#C9948E]/50 transition-colors mb-4"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-500 dark:text-white/70 hover:border-[#C9948E]/50 transition-colors mb-4"
             >
               <Library className="w-3.5 h-3.5" />
               Parcourir la bibliothèque
@@ -850,7 +850,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowMediaLibrary(false)}
-                  className="px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-500 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors"
+                  className="px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-500 dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors"
                 >
                   Annuler
                 </button>

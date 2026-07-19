@@ -205,7 +205,7 @@ export default function Chatbot() {
               </p>
             )}
             {remaining <= 0 ? (
-              <p className="text-xs text-gray-400 dark:text-neutral-500 text-center py-2">
+              <p className="text-xs text-gray-400 dark:text-white/60 text-center py-2">
                 Session terminée. Contactez-nous par email ou Instagram
               </p>
             ) : (

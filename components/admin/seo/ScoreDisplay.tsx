@@ -21,7 +21,7 @@ function ScoreRing({ score, label, color }: { score: number; label: string; colo
           <span className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100">{score}</span>
         </div>
       </div>
-      <span className="text-xs text-gray-500 dark:text-neutral-400 text-center">{label}</span>
+      <span className="text-xs text-gray-500 dark:text-white/70 text-center">{label}</span>
     </div>
   )
 }
@@ -45,7 +45,7 @@ export default function ScoreDisplay({ score }: { score: SeoScore }) {
           <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">
             Score global
           </h3>
-          <p className="text-xs text-gray-500 dark:text-neutral-400">
+          <p className="text-xs text-gray-500 dark:text-white/70">
             {score.total}/100
           </p>
         </div>

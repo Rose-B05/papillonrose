@@ -73,11 +73,11 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                     {p.nom}
                   </h3>
                   {p.dimension && (
-                    <p className="text-[10px] text-gray-400 dark:text-neutral-500 truncate">{p.dimension}</p>
+                    <p className="text-[10px] text-gray-400 dark:text-white/60 truncate">{p.dimension}</p>
                   )}
                   <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
                     {typeof p.prix === "number" ? `${p.prix} €` : `${p.prix} €`}
-                    <span className="text-xs font-normal text-gray-400 dark:text-neutral-500 ml-0.5">/jour</span>
+                    <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">/jour</span>
                   </p>
                 </div>
 
@@ -88,7 +88,7 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                     aria-label={inCart ? "Déjà dans le panier" : "Ajouter au panier"}
                     className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
                       inCart
-                        ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-neutral-500 cursor-not-allowed"
+                        ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-white/60 cursor-not-allowed"
                         : "bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#B8807A]"
                     }`}
                   >

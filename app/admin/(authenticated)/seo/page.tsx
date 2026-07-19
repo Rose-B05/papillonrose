@@ -182,7 +182,7 @@ export default function SeoPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <p className="text-gray-400 dark:text-neutral-500">Chargement…</p>
+        <p className="text-gray-400 dark:text-white/60">Chargement…</p>
       </div>
     )
   }
@@ -238,7 +238,7 @@ export default function SeoPage() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">Activer le mode Production</h3>
-                <p className="text-sm text-gray-500 dark:text-neutral-400">Cette action est irréversible sans intervention manuelle.</p>
+                <p className="text-sm text-gray-500 dark:text-white/70">Cette action est irréversible sans intervention manuelle.</p>
               </div>
             </div>
             <p className="text-sm text-[#2E2E2E]/70 dark:text-neutral-300 mb-6 leading-relaxed">
@@ -247,7 +247,7 @@ export default function SeoPage() {
             <div className="flex gap-3 justify-end">
               <button
                 onClick={() => { setShowConfirmProd(false); setPendingMode(null) }}
-                className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-neutral-400 hover:text-[#2E2E2E] dark:hover:text-neutral-100 transition-colors"
+                className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-white/70 hover:text-[#2E2E2E] dark:hover:text-neutral-100 transition-colors"
               >
                 Annuler
               </button>
@@ -271,7 +271,7 @@ export default function SeoPage() {
             <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">
               Mode {cfg.label}
             </h2>
-            <p className="text-sm text-gray-500 dark:text-neutral-400 mt-1">
+            <p className="text-sm text-gray-500 dark:text-white/70 mt-1">
               {cfg.description}
             </p>
           </div>
@@ -295,14 +295,14 @@ export default function SeoPage() {
                 } ${saving ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
               >
                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isActive ? mc.bgColor : "bg-gray-100 dark:bg-neutral-700"}`}>
-                  <McIcon size={16} className={isActive ? mc.color : "text-gray-400 dark:text-neutral-500"} />
+                  <McIcon size={16} className={isActive ? mc.color : "text-gray-400 dark:text-white/60"} />
                 </div>
                 <div>
-                  <p className={`text-sm font-semibold ${isActive ? "text-[#2E2E2E] dark:text-neutral-100" : "text-gray-600 dark:text-neutral-400"}`}>
+                  <p className={`text-sm font-semibold ${isActive ? "text-[#2E2E2E] dark:text-neutral-100" : "text-gray-600 dark:text-white/70"}`}>
                     {mc.label}
                   </p>
                   {isActive && (
-                    <p className="text-[10px] text-[#2E2E2E]/50 dark:text-neutral-500 mt-0.5">Actif</p>
+                    <p className="text-[10px] text-[#2E2E2E]/50 dark:text-white/60 mt-0.5">Actif</p>
                   )}
                 </div>
               </button>
@@ -348,7 +348,7 @@ export default function SeoPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 dark:border-neutral-700">
-                <th className="text-left py-2 pr-4 text-xs text-gray-500 dark:text-neutral-400 font-medium">État</th>
+                <th className="text-left py-2 pr-4 text-xs text-gray-500 dark:text-white/70 font-medium">État</th>
                 <th className="text-center py-2 px-3 text-xs font-medium text-amber-700 dark:text-[#E8B4AE]">Développement</th>
                 <th className="text-center py-2 px-3 text-xs font-medium text-blue-700 dark:text-blue-400">Audit SEO</th>
                 <th className="text-center py-2 px-3 text-xs font-medium text-green-700 dark:text-green-400">Production</th>
@@ -395,7 +395,7 @@ export default function SeoPage() {
             className={`flex-1 min-w-[100px] text-xs px-3 py-2 rounded-lg transition-colors ${
               activeTab === tab.id
                 ? "bg-white dark:bg-neutral-700 text-[#2E2E2E] dark:text-neutral-100 shadow-sm font-medium"
-                : "text-gray-500 dark:text-neutral-400 hover:text-gray-700 dark:hover:text-neutral-200"
+                : "text-gray-500 dark:text-white/70 hover:text-gray-700 dark:hover:text-neutral-200"
             }`}
           >
             {tab.label}
@@ -562,7 +562,7 @@ export default function SeoPage() {
 function StatusCard({ label, value, ok }: { label: string; value: string; ok: boolean }) {
   return (
     <div className={`rounded-xl border p-4 ${ok ? "bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800" : "bg-amber-50 dark:bg-[#3A1E1E]/30 border-amber-200 dark:border-[#4A2828]"}`}>
-      <p className="text-xs text-gray-500 dark:text-neutral-400 mb-1">{label}</p>
+      <p className="text-xs text-gray-500 dark:text-white/70 mb-1">{label}</p>
       <p className={`text-sm font-semibold ${ok ? "text-green-700 dark:text-green-400" : "text-amber-700 dark:text-[#E8B4AE]"}`}>
         {value}
       </p>
@@ -584,18 +584,18 @@ function IndexationStats({ stats }: { stats: SeoData["indexation"] }) {
         <StatItem label="Indexables" value={stats.indexablePages} color="text-green-600 dark:text-green-400" />
         <StatItem label="Noindex" value={stats.noindexPages} color="text-amber-600 dark:text-[#E8B4AE]" />
         <StatItem label="Indexées" value={stats.indexedPages} color="text-green-600 dark:text-green-400" />
-        <StatItem label="Non indexées" value={stats.nonIndexedPages} color="text-gray-600 dark:text-neutral-400" />
+        <StatItem label="Non indexées" value={stats.nonIndexedPages} color="text-gray-600 dark:text-white/70" />
         <StatItem label="Exclues" value={stats.excludedPages} color="text-amber-600 dark:text-[#E8B4AE]" />
         <StatItem label="Bloquées" value={stats.blockedPages} color="text-red-600 dark:text-red-400" />
       </div>
       <div className="mt-4 space-y-1">
-        <p className="text-xs text-gray-500 dark:text-neutral-400">
+        <p className="text-xs text-gray-500 dark:text-white/70">
           Dernière indexation : {stats.lastIndexation === "—" ? "—" : new Date(stats.lastIndexation).toLocaleDateString("fr-FR")}
         </p>
-        <p className="text-xs text-gray-500 dark:text-neutral-400">
+        <p className="text-xs text-gray-500 dark:text-white/70">
           Dernière génération sitemap : {new Date(stats.lastSitemapGeneration).toLocaleDateString("fr-FR")}
         </p>
-        <p className="text-xs text-gray-500 dark:text-neutral-400">
+        <p className="text-xs text-gray-500 dark:text-white/70">
           Dernière modification robots.txt : {new Date(stats.lastRobotsModification).toLocaleDateString("fr-FR")}
         </p>
       </div>
@@ -606,7 +606,7 @@ function IndexationStats({ stats }: { stats: SeoData["indexation"] }) {
 function StatItem({ label, value, color }: { label: string; value: number; color?: string }) {
   return (
     <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg p-2.5">
-      <p className="text-xs text-gray-500 dark:text-neutral-400">{label}</p>
+      <p className="text-xs text-gray-500 dark:text-white/70">{label}</p>
       <p className={`text-lg font-bold ${color || "text-[#2E2E2E] dark:text-neutral-100"}`}>{value}</p>
     </div>
   )

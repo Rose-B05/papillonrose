@@ -82,7 +82,7 @@ export default async function ProductPage({ params }: Props) {
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 pt-16 md:pt-20">
       {/* Breadcrumb */}
       <nav className="max-w-7xl mx-auto px-5 md:px-10 pt-6 pb-2">
-        <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-neutral-500 flex-wrap">
+        <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-white/60 flex-wrap">
           <li><Link href="/" className="hover:text-[#C9948E] transition-colors">Accueil</Link></li>
           <li>/</li>
           <li><Link href="/catalogue" className="hover:text-[#C9948E] transition-colors">Catalogue</Link></li>
@@ -126,20 +126,20 @@ export default async function ProductPage({ params }: Props) {
             </h1>
 
             {product.dimension && (
-              <p className="text-sm text-gray-500 dark:text-neutral-400 mt-2">
+              <p className="text-sm text-gray-500 dark:text-white/70 mt-2">
                 {product.dimension}
               </p>
             )}
 
             <p className="text-2xl font-bold text-[#2E2E2E] dark:text-neutral-100 mt-4">
               {price}
-              <span className="text-sm font-normal text-gray-400 dark:text-neutral-500 ml-1">/jour</span>
+              <span className="text-sm font-normal text-gray-400 dark:text-white/60 ml-1">/jour</span>
             </p>
 
             {/* Stock */}
             <div className="mt-4 flex items-center gap-2">
               <span className={`w-2 h-2 rounded-full ${product.stock > 0 ? "bg-green-500" : "bg-red-500"}`} />
-              <span className="text-sm text-gray-500 dark:text-neutral-400">
+              <span className="text-sm text-gray-500 dark:text-white/70">
                 {product.stock > 0 ? `${product.stock} en stock` : "Rupture de stock"}
               </span>
             </div>
@@ -164,7 +164,7 @@ export default async function ProductPage({ params }: Props) {
             {/* Description */}
             <div className="mt-8 pt-6 border-t border-gray-200 dark:border-neutral-700">
               <h2 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Détails</h2>
-              <ul className="text-sm text-gray-500 dark:text-neutral-400 space-y-1.5">
+              <ul className="text-sm text-gray-500 dark:text-white/70 space-y-1.5">
                 <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Catégorie :</span> {product.categorie}</li>
                 {product.dimension && <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Dimensions :</span> {product.dimension}</li>}
                 <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Tarif :</span> {price}/jour</li>

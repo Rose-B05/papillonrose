@@ -82,7 +82,7 @@ export default function Header() {
                         ? "text-[#C9948E] dark:text-[#E8B4AE]"
                         : "text-white")
                     : opaque
-                      ? "text-[#2E2E2E]/60 dark:text-neutral-400 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+                      ? "text-[#2E2E2E]/60 dark:text-white/70 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
                       : "text-white/70 hover:text-white"
                 }`}
               >
@@ -108,7 +108,7 @@ export default function Header() {
                   favorites.size > 0
                     ? "text-[#C9948E] dark:text-[#E8B4AE]"
                     : opaque
-                      ? "text-[#2E2E2E]/40 dark:text-neutral-500"
+                      ? "text-[#2E2E2E]/40 dark:text-white/60"
                       : "text-white/80"
                 }
               />
@@ -129,7 +129,7 @@ export default function Header() {
                   cartCount > 0
                     ? "text-[#C9948E] dark:text-[#E8B4AE]"
                     : opaque
-                      ? "text-[#2E2E2E]/40 dark:text-neutral-500"
+                      ? "text-[#2E2E2E]/40 dark:text-white/60"
                       : "text-white/80"
                 }
               />
@@ -152,7 +152,7 @@ export default function Header() {
                 size={19}
                 className={
                   opaque
-                    ? "text-[#2E2E2E]/40 dark:text-neutral-500"
+                    ? "text-[#2E2E2E]/40 dark:text-white/60"
                     : "text-white/80"
                 }
               />
@@ -169,7 +169,7 @@ export default function Header() {
               aria-label="Menu"
               className={`md:hidden p-2 ${
                 opaque
-                  ? "text-[#2E2E2E]/60 dark:text-neutral-400"
+                  ? "text-[#2E2E2E]/60 dark:text-white/70"
                   : "text-white/80"
               }`}
             >

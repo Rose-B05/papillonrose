@@ -108,7 +108,7 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
                     filters.occasions.includes(t)
                       ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
-                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
                   }`}
                 >
                   {t}
@@ -136,7 +136,7 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
                     filters.styles.includes(s)
                       ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
-                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
                   }`}
                 >
                   {s}
@@ -164,7 +164,7 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
                     filters.ambiances.includes(a)
                       ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
-                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
                   }`}
                 >
                   {a}
@@ -191,7 +191,7 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
                     filters.budgetMin === b.min && filters.budgetMax === b.max
                       ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
-                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
                   }`}
                 >
                   {b.label}
@@ -230,7 +230,7 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
           {sections.date && (
             <div className="px-5 pb-4 space-y-2.5">
               <div className="flex items-center gap-2">
-                <Calendar size={12} className="text-gray-400 dark:text-neutral-500 flex-shrink-0" />
+                <Calendar size={12} className="text-gray-400 dark:text-white/60 flex-shrink-0" />
                 <input
                   type="date"
                   value={filters.dateDebut}
@@ -240,9 +240,9 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   className="flex-1 min-w-0 bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-[#C9948E]/30"
                 />
               </div>
-              <span className="block text-[10px] text-gray-400 dark:text-neutral-500 text-center">au</span>
+              <span className="block text-[10px] text-gray-400 dark:text-white/60 text-center">au</span>
               <div className="flex items-center gap-2">
-                <Calendar size={12} className="text-gray-400 dark:text-neutral-500 flex-shrink-0" />
+                <Calendar size={12} className="text-gray-400 dark:text-white/60 flex-shrink-0" />
                 <input
                   type="date"
                   value={filters.dateFin}

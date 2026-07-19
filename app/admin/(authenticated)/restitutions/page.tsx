@@ -91,17 +91,17 @@ export default function RestitutionsPage() {
       <div className="max-w-5xl mx-auto">
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Restitutions</h1>
-          <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-white/60 mt-1">
             {bookings.length} location{bookings.length !== 1 ? "s" : ""} en cours
           </p>
         </div>
 
         {loading ? (
-          <div className="text-center py-16 text-gray-400 dark:text-neutral-500">Chargement…</div>
+          <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
         ) : bookings.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-400 dark:text-neutral-500 text-lg mb-2">Aucune location en cours</p>
-            <p className="text-sm text-gray-400 dark:text-neutral-500">Toutes les réservations ont été restituées.</p>
+            <p className="text-gray-400 dark:text-white/60 text-lg mb-2">Aucune location en cours</p>
+            <p className="text-sm text-gray-400 dark:text-white/60">Toutes les réservations ont été restituées.</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -115,7 +115,7 @@ export default function RestitutionsPage() {
                     <p className="font-semibold text-[#2E2E2E] dark:text-neutral-100">
                       #{booking.id}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-neutral-500">
+                    <p className="text-sm text-gray-500 dark:text-white/60">
                       {booking.client.prenom} {booking.client.nom}
                     </p>
                   </div>
@@ -132,7 +132,7 @@ export default function RestitutionsPage() {
                         {item.variantLabel ? ` — ${item.variantLabel}` : ""}
                         {" × "}{item.qty}
                       </span>
-                      <span className="text-gray-400 dark:text-neutral-500 text-xs">
+                      <span className="text-gray-400 dark:text-white/60 text-xs">
                         {formatDate(item.dateStart)} → {formatDate(item.dateEnd)}
                       </span>
                     </div>
@@ -140,7 +140,7 @@ export default function RestitutionsPage() {
                 </div>
 
                 <div className="flex items-center justify-between pt-3 border-t border-black/[0.05]">
-                  <p className="text-sm text-gray-500 dark:text-neutral-500">
+                  <p className="text-sm text-gray-500 dark:text-white/60">
                     Total : <span className="font-semibold text-[#2E2E2E] dark:text-neutral-100">{booking.totalTtc.toFixed(2)} €</span>
                   </p>
                   <button

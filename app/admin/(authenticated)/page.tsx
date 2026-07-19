@@ -111,15 +111,15 @@ export default function AdminPage() {
       <div className="max-w-5xl mx-auto">
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Devis</h1>
-          <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-white/60 mt-1">
             {quotes.length} devis au total
           </p>
         </div>
 
         {loading ? (
-          <div className="text-center py-16 text-gray-400 dark:text-neutral-500">Chargement…</div>
+          <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
         ) : quotes.length === 0 ? (
-          <div className="text-center py-16 text-gray-400 dark:text-neutral-500">Aucun devis</div>
+          <div className="text-center py-16 text-gray-400 dark:text-white/60">Aucun devis</div>
         ) : (
           <div className="space-y-3">
             {quotes.map((q) => (
@@ -146,7 +146,7 @@ export default function AdminPage() {
                       {q.client.prenom} {q.client.nom} — {q.client.email}
                     </p>
 
-                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-400 dark:text-neutral-500">
+                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-400 dark:text-white/60">
                       <span>
                         {q.client.typeEvenement} — {q.client.lieuEvenement}
                       </span>
@@ -154,7 +154,7 @@ export default function AdminPage() {
                       <span>{formatDate(q.createdAt)}</span>
                     </div>
 
-                    <div className="mt-2 text-xs text-gray-500 dark:text-neutral-500">
+                    <div className="mt-2 text-xs text-gray-500 dark:text-white/60">
                       {q.items.map((item, i) => (
                         <span key={i}>
                           {getProductName(item.productId)} ×{item.qty}

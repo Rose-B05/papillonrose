@@ -32,7 +32,7 @@ export default function SitemapPanel({ info }: { info: SitemapInfo }) {
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">sitemap.xml</h3>
-            <p className="text-xs text-gray-500 dark:text-neutral-400">
+            <p className="text-xs text-gray-500 dark:text-white/70">
               {info.urlCount} URLs • {(info.sizeBytes / 1024).toFixed(1)} Ko
             </p>
           </div>
@@ -52,11 +52,11 @@ export default function SitemapPanel({ info }: { info: SitemapInfo }) {
 
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg p-3">
-          <p className="text-xs text-gray-500 dark:text-neutral-400">URLs</p>
+          <p className="text-xs text-gray-500 dark:text-white/70">URLs</p>
           <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100">{info.urlCount}</p>
         </div>
         <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg p-3">
-          <p className="text-xs text-gray-500 dark:text-neutral-400">Dernière génération</p>
+          <p className="text-xs text-gray-500 dark:text-white/70">Dernière génération</p>
           <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
             {new Date(info.lastGenerated).toLocaleDateString("fr-FR")}
           </p>

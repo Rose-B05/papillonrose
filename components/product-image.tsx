@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 
@@ -14,7 +14,7 @@ export default function ProductImage({ src, alt, className }: ProductImageProps)
   if (error) {
     return (
       <div className={`${className} flex items-center justify-center bg-[#F0EBE3] dark:bg-neutral-700`}>
-        <span className="text-xs text-gray-400 dark:text-neutral-500 text-center px-2">{alt}</span>
+        <span className="text-xs text-gray-400 dark:text-white/60 text-center px-2">{alt}</span>
       </div>
     )
   }

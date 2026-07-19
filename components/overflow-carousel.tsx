@@ -124,14 +124,14 @@ export default function OverflowCarousel({
         <>
           <button
             onClick={(e) => { e.stopPropagation(); goPrev(); resetAuto() }}
-            className="absolute -left-1 md:left-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 dark:bg-neutral-900/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] shadow-md transition-all"
+            className="absolute -left-1 md:left-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 dark:bg-neutral-900/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] shadow-md transition-all"
             aria-label="Précédent"
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); goNext(); resetAuto() }}
-            className="absolute -right-1 md:right-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 dark:bg-neutral-900/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] shadow-md transition-all"
+            className="absolute -right-1 md:right-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 dark:bg-neutral-900/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] shadow-md transition-all"
             aria-label="Suivant"
           >
             <ChevronRight size={20} />

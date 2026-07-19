@@ -16,7 +16,7 @@ export default function MentionsLegalesPage() {
       <div className="max-w-3xl mx-auto px-5 md:px-10 pt-24 pb-16">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors mb-8"
         >
           <ArrowLeft size={14} /> Retour à l&apos;accueil
         </Link>
@@ -77,7 +77,7 @@ export default function MentionsLegalesPage() {
           </section>
         </div>
 
-        <p className="text-xs text-gray-400 dark:text-neutral-500 pt-8 mt-8 border-t border-black/[0.07] dark:border-white/[0.08]">
+        <p className="text-xs text-gray-400 dark:text-white/60 pt-8 mt-8 border-t border-black/[0.07] dark:border-white/[0.08]">
           Dernière mise à jour : janvier 2026
         </p>
       </div>

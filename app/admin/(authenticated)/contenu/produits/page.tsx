@@ -96,7 +96,7 @@ export default function ProductsListPage() {
             <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">
               Produits
             </h1>
-            <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
+            <p className="text-sm text-gray-500 dark:text-white/60 mt-1">
               {counts.tous} produit{counts.tous !== 1 ? "s" : ""} au total
             </p>
           </div>
@@ -129,7 +129,7 @@ export default function ProductsListPage() {
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   statusFilter === f
                     ? "bg-[#C9948E] dark:bg-[#C9948E] text-white"
-                    : "text-gray-500 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700"
+                    : "text-gray-500 dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700"
                 }`}
               >
                 {f === "tous" ? "Tous" : f === "brouillon" ? "Brouillons" : f === "publie" ? "Publiés" : "Masqués"}
@@ -153,19 +153,19 @@ export default function ProductsListPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-black/[0.07] dark:border-white/[0.08]">
-                  <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium">
+                  <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
                     Produit
                   </th>
-                  <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium hidden md:table-cell">
+                  <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium hidden md:table-cell">
                     Catégorie
                   </th>
-                  <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium">
+                  <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
                     Prix
                   </th>
-                  <th className="text-center px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium">
+                  <th className="text-center px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
                     Statut
                   </th>
-                  <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider font-medium">
+                  <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
                     Actions
                   </th>
                 </tr>
@@ -202,14 +202,14 @@ export default function ProductsListPage() {
                           <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
                             {p.nom}
                           </p>
-                          <p className="text-[10px] text-gray-400 dark:text-neutral-500 md:hidden">
+                          <p className="text-[10px] text-gray-400 dark:text-white/60 md:hidden">
                             {p.categorie}
                           </p>
                         </div>
                       </div>
                     </td>
                     <td className="px-5 py-3 hidden md:table-cell">
-                      <span className="text-sm text-gray-500 dark:text-neutral-400">
+                      <span className="text-sm text-gray-500 dark:text-white/70">
                         {p.categorie}
                       </span>
                     </td>
@@ -217,7 +217,7 @@ export default function ProductsListPage() {
                       <span className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
                         {typeof p.prix === "number" ? `${p.prix} €` : p.prix}
                       </span>
-                      <span className="text-xs text-gray-400 dark:text-neutral-500">/jour</span>
+                      <span className="text-xs text-gray-400 dark:text-white/60">/jour</span>
                     </td>
                     <td className="px-5 py-3 text-center">
                       <span
@@ -226,7 +226,7 @@ export default function ProductsListPage() {
                             ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
                             : p.status === "masque"
                             ? "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400"
-                            : "bg-gray-100 text-gray-500 dark:bg-neutral-700 dark:text-neutral-400"
+                            : "bg-gray-100 text-gray-500 dark:bg-neutral-700 dark:text-white/70"
                         }`}
                       >
                         {p.status === "publie" ? (
@@ -253,7 +253,7 @@ export default function ProductsListPage() {
                         </button>
                         <Link
                           href={`/admin/contenu/produits/${p.id}`}
-                          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] transition-colors"
+                          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-white/60 hover:text-[#C9948E] transition-colors"
                           title={p.isStatic ? "Modifier (créera une copie admin)" : "Modifier"}
                         >
                           <Edit className="w-4 h-4" />
@@ -261,7 +261,7 @@ export default function ProductsListPage() {
                         {!p.isStatic && (
                           <button
                             onClick={() => handleDelete(p.id, p.nom, p.isStatic)}
-                            className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-neutral-500 hover:text-red-500 transition-colors"
+                            className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-white/60 hover:text-red-500 transition-colors"
                             title="Supprimer"
                           >
                             <Trash2 className="w-4 h-4" />

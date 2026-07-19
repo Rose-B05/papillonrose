@@ -30,7 +30,7 @@ function BarHorizontal({ label, value, max }: { label: string; value: number; ma
   const pct = max > 0 ? (value / max) * 100 : 0
   return (
     <div className="flex items-center gap-3 text-sm">
-      <span className="w-32 md:w-48 truncate text-gray-600 dark:text-neutral-400 text-xs">{label || "—"}</span>
+      <span className="w-32 md:w-48 truncate text-gray-600 dark:text-white/70 text-xs">{label || "—"}</span>
       <div className="flex-1 h-5 bg-gray-100 dark:bg-neutral-700 rounded-full overflow-hidden">
         <div className="h-full bg-[#C9948E] dark:bg-[#C9948E] rounded-full transition-all" style={{ width: `${pct}%` }} />
       </div>
@@ -141,7 +141,7 @@ export default function AnalyticsPage() {
               <BarChart3 className="w-6 h-6 text-[#C9948E] dark:text-[#E8B4AE]" />
               Analytics
             </h1>
-            <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">
+            <p className="text-sm text-gray-500 dark:text-white/60 mt-1">
               Trafic et visiteurs — Vercel Web Analytics
             </p>
           </div>
@@ -157,7 +157,7 @@ export default function AnalyticsPage() {
             <button
               onClick={exportCSV}
               disabled={!data}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-600 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-600 dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors disabled:opacity-50"
             >
               <Download className="w-4 h-4" />
               Exporter CSV
@@ -183,7 +183,7 @@ export default function AnalyticsPage() {
               className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 period === p
                   ? "bg-[#C9948E] dark:bg-[#C9948E] text-white"
-                  : "text-gray-500 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-700"
+                  : "text-gray-500 dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700"
               }`}
             >
               {PERIOD_LABELS[p]}
@@ -206,11 +206,11 @@ export default function AnalyticsPage() {
             {/* Totals */}
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-white dark:bg-neutral-800 rounded-2xl p-6 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
-                <p className="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider mb-1">Page vues</p>
+                <p className="text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider mb-1">Page vues</p>
                 <p className="text-3xl font-bold text-[#2E2E2E] dark:text-neutral-100">{totals.pageviews?.toLocaleString() || "0"}</p>
               </div>
               <div className="bg-white dark:bg-neutral-800 rounded-2xl p-6 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
-                <p className="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider mb-1">Visiteurs uniques</p>
+                <p className="text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider mb-1">Visiteurs uniques</p>
                 <p className="text-3xl font-bold text-[#2E2E2E] dark:text-neutral-100">{totals.visitors?.toLocaleString() || "0"}</p>
               </div>
             </div>
@@ -231,7 +231,7 @@ export default function AnalyticsPage() {
                     )
                   })}
                 </div>
-                <div className="flex justify-between mt-2 text-[10px] text-gray-400 dark:text-neutral-500">
+                <div className="flex justify-between mt-2 text-[10px] text-gray-400 dark:text-white/60">
                   <span>{byDayFiltered[0]?.timestamp?.split("T")[0]}</span>
                   <span>{byDayFiltered[byDayFiltered.length - 1]?.timestamp?.split("T")[0]}</span>
                 </div>
@@ -285,7 +285,7 @@ export default function AnalyticsPage() {
                     {data.byDevice.map((d: any, i: number) => (
                       <div key={i} className="flex items-center gap-3">
                         <DeviceIcon type={d.deviceType} />
-                        <span className="text-xs text-gray-600 dark:text-neutral-400 w-20">{d.deviceType || "Inconnu"}</span>
+                        <span className="text-xs text-gray-600 dark:text-white/70 w-20">{d.deviceType || "Inconnu"}</span>
                         <div className="flex-1 h-5 bg-gray-100 dark:bg-neutral-700 rounded-full overflow-hidden">
                           <div
                             className="h-full bg-[#C9948E] dark:bg-[#C9948E] rounded-full transition-all"
