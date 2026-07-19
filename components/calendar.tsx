@@ -90,7 +90,7 @@ export default function AvailabilityCalendar({
       onDateStartChange(d)
       onDateEndChange("")
     } else {
-      if (d <= dateStart) {
+      if (d < dateStart) {
         onDateStartChange(d)
         onDateEndChange("")
       } else {

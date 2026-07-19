@@ -36,7 +36,7 @@ export const RENTAL_RULES: RentalRule[] = [
       "Location du lundi au mardi suivant. Retrait la veille (vendredi).",
     startDays: [1], // lundi
     minAdvanceDays: 3,
-    minNights: 7,
+    minNights: 1,
     maxNights: 7,
   },
   {
@@ -45,7 +45,7 @@ export const RENTAL_RULES: RentalRule[] = [
       "Du mardi au jeudi inclus. Retrait le lundi, restitution le vendredi avant midi.",
     startDays: [2, 3, 4], // mardi, mercredi, jeudi
     minAdvanceDays: 2,
-    minNights: 3,
+    minNights: 1,
     maxNights: 5,
   },
   {
@@ -54,7 +54,7 @@ export const RENTAL_RULES: RentalRule[] = [
       "Du vendredi au dimanche. Retrait le jeudi, restitution le lundi avant midi.",
     startDays: [5, 6, 0], // vendredi, samedi, dimanche
     minAdvanceDays: 2,
-    minNights: 2,
+    minNights: 1,
     maxNights: 4,
   },
 ]
