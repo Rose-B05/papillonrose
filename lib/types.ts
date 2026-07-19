@@ -128,3 +128,13 @@ export interface NewsletterSubscriber {
   confirmedAt?: string
   unsubscribedAt?: string
 }
+
+export interface ContactMessage {
+  id: string
+  name: string
+  email: string
+  date: string
+  message: string
+  read: boolean
+  createdAt: string
+}

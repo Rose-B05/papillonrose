@@ -58,14 +58,31 @@ const CONTACT_ITEMS = [
 
 export default function ContactView() {
   const [form, setForm] = useState({ name: "", email: "", date: "", message: "" })
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [error, setError] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`Demande de devis — ${form.name}`)
-    const body = encodeURIComponent(
-      `Nom : ${form.name}\nEmail : ${form.email}\nDate de l'événement : ${form.date}\n\n${form.message}`
-    )
-    window.location.href = `mailto:papillonrosebertha@gmail.com?subject=${subject}&body=${body}`
+    setSending(true)
+    setError("")
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || "Erreur d'envoi")
+      }
+      setSent(true)
+      setForm({ name: "", email: "", date: "", message: "" })
+    } catch (err: any) {
+      setError(err.message || "Une erreur est survenue")
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -140,6 +157,16 @@ export default function ContactView() {
 
         {/* Right — Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
+          {sent && (
+            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-2xl p-4 text-sm text-green-700 dark:text-green-300">
+              Votre message a bien été envoyé ! Nous vous répondrons dans les plus brefs délais.
+            </div>
+          )}
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-4 text-sm text-red-700 dark:text-red-300">
+              {error}
+            </div>
+          )}
           <div>
             <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
               Nom complet
@@ -196,9 +223,10 @@ export default function ContactView() {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#C9948E] dark:bg-[#C9948E] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-md"
+            disabled={sending}
+            className="w-full bg-[#C9948E] dark:bg-[#C9948E] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Envoyer ma demande
+            {sending ? "Envoi en cours…" : "Envoyer ma demande"}
           </button>
         </form>
       </div>

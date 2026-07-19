@@ -1,5 +1,5 @@
 import { kv } from "@vercel/kv"
-import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView, NewsletterSubscriber } from "./types"
+import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView, NewsletterSubscriber, ContactMessage } from "./types"
 
 // ─── Media Library ───
 export interface MediaItem {
@@ -449,4 +449,42 @@ export async function getSiteMode(): Promise<SiteMode> {
 
 export async function setSiteMode(mode: SiteMode): Promise<void> {
   await kv.set(SITE_MODE_KEY, mode)
+}
+
+// ─── Contact Messages ─────────────────────────────────────────────────────────
+const CONTACT_INDEX = "contact_messages:index"
+
+export async function getContactMessages(): Promise<ContactMessage[]> {
+  const ids = await kv.get<string[]>(CONTACT_INDEX)
+  if (!ids || ids.length === 0) return []
+  const values = await kv.mget<ContactMessage[]>(...ids.map((id) => `contact:${id}`))
+  return values.filter((v): v is ContactMessage => v !== null)
+}
+
+export async function getContactMessage(id: string): Promise<ContactMessage | undefined> {
+  const msg = await kv.get<ContactMessage>(`contact:${id}`)
+  return msg ?? undefined
+}
+
+export async function saveContactMessage(msg: ContactMessage): Promise<void> {
+  await kv.set(`contact:${msg.id}`, msg)
+  const ids = (await kv.get<string[]>(CONTACT_INDEX)) || []
+  if (!ids.includes(msg.id)) {
+    ids.push(msg.id)
+    await kv.set(CONTACT_INDEX, ids)
+  }
+}
+
+export async function markContactMessageRead(id: string): Promise<void> {
+  const msg = await kv.get<ContactMessage>(`contact:${id}`)
+  if (!msg) return
+  msg.read = true
+  await kv.set(`contact:${id}`, msg)
+}
+
+export async function deleteContactMessage(id: string): Promise<void> {
+  await kv.del(`contact:${id}`)
+  const ids = (await kv.get<string[]>(CONTACT_INDEX)) || []
+  const filtered = ids.filter((i) => i !== id)
+  await kv.set(CONTACT_INDEX, filtered)
 }
