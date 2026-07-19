@@ -49,7 +49,7 @@ const STATUT_COLORS: Record<string, string> = {
   refuse_stock: "bg-red-50 text-red-700",
   envoye: "bg-amber-50 text-amber-700",
   acompte_paye: "bg-emerald-50 text-emerald-700",
-  solde_paye: "bg-[#C8A97E]/10 dark:bg-amber-600/10 text-[#C8A97E] dark:text-amber-400",
+  solde_paye: "bg-[#C9948E]/10 dark:bg-[#C9948E]/10 text-[#C9948E] dark:text-[#E8B4AE]",
 }
 
 function formatDate(dateStr: string) {
@@ -165,7 +165,7 @@ export default function AdminPage() {
                   </div>
 
                   <div className="flex items-center gap-3 sm:flex-shrink-0">
-                    <span className="text-sm font-semibold text-[#C8A97E] dark:text-amber-400 whitespace-nowrap">
+                    <span className="text-sm font-semibold text-[#C9948E] dark:text-[#E8B4AE] whitespace-nowrap">
                       {q.totalTtc.toFixed(2)} € TTC
                     </span>
 
@@ -173,7 +173,7 @@ export default function AdminPage() {
                       <button
                         onClick={() => handleSendPaymentLink(q.id)}
                         disabled={sendingId === q.id}
-                        className="text-xs px-3 py-1.5 bg-[#C8A97E] dark:bg-amber-600 text-white rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50 whitespace-nowrap"
+                        className="text-xs px-3 py-1.5 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50 whitespace-nowrap"
                       >
                         {sendingId === q.id ? "Envoi…" : "Envoyer lien solde"}
                       </button>

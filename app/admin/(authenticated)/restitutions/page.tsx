@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
@@ -146,7 +146,7 @@ export default function RestitutionsPage() {
                   <button
                     onClick={() => handleReturn(booking.id)}
                     disabled={returningId === booking.id}
-                    className="px-4 py-2 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors disabled:opacity-50"
+                    className="px-4 py-2 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-xl hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors disabled:opacity-50"
                   >
                     {returningId === booking.id ? "Restitution…" : "Valider la restitution"}
                   </button>

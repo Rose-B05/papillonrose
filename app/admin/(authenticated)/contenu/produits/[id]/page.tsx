@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, use } from "react"
 import { useRouter } from "next/navigation"
@@ -59,7 +59,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         <p className="text-red-500 mb-4">{error || "Produit introuvable"}</p>
         <button
           onClick={() => router.push("/admin/contenu/produits")}
-          className="text-sm text-[#C8A97E] hover:underline"
+          className="text-sm text-[#C9948E] hover:underline"
         >
           Retour à la liste
         </button>

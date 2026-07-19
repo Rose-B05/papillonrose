@@ -202,7 +202,7 @@ function LoginForm() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E] placeholder:text-gray-400"
+                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E] placeholder:text-gray-400"
                     style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                   />
                 </div>
@@ -218,7 +218,7 @@ function LoginForm() {
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E] placeholder:text-gray-400"
+                      className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E] placeholder:text-gray-400"
                       style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                     />
                     <button
@@ -242,7 +242,7 @@ function LoginForm() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-2.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50"
+                  className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50"
                 >
                   {loading ? "Connexion…" : "Se connecter"}
                 </button>
@@ -251,7 +251,7 @@ function LoginForm() {
               <div className="mt-4 text-center">
                 <button
                   onClick={() => { setView("forgot-email"); setError(""); }}
-                  className="text-sm text-[#C8A97E] hover:underline"
+                  className="text-sm text-[#C9948E] hover:underline"
                 >
                   Mot de passe oublié ?
                 </button>
@@ -286,7 +286,7 @@ function LoginForm() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="papillonrosebertha@gmail.com"
-                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E] placeholder:text-gray-400"
+                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E] placeholder:text-gray-400"
                     style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                   />
                 </div>
@@ -301,7 +301,7 @@ function LoginForm() {
                 <button
                   onClick={handleSendOtp}
                   disabled={loading || !email.trim()}
-                  className="w-full py-2.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     "Envoi…"
@@ -343,7 +343,7 @@ function LoginForm() {
                       value={digit}
                       onChange={(e) => handleOtpInput(i, e.target.value)}
                       onKeyDown={(e) => handleOtpKeyDown(i, e)}
-                      className="w-11 h-12 text-center text-lg font-semibold bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]"
+                      className="w-11 h-12 text-center text-lg font-semibold bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]"
                       style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                     />
                   ))}
@@ -359,7 +359,7 @@ function LoginForm() {
                 <button
                   onClick={handleVerifyOtp}
                   disabled={loading || otpCode.join("").length !== 6}
-                  className="w-full py-2.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     "Vérification…"
@@ -374,7 +374,7 @@ function LoginForm() {
                 <button
                   onClick={handleSendOtp}
                   disabled={loading}
-                  className="w-full text-sm text-[#C8A97E] hover:underline"
+                  className="w-full text-sm text-[#C9948E] hover:underline"
                 >
                   Renvoyer le code
                 </button>
@@ -409,7 +409,7 @@ function LoginForm() {
                       required
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E] placeholder:text-gray-400"
+                      className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E] placeholder:text-gray-400"
                       style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                     />
                     <button
@@ -436,7 +436,7 @@ function LoginForm() {
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E] placeholder:text-gray-400"
+                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E] placeholder:text-gray-400"
                     style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                   />
                 </div>
@@ -451,7 +451,7 @@ function LoginForm() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-2.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     "Sauvegarde…"
@@ -480,7 +480,7 @@ function LoginForm() {
               </p>
               <button
                 onClick={resetAll}
-                className="w-full py-2.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors"
+                className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors"
               >
                 Se connecter
               </button>

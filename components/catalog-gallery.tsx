@@ -66,7 +66,7 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
 
               <div className="p-3.5 flex flex-col flex-1">
                 <div className="min-w-0">
-                  <p className="text-[10px] font-medium text-[#C8A97E] dark:text-amber-400 uppercase tracking-wider truncate">
+                  <p className="text-[10px] font-medium text-[#C9948E] dark:text-[#E8B4AE] uppercase tracking-wider truncate">
                     {p.categorie}
                   </p>
                   <h3 className="text-[13px] font-semibold text-[#2E2E2E] dark:text-neutral-100 leading-snug truncate">
@@ -89,7 +89,7 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                     className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
                       inCart
                         ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-neutral-500 cursor-not-allowed"
-                        : "bg-[#C8A97E] dark:bg-amber-600 text-white hover:bg-[#B8926E] dark:hover:bg-amber-700"
+                        : "bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#B8807A]"
                     }`}
                   >
                     <ShoppingBag size={13} />
@@ -101,8 +101,8 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                     aria-label="Favoris"
                     className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all shadow-sm flex-shrink-0 ${
                       favorites.has(p.id)
-                        ? "border-[#C8A97E] bg-[#C8A97E]/10 dark:bg-amber-600/10 text-[#C8A97E] dark:text-amber-400"
-                        : "border-gray-200 dark:border-neutral-700 text-gray-300 dark:text-neutral-600 hover:text-[#C8A97E] dark:hover:text-amber-400 hover:border-[#C8A97E]/30"
+                        ? "border-[#C9948E] bg-[#C9948E]/10 dark:bg-[#C9948E]/10 text-[#C9948E] dark:text-[#E8B4AE]"
+                        : "border-gray-200 dark:border-neutral-700 text-gray-300 dark:text-neutral-600 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] hover:border-[#C9948E]/30"
                     }`}
                   >
                     <Heart size={14} fill={favorites.has(p.id) ? "currentColor" : "none"} />

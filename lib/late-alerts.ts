@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer"
+﻿import nodemailer from "nodemailer"
 import { getBookings, getLateAlertsForBooking, saveLateAlert, hasAlertForBookingOnDate } from "./db"
 import { produits } from "@/data/produits"
 import { calculateLateFee } from "./rental-dates"
@@ -92,7 +92,7 @@ async function sendLateAlertEmail(
 
   const html = `
 <div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
-  <h2 style="color:#C8A97E">Relance : retard de restitution</h2>
+  <h2 style="color:#C9948E">Relance : retard de restitution</h2>
   <p>Bonjour ${booking.client.prenom},</p>
   <p>Nous constatons que le matériel loué n'a pas encore été restitué.</p>
 
@@ -100,9 +100,9 @@ async function sendLateAlertEmail(
     <tr><td style="padding:10px 16px;font-weight:600;border-bottom:1px solid #eee">Commande</td><td style="padding:10px 16px;border-bottom:1px solid #eee">#${booking.id}</td></tr>
     <tr><td style="padding:10px 16px;font-weight:600;border-bottom:1px solid #eee">Produit</td><td style="padding:10px 16px;border-bottom:1px solid #eee">${productNom}</td></tr>
     <tr><td style="padding:10px 16px;font-weight:600;border-bottom:1px solid #eee">Date de restitution prévue</td><td style="padding:10px 16px;border-bottom:1px solid #eee">${expectedDate}</td></tr>
-    <tr><td style="padding:10px 16px;font-weight:600;border-bottom:1px solid #eee">Jours de retard</td><td style="padding:10px 16px;border-bottom:1px solid #eee;color:#C8A97E;font-weight:700">${joursRetard} jour${joursRetard > 1 ? "s" : ""}</td></tr>
-    <tr><td style="padding:10px 16px;font-weight:600;border-bottom:1px solid #eee">Majoration appliquée</td><td style="padding:10px 16px;border-bottom:1px solid #eee;color:#C8A97E;font-weight:700">${(penalitePercent * 100).toFixed(0)}% → ${penaliteAmount.toFixed(2)} €</td></tr>
-    <tr><td style="padding:10px 16px;font-weight:600">Si retard continue (jour+1)</td><td style="padding:10px 16px;color:#C8A97E;font-weight:700">${(nextPenalitePercent * 100).toFixed(0)}% → ${nextPenaliteAmount.toFixed(2)} €</td></tr>
+    <tr><td style="padding:10px 16px;font-weight:600;border-bottom:1px solid #eee">Jours de retard</td><td style="padding:10px 16px;border-bottom:1px solid #eee;color:#C9948E;font-weight:700">${joursRetard} jour${joursRetard > 1 ? "s" : ""}</td></tr>
+    <tr><td style="padding:10px 16px;font-weight:600;border-bottom:1px solid #eee">Majoration appliquée</td><td style="padding:10px 16px;border-bottom:1px solid #eee;color:#C9948E;font-weight:700">${(penalitePercent * 100).toFixed(0)}% → ${penaliteAmount.toFixed(2)} €</td></tr>
+    <tr><td style="padding:10px 16px;font-weight:600">Si retard continue (jour+1)</td><td style="padding:10px 16px;color:#C9948E;font-weight:700">${(nextPenalitePercent * 100).toFixed(0)}% → ${nextPenaliteAmount.toFixed(2)} €</td></tr>
   </table>
 
   <p style="color:#e74c3c;font-weight:600">⚠️ La pénalité augmente de +30% par jour supplémentaire de retard (plafond 50% du montant de la location).</p>

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 
@@ -57,7 +57,7 @@ export default function StatistiquesPage() {
                 <p className="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wider mb-1">
                   Revenu total
                 </p>
-                <p className="text-2xl font-bold text-[#C8A97E] dark:text-amber-400">
+                <p className="text-2xl font-bold text-[#C9948E] dark:text-[#E8B4AE]">
                   {totalRevenu.toFixed(2)} €
                 </p>
               </div>
@@ -120,7 +120,7 @@ export default function StatistiquesPage() {
                         <td className="px-5 py-3 text-right text-gray-500 dark:text-neutral-500">
                           {s.stock}
                         </td>
-                        <td className="px-5 py-3 text-right font-semibold text-[#C8A97E] dark:text-amber-400">
+                        <td className="px-5 py-3 text-right font-semibold text-[#C9948E] dark:text-[#E8B4AE]">
                           {s.nbLocations}
                         </td>
                         <td className="px-5 py-3 text-right font-medium text-[#2E2E2E] dark:text-neutral-100">

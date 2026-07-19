@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { Globe, RefreshCw, Download, ExternalLink, CheckCircle, AlertTriangle } from "lucide-react"
 import { useState } from "react"
@@ -43,7 +43,7 @@ export default function SitemapPanel({ info }: { info: SitemapInfo }) {
               <CheckCircle size={12} /> Valide
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 px-2 py-1 rounded-full">
+            <span className="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-[#E8B4AE] bg-amber-50 dark:bg-[#3A1E1E]/30 px-2 py-1 rounded-full">
               <AlertTriangle size={12} /> {info.status === "empty" ? "Vide" : "Erreur"}
             </span>
           )}
@@ -73,7 +73,7 @@ export default function SitemapPanel({ info }: { info: SitemapInfo }) {
         <button
           onClick={() => handleAction("regenerate")}
           disabled={loading}
-          className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-[#C8A97E] text-white hover:bg-[#B8926E] transition-colors disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-[#C9948E] text-white hover:bg-[#B8807A] transition-colors disabled:opacity-50"
         >
           <RefreshCw size={12} /> Régénérer
         </button>

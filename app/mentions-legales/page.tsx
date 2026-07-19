@@ -16,12 +16,12 @@ export default function MentionsLegalesPage() {
       <div className="max-w-3xl mx-auto px-5 md:px-10 pt-24 pb-16">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors mb-8"
         >
           <ArrowLeft size={14} /> Retour à l&apos;accueil
         </Link>
 
-        <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
+        <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
           Informations légales
         </p>
         <h1 style={DP} className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-10">

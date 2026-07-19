@@ -73,10 +73,10 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
         onClick={() => setMobileOpen(!mobileOpen)}
         className="md:hidden flex items-center gap-2 w-full bg-white dark:bg-neutral-800 rounded-2xl px-5 py-3.5 border border-black/[0.07] dark:border-white/[0.08] shadow-sm mb-4 text-sm font-medium text-[#2E2E2E] dark:text-neutral-100"
       >
-        <Filter size={14} className="text-[#C8A97E] dark:text-amber-400" />
+        <Filter size={14} className="text-[#C9948E] dark:text-[#E8B4AE]" />
         Filtres
         {activeCount > 0 && (
-          <span className="ml-auto bg-[#C8A97E] dark:bg-amber-600 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">
+          <span className="ml-auto bg-[#C9948E] dark:bg-[#C9948E] text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">
             {activeCount}
           </span>
         )}
@@ -94,7 +94,7 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
           {/* Occasions / Thèmes */}
           <SectionHeader
             label="Occasion / Thème"
-            icon={<Sparkles size={12} className="text-[#C8A97E] dark:text-amber-400" />}
+            icon={<Sparkles size={12} className="text-[#C9948E] dark:text-[#E8B4AE]" />}
             count={filters.occasions.length}
             open={sections.occasion}
             onToggle={() => toggle("occasion")}
@@ -107,8 +107,8 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   onClick={() => toggleOccasion(t)}
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
                     filters.occasions.includes(t)
-                      ? "bg-[#C8A97E] dark:bg-amber-600 text-white shadow-sm"
-                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 hover:text-[#C8A97E] dark:hover:text-amber-400"
+                      ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
+                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
                   }`}
                 >
                   {t}
@@ -122,7 +122,7 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
           {/* Styles */}
           <SectionHeader
             label="Style"
-            icon={<Sun size={12} className="text-[#C8A97E] dark:text-amber-400" />}
+            icon={<Sun size={12} className="text-[#C9948E] dark:text-[#E8B4AE]" />}
             count={filters.styles.length}
             open={sections.style}
             onToggle={() => toggle("style")}
@@ -135,8 +135,8 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   onClick={() => toggleStyle(s)}
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
                     filters.styles.includes(s)
-                      ? "bg-[#C8A97E] dark:bg-amber-600 text-white shadow-sm"
-                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 hover:text-[#C8A97E] dark:hover:text-amber-400"
+                      ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
+                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
                   }`}
                 >
                   {s}
@@ -150,7 +150,7 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
           {/* Ambiances / Couleurs */}
           <SectionHeader
             label="Ambiance / Couleur"
-            icon={<Palette size={12} className="text-[#C8A97E] dark:text-amber-400" />}
+            icon={<Palette size={12} className="text-[#C9948E] dark:text-[#E8B4AE]" />}
             count={filters.ambiances.length}
             open={sections.ambiance}
             onToggle={() => toggle("ambiance")}
@@ -163,8 +163,8 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   onClick={() => toggleAmbiance(a)}
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
                     filters.ambiances.includes(a)
-                      ? "bg-[#C8A97E] dark:bg-amber-600 text-white shadow-sm"
-                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 hover:text-[#C8A97E] dark:hover:text-amber-400"
+                      ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
+                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
                   }`}
                 >
                   {a}
@@ -190,8 +190,8 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   onClick={() => setBudget(b.min, b.max)}
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
                     filters.budgetMin === b.min && filters.budgetMax === b.max
-                      ? "bg-[#C8A97E] dark:bg-amber-600 text-white shadow-sm"
-                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 hover:text-[#C8A97E] dark:hover:text-amber-400"
+                      ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
+                      : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-neutral-400 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
                   }`}
                 >
                   {b.label}
@@ -209,11 +209,11 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
               id="stock-filter"
               checked={filters.inStockOnly}
               onChange={(e) => onChange({ ...filters, inStockOnly: e.target.checked })}
-              className="appearance-none w-4 h-4 rounded border-2 border-gray-300 dark:border-neutral-600 group-hover:border-[#C8A97E] checked:border-[#C8A97E] checked:bg-[#C8A97E] transition-all cursor-pointer flex-shrink-0 relative
+              className="appearance-none w-4 h-4 rounded border-2 border-gray-300 dark:border-neutral-600 group-hover:border-[#C9948E] checked:border-[#C9948E] checked:bg-[#C9948E] transition-all cursor-pointer flex-shrink-0 relative
                 checked:after:content-[''] checked:after:absolute checked:after:left-[3.5px] checked:after:top-[0.5px] checked:after:w-[5px] checked:after:h-[9px] checked:after:border-r-2 checked:after:border-b-2 checked:after:border-white checked:after:rotate-45"
             />
             <label htmlFor="stock-filter" className="text-xs font-semibold text-[#2E2E2E] dark:text-neutral-100 uppercase tracking-wider cursor-pointer select-none flex items-center gap-1.5">
-              <SlidersHorizontal size={12} className="text-[#C8A97E] dark:text-amber-400" />
+              <SlidersHorizontal size={12} className="text-[#C9948E] dark:text-[#E8B4AE]" />
               En stock uniquement
             </label>
           </div>
@@ -237,7 +237,7 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   onChange={(e) =>
                     onChange({ ...filters, dateDebut: e.target.value })
                   }
-                  className="flex-1 min-w-0 bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-[#C8A97E]/30"
+                  className="flex-1 min-w-0 bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-[#C9948E]/30"
                 />
               </div>
               <span className="block text-[10px] text-gray-400 dark:text-neutral-500 text-center">au</span>
@@ -250,7 +250,7 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
                   onChange={(e) =>
                     onChange({ ...filters, dateFin: e.target.value })
                   }
-                  className="flex-1 min-w-0 bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-[#C8A97E]/30"
+                  className="flex-1 min-w-0 bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-[#C9948E]/30"
                 />
               </div>
             </div>
@@ -316,7 +316,7 @@ function SectionHeader({
         {icon}
         {label}
         {count > 0 && (
-          <span className="bg-[#C8A97E] dark:bg-amber-600 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+          <span className="bg-[#C9948E] dark:bg-[#C9948E] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
             {count}
           </span>
         )}
@@ -332,11 +332,11 @@ function Divider() {
 
 function Tag({ label, onRemove }: { label: string; onRemove: () => void }) {
   return (
-    <span className="inline-flex items-center gap-1.5 bg-[#C8A97E]/10 dark:bg-amber-600/10 text-[#C8A97E] dark:text-amber-400 text-[11px] font-medium px-2.5 py-1 rounded-full border border-[#C8A97E]/20">
+    <span className="inline-flex items-center gap-1.5 bg-[#C9948E]/10 dark:bg-[#C9948E]/10 text-[#C9948E] dark:text-[#E8B4AE] text-[11px] font-medium px-2.5 py-1 rounded-full border border-[#C9948E]/20">
       {label}
       <button
         onClick={onRemove}
-        className="hover:bg-[#C8A97E]/20 dark:hover:bg-amber-600/20 rounded-full p-0.5 transition-colors"
+        className="hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 rounded-full p-0.5 transition-colors"
       >
         <X size={10} />
       </button>

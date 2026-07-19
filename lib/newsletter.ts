@@ -1,4 +1,4 @@
-import crypto from "crypto"
+﻿import crypto from "crypto"
 import { getNewsletterSubscriber, getNewsletterSubscribers, saveNewsletterSubscriber } from "./db"
 import type { NewsletterSubscriber } from "./types"
 import nodemailer from "nodemailer"
@@ -65,12 +65,12 @@ export async function subscribeToNewsletter(email: string): Promise<{ success: b
       to: normalized,
       subject: "Confirmez votre inscription à la newsletter — Papillon Rose",
       html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
-        <h2 style="color:#C8A97E">Confirmez votre inscription</h2>
+        <h2 style="color:#C9948E">Confirmez votre inscription</h2>
         <p>Bonjour,</p>
         <p>Merci pour votre intérêt pour la newsletter Papillon Rose.</p>
         <p>Pour valider votre inscription, cliquez sur le bouton ci-dessous :</p>
         <p style="text-align:center;margin:24px 0">
-          <a href="${SITE_URL}/api/newsletter/confirm?token=${token}" style="background:#C8A97E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Confirmer mon inscription</a>
+          <a href="${SITE_URL}/api/newsletter/confirm?token=${token}" style="background:#C9948E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Confirmer mon inscription</a>
         </p>
         <p style="color:#888;font-size:12px">Ce lien est valable 48h. Si vous n'avez pas demandé cette inscription, vous pouvez ignorer cet email.</p>
         <p style="margin-top:16px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>

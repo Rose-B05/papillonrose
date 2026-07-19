@@ -106,7 +106,7 @@ function NewsletterToggle({ customerEmail }: { customerEmail: string }) {
         <button
           onClick={handleToggle}
           disabled={loading}
-          className="px-5 py-2 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50"
+          className="px-5 py-2 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50"
         >
           {loading ? "Inscription…" : "S'inscrire à la newsletter"}
         </button>
@@ -349,14 +349,14 @@ export default function ComptePage() {
               <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Email</label>
-                  <input type="email" required value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                  <input type="email" required value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Mot de passe</label>
-                  <input type="password" required value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                  <input type="password" required value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
                 </div>
                 {loginError && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{loginError}</p>}
-                <button type="submit" disabled={loginLoading} className="w-full py-2.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50">
+                <button type="submit" disabled={loginLoading} className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50">
                   {loginLoading ? "Connexion…" : "Se connecter"}
                 </button>
               </form>
@@ -367,45 +367,45 @@ export default function ComptePage() {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Prénom</label>
-                    <input type="text" required value={regPrenom} onChange={(e) => setRegPrenom(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                    <input type="text" required value={regPrenom} onChange={(e) => setRegPrenom(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Nom</label>
-                    <input type="text" required value={regNom} onChange={(e) => setRegNom(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                    <input type="text" required value={regNom} onChange={(e) => setRegNom(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Email</label>
-                  <input type="email" required value={regEmail} onChange={(e) => setRegEmail(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                  <input type="email" required value={regEmail} onChange={(e) => setRegEmail(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Mot de passe</label>
-                  <input type="password" required minLength={6} value={regPassword} onChange={(e) => setRegPassword(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                  <input type="password" required minLength={6} value={regPassword} onChange={(e) => setRegPassword(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Confirmer le mot de passe</label>
-                  <input type="password" required minLength={6} value={regPassword2} onChange={(e) => setRegPassword2(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                  <input type="password" required minLength={6} value={regPassword2} onChange={(e) => setRegPassword2(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
                 </div>
                 <label className="flex items-start gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={regNewsletter}
                     onChange={(e) => setRegNewsletter(e.target.checked)}
-                    className="mt-0.5 rounded border-gray-300 text-[#C8A97E] focus:ring-[#C8A97E]/50"
+                    className="mt-0.5 rounded border-gray-300 text-[#C9948E] focus:ring-[#C9948E]/50"
                   />
                   <span className="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">
                     Je souhaite recevoir la newsletter Papillon Rose (nouveautés, offres exclusives)
                   </span>
                 </label>
                 {regError && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{regError}</p>}
-                <button type="submit" disabled={regLoading} className="w-full py-2.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50">
+                <button type="submit" disabled={regLoading} className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50">
                   {regLoading ? "Inscription…" : "Créer mon compte"}
                 </button>
               </form>
             )}
           </div>
           <p className="text-center text-xs text-gray-400 dark:text-neutral-500 mt-4">
-            <Link href="/" className="hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors">← Retour au site</Link>
+            <Link href="/" className="hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">← Retour au site</Link>
           </p>
         </div>
       </div>
@@ -423,7 +423,7 @@ export default function ComptePage() {
             <p className="text-sm text-gray-500 dark:text-neutral-500 mt-1">{customer.prenom} {customer.nom}</p>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors">Site</Link>
+            <Link href="/" className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">Site</Link>
             <button onClick={handleLogout} className="text-sm text-gray-400 dark:text-neutral-500 hover:text-red-500 transition-colors">
               Déconnexion
             </button>
@@ -435,7 +435,7 @@ export default function ComptePage() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">Profil</h2>
             {!profileEditing && (
-              <button onClick={() => { setProfileEditing(true); setProfileMsg("") }} className="text-sm text-[#C8A97E] dark:text-amber-400 hover:text-[#B8926E] transition-colors">
+              <button onClick={() => { setProfileEditing(true); setProfileMsg("") }} className="text-sm text-[#C9948E] dark:text-[#E8B4AE] hover:text-[#B8807A] transition-colors">
                 Modifier
               </button>
             )}
@@ -473,11 +473,11 @@ export default function ComptePage() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Prénom</label>
-                  <input type="text" value={profileForm.prenom} onChange={(e) => setProfileForm((f) => ({ ...f, prenom: e.target.value }))} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                  <input type="text" value={profileForm.prenom} onChange={(e) => setProfileForm((f) => ({ ...f, prenom: e.target.value }))} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Nom</label>
-                  <input type="text" value={profileForm.nom} onChange={(e) => setProfileForm((f) => ({ ...f, nom: e.target.value }))} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                  <input type="text" value={profileForm.nom} onChange={(e) => setProfileForm((f) => ({ ...f, nom: e.target.value }))} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
                 </div>
               </div>
               <div>
@@ -486,14 +486,14 @@ export default function ComptePage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Téléphone</label>
-                <input type="tel" value={profileForm.telephone} onChange={(e) => setProfileForm((f) => ({ ...f, telephone: e.target.value }))} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                <input type="tel" value={profileForm.telephone} onChange={(e) => setProfileForm((f) => ({ ...f, telephone: e.target.value }))} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Adresse</label>
-                <input type="text" value={profileForm.adresse} onChange={(e) => setProfileForm((f) => ({ ...f, adresse: e.target.value }))} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                <input type="text" value={profileForm.adresse} onChange={(e) => setProfileForm((f) => ({ ...f, adresse: e.target.value }))} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
               </div>
               <div className="flex gap-3 pt-2">
-                <button onClick={handleSaveProfile} disabled={profileSaving} className="px-5 py-2 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50">
+                <button onClick={handleSaveProfile} disabled={profileSaving} className="px-5 py-2 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50">
                   {profileSaving ? "Enregistrement…" : "Enregistrer"}
                 </button>
                 <button onClick={() => { setProfileEditing(false); if (profile) setProfileForm({ prenom: profile.prenom, nom: profile.nom, telephone: profile.telephone || "", adresse: profile.adresse || "" }) }} className="px-5 py-2 border border-gray-200 dark:border-neutral-700 text-gray-500 dark:text-neutral-500 text-sm font-medium rounded-lg hover:border-gray-300 transition-colors">
@@ -550,7 +550,7 @@ export default function ComptePage() {
                     </div>
                     <div className="p-2.5">
                       <p className="text-xs font-medium text-[#2E2E2E] dark:text-neutral-100 truncate">{p.nom}</p>
-                      <p className="text-xs text-[#C8A97E] dark:text-amber-400 font-semibold mt-0.5">
+                      <p className="text-xs text-[#C9948E] dark:text-[#E8B4AE] font-semibold mt-0.5">
                         {typeof p.prix === "number" ? `${p.prix} €` : p.prix}
                       </p>
                     </div>
@@ -571,7 +571,7 @@ export default function ComptePage() {
         </section>
 
         <p className="text-center text-xs text-gray-400 dark:text-neutral-500 mt-6">
-          <Link href="/" className="hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors">← Retour au site</Link>
+          <Link href="/" className="hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">← Retour au site</Link>
         </p>
       </div>
     </div>

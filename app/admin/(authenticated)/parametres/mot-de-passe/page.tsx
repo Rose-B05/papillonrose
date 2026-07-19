@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { Eye, EyeOff, Lock, CheckCircle, AlertCircle } from "lucide-react"
@@ -41,7 +41,7 @@ function PasswordField({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8A97E]/50 focus:border-[#C8A97E] placeholder:text-gray-400"
+          className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E] placeholder:text-gray-400"
           style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
         />
         <button
@@ -108,8 +108,8 @@ export default function MotDePassePage() {
     <div className="max-w-lg">
       <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-8">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-[#C8A97E]/15 flex items-center justify-center">
-            <Lock size={18} className="text-[#C8A97E]" />
+          <div className="w-10 h-10 rounded-xl bg-[#C9948E]/15 flex items-center justify-center">
+            <Lock size={18} className="text-[#C9948E]" />
           </div>
           <div>
             <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">
@@ -188,7 +188,7 @@ export default function MotDePassePage() {
           <button
             type="submit"
             disabled={loading || !currentPassword || !newPassword || !confirmPassword || newPassword !== confirmPassword}
-            className="w-full py-2.5 bg-[#C8A97E] dark:bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-[#b8996e] transition-colors disabled:opacity-50"
+            className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50"
           >
             {loading ? "Changement en cours…" : "Changer le mot de passe"}
           </button>

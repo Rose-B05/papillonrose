@@ -146,7 +146,7 @@ export default function Chatbot() {
       <button
         onClick={() => setOpen(!open)}
         aria-label="Ouvrir le chat"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#C8A97E] dark:bg-amber-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-all hover:scale-105 active:scale-95"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-all hover:scale-105 active:scale-95"
       >
         {open ? <X size={22} /> : <MessageCircle size={22} />}
       </button>
@@ -156,7 +156,7 @@ export default function Chatbot() {
         <div className="fixed bottom-24 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] h-[520px] max-h-[calc(100vh-10rem)] bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl border border-black/[0.07] dark:border-white/[0.08] flex flex-col overflow-hidden animate-[fade-in-up_0.25s_ease-out]">
           {/* Header */}
           <div className="bg-[#2E2E2E] dark:bg-neutral-800 text-white px-5 py-4 flex items-center gap-3">
-            <div className="w-9 h-9 bg-[#C8A97E] dark:bg-amber-600 rounded-full flex items-center justify-center text-sm font-bold">
+            <div className="w-9 h-9 bg-[#C9948E] dark:bg-[#C9948E] rounded-full flex items-center justify-center text-sm font-bold">
               PR
             </div>
             <div>
@@ -175,7 +175,7 @@ export default function Chatbot() {
                 <div
                   className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
                     msg.role === "user"
-                      ? "bg-[#C8A97E] dark:bg-amber-600 text-white rounded-br-md"
+                      ? "bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-br-md"
                       : "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm rounded-bl-md"
                   }`}
                 >
@@ -187,9 +187,9 @@ export default function Chatbot() {
             {loading && (
               <div className="flex justify-start">
                 <div className="bg-white dark:bg-neutral-800 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 bg-[#C8A97E] dark:bg-amber-600 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                  <span className="w-1.5 h-1.5 bg-[#C8A97E] dark:bg-amber-600 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                  <span className="w-1.5 h-1.5 bg-[#C8A97E] dark:bg-amber-600 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                  <span className="w-1.5 h-1.5 bg-[#C9948E] dark:bg-[#C9948E] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <span className="w-1.5 h-1.5 bg-[#C9948E] dark:bg-[#C9948E] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <span className="w-1.5 h-1.5 bg-[#C9948E] dark:bg-[#C9948E] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                 </div>
               </div>
             )}
@@ -217,13 +217,13 @@ export default function Chatbot() {
                   onKeyDown={handleKeyDown}
                   placeholder="Votre message..."
                   disabled={loading}
-                  className="flex-1 bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[#C8A97E]/30 transition-all placeholder:text-gray-400"
+                  className="flex-1 bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[#C9948E]/30 transition-all placeholder:text-gray-400"
                 />
                 <button
                   onClick={send}
                   disabled={!input.trim() || loading}
                   aria-label="Envoyer"
-                  className="w-9 h-9 rounded-full bg-[#C8A97E] dark:bg-amber-600 text-white flex items-center justify-center hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
+                  className="w-9 h-9 rounded-full bg-[#C9948E] dark:bg-[#C9948E] text-white flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
                 >
                   {loading ? (
                     <Loader2 size={15} className="animate-spin" />

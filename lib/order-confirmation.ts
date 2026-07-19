@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer"
+﻿import nodemailer from "nodemailer"
 import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
 import { formatPrix, formatDateFr } from "./utils"
@@ -85,7 +85,7 @@ function buildItemsRows(booking: Booking): string {
           <td style="padding:10px 12px;border-bottom:1px solid #eee;font-weight:600">${nom}</td>
           <td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:center">${item.qty}</td>
           <td style="padding:10px 12px;border-bottom:1px solid #eee;font-size:12px">${period}</td>
-          <td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;color:#C8A97E;font-weight:700">${formatPrix(lineTotal)} €</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #eee;text-align:right;color:#C9948E;font-weight:700">${formatPrix(lineTotal)} €</td>
         </tr>`
     })
     .join("")
@@ -103,7 +103,7 @@ function buildSuggestionsHtml(booking: Booking): string {
           <a href="${SITE_URL}/catalogue?produit=${p.id}" style="text-decoration:none;color:inherit">
             <img src="${imageUrl}" alt="${p.nom}" style="width:100%;max-width:120px;height:auto;border-radius:8px;object-fit:cover;margin-bottom:6px" />
             <p style="font-size:12px;font-weight:600;color:#2E2E2E;margin:0">${p.nom}</p>
-            <p style="font-size:11px;color:#C8A97E;margin:2px 0 0">${formatPrix(parsePrix(p.prix))} € / jour</p>
+            <p style="font-size:11px;color:#C9948E;margin:2px 0 0">${formatPrix(parsePrix(p.prix))} € / jour</p>
           </a>
         </td>`
     })
@@ -146,8 +146,8 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
   const html = `
 <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;max-width:650px;margin:auto;padding:20px;background:#fff;color:#2E2E2E">
   <!-- Header -->
-  <div style="text-align:center;padding:20px 0;border-bottom:2px solid #C8A97E">
-    <h1 style="color:#C8A97E;font-size:24px;margin:0">🦋 Papillon Rose</h1>
+  <div style="text-align:center;padding:20px 0;border-bottom:2px solid #C9948E">
+    <h1 style="color:#C9948E;font-size:24px;margin:0">🦋 Papillon Rose</h1>
     <p style="color:#999;font-size:12px;margin:4px 0 0">Location mobilier & décoration événements</p>
   </div>
 
@@ -156,7 +156,7 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
     <h2 style="color:#2E2E2E;font-size:20px;margin:0 0 8px">
       ${prenom ? `Merci ${prenom} !` : "Merci pour votre commande !"}
     </h2>
-    <p style="color:#C8A97E;font-size:14px;margin:0">Réservation #${booking.id}</p>
+    <p style="color:#C9948E;font-size:14px;margin:0">Réservation #${booking.id}</p>
     <p style="color:#999;font-size:12px;margin:4px 0 0">Reçue le ${formatDateFr(now.toISOString())}</p>
   </div>
 
@@ -188,15 +188,15 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
     </div>
     <div style="display:flex;justify-content:space-between;margin-bottom:8px">
       <span style="opacity:0.7">Total TTC (livraison incluse)</span>
-      <span style="font-weight:700;font-size:18px;color:#C8A97E">${formatPrix(totalItems)} €</span>
+      <span style="font-weight:700;font-size:18px;color:#C9948E">${formatPrix(totalItems)} €</span>
     </div>
     <div style="display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1)">
       <span style="opacity:0.7">Acompte à verser (30%)</span>
-      <span style="font-weight:700;color:#C8A97E">${formatPrix(deposit)} €</span>
+      <span style="font-weight:700;color:#C9948E">${formatPrix(deposit)} €</span>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:8px">
       <span style="opacity:0.7">Caution (remboursable)</span>
-      <span style="font-weight:600;color:#C8A97E">${formatPrix(deposit)} €</span>
+      <span style="font-weight:600;color:#C9948E">${formatPrix(deposit)} €</span>
     </div>
   </div>
 
@@ -213,7 +213,7 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
   <!-- Contact -->
   <div style="text-align:center;padding:16px;margin:16px 0;background:#fdf8f0;border-radius:8px">
     <p style="margin:0;font-size:13px;color:#555">Une question sur votre réservation ?</p>
-    <a href="mailto:papillonrosebertha@gmail.com" style="display:inline-block;margin-top:8px;background:#C8A97E;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">
+    <a href="mailto:papillonrosebertha@gmail.com" style="display:inline-block;margin-top:8px;background:#C9948E;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">
       ✉️ Nous contacter
     </a>
   </div>
@@ -221,7 +221,7 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
   <!-- Footer -->
   <div style="text-align:center;padding:20px 0;border-top:1px solid #eee;margin-top:20px">
     <p style="color:#999;font-size:11px;margin:0">Cet email a été envoyé automatiquement.</p>
-    <p style="color:#C8A97E;font-size:12px;margin:4px 0 0">papillonrosebertha@gmail.com · Île-de-France</p>
+    <p style="color:#C9948E;font-size:12px;margin:4px 0 0">papillonrosebertha@gmail.com · Île-de-France</p>
   </div>
 </div>`
 
