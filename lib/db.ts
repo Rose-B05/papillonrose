@@ -1,5 +1,5 @@
 import { kv } from "@vercel/kv"
-import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView, NewsletterSubscriber, ContactMessage } from "./types"
+import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView, NewsletterSubscriber, ContactMessage, Nouveaute } from "./types"
 
 // ─── Media Library ───
 export interface MediaItem {
@@ -531,4 +531,42 @@ export async function getActivityLog(limit = 50): Promise<ActivityLog[]> {
   const sliced = ids.slice(0, limit)
   const values = await kv.mget<ActivityLog[]>(...sliced.map((id) => `activity:${id}`))
   return values.filter((v): v is ActivityLog => v !== null)
+}
+
+// ─── Nouveautés ──────────────────────────────────────────────────────────────
+const NOUVEAUTES_INDEX = "nouveautes:index"
+
+export async function getNouveautes(): Promise<Nouveaute[]> {
+  const ids = await kv.get<string[]>(NOUVEAUTES_INDEX)
+  if (!ids || ids.length === 0) return []
+  const values = await kv.mget<Nouveaute[]>(...ids.map((id) => `nouveaute:${id}`))
+  return values.filter((v): v is Nouveaute => v !== null)
+}
+
+export async function getPublishedNouveautes(): Promise<Nouveaute[]> {
+  const all = await getNouveautes()
+  return all
+    .filter((n) => n.statut === "publie")
+    .sort((a, b) => a.ordre - b.ordre)
+}
+
+export async function getNouveaute(id: string): Promise<Nouveaute | undefined> {
+  const item = await kv.get<Nouveaute>(`nouveaute:${id}`)
+  return item ?? undefined
+}
+
+export async function saveNouveaute(item: Nouveaute): Promise<void> {
+  await kv.set(`nouveaute:${item.id}`, item)
+  const ids = (await kv.get<string[]>(NOUVEAUTES_INDEX)) || []
+  if (!ids.includes(item.id)) {
+    ids.push(item.id)
+    await kv.set(NOUVEAUTES_INDEX, ids)
+  }
+}
+
+export async function deleteNouveaute(id: string): Promise<void> {
+  await kv.del(`nouveaute:${id}`)
+  const ids = (await kv.get<string[]>(NOUVEAUTES_INDEX)) || []
+  const filtered = ids.filter((i) => i !== id)
+  await kv.set(NOUVEAUTES_INDEX, filtered)
 }
