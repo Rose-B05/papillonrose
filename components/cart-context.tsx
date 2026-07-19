@@ -4,11 +4,15 @@ import { createContext, useContext, useState, useCallback, useEffect, type React
 import type { CartItem } from "@/lib/types"
 import { produits } from "@/data/produits"
 
+function matchItem(i: CartItem, productId: number, variantLabel?: string) {
+  return i.productId === productId && (variantLabel === undefined || i.variantLabel === variantLabel)
+}
+
 interface CartContextType {
   items: CartItem[]
   addItem: (item: CartItem) => boolean
-  updateItem: (productId: number, updates: Partial<CartItem>) => void
-  removeItem: (productId: number) => void
+  updateItem: (productId: number, updates: Partial<CartItem>, variantLabel?: string) => void
+  removeItem: (productId: number, variantLabel?: string) => void
   clearCart: () => void
   itemCount: number
 }
@@ -35,24 +39,24 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const product = produits.find((p) => p.id === item.productId)
     if (!product) return false
 
-    const ex = items.find((i) => i.productId === item.productId)
+    const ex = items.find((i) => matchItem(i, item.productId, item.variantLabel))
     const currentQty = ex ? ex.qty : 0
     if (currentQty + item.qty > product.stock) return false
 
     setItems((prev) => {
-      const existing = prev.find((i) => i.productId === item.productId)
-      if (existing) return prev.map((i) => (i.productId === item.productId ? item : i))
+      const existing = prev.find((i) => matchItem(i, item.productId, item.variantLabel))
+      if (existing) return prev.map((i) => matchItem(i, item.productId, item.variantLabel) ? item : i)
       return [...prev, item]
     })
     return true
   }, [items])
 
-  const updateItem = useCallback((productId: number, updates: Partial<CartItem>) => {
-    setItems((prev) => prev.map((i) => (i.productId === productId ? { ...i, ...updates } : i)))
+  const updateItem = useCallback((productId: number, updates: Partial<CartItem>, variantLabel?: string) => {
+    setItems((prev) => prev.map((i) => matchItem(i, productId, variantLabel) ? { ...i, ...updates } : i))
   }, [])
 
-  const removeItem = useCallback((productId: number) => {
-    setItems((prev) => prev.filter((i) => i.productId !== productId))
+  const removeItem = useCallback((productId: number, variantLabel?: string) => {
+    setItems((prev) => prev.filter((i) => !matchItem(i, productId, variantLabel)))
   }, [])
 
   const clearCart = useCallback(() => setItems([]), [])

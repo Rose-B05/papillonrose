@@ -38,9 +38,19 @@ export default function AvailabilityCalendar({
   availableStock,
 }: AvailabilityCalendarProps) {
   const [blockedDates, setBlockedDates] = useState<string[]>([])
-  const [viewMonth, setViewMonth] = useState(() => new Date().getMonth())
-  const [viewYear, setViewYear] = useState(() => new Date().getFullYear())
+  const [viewMonth, setViewMonth] = useState<number | null>(null)
+  const [viewYear, setViewYear] = useState<number | null>(null)
+  const [todayStr, setTodayStr] = useState("")
   const [error, setError] = useState("")
+
+  useEffect(() => {
+    const now = new Date()
+    setViewMonth(now.getMonth())
+    setViewYear(now.getFullYear())
+    const t = new Date(now)
+    t.setHours(0, 0, 0, 0)
+    setTodayStr(t.toISOString().split("T")[0])
+  }, [])
 
   useEffect(() => {
     fetch(`/api/availability?productId=${productId}`)
@@ -49,8 +59,17 @@ export default function AvailabilityCalendar({
       .catch(() => {})
   }, [productId])
 
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
+  const today = todayStr ? new Date(todayStr + "T00:00:00") : null
+
+  if (viewMonth === null || viewYear === null || !today) {
+    return (
+      <div className="bg-white dark:bg-neutral-800 rounded-2xl p-4 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
+        <div className="h-64 flex items-center justify-center text-gray-400 dark:text-white/60 text-xs">
+          Chargement du calendrier…
+        </div>
+      </div>
+    )
+  }
 
   const next = getNextMonth(viewYear, viewMonth)
 

@@ -22,31 +22,12 @@ export default function ReservationPage() {
   const { items, updateItem, removeItem, clearCart } = useCart()
   const router = useRouter()
 
-  const [step, setStep] = useState<Step>(() => {
-    if (typeof window !== "undefined") {
-      const saved = sessionStorage.getItem("reservation_step")
-      if (saved === "panier" || saved === "dates" || saved === "client" || saved === "confirmation") return saved
-    }
-    return "panier"
-  })
-  const [dateEdits, setDateEdits] = useState<Record<number, { start: string; end: string }>>(() => {
-    if (typeof window !== "undefined") {
-      try { return JSON.parse(sessionStorage.getItem("reservation_dateEdits") || "{}") } catch {}
-    }
-    return {}
-  })
-  const [client, setClient] = useState<ClientInfo>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const saved = JSON.parse(sessionStorage.getItem("reservation_client") || "null")
-        if (saved) return saved
-      } catch {}
-    }
-    return {
-      nom: "", prenom: "", email: "", telephone: "",
-      typeEvenement: "", dateEvenement: "", lieuEvenement: "",
-      nbInvites: 0, besoinLivraison: false, message: "",
-    }
+  const [step, setStep] = useState<Step>("panier")
+  const [dateEdits, setDateEdits] = useState<Record<number, { start: string; end: string }>>({})
+  const [client, setClient] = useState<ClientInfo>({
+    nom: "", prenom: "", email: "", telephone: "",
+    typeEvenement: "", dateEvenement: "", lieuEvenement: "",
+    nbInvites: 0, besoinLivraison: false, message: "",
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -58,6 +39,22 @@ export default function ReservationPage() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [showErrors, setShowErrors] = useState(false)
   const [isDark, setIsDark] = useState(false)
+
+  // Restore from sessionStorage after hydration (avoids #418 mismatch)
+  const [hydrated, setHydrated] = useState(false)
+  useEffect(() => {
+    try {
+      const savedStep = sessionStorage.getItem("reservation_step")
+      if (savedStep === "panier" || savedStep === "dates" || savedStep === "client" || savedStep === "confirmation") {
+        setStep(savedStep)
+      }
+      const savedDateEdits = sessionStorage.getItem("reservation_dateEdits")
+      if (savedDateEdits) setDateEdits(JSON.parse(savedDateEdits))
+      const savedClient = sessionStorage.getItem("reservation_client")
+      if (savedClient) setClient(JSON.parse(savedClient))
+    } catch {}
+    setHydrated(true)
+  }, [])
 
   useEffect(() => {
     const check = () => setIsDark(document.documentElement.classList.contains("dark"))
