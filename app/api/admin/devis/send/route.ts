@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { getDevis } from "@/lib/devis/db"
 import { generateDevisPdf } from "@/lib/devis/db"
 import { COOKIE_NAME } from "@/lib/auth"
+import { logActivity } from "@/lib/db"
 import nodemailer from "nodemailer"
 
 function getTransport() {
@@ -75,6 +76,7 @@ export async function POST(request: NextRequest) {
       await saveDevis(devis)
     }
 
+    await logActivity({ type: "devis_sent", description: `Devis ${devis.quoteNumber} envoyé à ${devis.client.email}`, reference: devis.id })
     return NextResponse.json({ ok: true, message: "Devis envoyé" })
   } catch (err) {
     console.error("Error sending devis:", err)

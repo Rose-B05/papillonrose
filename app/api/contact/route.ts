@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { saveContactMessage, type ContactMessage } from "@/lib/db"
+import { saveContactMessage, logActivity, type ContactMessage } from "@/lib/db"
 
 export const runtime = "nodejs"
 
@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
     }
 
     await saveContactMessage(contactMsg)
+    await logActivity({ type: "contact_received", description: `Message de ${contactMsg.name} (${contactMsg.email})`, reference: contactMsg.id })
 
     return NextResponse.json({ success: true, id: contactMsg.id })
   } catch (error) {
