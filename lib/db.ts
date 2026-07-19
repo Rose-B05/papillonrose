@@ -488,3 +488,47 @@ export async function deleteContactMessage(id: string): Promise<void> {
   const filtered = ids.filter((i) => i !== id)
   await kv.set(CONTACT_INDEX, filtered)
 }
+
+// ─── Activity Log ─────────────────────────────────────────────────────────────
+export type ActivityEventType =
+  | "devis_created"
+  | "devis_sent"
+  | "devis_accepted"
+  | "devis_refused"
+  | "product_created"
+  | "product_updated"
+  | "product_deleted"
+  | "contact_received"
+  | "quote_created"
+  | "quote_sent"
+
+export interface ActivityLog {
+  id: string
+  type: ActivityEventType
+  description: string
+  reference?: string
+  createdAt: string
+}
+
+const ACTIVITY_INDEX = "activity:index"
+
+export async function logActivity(event: Omit<ActivityLog, "id" | "createdAt">): Promise<void> {
+  const entry: ActivityLog = {
+    id: crypto.randomUUID(),
+    ...event,
+    createdAt: new Date().toISOString(),
+  }
+  await kv.set(`activity:${entry.id}`, entry)
+  const ids = (await kv.get<string[]>(ACTIVITY_INDEX)) || []
+  ids.unshift(entry.id)
+  if (ids.length > 200) ids.length = 200
+  await kv.set(ACTIVITY_INDEX, ids)
+}
+
+export async function getActivityLog(limit = 50): Promise<ActivityLog[]> {
+  const ids = await kv.get<string[]>(ACTIVITY_INDEX)
+  if (!ids || ids.length === 0) return []
+  const sliced = ids.slice(0, limit)
+  const values = await kv.mget<ActivityLog[]>(...sliced.map((id) => `activity:${id}`))
+  return values.filter((v): v is ActivityLog => v !== null)
+}

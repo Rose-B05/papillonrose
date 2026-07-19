@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getDevis, saveDevis, getNextDevisNumber, calculateDevis } from "@/lib/devis/db"
 import { COOKIE_NAME } from "@/lib/auth"
+import { logActivity } from "@/lib/db"
 import type { Devis, DevisStatut } from "@/lib/devis/types"
 
 // GET — list all devis
@@ -56,6 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     await saveDevis(devis)
+    await logActivity({ type: "devis_created", description: `Devis ${quoteNumber} créé pour ${client.prenom} ${client.nom}`, reference: devis.id })
     return NextResponse.json({ devis }, { status: 201 })
   } catch (err) {
     console.error("Error creating admin devis:", err)

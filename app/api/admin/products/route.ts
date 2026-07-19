@@ -8,6 +8,7 @@ import {
   deleteAdminProduct,
   getNextAdminProductId,
   ValidationError,
+  logActivity,
   type AdminProduct,
   type AdminProductStatus,
 } from "@/lib/db"
@@ -136,6 +137,7 @@ export async function POST(request: NextRequest) {
     }
 
     await saveAdminProduct(product)
+    await logActivity({ type: body.id ? "product_updated" : "product_created", description: `Produit "${product.nom}" ${body.id ? "modifié" : "créé"}`, reference: String(product.id) })
 
     return NextResponse.json({ product, message: "Produit enregistré" })
   } catch (error: any) {
