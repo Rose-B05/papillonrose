@@ -384,7 +384,7 @@ export default function Footer() {
 
           {/* Colonne 4 — Illustration femme + cage */}
           <div className="flex justify-end overflow-visible">
-            <div className="relative -mt-[340px] z-20 pointer-events-none">
+            <div className="relative -mt-[240px] z-20 pointer-events-none">
               <img
                 src={img("/images/PROD086.png")}
                 alt=""
@@ -485,7 +485,7 @@ export default function Footer() {
               alt=""
               aria-hidden
               loading="lazy"
-              className="w-[350px] max-w-[90vw] h-auto object-contain opacity-90 -mt-[160px] relative z-20"
+              className="w-[350px] max-w-[90vw] h-auto object-contain opacity-90 -mt-[100px] relative z-20"
             />
           </div>
         </div>
