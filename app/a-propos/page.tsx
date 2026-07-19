@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next"
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, Crown, ShieldCheck, Heart } from "lucide-react"
 import { getActiveProductsCount } from "@/data/produits"
 
@@ -51,64 +52,78 @@ export default function AProposPage() {
 
         {/* Notre histoire */}
         <section className="mt-8 mb-16">
-          <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
-            Notre histoire
-          </p>
-          <h2
-            style={DP}
-            className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-6"
-          >
-            L&apos;histoire de Papillon Rose
-          </h2>
-          <div className="space-y-4 text-sm text-[#2E2E2E]/70 dark:text-neutral-300 leading-relaxed">
-            <p>
-              Papillon Rose est avant tout une histoire de passion.
-            </p>
-            <p>
-              Tout a commencé lors de la préparation de mon propre mariage.
-              Passionnée par la décoration, j&apos;ai imaginé et réalisé un univers qui me
-              ressemblait, en accordant une attention particulière à chaque détail afin de
-              créer une ambiance chaleureuse et harmonieuse.
-            </p>
-            <p>
-              Les nombreux compliments reçus ce jour-là m&apos;ont donné envie d&apos;aller
-              plus loin. J&apos;ai alors commencé à décorer les événements de mes proches,
-              puis ceux de particuliers. Au fil des années, cette passion s&apos;est
-              transformée en une véritable activité.
-            </p>
-            <p>
-              Depuis 2016, j&apos;ai eu le plaisir de concevoir et de décorer plus de 30
-              événements privés : mariages, anniversaires, baptêmes, baby showers et autres
-              moments de vie. Chaque projet m&apos;a permis de développer une conviction
-              forte : une décoration réussie ne consiste pas seulement à embellir un lieu,
-              mais à créer une ambiance qui reflète l&apos;histoire, les envies et les
-              émotions de chaque client.
-            </p>
-            <p>
-              Très rapidement, une même question revenait après chaque prestation :{" "}
-              <em className="text-[#C9948E] dark:text-[#E8B4AE] not-italic font-medium">
-                &laquo;&nbsp;Est-ce que vous louez aussi votre décoration ?&nbsp;&raquo;
-              </em>
-            </p>
-            <p>
-              Pendant longtemps, je n&apos;ai pas donné suite à cette idée. La gestion
-              d&apos;un parc de location me semblait représenter une charge de travail
-              importante et je préférais me concentrer sur la décoration
-              d&apos;événements.
-            </p>
-            <p>
-              Puis, en juillet 2026, en décidant de créer le site internet de Papillon
-              Rose, cette idée s&apos;est imposée comme une évidence. J&apos;ai réalisé
-              qu&apos;il était possible d&apos;allier ma passion pour la décoration à une
-              offre de location, permettant à chacun de créer un événement élégant,
-              personnalisé et responsable, quel que soit son budget.
-            </p>
-            <p>
-              C&apos;est ainsi qu&apos;est née la nouvelle identité de Papillon Rose : un
-              concept dédié à la location de décoration événementielle, inspiré par
-              l&apos;expérience, la créativité et l&apos;envie de rendre chaque
-              célébration unique.
-            </p>
+          <div className="grid md:grid-cols-[3fr_2fr] gap-8 md:gap-12 items-center">
+            <div>
+              <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
+                Notre histoire
+              </p>
+              <h2
+                style={DP}
+                className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-6"
+              >
+                L&apos;histoire de Papillon Rose
+              </h2>
+              <div className="space-y-4 text-sm text-[#2E2E2E]/70 dark:text-neutral-300 leading-relaxed">
+                <p>
+                  Papillon Rose est avant tout une histoire de passion.
+                </p>
+                <p>
+                  Tout a commencé lors de la préparation de mon propre mariage.
+                  Passionnée par la décoration, j&apos;ai imaginé et réalisé un univers qui me
+                  ressemblait, en accordant une attention particulière à chaque détail afin de
+                  créer une ambiance chaleureuse et harmonieuse.
+                </p>
+                <p>
+                  Les nombreux compliments reçus ce jour-là m&apos;ont donné envie d&apos;aller
+                  plus loin. J&apos;ai alors commencé à décorer les événements de mes proches,
+                  puis ceux de particuliers. Au fil des années, cette passion s&apos;est
+                  transformée en une véritable activité.
+                </p>
+                <p>
+                  Depuis 2016, j&apos;ai eu le plaisir de concevoir et de décorer plus de 30
+                  événements privés : mariages, anniversaires, baptêmes, baby showers et autres
+                  moments de vie. Chaque projet m&apos;a permis de développer une conviction
+                  forte : une décoration réussie ne consiste pas seulement à embellir un lieu,
+                  mais à créer une ambiance qui reflète l&apos;histoire, les envies et les
+                  émotions de chaque client.
+                </p>
+                <p>
+                  Très rapidement, une même question revenait après chaque prestation :{" "}
+                  <em className="text-[#C9948E] dark:text-[#E8B4AE] not-italic font-medium">
+                    &laquo;&nbsp;Est-ce que vous louez aussi votre décoration ?&nbsp;&raquo;
+                  </em>
+                </p>
+                <p>
+                  Pendant longtemps, je n&apos;ai pas donné suite à cette idée. La gestion
+                  d&apos;un parc de location me semblait représenter une charge de travail
+                  importante et je préférais me concentrer sur la décoration
+                  d&apos;événements.
+                </p>
+                <p>
+                  Puis, en juillet 2026, en décidant de créer le site internet de Papillon
+                  Rose, cette idée s&apos;est imposée comme une évidence. J&apos;ai réalisé
+                  qu&apos;il était possible d&apos;allier ma passion pour la décoration à une
+                  offre de location, permettant à chacun de créer un événement élégant,
+                  personnalisé et responsable, quel que soit son budget.
+                </p>
+                <p>
+                  C&apos;est ainsi qu&apos;est née la nouvelle identité de Papillon Rose : un
+                  concept dédié à la location de décoration événementielle, inspiré par
+                  l&apos;expérience, la créativité et l&apos;envie de rendre chaque
+                  célébration unique.
+                </p>
+              </div>
+            </div>
+            <div className="flex justify-center md:justify-end">
+              <Image
+                src="/images/femme-papillon-rose.png"
+                alt="Femme en robe élégante, illustration Papillon Rose"
+                width={1254}
+                height={1254}
+                className="w-full max-w-[360px] md:max-w-none md:w-full h-auto rounded-2xl object-contain"
+                priority
+              />
+            </div>
           </div>
         </section>
 
