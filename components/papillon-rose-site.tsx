@@ -31,6 +31,7 @@ import OverflowCarousel from "@/components/overflow-carousel"
 import Chatbot from "@/components/chatbot"
 import WhatsAppButton from "@/components/whatsapp-button"
 import AccessibilityPanel from "@/components/accessibility-panel"
+import NouveautesBanner from "@/components/nouveautes-banner"
 import { getTagsForProduct, type FilterState } from "@/lib/product-tags"
 import { FEATURED_IDS } from "@/lib/scenes"
 
@@ -797,6 +798,9 @@ export default function PapillonRoseSite() {
                 onSelect={(cat) => goToCatalogue(cat)}
               />
             </section>
+
+            {/* Nouveautés banner */}
+            <NouveautesBanner />
 
             {/* Featured products */}
             <section className="max-w-7xl mx-auto px-5 md:px-10 mt-10 md:mt-8">

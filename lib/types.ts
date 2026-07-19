@@ -138,3 +138,21 @@ export interface ContactMessage {
   read: boolean
   createdAt: string
 }
+
+export type NouveauteType = "image" | "video" | "document"
+export type NouveauteStatus = "brouillon" | "publie"
+
+export interface Nouveaute {
+  id: string
+  titre: string
+  description: string
+  type: NouveauteType
+  statut: NouveauteStatus
+  mediaUrl: string
+  mediaThumbnail?: string
+  lienAction?: string
+  labelAction?: string
+  ordre: number
+  dateCreation: string
+  dateModification: string
+}
