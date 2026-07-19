@@ -179,6 +179,7 @@ function FooterNavAccordion({
             <li key={item.label}>
               <Link
                 href={item.href}
+                prefetch={false}
                 className="text-[#E8C4BE] hover:text-white transition-colors"
               >
                 {item.label}
@@ -189,6 +190,7 @@ function FooterNavAccordion({
             <li key={item.label}>
               <Link
                 href={item.href}
+                prefetch={false}
                 className="text-[#E8C4BE] hover:text-white transition-colors"
               >
                 {item.label}
@@ -239,6 +241,7 @@ function FooterCategoriesAccordion({
             <li key={cat}>
               <Link
                 href={`/categorie/${getCategorySlug(cat)}`}
+                prefetch={false}
                 className="text-[#E8C4BE] hover:text-white transition-colors"
               >
                 {cat}
@@ -452,6 +455,7 @@ export default function Footer() {
                     <li key={cat}>
                       <Link
                         href={`/categorie/${getCategorySlug(cat)}`}
+                        prefetch={false}
                         className="text-[#E8C4BE] hover:text-white transition-colors"
                       >
                         {cat}
