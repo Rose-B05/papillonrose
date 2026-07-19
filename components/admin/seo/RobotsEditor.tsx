@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { FileText, RefreshCw, Download, CheckCircle, AlertTriangle } from "lucide-react"
 import { useState } from "react"
@@ -56,7 +56,7 @@ export default function RobotsEditor({ info }: { info: RobotsInfo }) {
       {info.warnings.length > 0 && (
         <div className="mb-4 space-y-1">
           {info.warnings.map((w, i) => (
-            <p key={i} className="text-xs text-amber-600 dark:text-amber-400">⚠ {w}</p>
+            <p key={i} className="text-xs text-amber-600 dark:text-[#E8B4AE]">⚠ {w}</p>
           ))}
         </div>
       )}
@@ -65,7 +65,7 @@ export default function RobotsEditor({ info }: { info: RobotsInfo }) {
         <button
           onClick={() => handleAction("regenerate")}
           disabled={loading}
-          className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-[#C8A97E] text-white hover:bg-[#B8926E] transition-colors disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-[#C9948E] text-white hover:bg-[#B8807A] transition-colors disabled:opacity-50"
         >
           <RefreshCw size={12} /> Régénérer
         </button>

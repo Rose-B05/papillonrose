@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import Link from "next/link"
@@ -122,7 +122,7 @@ export default function AdminSidebar() {
                       transition-colors duration-150
                       ${
                         active
-                          ? "bg-[#C8A97E]/10 text-[#C8A97E] font-medium"
+                          ? "bg-[#C9948E]/10 text-[#C9948E] font-medium"
                           : "text-gray-500 dark:text-neutral-400 hover:bg-black/[0.03] dark:hover:bg-white/[0.04] hover:text-[#2E2E2E] dark:hover:text-neutral-100"
                       }
                     `}
@@ -140,7 +140,7 @@ export default function AdminSidebar() {
         <div className="px-5 py-4 border-t border-black/[0.05] dark:border-white/[0.06] space-y-3">
           <Link
             href="/"
-            className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] transition-colors"
+            className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] transition-colors"
           >
             ← Retour au site
           </Link>

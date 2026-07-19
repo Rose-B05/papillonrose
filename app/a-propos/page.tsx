@@ -49,7 +49,7 @@ export default function AProposPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#F8F5F0]/60 to-[#F8F5F0]" />
         <div className="relative z-10 text-center px-6 max-w-2xl">
-          <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.5em] uppercase mb-4 font-medium">
+          <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.5em] uppercase mb-4 font-medium">
             Notre histoire
           </p>
           <h1
@@ -69,7 +69,7 @@ export default function AProposPage() {
         {/* Breadcrumb */}
         <nav className="pt-6 pb-2">
           <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-neutral-500">
-            <li><Link href="/" className="hover:text-[#C8A97E] transition-colors">Accueil</Link></li>
+            <li><Link href="/" className="hover:text-[#C9948E] transition-colors">Accueil</Link></li>
             <li>/</li>
             <li className="text-[#2E2E2E] dark:text-neutral-100 font-medium">À propos</li>
           </ol>
@@ -77,7 +77,7 @@ export default function AProposPage() {
 
         {/* Notre histoire */}
         <section className="mt-8 mb-16">
-          <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
+          <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
             Notre histoire
           </p>
           <h2
@@ -112,7 +112,7 @@ export default function AProposPage() {
             </p>
             <p>
               Très rapidement, une même question revenait après chaque prestation :{" "}
-              <em className="text-[#C8A97E] dark:text-amber-400 not-italic font-medium">
+              <em className="text-[#C9948E] dark:text-[#E8B4AE] not-italic font-medium">
                 &laquo;&nbsp;Est-ce que vous louez aussi votre décoration ?&nbsp;&raquo;
               </em>
             </p>
@@ -140,7 +140,7 @@ export default function AProposPage() {
 
         {/* Nos valeurs */}
         <section className="mb-16">
-          <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
+          <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
             Nos valeurs
           </p>
           <h2
@@ -155,8 +155,8 @@ export default function AProposPage() {
                 key={title}
                 className="bg-white dark:bg-neutral-800 rounded-2xl p-6 border border-black/[0.07] dark:border-white/[0.08] shadow-sm text-center"
               >
-                <div className="w-12 h-12 bg-[#C8A97E]/10 dark:bg-amber-600/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Icon size={20} className="text-[#C8A97E] dark:text-amber-400" />
+                <div className="w-12 h-12 bg-[#C9948E]/10 dark:bg-[#C9948E]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Icon size={20} className="text-[#C9948E] dark:text-[#E8B4AE]" />
                 </div>
                 <h3
                   style={DP}
@@ -180,7 +180,7 @@ export default function AProposPage() {
                 <div key={s.val} className="text-center">
                   <p
                     style={DP}
-                    className="text-3xl md:text-4xl font-bold text-[#C8A97E] dark:text-amber-400 mb-1"
+                    className="text-3xl md:text-4xl font-bold text-[#C9948E] dark:text-[#E8B4AE] mb-1"
                   >
                     {s.val}
                   </p>
@@ -200,7 +200,7 @@ export default function AProposPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 bg-[#C8A97E] dark:bg-amber-600 text-white px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors"
+            className="inline-flex items-center gap-2 bg-[#C9948E] dark:bg-[#C9948E] text-white px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors"
           >
             Parcourir le catalogue <ArrowRight size={15} />
           </Link>

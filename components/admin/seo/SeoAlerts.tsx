@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { AlertTriangle, CheckCircle, Info, ExternalLink, ChevronDown, ChevronUp } from "lucide-react"
 import { useState } from "react"
@@ -19,11 +19,11 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
         className="w-full flex items-center justify-between p-5 text-left"
       >
         <div className="flex items-center gap-3">
-          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${errors > 0 ? "bg-red-100 dark:bg-red-950/50" : warnings > 0 ? "bg-amber-100 dark:bg-amber-950/50" : "bg-green-100 dark:bg-green-950/50"}`}>
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${errors > 0 ? "bg-red-100 dark:bg-red-950/50" : warnings > 0 ? "bg-amber-100 dark:bg-[#3A1E1E]/50" : "bg-green-100 dark:bg-green-950/50"}`}>
             {errors > 0 ? (
               <AlertTriangle size={16} className="text-red-600 dark:text-red-400" />
             ) : warnings > 0 ? (
-              <AlertTriangle size={16} className="text-amber-600 dark:text-amber-400" />
+              <AlertTriangle size={16} className="text-amber-600 dark:text-[#E8B4AE]" />
             ) : (
               <CheckCircle size={16} className="text-green-600 dark:text-green-400" />
             )}
@@ -49,7 +49,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
                 onClick={() => setFilter(f)}
                 className={`text-xs px-2.5 py-1 rounded-full transition-colors ${
                   filter === f
-                    ? "bg-[#C8A97E] text-white"
+                    ? "bg-[#C9948E] text-white"
                     : "bg-gray-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-300 hover:bg-gray-200 dark:hover:bg-neutral-600"
                 }`}
               >
@@ -71,7 +71,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
                     alert.type === "error"
                       ? "bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800"
                       : alert.type === "warning"
-                      ? "bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800"
+                      ? "bg-amber-50 dark:bg-[#3A1E1E]/20 border border-amber-200 dark:border-[#4A2828]"
                       : "bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800"
                   }`}
                 >
@@ -92,7 +92,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
                       </p>
                     )}
                     {alert.action && (
-                      <p className="text-xs text-[#C8A97E] mt-1">
+                      <p className="text-xs text-[#C9948E] mt-1">
                         {alert.action}
                       </p>
                     )}

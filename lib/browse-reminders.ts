@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer"
+﻿import nodemailer from "nodemailer"
 import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
 import { getProductViews, markReminderSent, getBookings, saveEmailLog, cleanupOldProductViews } from "./db"
@@ -62,7 +62,7 @@ function buildReminderEmail(
             <a href="${SITE_URL}/catalogue?produit=${s.id}" style="text-decoration:none;color:inherit">
               <img src="${img}" alt="${s.nom}" style="width:100%;max-width:120px;height:auto;border-radius:8px;object-fit:cover;margin-bottom:6px" />
               <p style="font-size:12px;font-weight:600;color:#2E2E2E;margin:0">${s.nom}</p>
-              <p style="font-size:11px;color:#C8A97E;margin:2px 0 0">${formatPrix(parsePrix(s.prix))} € / jour</p>
+              <p style="font-size:11px;color:#C9948E;margin:2px 0 0">${formatPrix(parsePrix(s.prix))} € / jour</p>
             </a>
           </td>`
       })
@@ -81,8 +81,8 @@ function buildReminderEmail(
 
   return `
 <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;max-width:650px;margin:auto;padding:20px;background:#fff;color:#2E2E2E">
-  <div style="text-align:center;padding:20px 0;border-bottom:2px solid #C8A97E">
-    <h1 style="color:#C8A97E;font-size:24px;margin:0">🦋 Papillon Rose</h1>
+  <div style="text-align:center;padding:20px 0;border-bottom:2px solid #C9948E">
+    <h1 style="color:#C9948E;font-size:24px;margin:0">🦋 Papillon Rose</h1>
     <p style="color:#999;font-size:12px;margin:4px 0 0">Location mobilier & décoration événements</p>
   </div>
 
@@ -101,11 +101,11 @@ function buildReminderEmail(
 
   <div style="background:#f8f5f0;border-radius:12px;padding:20px;margin:20px 0">
     <h3 style="color:#2E2E2E;font-size:18px;margin:0 0 4px;text-align:center">${product.nom}</h3>
-    <p style="color:#C8A97E;font-size:16px;font-weight:700;text-align:center;margin:8px 0 16px">
+    <p style="color:#C9948E;font-size:16px;font-weight:700;text-align:center;margin:8px 0 16px">
       ${formatPrix(parsePrix(product.prix))} € / jour
     </p>
     <p style="text-align:center;margin:0">
-      <a href="${productUrl}" style="display:inline-block;background:#C8A97E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600">
+      <a href="${productUrl}" style="display:inline-block;background:#C9948E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600">
         Voir la fiche produit →
       </a>
     </p>
@@ -119,14 +119,14 @@ function buildReminderEmail(
   ${suggestionsHtml}
 
   <div style="text-align:center;padding:16px;margin:16px 0;background:#fdf8f0;border-radius:8px">
-    <a href="mailto:papillonrosebertha@gmail.com" style="display:inline-block;background:#C8A97E;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">
+    <a href="mailto:papillonrosebertha@gmail.com" style="display:inline-block;background:#C9948E;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">
       ✉️ Nous contacter
     </a>
   </div>
 
   <div style="text-align:center;padding:20px 0;border-top:1px solid #eee;margin-top:20px">
     <p style="color:#999;font-size:11px;margin:0">Cet email a été envoyé automatiquement.</p>
-    <p style="color:#C8A97E;font-size:12px;margin:4px 0 0">papillonrosebertha@gmail.com · Île-de-France</p>
+    <p style="color:#C9948E;font-size:12px;margin:4px 0 0">papillonrosebertha@gmail.com · Île-de-France</p>
   </div>
 </div>`
 }

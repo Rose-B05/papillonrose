@@ -9,6 +9,10 @@
   --font-serif: var(--font-playfair), serif;
   --font-sans: var(--font-inter), 'Inter Fallback', sans-serif;
   --font-mono: var(--font-inter), sans-serif;
+  --color-brand: #C9948E;
+  --color-brand-hover: #B8807A;
+  --color-brand-light: #E8C4BE;
+  --color-brand-dark: #A87070;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);

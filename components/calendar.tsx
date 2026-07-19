@@ -163,8 +163,8 @@ export default function AvailabilityCalendar({
                 className={`
                   relative w-full text-center text-[11px] py-1.5 rounded-md transition-all
                   ${disabled ? "text-gray-300 dark:text-neutral-600 line-through cursor-not-allowed bg-red-50" : "hover:bg-[#F0EBE3] dark:hover:bg-neutral-700 cursor-pointer"}
-                  ${start || end ? "bg-[#C8A97E] dark:bg-amber-600 text-white font-bold hover:bg-[#B8926E] dark:hover:bg-amber-700" : ""}
-                  ${inRange && !start && !end ? "bg-[#C8A97E]/15 dark:bg-amber-600/15 text-[#2E2E2E] dark:text-neutral-100" : ""}
+                  ${start || end ? "bg-[#C9948E] dark:bg-[#C9948E] text-white font-bold hover:bg-[#B8807A] dark:hover:bg-[#B8807A]" : ""}
+                  ${inRange && !start && !end ? "bg-[#C9948E]/15 dark:bg-[#C9948E]/15 text-[#2E2E2E] dark:text-neutral-100" : ""}
                   ${!disabled && !start && !end && !inRange ? "text-[#2E2E2E] dark:text-neutral-100" : ""}
                 `}
               >
@@ -203,14 +203,14 @@ export default function AvailabilityCalendar({
       {error && <p className="text-red-400 text-xs mt-3 text-center">{error}</p>}
 
       {dateStart && !dateEnd && (
-        <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] mt-2 text-center font-medium">
+        <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] mt-2 text-center font-medium">
           {getRentalRuleForDate(new Date(dateStart)).description}
         </p>
       )}
 
       <div className="flex items-center gap-4 mt-4 pt-3 border-t border-black/[0.05] text-[10px] text-gray-400 dark:text-neutral-500">
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-[#C8A97E] dark:bg-amber-600" />
+          <div className="w-3 h-3 rounded bg-[#C9948E] dark:bg-[#C9948E]" />
           <span>Sélectionné</span>
         </div>
         <div className="flex items-center gap-1.5">
@@ -218,7 +218,7 @@ export default function AvailabilityCalendar({
           <span>Réservé</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-[#C8A97E]/15 dark:bg-amber-600/15" />
+          <div className="w-3 h-3 rounded bg-[#C9948E]/15 dark:bg-[#C9948E]/15" />
           <span>Dans la période</span>
         </div>
       </div>

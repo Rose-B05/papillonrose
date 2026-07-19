@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { CheckCircle, AlertTriangle, ExternalLink, ChevronDown, ChevronUp } from "lucide-react"
 import { useState } from "react"
@@ -48,7 +48,7 @@ export default function PageControl({ pages }: { pages: PageSeoInfo[] }) {
                       <div className="flex items-center gap-2">
                         <span className="text-[#2E2E2E] dark:text-neutral-100 font-medium">{page.label}</span>
                         {page.critical && (
-                          <span className="text-[10px] bg-[#C8A97E]/10 text-[#C8A97E] px-1.5 py-0.5 rounded font-medium">
+                          <span className="text-[10px] bg-[#C9948E]/10 text-[#C9948E] px-1.5 py-0.5 rounded font-medium">
                             Critique
                           </span>
                         )}
@@ -66,7 +66,7 @@ export default function PageControl({ pages }: { pages: PageSeoInfo[] }) {
                       </span>
                     </td>
                     <td className="py-2.5 px-2">
-                      <span className={`text-xs ${page.robots.includes("noindex") ? "text-amber-600 dark:text-amber-400" : "text-green-600 dark:text-green-400"}`}>
+                      <span className={`text-xs ${page.robots.includes("noindex") ? "text-amber-600 dark:text-[#E8B4AE]" : "text-green-600 dark:text-green-400"}`}>
                         {page.robots}
                       </span>
                     </td>
@@ -82,7 +82,7 @@ export default function PageControl({ pages }: { pages: PageSeoInfo[] }) {
                       </span>
                     </td>
                     <td className="py-2.5 px-2">
-                      <span className={`text-xs ${page.indexable ? "text-green-600 dark:text-green-400" : "text-amber-600 dark:text-amber-400"}`}>
+                      <span className={`text-xs ${page.indexable ? "text-green-600 dark:text-green-400" : "text-amber-600 dark:text-[#E8B4AE]"}`}>
                         {page.indexable ? "Oui" : "Non"}
                       </span>
                     </td>
@@ -91,7 +91,7 @@ export default function PageControl({ pages }: { pages: PageSeoInfo[] }) {
                         href={`${SITE_URL}${page.path}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-[#C8A97E] transition-colors"
+                        className="text-gray-400 hover:text-[#C9948E] transition-colors"
                       >
                         <ExternalLink size={12} />
                       </a>

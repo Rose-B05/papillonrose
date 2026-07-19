@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import type { SeoScore } from "@/lib/seo-center"
 import { TrendingUp, AlertTriangle, Lightbulb } from "lucide-react"
@@ -32,12 +32,12 @@ export default function ScoreDisplay({ score }: { score: SeoScore }) {
       <div className="flex items-center gap-3 mb-5">
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
           score.total >= 80 ? "bg-green-100 dark:bg-green-950/50" :
-          score.total >= 50 ? "bg-amber-100 dark:bg-amber-950/50" :
+          score.total >= 50 ? "bg-amber-100 dark:bg-[#3A1E1E]/50" :
           "bg-red-100 dark:bg-red-950/50"
         }`}>
           <TrendingUp size={16} className={
             score.total >= 80 ? "text-green-600 dark:text-green-400" :
-            score.total >= 50 ? "text-amber-600 dark:text-amber-400" :
+            score.total >= 50 ? "text-amber-600 dark:text-[#E8B4AE]" :
             "text-red-600 dark:text-red-400"
           } />
         </div>
@@ -79,7 +79,7 @@ export default function ScoreDisplay({ score }: { score: SeoScore }) {
         <div>
           <div className="flex items-center gap-2 mb-2">
             <Lightbulb size={14} className="text-amber-500" />
-            <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wide">Recommandations</span>
+            <span className="text-xs font-semibold text-amber-600 dark:text-[#E8B4AE] uppercase tracking-wide">Recommandations</span>
           </div>
           <div className="space-y-1">
             {score.recommendations.map((rec, i) => (

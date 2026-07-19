@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState, useRef } from "react"
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet"
@@ -20,7 +20,7 @@ function makeIcon(color: string) {
   })
 }
 
-const originIcon = makeIcon("#C8A97E")
+const originIcon = makeIcon("#C9948E")
 const destIcon = makeIcon("#ef4444")
 
 interface RouteProps {
@@ -29,7 +29,7 @@ interface RouteProps {
   color?: string
 }
 
-function RouteLine({ origin, dest, color = "#C8A97E" }: RouteProps) {
+function RouteLine({ origin, dest, color = "#C9948E" }: RouteProps) {
   const map = useMap()
   const [coords, setCoords] = useState<L.LatLngExpression[]>([])
   const drawn = useRef(false)
@@ -122,7 +122,7 @@ export default function DeliveryMap({ destination, postalCode, isDark = false }:
       {loading && (
         <div className="h-[200px] bg-gradient-to-br from-[#F0EBE3] to-white dark:from-neutral-800 dark:to-neutral-900 flex items-center justify-center">
           <div className="flex flex-col items-center gap-2">
-            <div className="w-5 h-5 border-2 border-[#C8A97E] border-t-transparent rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-[#C9948E] border-t-transparent rounded-full animate-spin" />
             <p className="text-xs text-gray-400 dark:text-neutral-500">Chargement de la carte…</p>
           </div>
         </div>

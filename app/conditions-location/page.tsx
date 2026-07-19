@@ -16,12 +16,12 @@ export default function ConditionsLocationPage() {
       <div className="max-w-3xl mx-auto px-5 md:px-10 pt-24 pb-16">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors mb-8"
         >
           <ArrowLeft size={14} /> Retour a l&apos;accueil
         </Link>
 
-        <p className="text-[#C8A97E] dark:text-amber-400 text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
+        <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
           Informations legales
         </p>
         <h1 style={DP} className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-10">
@@ -158,7 +158,7 @@ export default function ConditionsLocationPage() {
               <CancelRow delay="Entre 15 et 30 jours avant l evenement" result="Remboursement de 50% de l acompte" />
               <CancelRow delay="Moins de 15 jours avant l evenement" result="Aucun remboursement" />
             </div>
-            <div className="bg-[#C8A97E]/8 border border-[#C8A97E]/20 rounded-xl p-4">
+            <div className="bg-[#C9948E]/8 border border-[#C9948E]/20 rounded-xl p-4">
               <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                 Attention &mdash; Modification ou annulation tardive
               </p>
@@ -185,7 +185,7 @@ export default function ConditionsLocationPage() {
               selon la distance depuis Creteil (20&euro; forfait de base +
               1,50&euro;/km).
             </p>
-            <div className="bg-[#C8A97E]/8 border border-[#C8A97E]/20 rounded-xl p-4 mb-3">
+            <div className="bg-[#C9948E]/8 border border-[#C9948E]/20 rounded-xl p-4 mb-3">
               <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                 Livraison offerte a partir de 150&euro; de location
               </p>
@@ -232,7 +232,7 @@ function Section({
   return (
     <section>
       <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-3">
-        <span className="text-[#C8A97E] dark:text-amber-400">Art. {num}</span> &mdash; {title}
+        <span className="text-[#C9948E] dark:text-[#E8B4AE]">Art. {num}</span> &mdash; {title}
       </h2>
       {children}
     </section>
@@ -284,7 +284,7 @@ function CancelRow({
   return (
     <div className="flex items-center justify-between bg-white dark:bg-neutral-800 rounded-xl px-5 py-3 border border-black/[0.07] dark:border-white/[0.08] text-sm">
       <span className="text-[#2E2E2E] dark:text-neutral-100 font-medium">{delay}</span>
-      <span className="text-[#C8A97E] dark:text-amber-400 font-medium">{result}</span>
+      <span className="text-[#C9948E] dark:text-[#E8B4AE] font-medium">{result}</span>
     </div>
   )
 }

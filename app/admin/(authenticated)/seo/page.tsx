@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import { Search, Globe, Lock, AlertTriangle, CheckCircle, ExternalLink, FileText, Download, BarChart3, Shield } from "lucide-react"
@@ -199,9 +199,9 @@ export default function SeoPage() {
     development: {
       label: "Développement",
       description: "Le site est totalement invisible. Aucun crawl, aucune indexation.",
-      color: "text-amber-700 dark:text-amber-400",
-      bgColor: "bg-amber-50 dark:bg-amber-950/30",
-      borderColor: "border-amber-200 dark:border-amber-800",
+      color: "text-amber-700 dark:text-[#E8B4AE]",
+      bgColor: "bg-amber-50 dark:bg-[#3A1E1E]/30",
+      borderColor: "border-amber-200 dark:border-[#4A2828]",
       icon: Lock,
     },
     seo_audit: {
@@ -349,7 +349,7 @@ export default function SeoPage() {
             <thead>
               <tr className="border-b border-gray-100 dark:border-neutral-700">
                 <th className="text-left py-2 pr-4 text-xs text-gray-500 dark:text-neutral-400 font-medium">État</th>
-                <th className="text-center py-2 px-3 text-xs font-medium text-amber-700 dark:text-amber-400">Développement</th>
+                <th className="text-center py-2 px-3 text-xs font-medium text-amber-700 dark:text-[#E8B4AE]">Développement</th>
                 <th className="text-center py-2 px-3 text-xs font-medium text-blue-700 dark:text-blue-400">Audit SEO</th>
                 <th className="text-center py-2 px-3 text-xs font-medium text-green-700 dark:text-green-400">Production</th>
               </tr>
@@ -457,7 +457,7 @@ export default function SeoPage() {
                 href={`${SITE_URL}/robots.txt`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm text-[#C8A97E] hover:text-[#B8926E] transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm text-[#C9948E] hover:text-[#B8807A] transition-colors"
               >
                 robots.txt <ExternalLink size={12} />
               </a>
@@ -465,7 +465,7 @@ export default function SeoPage() {
                 href="https://search.google.com/search-console"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm text-[#C8A97E] hover:text-[#B8926E] transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm text-[#C9948E] hover:text-[#B8807A] transition-colors"
               >
                 Google Search Console <ExternalLink size={12} />
               </a>
@@ -488,7 +488,7 @@ export default function SeoPage() {
                 href={`${SITE_URL}/sitemap.xml`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm text-[#C8A97E] hover:text-[#B8926E] transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm text-[#C9948E] hover:text-[#B8807A] transition-colors"
               >
                 sitemap.xml <ExternalLink size={12} />
               </a>
@@ -496,7 +496,7 @@ export default function SeoPage() {
                 href="https://search.google.com/search-console"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm text-[#C8A97E] hover:text-[#B8926E] transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm text-[#C9948E] hover:text-[#B8807A] transition-colors"
               >
                 Google Search Console <ExternalLink size={12} />
               </a>
@@ -524,7 +524,7 @@ export default function SeoPage() {
               href={`${SITE_URL}/robots.txt`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-[#C8A97E] hover:text-[#B8926E] transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-[#C9948E] hover:text-[#B8807A] transition-colors"
             >
               robots.txt <ExternalLink size={12} />
             </a>
@@ -532,7 +532,7 @@ export default function SeoPage() {
               href={`${SITE_URL}/sitemap.xml`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-[#C8A97E] hover:text-[#B8926E] transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-[#C9948E] hover:text-[#B8807A] transition-colors"
             >
               sitemap.xml <ExternalLink size={12} />
             </a>
@@ -540,7 +540,7 @@ export default function SeoPage() {
               href="https://search.google.com/search-console"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-[#C8A97E] hover:text-[#B8926E] transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-[#C9948E] hover:text-[#B8807A] transition-colors"
             >
               Google Search Console <ExternalLink size={12} />
             </a>
@@ -548,7 +548,7 @@ export default function SeoPage() {
               href="https://pagespeed.web.dev/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-[#C8A97E] hover:text-[#B8926E] transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-[#C9948E] hover:text-[#B8807A] transition-colors"
             >
               PageSpeed Insights <ExternalLink size={12} />
             </a>
@@ -561,9 +561,9 @@ export default function SeoPage() {
 
 function StatusCard({ label, value, ok }: { label: string; value: string; ok: boolean }) {
   return (
-    <div className={`rounded-xl border p-4 ${ok ? "bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800" : "bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800"}`}>
+    <div className={`rounded-xl border p-4 ${ok ? "bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800" : "bg-amber-50 dark:bg-[#3A1E1E]/30 border-amber-200 dark:border-[#4A2828]"}`}>
       <p className="text-xs text-gray-500 dark:text-neutral-400 mb-1">{label}</p>
-      <p className={`text-sm font-semibold ${ok ? "text-green-700 dark:text-green-400" : "text-amber-700 dark:text-amber-400"}`}>
+      <p className={`text-sm font-semibold ${ok ? "text-green-700 dark:text-green-400" : "text-amber-700 dark:text-[#E8B4AE]"}`}>
         {value}
       </p>
     </div>
@@ -582,10 +582,10 @@ function IndexationStats({ stats }: { stats: SeoData["indexation"] }) {
       <div className="grid grid-cols-2 gap-3">
         <StatItem label="Total pages" value={stats.totalPages} />
         <StatItem label="Indexables" value={stats.indexablePages} color="text-green-600 dark:text-green-400" />
-        <StatItem label="Noindex" value={stats.noindexPages} color="text-amber-600 dark:text-amber-400" />
+        <StatItem label="Noindex" value={stats.noindexPages} color="text-amber-600 dark:text-[#E8B4AE]" />
         <StatItem label="Indexées" value={stats.indexedPages} color="text-green-600 dark:text-green-400" />
         <StatItem label="Non indexées" value={stats.nonIndexedPages} color="text-gray-600 dark:text-neutral-400" />
-        <StatItem label="Exclues" value={stats.excludedPages} color="text-amber-600 dark:text-amber-400" />
+        <StatItem label="Exclues" value={stats.excludedPages} color="text-amber-600 dark:text-[#E8B4AE]" />
         <StatItem label="Bloquées" value={stats.blockedPages} color="text-red-600 dark:text-red-400" />
       </div>
       <div className="mt-4 space-y-1">

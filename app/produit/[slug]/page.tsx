@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import {
@@ -83,11 +83,11 @@ export default async function ProductPage({ params }: Props) {
       {/* Breadcrumb */}
       <nav className="max-w-7xl mx-auto px-5 md:px-10 pt-6 pb-2">
         <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-neutral-500 flex-wrap">
-          <li><Link href="/" className="hover:text-[#C8A97E] transition-colors">Accueil</Link></li>
+          <li><Link href="/" className="hover:text-[#C9948E] transition-colors">Accueil</Link></li>
           <li>/</li>
-          <li><Link href="/catalogue" className="hover:text-[#C8A97E] transition-colors">Catalogue</Link></li>
+          <li><Link href="/catalogue" className="hover:text-[#C9948E] transition-colors">Catalogue</Link></li>
           <li>/</li>
-          <li><Link href={`/categorie/${categorySlug}`} className="hover:text-[#C8A97E] transition-colors">{product.categorie}</Link></li>
+          <li><Link href={`/categorie/${categorySlug}`} className="hover:text-[#C9948E] transition-colors">{product.categorie}</Link></li>
           <li>/</li>
           <li className="text-[#2E2E2E] dark:text-neutral-100 font-medium truncate max-w-[200px]">{product.nom}</li>
         </ol>
@@ -118,7 +118,7 @@ export default async function ProductPage({ params }: Props) {
 
           {/* Info */}
           <div className="lg:w-[400px] flex flex-col">
-            <p className="text-[#C8A97E] dark:text-amber-400 text-xs tracking-[0.3em] uppercase font-medium mb-2">
+            <p className="text-[#C9948E] dark:text-[#E8B4AE] text-xs tracking-[0.3em] uppercase font-medium mb-2">
               {product.categorie}
             </p>
             <h1 className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
@@ -175,7 +175,7 @@ export default async function ProductPage({ params }: Props) {
             {/* CTA */}
             <Link
               href="/reservation"
-              className="mt-6 inline-flex items-center justify-center gap-2 bg-[#C9A96E] text-[#1C1A17] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#d4b87a] transition-colors"
+              className="mt-6 inline-flex items-center justify-center gap-2 bg-[#C9948E] text-[#1C1A17] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#D4A09A] transition-colors"
             >
               Demander un devis
             </Link>

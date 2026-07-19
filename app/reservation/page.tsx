@@ -273,13 +273,13 @@ export default function ReservationPage() {
           </div>
           <h1 style={DP} className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Demande envoyée</h1>
           <p className="text-gray-500 dark:text-neutral-500 text-sm mb-1">Votre numéro de demande :</p>
-          <p className="text-[#C8A97E] dark:text-amber-400 font-bold text-2xl mb-6">#{bookingId}</p>
+          <p className="text-[#C9948E] dark:text-[#E8B4AE] font-bold text-2xl mb-6">#{bookingId}</p>
           <p className="text-gray-500 dark:text-neutral-500 text-sm mb-6">
-            Votre demande de devis a bien été enregistrée. Nous vous enverrons votre devis personnalisé sous <strong className="text-[#C8A97E] dark:text-amber-400">24h ouvrées</strong>.
+            Votre demande de devis a bien été enregistrée. Nous vous enverrons votre devis personnalisé sous <strong className="text-[#C9948E] dark:text-[#E8B4AE]">24h ouvrées</strong>.
           </p>
           <button
             onClick={() => router.push("/")}
-            className="bg-[#2E2E2E] dark:bg-neutral-800 text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#C8A97E] dark:hover:bg-amber-600 transition-colors"
+            className="bg-[#2E2E2E] dark:bg-neutral-800 text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#C9948E] dark:hover:bg-amber-600 transition-colors"
           >
             Retour à l&apos;accueil
           </button>
@@ -292,19 +292,19 @@ export default function ReservationPage() {
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 pt-16 md:pt-20">
       <div className="bg-white dark:bg-neutral-800 shadow-sm">
         <div className="max-w-4xl mx-auto px-5 py-4 flex items-center justify-between">
-          <button onClick={handleBack} className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors">← Retour</button>
+          <button onClick={handleBack} className="text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">← Retour</button>
           <h1 style={DP} className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">Réservation</h1>
           <div className="w-16" />
         </div>
         <div className="max-w-4xl mx-auto px-5 pb-4">
           <div className="flex gap-1 mb-2">
             {stepLabels.map((label, i) => (
-              <div key={label} className={`flex-1 h-1.5 rounded-full transition-all ${i <= stepIndex ? "bg-[#C8A97E] dark:bg-amber-600" : "bg-gray-200"}`} />
+              <div key={label} className={`flex-1 h-1.5 rounded-full transition-all ${i <= stepIndex ? "bg-[#C9948E] dark:bg-[#C9948E]" : "bg-gray-200"}`} />
             ))}
           </div>
           <div className="flex justify-between text-[10px] uppercase tracking-wider">
             {stepLabels.map((label, i) => (
-                            <span key={label} className={i <= stepIndex ? "text-[#C8A97E] dark:text-amber-400 font-semibold" : "text-[#999]"}>        {label}</span>
+                            <span key={label} className={i <= stepIndex ? "text-[#C9948E] dark:text-[#E8B4AE] font-semibold" : "text-[#999]"}>        {label}</span>
             ))}
           </div>
         </div>
@@ -325,11 +325,11 @@ export default function ReservationPage() {
             <h2 style={DP} className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-6">Votre panier</h2>
             {items.length === 0 ? (
               <div className="text-center py-16">
-                <div className="w-16 h-16 bg-[#C8A97E]/10 dark:bg-amber-600/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <ShoppingBag size={24} className="text-[#C8A97E]/40" />
+                <div className="w-16 h-16 bg-[#C9948E]/10 dark:bg-[#C9948E]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <ShoppingBag size={24} className="text-[#C9948E]/40" />
                 </div>
                 <p className="text-gray-400 dark:text-neutral-500 mb-5">Votre panier est vide</p>
-                <a href="/" className="bg-[#C8A97E] dark:bg-amber-600 text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors inline-block">
+                <a href="/" className="bg-[#C9948E] dark:bg-[#C9948E] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors inline-block">
                   Découvrir le catalogue
                 </a>
               </div>
@@ -346,15 +346,15 @@ export default function ReservationPage() {
                         <img src={p?.image || "/placeholder.svg"} alt={p?.nom || ""} className="w-16 h-16 rounded-xl object-cover flex-shrink-0" />
                         <div className="flex-1 min-w-0">
                           <p className="font-medium text-sm text-[#2E2E2E] dark:text-neutral-100">{p?.nom}</p>
-                          {item.variantLabel && <p className="text-[11px] text-[#C8A97E] dark:text-amber-400 font-medium">{item.variantLabel}</p>}
+                          {item.variantLabel && <p className="text-[11px] text-[#C9948E] dark:text-[#E8B4AE] font-medium">{item.variantLabel}</p>}
                           <p className="text-[11px] text-gray-400 dark:text-neutral-500 mt-0.5">{parsePrix(itemPrix)} € / jour</p>
                           <div className="flex items-center gap-2 mt-2">
-                            <button onClick={() => updateItem(item.productId, item.variantLabel, { qty: Math.max(1, item.qty - 1) })} className="w-6 h-6 bg-[#C8A97E] dark:bg-amber-600 text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors shadow-sm"><Minus size={10} /></button>
+                            <button onClick={() => updateItem(item.productId, item.variantLabel, { qty: Math.max(1, item.qty - 1) })} className="w-6 h-6 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm"><Minus size={10} /></button>
                             <span className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 w-7 text-center">{item.qty}</span>
                             <button
                               onClick={() => { if (!atMax) updateItem(item.productId, item.variantLabel, { qty: item.qty + 1 }) }}
                               disabled={atMax}
-                              className="w-6 h-6 bg-[#C8A97E] dark:bg-amber-600 text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
+                              className="w-6 h-6 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
                             ><Plus size={10} /></button>
                           </div>
                           {atMax && maxQty > 0 && (
@@ -370,8 +370,8 @@ export default function ReservationPage() {
                 <Totals totalHt={totalHt} totalTtc={totalTtc} deposit={deposit} deliveryFee={deliveryFee} />
 
                 <div className="flex gap-3">
-                  <button onClick={clearCart} className="flex-1 border border-[#C8A97E] text-gray-500 dark:text-neutral-500 py-3 rounded-2xl text-sm font-medium hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition-colors">Vider le panier</button>
-                  <button onClick={() => setStep("dates")} className="flex-1 bg-[#C8A97E] dark:bg-amber-600 text-white py-3 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors flex items-center justify-center gap-2">
+                  <button onClick={clearCart} className="flex-1 border border-[#C9948E] text-gray-500 dark:text-neutral-500 py-3 rounded-2xl text-sm font-medium hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition-colors">Vider le panier</button>
+                  <button onClick={() => setStep("dates")} className="flex-1 bg-[#C9948E] dark:bg-[#C9948E] text-white py-3 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors flex items-center justify-center gap-2">
                     Choisir les dates <ArrowRight size={14} />
                   </button>
                 </div>
@@ -397,15 +397,15 @@ export default function ReservationPage() {
                       <img src={p?.image || "/placeholder.svg"} alt="" className="w-10 h-10 rounded-lg object-cover" />
                       <div className="flex-1">
                         <p className="font-medium text-sm text-[#2E2E2E] dark:text-neutral-100">{p?.nom}</p>
-                        {item.variantLabel && <p className="text-[11px] text-[#C8A97E] dark:text-amber-400 font-medium">{item.variantLabel}</p>}
+                        {item.variantLabel && <p className="text-[11px] text-[#C9948E] dark:text-[#E8B4AE] font-medium">{item.variantLabel}</p>}
                         <div className="flex items-center gap-3 mt-1">
                           <div className="flex items-center gap-1.5">
-                            <button onClick={() => { if (item.qty > 1) updateItem(item.productId, item.variantLabel, { qty: item.qty - 1 }) }} className="w-5 h-5 bg-[#C8A97E] dark:bg-amber-600 text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors shadow-sm"><Minus size={9} /></button>
+                            <button onClick={() => { if (item.qty > 1) updateItem(item.productId, item.variantLabel, { qty: item.qty - 1 }) }} className="w-5 h-5 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm"><Minus size={9} /></button>
                             <span className="text-xs font-semibold w-5 text-center">{item.qty}</span>
                             <button
                               onClick={() => { if (!atMax) updateItem(item.productId, item.variantLabel, { qty: item.qty + 1 }) }}
                               disabled={atMax}
-                              className="w-5 h-5 bg-[#C8A97E] dark:bg-amber-600 text-white rounded-full flex items-center justify-center hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
+                              className="w-5 h-5 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
                             ><Plus size={9} /></button>
                           </div>
                           {eds.start && eds.end && maxQty < (p?.stock || 0) && (
@@ -451,7 +451,7 @@ export default function ReservationPage() {
             <BackButton onClick={() => setStep("dates")} label="Retour aux dates" />
             <div className="flex items-center justify-between gap-3 mb-6">
               <h2 style={DP} className="text-xl sm:text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Vos informations</h2>
-              <button onClick={() => router.push("/")} className="text-[10px] sm:text-xs text-[#C8A97E] dark:text-amber-400 hover:text-[#B8926E] transition-colors underline flex-shrink-0">
+              <button onClick={() => router.push("/")} className="text-[10px] sm:text-xs text-[#C9948E] dark:text-[#E8B4AE] hover:text-[#B8807A] transition-colors underline flex-shrink-0">
                 Retour à l&apos;accueil
               </button>
             </div>
@@ -476,8 +476,8 @@ export default function ReservationPage() {
                   <div
                     className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer"
                     style={{
-                      borderColor: !client.besoinLivraison ? "#C8A97E" : "#d1d5db",
-                      backgroundColor: !client.besoinLivraison ? "#C8A97E" : "transparent",
+                      borderColor: !client.besoinLivraison ? "#C9948E" : "#d1d5db",
+                      backgroundColor: !client.besoinLivraison ? "#C9948E" : "transparent",
                       borderRadius: "6px",
                     }}
                     onClick={() => setClient((c) => ({ ...c, besoinLivraison: false }))}
@@ -490,8 +490,8 @@ export default function ReservationPage() {
                     <input type="radio" checked={!client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
                   </div>
                   <label className="text-sm text-[#2E2E2E] dark:text-neutral-100 cursor-pointer flex items-center gap-2 min-w-0">
-                    <Package size={16} className="text-[#C8A97E] dark:text-amber-400 flex-shrink-0" />
-                    <span className="truncate">Retrait sur place &mdash; <strong className="text-[#C8A97E] dark:text-amber-400">Gratuit</strong></span>
+                    <Package size={16} className="text-[#C9948E] dark:text-[#E8B4AE] flex-shrink-0" />
+                    <span className="truncate">Retrait sur place &mdash; <strong className="text-[#C9948E] dark:text-[#E8B4AE]">Gratuit</strong></span>
                   </label>
                 </div>
 
@@ -500,8 +500,8 @@ export default function ReservationPage() {
                   <div
                     className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer"
                     style={{
-                      borderColor: client.besoinLivraison ? "#C8A97E" : "#d1d5db",
-                      backgroundColor: client.besoinLivraison ? "#C8A97E" : "transparent",
+                      borderColor: client.besoinLivraison ? "#C9948E" : "#d1d5db",
+                      backgroundColor: client.besoinLivraison ? "#C9948E" : "transparent",
                       borderRadius: "6px",
                     }}
                     onClick={() => setClient((c) => ({ ...c, besoinLivraison: true }))}
@@ -514,7 +514,7 @@ export default function ReservationPage() {
                     <input type="radio" checked={client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
                   </div>
                   <label className="text-sm text-[#2E2E2E] dark:text-neutral-100 cursor-pointer flex items-center gap-2 min-w-0">
-                    <Truck size={16} className="text-[#C8A97E] dark:text-amber-400 flex-shrink-0" />
+                    <Truck size={16} className="text-[#C9948E] dark:text-[#E8B4AE] flex-shrink-0" />
                     <span>Livraison</span>
                   </label>
                 </div>
@@ -542,7 +542,7 @@ export default function ReservationPage() {
                         }}
                         placeholder="ex: 94000"
                         maxLength={5}
-                        className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm"
+                        className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm"
                       />
                     </div>
 
@@ -550,7 +550,7 @@ export default function ReservationPage() {
                       <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-sm text-red-600">
                         {deliveryResult.error}
                         {deliveryResult.error.includes("non disponible") && (
-                          <a href="mailto:papillonrosebertha@gmail.com" className="block mt-2 text-[#C8A97E] dark:text-amber-400 underline font-medium hover:text-[#B8926E] transition-colors">
+                          <a href="mailto:papillonrosebertha@gmail.com" className="block mt-2 text-[#C9948E] dark:text-[#E8B4AE] underline font-medium hover:text-[#B8807A] transition-colors">
                             Contactez-nous pour un devis personnalisé
                           </a>
                         )}
@@ -579,7 +579,7 @@ export default function ReservationPage() {
                                 <span className="text-[#2E2E2E] dark:text-neutral-100">{deliveryResult.distanceKm} km × 1,50 €/km</span>
                                 <span className="font-medium">{deliveryResult.perKmFee.toFixed(2)} €</span>
                               </div>
-                              <div className="flex justify-between pt-2 border-t border-black/[0.1] font-bold text-[#C8A97E] dark:text-amber-400">
+                              <div className="flex justify-between pt-2 border-t border-black/[0.1] font-bold text-[#C9948E] dark:text-[#E8B4AE]">
                                 <span>Total livraison</span>
                                 <span>{deliveryResult.totalFee.toFixed(2)} €</span>
                               </div>
@@ -602,7 +602,7 @@ export default function ReservationPage() {
               </div>
               <div>
                 <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">Message (optionnel)</label>
-                <textarea value={client.message || ""} onChange={(e) => setClient((c) => ({ ...c, message: e.target.value }))} rows={3} placeholder="Informations complémentaires..." className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors resize-none shadow-sm" style={{ WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
+                <textarea value={client.message || ""} onChange={(e) => setClient((c) => ({ ...c, message: e.target.value }))} rows={3} placeholder="Informations complémentaires..." className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors resize-none shadow-sm" style={{ WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
               </div>
 
               {/* Recap */}
@@ -620,10 +620,10 @@ export default function ReservationPage() {
                 })}
                 <div className="border-t border-black/[0.1] mt-3 pt-3 flex justify-between font-bold">
                   <span className="text-[#666]">Acompte 30%</span>
-                  <span className="text-[#C8A97E] dark:text-amber-400">{Number.isFinite(deposit) ? `${deposit.toFixed(2)} €` : "0,00 €"}</span>
+                  <span className="text-[#C9948E] dark:text-[#E8B4AE]">{Number.isFinite(deposit) ? `${deposit.toFixed(2)} €` : "0,00 €"}</span>
                 </div>
                 {client.besoinLivraison && deliveryFee > 0 && (
-                  <div className="flex justify-between text-xs text-[#C8A97E] dark:text-amber-400 mt-1">
+                  <div className="flex justify-between text-xs text-[#C9948E] dark:text-[#E8B4AE] mt-1">
                     <span className="flex items-center gap-1"><Truck size={11} /> Livraison</span>
                     <span>{deliveryFee.toFixed(2)} €</span>
                   </div>
@@ -645,7 +645,7 @@ export default function ReservationPage() {
               {/* Carte itinéraire livraison */}
               {client.besoinLivraison && client.adresseLivraison && (
                 <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 border border-black/[0.07] dark:border-white/[0.08] shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-[#C8A97E] dark:text-amber-400 mb-3 flex items-center gap-2">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#C9948E] dark:text-[#E8B4AE] mb-3 flex items-center gap-2">
                     <Truck size={13} />
                     Itinéraire de livraison
                   </p>
@@ -662,7 +662,7 @@ export default function ReservationPage() {
                       href={`https://www.google.com/maps/dir/?api=1&origin=Cr%C3%A9teil+94000+France&destination=${encodeURIComponent(client.adresseLivraison + (client.codePostalLivraison ? ", " + client.codePostalLivraison : ""))}&travelmode=driving`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[10px] text-[#C8A97E] dark:text-amber-400 hover:underline"
+                      className="text-[10px] text-[#C9948E] dark:text-[#E8B4AE] hover:underline"
                     >
                       Ouvrir dans Google Maps
                     </a>
@@ -673,7 +673,7 @@ export default function ReservationPage() {
               {/* Dates de retrait / restitution */}
               {firstRentalDate && (
                 <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 border border-black/[0.07] dark:border-white/[0.08] shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-[#C8A97E] dark:text-amber-400 mb-3 flex items-center gap-2">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#C9948E] dark:text-[#E8B4AE] mb-3 flex items-center gap-2">
                     <Package size={13} />
                     Retrait & Restitution
                   </p>
@@ -685,7 +685,7 @@ export default function ReservationPage() {
                           <div className="flex-1">
                             {prod && <p className="text-[10px] text-gray-400 dark:text-neutral-500 mb-0.5">{prod.nom}</p>}
                             <div className="flex items-center gap-2 mb-1">
-                              <RotateCcw size={12} className="text-[#C8A97E] dark:text-amber-400" />
+                              <RotateCcw size={12} className="text-[#C9948E] dark:text-[#E8B4AE]" />
                               <span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Retrait</span>
                             </div>
                             <p className="text-xs text-gray-500 dark:text-neutral-500 ml-5">{formatDateLong(rd.pickupDate)}</p>
@@ -736,12 +736,12 @@ export default function ReservationPage() {
               )}
 
               <p className="text-xs text-gray-400 dark:text-neutral-500 text-center">
-                Vous recevrez votre devis sous <strong className="text-[#C8A97E] dark:text-amber-400">24h ouvrées</strong>
+                Vous recevrez votre devis sous <strong className="text-[#C9948E] dark:text-[#E8B4AE]">24h ouvrées</strong>
               </p>
 
               {/* Encart conditions de location */}
               <div className="bg-[#2E2E2E] dark:bg-neutral-800 rounded-2xl p-5 text-white">
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#C8A97E] dark:text-amber-400 mb-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#C9948E] dark:text-[#E8B4AE] mb-3">
                   Conditions de location
                 </p>
                 <ul className="text-xs text-white/60 space-y-1.5 mb-4">
@@ -755,7 +755,7 @@ export default function ReservationPage() {
                   href="/conditions-location"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-[#C8A97E] dark:text-amber-400 underline hover:text-white transition-colors"
+                  className="text-xs text-[#C9948E] dark:text-[#E8B4AE] underline hover:text-white transition-colors"
                 >
                   Lire les conditions completes
                 </a>
@@ -766,8 +766,8 @@ export default function ReservationPage() {
                 <div
                   className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors mt-0.5"
                   style={{
-                    borderColor: acceptedConditions ? "#C8A97E" : "#d1d5db",
-                    backgroundColor: acceptedConditions ? "#C8A97E" : "transparent",
+                    borderColor: acceptedConditions ? "#C9948E" : "#d1d5db",
+                    backgroundColor: acceptedConditions ? "#C9948E" : "transparent",
                     borderRadius: "6px",
                   }}
                   onClick={() => setAcceptedConditions(!acceptedConditions)}
@@ -786,14 +786,14 @@ export default function ReservationPage() {
                 </div>
                 <span className="text-sm text-[#2E2E2E] dark:text-neutral-100">
                   J&apos;ai lu et j&apos;accepte les{" "}
-                  <a href="/conditions-location" target="_blank" rel="noopener noreferrer" className="text-[#C8A97E] dark:text-amber-400 underline font-medium">
+                  <a href="/conditions-location" target="_blank" rel="noopener noreferrer" className="text-[#C9948E] dark:text-[#E8B4AE] underline font-medium">
                     conditions de location
                   </a>
                 </span>
               </label>
 
               <button type="submit" disabled={!validateClient() || !acceptedConditions || loading}
-                className="w-full bg-[#C8A97E] dark:bg-amber-600 text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                className="w-full bg-[#C9948E] dark:bg-[#C9948E] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                 {loading ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
                 {loading ? "Envoi en cours..." : "Envoyer la demande de devis"}
               </button>
@@ -810,7 +810,7 @@ export default function ReservationPage() {
 
 function BackButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (
-    <button onClick={onClick} className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C8A97E] dark:hover:text-amber-400 transition-colors mb-6">
+    <button onClick={onClick} className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-neutral-500 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors mb-6">
       <ArrowLeft size={14} /> {label}
     </button>
   )
@@ -819,7 +819,7 @@ function BackButton({ onClick, label }: { onClick: () => void; label: string }) 
 function NextButton({ onClick, disabled, label }: { onClick: () => void; disabled: boolean; label: string }) {
   return (
     <button onClick={onClick} disabled={disabled}
-      className="w-full bg-[#C8A97E] dark:bg-amber-600 text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8926E] dark:hover:bg-amber-700 transition-colors mt-6 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+      className="w-full bg-[#C9948E] dark:bg-[#C9948E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors mt-6 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
       {label} <ArrowRight size={14} />
     </button>
   )
@@ -832,7 +832,7 @@ function InputField({ label, type = "text", value, onChange, required, error, fi
     <div>
       <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
       <input id={fieldId} type={type} value={value} onChange={(e) => onChange(e.target.value)} onBlur={onBlur} required={required}
-        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
+        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
         style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
       {error && <p className="text-red-600 dark:text-red-400 text-xs mt-1">{error}</p>}
     </div>
@@ -846,7 +846,7 @@ function SelectField({ label, value, onChange, options, required, error, fieldId
     <div>
       <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
       <select id={fieldId} value={value} onChange={(e) => onChange(e.target.value)} onBlur={onBlur} required={required}
-        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C8A97E]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
+        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
         style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}>
         <option value="">Sélectionner</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
@@ -876,14 +876,14 @@ function Totals({ totalHt, totalTtc, deposit, deliveryFee }: { totalHt: number; 
           <span className="text-gray-400 dark:text-neutral-500 flex items-center gap-1.5">
             <Truck size={12} /> Livraison
           </span>
-          <span className="font-semibold text-[#C8A97E] dark:text-amber-400">{fmt(deliveryFee)}</span>
+          <span className="font-semibold text-[#C9948E] dark:text-[#E8B4AE]">{fmt(deliveryFee)}</span>
         </div>
       )}
       <div className="flex justify-between text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 pt-2 border-t border-black/[0.07] dark:border-white/[0.08]">
         <span>Total TTC</span>
         <span>{deliveryFee && deliveryFee > 0 ? fmt(totalTtc + deliveryFee) : fmt(totalTtc)}</span>
       </div>
-      <div className="flex justify-between text-sm mt-1 text-[#C8A97E] dark:text-amber-400">
+      <div className="flex justify-between text-sm mt-1 text-[#C9948E] dark:text-[#E8B4AE]">
         <span>Acompte 30%</span>
         <span className="font-semibold">{fmt(deposit)}</span>
       </div>
@@ -899,7 +899,7 @@ function RentalDatesCard({ rd, montantTotal }: { rd: RentalDates; montantTotal: 
 
   return (
     <div className="mt-3 bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl p-3 border border-black/[0.05]">
-      <p className="text-[10px] uppercase tracking-wider text-[#C8A97E] dark:text-amber-400 font-semibold mb-2">{rd.ruleLabel}</p>
+      <p className="text-[10px] uppercase tracking-wider text-[#C9948E] dark:text-[#E8B4AE] font-semibold mb-2">{rd.ruleLabel}</p>
       <div className="grid grid-cols-2 gap-3 text-xs">
         <div>
           <p className="text-gray-400 dark:text-neutral-500 mb-0.5">Retrait</p>

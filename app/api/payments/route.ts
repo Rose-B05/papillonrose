@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"
+﻿import { NextRequest, NextResponse } from "next/server"
 import { getBooking, saveBooking, getPaymentByBookingId, savePayment } from "@/lib/db"
 import { retrievePaymentIntent } from "@/lib/stripe"
 import { sendPaymentConfirmation, sendAdminBookingNotification } from "@/lib/email"
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
 
       const recapHtml = `
         <table style="width:100%;border-collapse:collapse;margin:16px 0">
-          <tr><th style="text-align:left;padding:8px;border-bottom:2px solid #C8A97E">Article</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C8A97E">Qté</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C8A97E">Dates</th></tr>
+          <tr><th style="text-align:left;padding:8px;border-bottom:2px solid #C9948E">Article</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C9948E">Qté</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C9948E">Dates</th></tr>
           ${itemsHtml}
         </table>
         <p><strong>Réservation n°${bookingId}</strong></p>

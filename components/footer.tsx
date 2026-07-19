@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
@@ -105,7 +105,7 @@ function FooterNewsletterForm() {
 
   if (status === "success" && message) {
     return (
-      <div className="bg-white/10 rounded-xl px-4 py-3 text-sm text-[#C9A96E]">
+      <div className="bg-white/10 rounded-xl px-4 py-3 text-sm text-[#C9948E]">
         {message}
       </div>
     )
@@ -124,12 +124,12 @@ function FooterNewsletterForm() {
             setStatus("idle")
             setMessage("")
           }}
-          className="flex-1 bg-white/10 border border-white/15 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#C9A96E]/50"
+          className="flex-1 bg-white/10 border border-white/15 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#C9948E]/50"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="bg-[#C9A96E] text-[#1C1A17] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#d4b87a] transition-colors disabled:opacity-50 whitespace-nowrap shrink-0"
+          className="bg-[#C9948E] text-[#1C1A17] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#D4A09A] transition-colors disabled:opacity-50 whitespace-nowrap shrink-0"
         >
           {status === "loading" ? "…" : "Je m'inscris"}
         </button>
@@ -153,7 +153,7 @@ function FooterNavAccordion({
     <div>
       <button
         onClick={onToggle}
-        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
+        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9948E]/30 pb-2"
       >
         Navigation
         <svg
@@ -179,7 +179,7 @@ function FooterNavAccordion({
             <li key={item.label}>
               <Link
                 href={item.href}
-                className="text-[#D4B896] hover:text-white transition-colors"
+                className="text-[#E8C4BE] hover:text-white transition-colors"
               >
                 {item.label}
               </Link>
@@ -189,7 +189,7 @@ function FooterNavAccordion({
             <li key={item.label}>
               <Link
                 href={item.href}
-                className="text-[#D4B896] hover:text-white transition-colors"
+                className="text-[#E8C4BE] hover:text-white transition-colors"
               >
                 {item.label}
               </Link>
@@ -213,7 +213,7 @@ function FooterCategoriesAccordion({
     <div>
       <button
         onClick={onToggle}
-        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
+        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9948E]/30 pb-2"
       >
         Catégories
         <svg
@@ -239,7 +239,7 @@ function FooterCategoriesAccordion({
             <li key={cat}>
               <Link
                 href={`/categorie/${getCategorySlug(cat)}`}
-                className="text-[#D4B896] hover:text-white transition-colors"
+                className="text-[#E8C4BE] hover:text-white transition-colors"
               >
                 {cat}
               </Link>
@@ -263,7 +263,7 @@ function FooterContactAccordion({
     <div>
       <button
         onClick={onToggle}
-        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
+        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9948E]/30 pb-2"
       >
         Contact
         <svg
@@ -288,11 +288,11 @@ function FooterContactAccordion({
           <li className="flex items-start gap-2.5">
             <Mail
               size={13}
-              className="text-[#C9A96E] mt-0.5 flex-shrink-0"
+              className="text-[#C9948E] mt-0.5 flex-shrink-0"
             />
             <a
               href="mailto:papillonrosebertha@gmail.com"
-              className="text-[#D4B896] hover:text-white transition-colors"
+              className="text-[#E8C4BE] hover:text-white transition-colors"
             >
               papillonrosebertha@gmail.com
             </a>
@@ -300,9 +300,9 @@ function FooterContactAccordion({
           <li className="flex items-start gap-2.5">
             <MapPin
               size={13}
-              className="text-[#C9A96E] mt-0.5 flex-shrink-0"
+              className="text-[#C9948E] mt-0.5 flex-shrink-0"
             />
-            <span className="text-[#D4B896]">
+            <span className="text-[#E8C4BE]">
               Île-de-France
               <br />
               Créteil (94)
@@ -313,7 +313,7 @@ function FooterContactAccordion({
               href="https://www.instagram.com/papillonrose.g"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-[#D4B896] hover:text-white transition-colors"
+              className="flex items-center gap-2 text-[#E8C4BE] hover:text-white transition-colors"
             >
               <InstagramIcon size={18} />
               @papillonrose.g
@@ -343,13 +343,13 @@ export default function Footer() {
               alt="Papillon Rose"
               className="h-10 md:h-12 w-auto brightness-0 invert opacity-90 mb-4"
             />
-            <p className="text-[#A89880] text-sm leading-relaxed mb-6">
+            <p className="text-[#A89090] text-sm leading-relaxed mb-6">
               Location de mobilier et décoration pour événements, mariages et
               réceptions.
             </p>
             <a
               href="/reservation"
-              className="inline-flex items-center gap-2 bg-[#C9A96E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#d4b87a] transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-2 bg-[#C9948E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#D4A09A] transition-colors whitespace-nowrap"
             >
               Demander un devis
             </a>
@@ -373,10 +373,10 @@ export default function Footer() {
 
           {/* Colonne 3 — Newsletter */}
           <div>
-            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#C9A96E]/30 pb-2">
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#C9948E]/30 pb-2">
               Newsletter
             </p>
-            <p className="text-[#D4B896]/70 text-sm mb-4 leading-relaxed">
+            <p className="text-[#E8C4BE]/70 text-sm mb-4 leading-relaxed">
               Recevez nos nouveautés et offres exclusives.
             </p>
             <FooterNewsletterForm />
@@ -405,13 +405,13 @@ export default function Footer() {
               alt="Papillon Rose"
               className="h-10 md:h-12 w-auto brightness-0 invert opacity-90 mb-4"
             />
-            <p className="text-[#A89880] text-sm leading-relaxed mb-6">
+            <p className="text-[#A89090] text-sm leading-relaxed mb-6">
               Location de mobilier et décoration pour événements, mariages et
               réceptions.
             </p>
             <a
               href="/reservation"
-              className="inline-flex items-center gap-2 bg-[#C9A96E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#d4b87a] transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-2 bg-[#C9948E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#D4A09A] transition-colors whitespace-nowrap"
             >
               Demander un devis
             </a>
@@ -426,7 +426,7 @@ export default function Footer() {
             <div>
               <button
                 onClick={() => setShowCategories(!showCategories)}
-                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9A96E]/30 pb-2"
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9948E]/30 pb-2"
               >
                 Catégories
                 <svg
@@ -452,7 +452,7 @@ export default function Footer() {
                     <li key={cat}>
                       <Link
                         href={`/categorie/${getCategorySlug(cat)}`}
-                        className="text-[#D4B896] hover:text-white transition-colors"
+                        className="text-[#E8C4BE] hover:text-white transition-colors"
                       >
                         {cat}
                       </Link>
@@ -469,10 +469,10 @@ export default function Footer() {
 
           {/* Colonne 3 — Newsletter */}
           <div>
-            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#C9A96E]/30 pb-2">
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#C9948E]/30 pb-2">
               Newsletter
             </p>
-            <p className="text-[#D4B896]/70 text-sm mb-4 leading-relaxed">
+            <p className="text-[#E8C4BE]/70 text-sm mb-4 leading-relaxed">
               Recevez nos nouveautés et offres exclusives.
             </p>
             <FooterNewsletterForm />
@@ -494,20 +494,20 @@ export default function Footer() {
       {/* Barre copyright */}
       <div className="max-w-[1600px] mx-auto px-5 md:px-10 lg:px-[70px] relative z-10 pt-6 border-t border-white/10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-[#A89880]/60 text-xs">
+          <p className="text-[#A89090]/60 text-xs">
             © 2026 Papillon Rose — Location décoration événements · Tous droits
             réservés
           </p>
           <div className="flex items-center gap-4 text-xs">
             <a
               href="/conditions-location"
-              className="text-[#A89880]/60 hover:text-[#D4B896] transition-colors"
+              className="text-[#A89090]/60 hover:text-[#E8C4BE] transition-colors"
             >
               Conditions de location
             </a>
             <a
               href="/mentions-legales"
-              className="text-[#A89880]/60 hover:text-[#D4B896] transition-colors"
+              className="text-[#A89090]/60 hover:text-[#E8C4BE] transition-colors"
             >
               Mentions légales
             </a>

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { History, RotateCcw, ChevronDown, ChevronUp } from "lucide-react"
 import { useState } from "react"
@@ -51,7 +51,7 @@ export default function HistoryPanel({ history }: { history: SeoHistoryEntry[] }
                     </div>
                   </div>
                   {entry.rollbackAvailable && (
-                    <button className="text-gray-400 hover:text-[#C8A97E] transition-colors ml-2">
+                    <button className="text-gray-400 hover:text-[#C9948E] transition-colors ml-2">
                       <RotateCcw size={12} />
                     </button>
                   )}

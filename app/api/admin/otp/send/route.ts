@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"
+﻿import { NextRequest, NextResponse } from "next/server"
 import { kv } from "@vercel/kv"
 import nodemailer from "nodemailer"
 import { checkRateLimit, sanitizeError } from "@/lib/security"
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       to: email,
       subject: "Code de vérification — Administration Papillon Rose",
       html: `<div style="font-family:sans-serif;max-width:400px;margin:auto;padding:20px;text-align:center">
-        <h2 style="color:#C8A97E;margin-bottom:8px">Code de vérification</h2>
+        <h2 style="color:#C9948E;margin-bottom:8px">Code de vérification</h2>
         <p style="color:#555;font-size:14px">Voici votre code de connexion :</p>
         <div style="background:#f8f5f0;border-radius:12px;padding:20px;margin:20px 0">
           <span style="font-size:32px;font-weight:700;letter-spacing:8px;color:#2E2E2E">${otp}</span>

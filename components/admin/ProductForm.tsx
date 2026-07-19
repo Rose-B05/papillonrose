@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useRef, useCallback, useEffect } from "react"
 import {
@@ -414,7 +414,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                 {form.status === "publie" ? "Publié" : form.status === "masque" ? "Masqué" : "Brouillon"}
               </span>
               {initialData?.isStatic && (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 dark:bg-[#4A2828]/30 dark:text-[#E8B4AE]">
                   Catalogue statique → sera copié en admin
                 </span>
               )}
@@ -442,7 +442,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             onClick={() => handleSave("publie")}
             disabled={saving || hasPendingImages}
             title={hasPendingImages ? "Image en attente de synchronisation cloud" : undefined}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#C8A97E] dark:bg-amber-600 text-white hover:bg-[#b8996e] dark:hover:bg-amber-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#C9948E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Eye className="w-4 h-4" />
             Publier au catalogue
@@ -452,10 +452,10 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
 
       {/* Pending images banner */}
       {hasPendingImages && (
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-4 mb-6">
+        <div className="bg-amber-50 dark:bg-[#4A2828]/20 border border-amber-200 dark:border-[#4A2828] rounded-2xl p-4 mb-6">
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0" />
-            <p className="text-sm text-amber-700 dark:text-amber-300">
+            <p className="text-sm text-amber-700 dark:text-[#E8B4AE]">
               Image en attente de synchronisation cloud, réessayez avant de publier.
             </p>
           </div>
@@ -490,7 +490,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
               value={form.nom}
               onChange={(e) => updateField("nom", e.target.value)}
               placeholder="Ex: Chaise Médaillon"
-              className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C8A97E]/50 transition-colors"
+              className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C9948E]/50 transition-colors"
             />
           </div>
 
@@ -507,7 +507,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                 value={form.prix}
                 onChange={(e) => updateField("prix", e.target.value ? Number(e.target.value) : "")}
                 placeholder="25"
-                className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C8A97E]/50 transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C9948E]/50 transition-colors"
               />
             </div>
             <div>
@@ -517,7 +517,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
               <select
                 value={form.categorie}
                 onChange={(e) => updateField("categorie", e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C8A97E]/50 transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C9948E]/50 transition-colors"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
@@ -539,7 +539,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                 value={form.dimension}
                 onChange={(e) => updateField("dimension", e.target.value)}
                 placeholder="90 x 45 cm"
-                className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C8A97E]/50 transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C9948E]/50 transition-colors"
               />
             </div>
             <div>
@@ -552,7 +552,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                 value={form.stock}
                 onChange={(e) => updateField("stock", Number(e.target.value))}
                 disabled={form.pieceUnique}
-                className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C8A97E]/50 transition-colors disabled:opacity-50"
+                className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C9948E]/50 transition-colors disabled:opacity-50"
               />
             </div>
           </div>
@@ -563,7 +563,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
               type="checkbox"
               checked={form.pieceUnique}
               onChange={(e) => updateField("pieceUnique", e.target.checked)}
-              className="w-4 h-4 rounded border-gray-300 text-[#C8A97E] focus:ring-[#C8A97E]/30"
+              className="w-4 h-4 rounded border-gray-300 text-[#C9948E] focus:ring-[#C9948E]/30"
             />
             <span className="text-sm text-[#2E2E2E] dark:text-neutral-100">
               Pièce unique (quantité = 1)
@@ -580,7 +580,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
               value={form.description}
               onChange={(e) => updateField("description", e.target.value)}
               placeholder="Description du produit..."
-              className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C8A97E]/50 transition-colors resize-none"
+              className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C9948E]/50 transition-colors resize-none"
             />
           </div>
 
@@ -597,8 +597,8 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                   onClick={() => toggleThemeTag(tag)}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                     form.tagsThemes.includes(tag)
-                      ? "bg-[#C8A97E] dark:bg-amber-600 text-white"
-                      : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-neutral-400 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#C8A97E]/50"
+                      ? "bg-[#C9948E] dark:bg-[#C9948E] text-white"
+                      : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-neutral-400 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#C9948E]/50"
                   }`}
                 >
                   {tag}
@@ -620,8 +620,8 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                   onClick={() => toggleCouleurTag(tag)}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                     form.tagsCouleurs.includes(tag)
-                      ? "bg-[#C8A97E] dark:bg-amber-600 text-white"
-                      : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-neutral-400 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#C8A97E]/50"
+                      ? "bg-[#C9948E] dark:bg-[#C9948E] text-white"
+                      : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-neutral-400 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#C9948E]/50"
                   }`}
                 >
                   {tag}
@@ -635,7 +635,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
         <div className="space-y-6">
           <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
             <h3 className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-4 flex items-center gap-2">
-              <ImageIcon className="w-4 h-4 text-[#C8A97E]" />
+              <ImageIcon className="w-4 h-4 text-[#C9948E]" />
               Photos du produit
             </h3>
 
@@ -647,8 +647,8 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
               onClick={() => fileInputRef.current?.click()}
               className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-colors mb-4 ${
                 dragOver
-                  ? "border-[#C8A97E] bg-[#C8A97E]/5"
-                  : "border-gray-200 dark:border-neutral-700 hover:border-[#C8A97E]/50"
+                  ? "border-[#C9948E] bg-[#C9948E]/5"
+                  : "border-gray-200 dark:border-neutral-700 hover:border-[#C9948E]/50"
               }`}
             >
               <Upload className="w-6 h-6 text-gray-400 mx-auto mb-2" />
@@ -669,7 +669,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             />
 
             {uploading && (
-              <div className="text-xs text-[#C8A97E] mb-4 text-center">{uploadProgress}</div>
+              <div className="text-xs text-[#C9948E] mb-4 text-center">{uploadProgress}</div>
             )}
 
             {uploadError && (
@@ -683,7 +683,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             <button
               type="button"
               onClick={openMediaLibrary}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-500 dark:text-neutral-400 hover:border-[#C8A97E]/50 transition-colors mb-4"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-500 dark:text-neutral-400 hover:border-[#C9948E]/50 transition-colors mb-4"
             >
               <Library className="w-3.5 h-3.5" />
               Parcourir la bibliothèque
@@ -722,7 +722,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                                 e.stopPropagation()
                                 retryUpload(url)
                               }}
-                              className="text-[10px] font-medium text-white bg-[#C8A97E] hover:bg-[#b8996e] px-2 py-1 rounded-md transition-colors"
+                              className="text-[10px] font-medium text-white bg-[#C9948E] hover:bg-[#B8807A] px-2 py-1 rounded-md transition-colors"
                             >
                               Réessayer
                             </button>
@@ -742,7 +742,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                       )}
 
                       {url === form.image && (
-                        <div className="absolute top-1 left-1 bg-[#C8A97E] text-white text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                        <div className="absolute top-1 left-1 bg-[#C9948E] text-white text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5">
                           <Star className="w-2.5 h-2.5" fill="currentColor" />
                           Principale
                         </div>
@@ -777,14 +777,14 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
           </div>
 
           {/* Snapshot Banner */}
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-4">
+          <div className="bg-amber-50 dark:bg-[#4A2828]/20 border border-amber-200 dark:border-[#4A2828] rounded-2xl p-4">
             <div className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-xs font-medium text-amber-700 dark:text-amber-300">
+                <p className="text-xs font-medium text-amber-700 dark:text-[#E8B4AE]">
                   Comportement Snapshot
                 </p>
-                <p className="text-[11px] text-amber-600 dark:text-amber-400 mt-0.5">
+                <p className="text-[11px] text-amber-600 dark:text-[#E8B4AE] mt-0.5">
                   Les devis et paniers existants conservent une copie figée des informations du
                   produit. Modifier cette fiche n&apos;impacte pas les demandes en cours.
                 </p>
@@ -822,7 +822,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                       onClick={() => toggleMediaSelection(item.id)}
                       className={`relative aspect-square rounded-lg overflow-hidden cursor-pointer border-2 transition-colors ${
                         selectedMedia.has(item.id)
-                          ? "border-[#C8A97E]"
+                          ? "border-[#C9948E]"
                           : "border-transparent hover:border-gray-300"
                       }`}
                     >
@@ -832,7 +832,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                         className="w-full h-full object-cover"
                       />
                       {selectedMedia.has(item.id) && (
-                        <div className="absolute top-1 right-1 w-5 h-5 rounded-full bg-[#C8A97E] text-white flex items-center justify-center">
+                        <div className="absolute top-1 right-1 w-5 h-5 rounded-full bg-[#C9948E] text-white flex items-center justify-center">
                           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                           </svg>
@@ -857,7 +857,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                 <button
                   onClick={addSelectedMedia}
                   disabled={selectedMedia.size === 0}
-                  className="px-4 py-2 rounded-xl text-sm font-medium bg-[#C8A97E] dark:bg-amber-600 text-white hover:bg-[#b8996e] dark:hover:bg-amber-500 transition-colors disabled:opacity-50"
+                  className="px-4 py-2 rounded-xl text-sm font-medium bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#C9948E] transition-colors disabled:opacity-50"
                 >
                   Ajouter ({selectedMedia.size})
                 </button>

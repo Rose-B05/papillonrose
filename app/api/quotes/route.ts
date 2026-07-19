@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"
+﻿import { NextRequest, NextResponse } from "next/server"
 import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
 import { saveQuote, getBooking } from "@/lib/db"
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
 
     const recapHtml = `
       <table style="width:100%;border-collapse:collapse;margin:16px 0">
-        <tr><th style="text-align:left;padding:8px;border-bottom:2px solid #C8A97E">Article</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C8A97E">Qté</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C8A97E">Dates</th></tr>
+        <tr><th style="text-align:left;padding:8px;border-bottom:2px solid #C9948E">Article</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C9948E">Qté</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C9948E">Dates</th></tr>
         ${itemsHtml}
       </table>
       <p><strong>Total location :</strong> ${totalTtc.toFixed(2)} € TTC</p>
