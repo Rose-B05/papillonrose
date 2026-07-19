@@ -14,6 +14,7 @@ import {
 import { getRobotsMeta } from "@/lib/site-mode"
 import { getAdminProducts } from "@/lib/db"
 import ProductImage from "@/components/product-image"
+import ProductGallery from "./ProductGallery"
 import AddToCartButton from "./AddToCartButton"
 import FavoriteButton from "./FavoriteButton"
 
@@ -98,22 +99,7 @@ export default async function ProductPage({ params }: Props) {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/* Images */}
           <div className="flex-1">
-            <div className="relative aspect-square bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden">
-              <ProductImage
-                src={images[0]?.src || "/placeholder.svg"}
-                alt={product.nom}
-                className="w-full h-full object-contain"
-              />
-            </div>
-            {images.length > 1 && (
-              <div className="flex gap-2 mt-3 overflow-x-auto">
-                {images.map((img, i) => (
-                  <div key={i} className="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700">
-                    <ProductImage src={img.src} alt={img.alt} className="w-full h-full object-cover" />
-                  </div>
-                ))}
-              </div>
-            )}
+            <ProductGallery images={images} />
           </div>
 
           {/* Info */}
