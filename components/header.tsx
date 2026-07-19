@@ -75,6 +75,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                prefetch={false}
                 className={`text-sm transition-all duration-300 ${
                   isActive(item.href)
                     ? "font-bold " +
@@ -208,6 +209,7 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  prefetch={false}
                   onClick={() => setShowMenu(false)}
                   className={`text-left transition-colors text-lg ${
                     isActive(item.href)
