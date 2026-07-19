@@ -39,33 +39,7 @@ const STATS = [
 export default function AProposPage() {
   return (
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900">
-      {/* Hero */}
-      <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <img
-          src="/images/PROD086.png"
-          alt=""
-          aria-hidden
-          className="absolute inset-0 w-full h-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F8F5F0]/60 to-[#F8F5F0]" />
-        <div className="relative z-10 text-center px-6 max-w-2xl">
-          <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.5em] uppercase mb-4 font-medium">
-            Notre histoire
-          </p>
-          <h1
-            style={DP}
-            className="text-4xl md:text-5xl font-semibold text-[#2E2E2E] dark:text-neutral-100 leading-tight"
-          >
-            L&apos;élégance au service de vos événements
-          </h1>
-          <p className="text-[#2E2E2E]/60 dark:text-white/70 text-base mt-5 leading-relaxed">
-            Papillon Rose, c&apos;est l&apos;histoire d&apos;une passion pour la décoration
-            et le soin apporté à chaque détail de vos moments précieux.
-          </p>
-        </div>
-      </section>
-
-      <div className="max-w-4xl mx-auto px-5 md:px-10 pb-16">
+      <div className="max-w-4xl mx-auto px-5 md:px-10 pt-24 pb-16">
         {/* Breadcrumb */}
         <nav className="pt-6 pb-2">
           <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-white/60">
