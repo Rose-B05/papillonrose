@@ -1,13 +1,13 @@
-﻿import type { Metadata } from "next"
+import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Crown, ShieldCheck, Heart } from "lucide-react"
 import { getActiveProductsCount } from "@/data/produits"
 
 export const metadata: Metadata = {
-  title: "À propos — Notre histoire | Papillon Rose",
+  title: "� propos � Notre histoire | Papillon Rose",
   description:
-    "Découvrez l'histoire et les valeurs de Papillon Rose, spécialiste de la location de mobilier et décoration événementielle en Île-de-France.",
+    "D�couvrez l'histoire et les valeurs de Papillon Rose, sp�cialiste de la location de mobilier et d�coration �v�nementielle en �le-de-France.",
 }
 
 const DP = { fontFamily: "var(--font-playfair), serif" } as const
@@ -15,25 +15,25 @@ const DP = { fontFamily: "var(--font-playfair), serif" } as const
 const VALUES = [
   {
     Icon: Crown,
-    title: "Élégance",
-    text: "Chaque pièce est sélectionnée pour sa beauté et sa qualité. Nous ne proposons que des articles qui sublimeront votre événement.",
+    title: "�l�gance",
+    text: "Chaque pi�ce est s�lectionn�e pour sa beaut� et sa qualit�. Nous ne proposons que des articles qui sublimeront votre �v�nement.",
   },
   {
     Icon: ShieldCheck,
-    title: "Fiabilité",
-    text: "Stock mis à jour en temps réel, devis sous 24h, ponctualité garantie. Vous pouvez compter sur nous.",
+    title: "Fiabilit�",
+    text: "Stock mis � jour en temps r�el, devis sous 24h, ponctualit� garantie. Vous pouvez compter sur nous.",
   },
   {
     Icon: Heart,
-    title: "Proximité",
-    text: "Un service personnalisé, à l'écoute de votre vision et de votre budget. Chaque projet est unique.",
+    title: "Proximit�",
+    text: "Un service personnalis�, � l'�coute de votre vision et de votre budget. Chaque projet est unique.",
   },
 ]
 
 const STATS = [
-  { val: `${getActiveProductsCount()}`, label: "références" },
-  { val: "11", label: "catégories" },
-  { val: "IDF", label: "Île-de-France" },
+  { val: `${getActiveProductsCount()}`, label: "r�f�rences" },
+  { val: "11", label: "cat�gories" },
+  { val: "IDF", label: "�le-de-France" },
   { val: "24h", label: "Devis sous" },
 ]
 
@@ -46,7 +46,7 @@ export default function AProposPage() {
           <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-white/60">
             <li><Link href="/" className="hover:text-[#C9948E] transition-colors">Accueil</Link></li>
             <li>/</li>
-            <li className="text-[#2E2E2E] dark:text-neutral-100 font-medium">À propos</li>
+            <li className="text-[#2E2E2E] dark:text-neutral-100 font-medium">� propos</li>
           </ol>
         </nav>
 
@@ -68,56 +68,56 @@ export default function AProposPage() {
                   Papillon Rose est avant tout une histoire de passion.
                 </p>
                 <p>
-                  Tout a commencé lors de la préparation de mon propre mariage.
-                  Passionnée par la décoration, j&apos;ai imaginé et réalisé un univers qui me
-                  ressemblait, en accordant une attention particulière à chaque détail afin de
-                  créer une ambiance chaleureuse et harmonieuse.
+                  Tout a commenc� lors de la pr�paration de mon propre mariage.
+                  Passionn�e par la d�coration, j&apos;ai imagin� et r�alis� un univers qui me
+                  ressemblait, en accordant une attention particuli�re � chaque d�tail afin de
+                  cr�er une ambiance chaleureuse et harmonieuse.
                 </p>
                 <p>
-                  Les nombreux compliments reçus ce jour-là m&apos;ont donné envie d&apos;aller
-                  plus loin. J&apos;ai alors commencé à décorer les événements de mes proches,
-                  puis ceux de particuliers. Au fil des années, cette passion s&apos;est
-                  transformée en une véritable activité.
+                  Les nombreux compliments re�us ce jour-l� m&apos;ont donn� envie d&apos;aller
+                  plus loin. J&apos;ai alors commenc� � d�corer les �v�nements de mes proches,
+                  puis ceux de particuliers. Au fil des ann�es, cette passion s&apos;est
+                  transform�e en une v�ritable activit�.
                 </p>
                 <p>
-                  Depuis 2016, j&apos;ai eu le plaisir de concevoir et de décorer plus de 30
-                  événements privés : mariages, anniversaires, baptêmes, baby showers et autres
-                  moments de vie. Chaque projet m&apos;a permis de développer une conviction
-                  forte : une décoration réussie ne consiste pas seulement à embellir un lieu,
-                  mais à créer une ambiance qui reflète l&apos;histoire, les envies et les
-                  émotions de chaque client.
+                  Depuis 2016, j&apos;ai eu le plaisir de concevoir et de d�corer plus de 30
+                  �v�nements priv�s : mariages, anniversaires, bapt�mes, baby showers et autres
+                  moments de vie. Chaque projet m&apos;a permis de d�velopper une conviction
+                  forte : une d�coration r�ussie ne consiste pas seulement � embellir un lieu,
+                  mais � cr�er une ambiance qui refl�te l&apos;histoire, les envies et les
+                  �motions de chaque client.
                 </p>
                 <p>
-                  Très rapidement, une même question revenait après chaque prestation :{" "}
+                  Tr�s rapidement, une m�me question revenait apr�s chaque prestation :{" "}
                   <em className="text-[#C9948E] dark:text-[#E8B4AE] not-italic font-medium">
-                    &laquo;&nbsp;Est-ce que vous louez aussi votre décoration ?&nbsp;&raquo;
+                    &laquo;&nbsp;Est-ce que vous louez aussi votre d�coration ?&nbsp;&raquo;
                   </em>
                 </p>
                 <p>
-                  Pendant longtemps, je n&apos;ai pas donné suite à cette idée. La gestion
-                  d&apos;un parc de location me semblait représenter une charge de travail
-                  importante et je préférais me concentrer sur la décoration
-                  d&apos;événements.
+                  Pendant longtemps, je n&apos;ai pas donn� suite � cette id�e. La gestion
+                  d&apos;un parc de location me semblait repr�senter une charge de travail
+                  importante et je pr�f�rais me concentrer sur la d�coration
+                  d&apos;�v�nements.
                 </p>
                 <p>
-                  Puis, en juillet 2026, en décidant de créer le site internet de Papillon
-                  Rose, cette idée s&apos;est imposée comme une évidence. J&apos;ai réalisé
-                  qu&apos;il était possible d&apos;allier ma passion pour la décoration à une
-                  offre de location, permettant à chacun de créer un événement élégant,
-                  personnalisé et responsable, quel que soit son budget.
+                  Puis, en juillet 2026, en d�cidant de cr�er le site internet de Papillon
+                  Rose, cette id�e s&apos;est impos�e comme une �vidence. J&apos;ai r�alis�
+                  qu&apos;il �tait possible d&apos;allier ma passion pour la d�coration � une
+                  offre de location, permettant � chacun de cr�er un �v�nement �l�gant,
+                  personnalis� et responsable, quel que soit son budget.
                 </p>
                 <p>
-                  C&apos;est ainsi qu&apos;est née la nouvelle identité de Papillon Rose : un
-                  concept dédié à la location de décoration événementielle, inspiré par
-                  l&apos;expérience, la créativité et l&apos;envie de rendre chaque
-                  célébration unique.
+                  C&apos;est ainsi qu&apos;est n�e la nouvelle identit� de Papillon Rose : un
+                  concept d�di� � la location de d�coration �v�nementielle, inspir� par
+                  l&apos;exp�rience, la cr�ativit� et l&apos;envie de rendre chaque
+                  c�l�bration unique.
                 </p>
               </div>
             </div>
             <div className="flex justify-center md:justify-end">
               <Image
                 src="/images/femme-papillon-rose.png"
-                alt="Femme en robe élégante, illustration Papillon Rose"
+                alt="Femme en robe �l�gante, illustration Papillon Rose"
                 width={1254}
                 height={1254}
                 className="w-full max-w-[320px] md:max-w-[380px] h-auto rounded-2xl object-contain"
@@ -185,7 +185,7 @@ export default function AProposPage() {
         {/* CTA */}
         <section className="text-center">
           <p className="text-[#2E2E2E]/60 dark:text-white/70 text-base mb-6">
-            Prêt(e) à sublimer votre événement ?
+            Pr�t(e) � sublimer votre �v�nement ?
           </p>
           <Link
             href="/"
