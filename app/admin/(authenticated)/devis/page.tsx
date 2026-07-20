@@ -22,6 +22,7 @@ export default function DevisListePage() {
   const [filter, setFilter] = useState<string>("all")
   const [search, setSearch] = useState("")
   const [sendingId, setSendingId] = useState<string | null>(null)
+  const [returningId, setReturningId] = useState<string | null>(null)
 
   useEffect(() => {
     fetch("/api/admin/devis")
@@ -95,6 +96,29 @@ export default function DevisListePage() {
     setSendingId(null)
   }
 
+  async function handleMarkReturned(id: string) {
+    if (!confirm("Confirmer la restitution ? Le stock sera incrémenté.")) return
+    setReturningId(id)
+    try {
+      const res = await fetch("/api/admin/returned", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookingId: id }),
+      })
+      if (res.ok) {
+        setDevis((prev) =>
+          prev.map((d) => (d.id === id ? { ...d, statut: "returned" } : d))
+        )
+      } else {
+        const data = await res.json()
+        alert(data.error || "Erreur lors de la restitution")
+      }
+    } catch {
+      alert("Erreur lors de la restitution")
+    }
+    setReturningId(null)
+  }
+
   return (
     <AdminShell title="Devis">
       <div className="max-w-6xl mx-auto">
@@ -146,6 +170,7 @@ export default function DevisListePage() {
               onStatusChange={handleStatusChange}
               onDelete={handleDelete}
               onSend={handleSend}
+              onMarkReturned={handleMarkReturned}
               sendingId={sendingId}
             />
           </div>

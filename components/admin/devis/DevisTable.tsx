@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Eye, Pencil, Send, XCircle } from "lucide-react"
+import { Eye, Pencil, Send, XCircle, PackageCheck } from "lucide-react"
 import DevisStatutBadge from "./DevisStatutBadge"
 
 function formatDate(dateStr: string) {
@@ -30,10 +30,12 @@ interface DevisTableProps {
   onStatusChange?: (id: string, statut: string) => void
   onDelete?: (id: string) => void
   onSend?: (id: string) => void
+  onMarkReturned?: (id: string) => void
   sendingId?: string | null
+  returningId?: string | null
 }
 
-export default function DevisTable({ devis, onStatusChange, onDelete, onSend, sendingId }: DevisTableProps) {
+export default function DevisTable({ devis, onStatusChange, onDelete, onSend, onMarkReturned, sendingId, returningId }: DevisTableProps) {
   if (devis.length === 0) {
     return (
       <div className="text-center py-16 text-gray-400 dark:text-white/60">
@@ -112,6 +114,16 @@ export default function DevisTable({ devis, onStatusChange, onDelete, onSend, se
                       title="Envoyer le devis"
                     >
                       <Send size={15} />
+                    </button>
+                  )}
+                  {(d.statut === "confirmed" || d.statut === "deposit-pending") && onMarkReturned && (
+                    <button
+                      onClick={() => onMarkReturned(d.id)}
+                      disabled={returningId === d.id}
+                      className="p-1.5 rounded-lg hover:bg-black/[0.05] dark:hover:bg-white/[0.08] text-gray-400 hover:text-purple-600 transition-colors disabled:opacity-50"
+                      title="Marquer comme restitué"
+                    >
+                      <PackageCheck size={15} />
                     </button>
                   )}
                   {onDelete && d.statut !== "cancelled" && (
