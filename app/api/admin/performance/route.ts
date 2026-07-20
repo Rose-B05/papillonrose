@@ -1,11 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { promises as fs } from "fs"
 import path from "path"
+import { COOKIE_NAME } from "@/lib/auth"
 
 // ─── Auth check ──────────────────────────────────────────────────────────────
 function checkAuth(req: NextRequest) {
-  const cookie = req.cookies.get("admin_session")
-  return cookie?.value === "authenticated"
+  const cookie = req.cookies.get(COOKIE_NAME)
+  return !!cookie?.value
 }
 
 // ─── Types ───────────────────────────────────────────────────────────────────

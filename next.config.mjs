@@ -6,7 +6,7 @@ const CSP_DIRECTIVES = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net",
   "img-src 'self' data: blob: https://*.tile.openstreetmap.org https://unpkg.com https://*.public.blob.vercel-storage.com",
-  "media-src 'self' blob:",
+  "media-src 'self' blob: https://*.public.blob.vercel-storage.com",
   "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://api.minimax.io https://vitals.vercel-insights.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",

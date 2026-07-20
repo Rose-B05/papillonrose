@@ -5,6 +5,9 @@ import type { Nouveaute } from "@/lib/types"
 
 function checkAuth(req: NextRequest) {
   const cookie = req.cookies.get(COOKIE_NAME)
+  if (!cookie?.value) {
+    console.error(`[nouveautes] Auth failed — cookie "${COOKIE_NAME}" value:`, cookie?.value ?? "(absent)")
+  }
   return !!cookie?.value
 }
 
