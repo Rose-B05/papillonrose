@@ -63,6 +63,22 @@ export default function ReservationPage() {
     setHydrated(true)
   }, [])
 
+  // Restore from sessionStorage after hydration (avoids #418 mismatch)
+  const [hydrated, setHydrated] = useState(false)
+  useEffect(() => {
+    try {
+      const savedStep = sessionStorage.getItem("reservation_step")
+      if (savedStep === "panier" || savedStep === "dates" || savedStep === "client" || savedStep === "confirmation") {
+        setStep(savedStep)
+      }
+      const savedDateEdits = sessionStorage.getItem("reservation_dateEdits")
+      if (savedDateEdits) setDateEdits(JSON.parse(savedDateEdits))
+      const savedClient = sessionStorage.getItem("reservation_client")
+      if (savedClient) setClient(JSON.parse(savedClient))
+    } catch {}
+    setHydrated(true)
+  }, [])
+
   useEffect(() => {
     const check = () => setIsDark(document.documentElement.classList.contains("dark"))
     check()
