@@ -15,6 +15,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
 
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState("")
   const [form, setForm] = useState({
     titre: "",
     description: "",
@@ -52,6 +53,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
     const file = e.target.files?.[0]
     if (!file) return
     setUploading(true)
+    setUploadError("")
     try {
       const fd = new FormData()
       fd.append("file", file)
@@ -59,8 +61,13 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
       if (res.ok) {
         const data = await res.json()
         setForm((f) => ({ ...f, mediaUrl: data.url }))
+      } else {
+        const err = await res.json().catch(() => ({ error: "Erreur inconnue" }))
+        setUploadError(err.error || "Échec de l'upload")
       }
-    } catch {}
+    } catch {
+      setUploadError("Erreur réseau lors de l'upload")
+    }
     setUploading(false)
   }
 
@@ -164,6 +171,14 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
               <input type="file" accept="image/*,video/*" className="hidden" onChange={handleUpload} disabled={uploading} />
             </label>
           </div>
+          <p className="text-[10px] text-gray-400 dark:text-white/60 mt-1.5">
+            Formats acceptés : images (JPEG, PNG, WebP, GIF) · vidéos (MP4, WebM, MOV). Max 50 Mo pour les vidéos, 10 Mo pour les images.
+          </p>
+          {uploadError && (
+            <p className="text-red-500 dark:text-red-400 text-xs mt-2 flex items-center gap-1">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500" /> {uploadError}
+            </p>
+          )}
           {form.mediaUrl && (
             <div className="mt-3">
               {form.type === "image" ? (
