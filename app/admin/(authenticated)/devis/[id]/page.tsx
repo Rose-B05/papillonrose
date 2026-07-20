@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { useRouter, useParams } from "next/navigation"
-import AdminShell from "@/components/admin/AdminShell"
+import { useAdminHeader } from "@/components/admin/AdminHeaderContext"
 import DevisStatutBadge from "@/components/admin/devis/DevisStatutBadge"
 import { produits } from "@/data/produits"
 import { ArrowLeft, Send, XCircle } from "lucide-react"
@@ -34,6 +34,33 @@ export default function DevisDetailPage() {
   const [booking, setBooking] = useState<Booking | null>(null)
   const [loading, setLoading] = useState(true)
   const [sending, setSending] = useState(false)
+
+  const headerTitle = loading ? "Réservation" : !booking ? "Réservation introuvable" : booking.quoteNumber || booking.id
+  const headerAction = booking && !loading ? (
+    <div className="flex items-center gap-2">
+      {(booking.status === "pending-quote") && (
+        <button
+          onClick={handleSend}
+          disabled={sending}
+          className="px-3 py-1.5 text-xs bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50"
+        >
+          <Send size={13} className="inline mr-1" />
+          {sending ? "Envoi…" : "Envoyer le devis"}
+        </button>
+      )}
+      {booking.status !== "cancelled" && (
+        <button
+          onClick={handleCancel}
+          className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"
+          title="Annuler"
+        >
+          <XCircle size={15} />
+        </button>
+      )}
+    </div>
+  ) : null
+
+  useAdminHeader(headerTitle, headerAction)
 
   const loadBooking = useCallback(async () => {
     try {
@@ -90,52 +117,22 @@ export default function DevisDetailPage() {
 
   if (loading) {
     return (
-      <AdminShell title="Réservation">
         <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
-      </AdminShell>
     )
   }
 
   if (!booking) {
     return (
-      <AdminShell title="Réservation introuvable">
         <div className="text-center py-16">
           <p className="text-gray-400 dark:text-white/60 mb-4">Cette réservation n&apos;existe pas.</p>
           <button onClick={() => router.push("/admin/devis")} className="text-[#C9948E] hover:underline">
             ← Retour à la liste
           </button>
         </div>
-      </AdminShell>
     )
   }
 
   return (
-    <AdminShell
-      title={booking.quoteNumber || booking.id}
-      action={
-        <div className="flex items-center gap-2">
-          {(booking.status === "pending-quote") && (
-            <button
-              onClick={handleSend}
-              disabled={sending}
-              className="px-3 py-1.5 text-xs bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50"
-            >
-              <Send size={13} className="inline mr-1" />
-              {sending ? "Envoi…" : "Envoyer le devis"}
-            </button>
-          )}
-          {booking.status !== "cancelled" && (
-            <button
-              onClick={handleCancel}
-              className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"
-              title="Annuler"
-            >
-              <XCircle size={15} />
-            </button>
-          )}
-        </div>
-      }
-    >
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
           <div className="flex items-center gap-3 mb-4">
@@ -252,6 +249,5 @@ export default function DevisDetailPage() {
           </div>
         </div>
       </div>
-    </AdminShell>
   )
 }

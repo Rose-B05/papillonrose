@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation"
 import AdminShell from "@/components/admin/AdminShell"
+import { AdminHeaderProvider, useAdminHeader } from "@/components/admin/AdminHeaderContext"
 
 const PAGE_TITLES: Record<string, string> = {
   "/admin": "Devis",
@@ -14,6 +15,8 @@ const PAGE_TITLES: Record<string, string> = {
   "/admin/contenu": "Produits",
   "/admin/contenu/produits": "Produits",
   "/admin/contenu/produits/nouveau": "Nouveau produit",
+  "/admin/devis": "Devis",
+  "/admin/devis/new": "Nouvelle réservation",
   "/admin/nouveautes": "Nouveautés",
   "/admin/nouveautes/nouveau": "Nouvelle nouveauté",
   "/admin/formulaires": "Formulaires",
@@ -26,8 +29,19 @@ const PAGE_TITLES: Record<string, string> = {
   "/admin/statistiques": "Statistiques",
 }
 
-export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
+function LayoutWithTitle({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const title = PAGE_TITLES[pathname] || "Administration"
-  return <AdminShell title={title}>{children}</AdminShell>
+  useAdminHeader(title)
+  return <>{children}</>
+}
+
+export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <AdminHeaderProvider>
+      <AdminShell>
+        <LayoutWithTitle>{children}</LayoutWithTitle>
+      </AdminShell>
+    </AdminHeaderProvider>
+  )
 }

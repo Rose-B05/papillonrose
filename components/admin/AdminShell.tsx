@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import AdminSidebar from "./AdminSidebar"
 import { AlertTriangle } from "lucide-react"
+import { useAdminHeaderContext } from "./AdminHeaderContext"
 
 interface AdminShellProps {
   children: React.ReactNode
@@ -10,8 +11,12 @@ interface AdminShellProps {
   action?: React.ReactNode
 }
 
-export default function AdminShell({ children, title, action }: AdminShellProps) {
+export default function AdminShell({ children, title: propTitle, action: propAction }: AdminShellProps) {
   const [siteMode, setSiteMode] = useState<string | null>(null)
+  const { state: headerState } = useAdminHeaderContext()
+
+  const title = headerState.title ?? propTitle ?? null
+  const action = headerState.action ?? propAction ?? null
 
   useEffect(() => {
     fetch("/api/admin/seo")
