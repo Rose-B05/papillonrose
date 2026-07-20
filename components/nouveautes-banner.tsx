@@ -76,9 +76,7 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
         )}
       </div>
 
-      <div className="relative rounded-2xl overflow-hidden bg-[#F8F5F0] dark:bg-neutral-800 shadow-sm border border-black/[0.07] dark:border-white/[0.08]"
-        style={{ minHeight: "300px" }}
-      >
+      <div className="relative rounded-2xl overflow-hidden bg-[#F8F5F0] dark:bg-neutral-800 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
         {/* Image / Video background */}
         {item.type === "image" && (
           <div className="absolute inset-0">
@@ -87,7 +85,6 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
               alt={item.titre}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
           </div>
         )}
 
@@ -101,7 +98,6 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
               loop
               playsInline
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
             <button
               onClick={() => setMuted(!muted)}
               className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/80 hover:text-white transition-colors z-10"
@@ -123,7 +119,7 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
         )}
 
         {/* Content overlay */}
-        <div className="relative z-10 flex flex-col justify-end min-h-[300px] md:min-h-[380px] p-6 md:p-10">
+        <div className="relative z-10 flex flex-col justify-end min-h-[420px] md:min-h-[560px] p-6 md:p-10">
           <div className="max-w-lg">
             <h3
               style={{ fontFamily: "var(--font-playfair), serif" }}
