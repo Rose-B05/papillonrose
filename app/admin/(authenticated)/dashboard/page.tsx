@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import AdminShell from "@/components/admin/AdminShell"
 import {
   FileText,
   Package,
@@ -111,7 +110,6 @@ export default function DashboardPage() {
     : null
 
   return (
-    <AdminShell title="Dashboard">
       <div className="max-w-6xl mx-auto">
         {loading ? (
           <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
@@ -213,6 +211,5 @@ export default function DashboardPage() {
           </>
         )}
       </div>
-    </AdminShell>
   )
 }

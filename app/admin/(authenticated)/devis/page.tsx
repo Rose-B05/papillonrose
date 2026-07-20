@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import AdminShell from "@/components/admin/AdminShell"
 import DevisTable from "@/components/admin/devis/DevisTable"
 
 const STATUT_FILTERS: Array<{ label: string; value: string }> = [
@@ -120,7 +119,6 @@ export default function DevisListePage() {
   }
 
   return (
-    <AdminShell title="Devis">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
@@ -176,6 +174,5 @@ export default function DevisListePage() {
           </div>
         )}
       </div>
-    </AdminShell>
   )
 }

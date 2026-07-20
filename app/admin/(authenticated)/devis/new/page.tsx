@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import AdminShell from "@/components/admin/AdminShell"
 import { ArrowLeft, Plus, X } from "lucide-react"
 
 interface LigneForm {
@@ -86,8 +85,7 @@ export default function NewDevisPage() {
   }
 
   return (
-    <AdminShell title="Nouvelle réservation">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6">
         <button
           onClick={() => router.push("/admin/devis")}
           className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-white/60 hover:text-[#C9948E] transition-colors"
@@ -213,6 +211,5 @@ export default function NewDevisPage() {
           </button>
         </div>
       </div>
-    </AdminShell>
   )
 }
