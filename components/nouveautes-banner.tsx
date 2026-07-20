@@ -89,10 +89,10 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
         )}
 
         {item.type === "video" && (
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 overflow-hidden">
             <video
               src={item.mediaUrl}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-[50%_67%]"
               autoPlay
               muted={muted}
               loop
