@@ -30,6 +30,7 @@ export interface Booking {
   id: string
   items: CartItem[]
   client: ClientInfo
+  customerEmail?: string
   totalHt: number
   totalTtc: number
   depositAmount: number

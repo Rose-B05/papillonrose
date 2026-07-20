@@ -8,13 +8,13 @@ import AvailabilityCalendar from "@/components/calendar"
 import { parsePrix, calcTotalHt, calcTtc, calcDeposit, formatDateFr, getPrixForProduct } from "@/lib/utils"
 import { calcRentalDates, calculateLateFee, getRuleSummary, formatDateLong, type RentalDates } from "@/lib/rental-dates"
 import { calcDeliveryFee, type DeliveryResult } from "@/lib/delivery"
-import { ShoppingBag, ArrowRight, ArrowLeft, Check, X, Trash2, Plus, Minus, Loader2, Package, RotateCcw, AlertTriangle, Truck } from "lucide-react"
+import { ShoppingBag, ArrowRight, ArrowLeft, Check, X, Trash2, Plus, Minus, Loader2, Package, RotateCcw, AlertTriangle, Truck, LogIn, UserPlus } from "lucide-react"
 import dynamic from "next/dynamic"
 import type { ClientInfo, CartItem } from "@/lib/types"
 
 const DeliveryMap = dynamic(() => import("@/components/delivery-map"), { ssr: false })
 
-type Step = "panier" | "dates" | "client" | "confirmation"
+type Step = "panier" | "dates" | "client" | "compte" | "confirmation"
 
 const DP = { fontFamily: "var(--font-playfair), serif" } as const
 
@@ -39,13 +39,20 @@ export default function ReservationPage() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [showErrors, setShowErrors] = useState(false)
   const [isDark, setIsDark] = useState(false)
+  // Account step
+  const [accountMode, setAccountMode] = useState<"register" | "login">("register")
+  const [accountPassword, setAccountPassword] = useState("")
+  const [accountPasswordConfirm, setAccountPasswordConfirm] = useState("")
+  const [accountError, setAccountError] = useState("")
+  const [accountLoading, setAccountLoading] = useState(false)
+  const [alreadyConnected, setAlreadyConnected] = useState<boolean | null>(null)
 
   // Restore from sessionStorage after hydration (avoids #418 mismatch)
   const [hydrated, setHydrated] = useState(false)
   useEffect(() => {
     try {
       const savedStep = sessionStorage.getItem("reservation_step")
-      if (savedStep === "panier" || savedStep === "dates" || savedStep === "client" || savedStep === "confirmation") {
+      if (savedStep === "panier" || savedStep === "dates" || savedStep === "client" || savedStep === "compte" || savedStep === "confirmation") {
         setStep(savedStep)
       }
       const savedDateEdits = sessionStorage.getItem("reservation_dateEdits")
@@ -167,6 +174,7 @@ export default function ReservationPage() {
       .then((r) => r.json())
       .then(async (data) => {
         if (data.customer) {
+          setAlreadyConnected(true)
           const res = await fetch("/api/customer/profile")
           const profData = await res.json()
           if (profData.customer) {
@@ -180,9 +188,11 @@ export default function ReservationPage() {
               lieuEvenement: c.lieuEvenement || p.adresse || "",
             }))
           }
+        } else {
+          setAlreadyConnected(false)
         }
       })
-      .catch(() => {})
+      .catch(() => setAlreadyConnected(false))
   }, [])
 
   const validateDates = () => {
@@ -254,11 +264,13 @@ export default function ReservationPage() {
       setStep("panier")
     } else if (step === "client") {
       setStep("dates")
+    } else if (step === "compte") {
+      setStep("client")
     }
   }
 
-  const stepLabels = ["Panier", "Dates", "Client"]
-  const stepIndex = ["panier", "dates", "client"].indexOf(step)
+  const stepLabels = ["Panier", "Dates", "Client", "Compte"]
+  const stepIndex = ["panier", "dates", "client", "compte"].indexOf(step)
   const isConfirmation = step === "confirmation"
 
   if (isConfirmation) {
@@ -452,7 +464,7 @@ export default function ReservationPage() {
                 Retour à l&apos;accueil
               </button>
             </div>
-            <form onSubmit={(e) => { e.preventDefault(); const errs = validateClientFields(); setFieldErrors(errs); setShowErrors(true); if (Object.keys(errs).length > 0) { const firstKey = Object.keys(errs)[0]; document.getElementById(`field-${firstKey}`)?.scrollIntoView({ behavior: "smooth", block: "center" }); } else { handleCreateBooking() } }} className="space-y-4">
+            <form onSubmit={(e) => { e.preventDefault(); const errs = validateClientFields(); setFieldErrors(errs); setShowErrors(true); if (Object.keys(errs).length > 0) { const firstKey = Object.keys(errs)[0]; document.getElementById(`field-${firstKey}`)?.scrollIntoView({ behavior: "smooth", block: "center" }); } else { setStep("compte") } }} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <InputField fieldId="field-prenom" label="Prénom" value={client.prenom} onChange={(v) => { setClient((c) => ({ ...c, prenom: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.prenom; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.prenom : undefined} />
                 <InputField fieldId="field-nom" label="Nom" value={client.nom} onChange={(v) => { setClient((c) => ({ ...c, nom: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.nom; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.nom : undefined} />
@@ -791,10 +803,127 @@ export default function ReservationPage() {
 
               <button type="submit" disabled={!validateClient() || !acceptedConditions || loading}
                 className="w-full bg-[#C9948E] dark:bg-[#C9948E] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                {loading ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
-                {loading ? "Envoi en cours..." : "Envoyer la demande de devis"}
+                {loading ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />}
+                {loading ? "Envoi en cours..." : "Continuer"}
               </button>
             </form>
+          </div>
+        )}
+
+        {step === "compte" && (
+          <div>
+            <BackButton onClick={() => setStep("client")} label="Retour aux informations" />
+            <h2 style={DP} className="text-xl sm:text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-6">Créez votre compte</h2>
+
+            {alreadyConnected === null ? (
+              <div className="text-center py-12">
+                <Loader2 size={24} className="animate-spin mx-auto text-[#C9948E] mb-3" />
+                <p className="text-sm text-gray-400">Vérification de votre session…</p>
+              </div>
+            ) : alreadyConnected === true ? (
+              <AccountAutoAdvance onAdvance={handleCreateBooking} />
+            ) : (
+              <>
+                {/* Toggle register / login */}
+                <div className="flex gap-2 mb-6 bg-gray-100 dark:bg-neutral-900 rounded-xl p-1">
+                  <button
+                    type="button"
+                    onClick={() => { setAccountMode("register"); setAccountError("") }}
+                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${accountMode === "register" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-gray-400 dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}
+                  >
+                    <UserPlus size={15} />
+                    Créer un compte
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setAccountMode("login"); setAccountError("") }}
+                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${accountMode === "login" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-gray-400 dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}
+                  >
+                    <LogIn size={15} />
+                    Se connecter
+                  </button>
+                </div>
+
+                {accountError && (
+                  <div className="bg-red-50 border border-red-200 text-red-500 text-sm rounded-2xl px-5 py-3 mb-4">{accountError}</div>
+                )}
+
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault()
+                    setAccountError("")
+                    if (accountMode === "register" && accountPassword !== accountPasswordConfirm) {
+                      setAccountError("Les mots de passe ne correspondent pas")
+                      return
+                    }
+                    if (accountMode === "register" && (accountPassword.length < 6 || accountPassword.length > 128)) {
+                      setAccountError("Le mot de passe doit contenir entre 6 et 128 caractères")
+                      return
+                    }
+                    setAccountLoading(true)
+                    try {
+                      const url = accountMode === "register" ? "/api/customer/register" : "/api/customer/login"
+                      const body = accountMode === "register"
+                        ? { email: client.email, password: accountPassword, prenom: client.prenom, nom: client.nom }
+                        : { email: client.email, password: accountPassword }
+                      const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+                      const data = await res.json()
+                      if (!res.ok) throw new Error(data.error || "Une erreur est survenue")
+                      setAlreadyConnected(true)
+                    } catch (err: any) {
+                      setAccountError(err.message)
+                    } finally {
+                      setAccountLoading(false)
+                    }
+                  }}
+                  className="space-y-4"
+                >
+                  {/* Pré-remplissage : champs en lecture seule */}
+                  <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl p-4 space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">Prénom</span>
+                      <span className="text-[#2E2E2E] dark:text-neutral-100 font-medium">{client.prenom}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">Nom</span>
+                      <span className="text-[#2E2E2E] dark:text-neutral-100 font-medium">{client.nom}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">Email</span>
+                      <span className="text-[#2E2E2E] dark:text-neutral-100 font-medium">{client.email}</span>
+                    </div>
+                  </div>
+
+                  <InputField
+                    label="Mot de passe"
+                    type="password"
+                    value={accountPassword}
+                    onChange={setAccountPassword}
+                    required
+                  />
+
+                  {accountMode === "register" && (
+                    <InputField
+                      label="Confirmer le mot de passe"
+                      type="password"
+                      value={accountPasswordConfirm}
+                      onChange={setAccountPasswordConfirm}
+                      required
+                    />
+                  )}
+
+                  <button type="submit" disabled={accountLoading}
+                    className="w-full bg-[#C9948E] dark:bg-[#C9948E] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                    {accountLoading ? <Loader2 size={16} className="animate-spin" /> : accountMode === "register" ? <UserPlus size={16} /> : <LogIn size={16} />}
+                    {accountLoading ? "En cours..." : accountMode === "register" ? "Créer mon compte" : "Se connecter"}
+                  </button>
+                </form>
+
+                <p className="text-center text-xs text-gray-400 dark:text-white/60 mt-4">
+                  En créant un compte, vous pourrez suivre vos devis et vos réservations depuis votre espace client.
+                </p>
+              </>
+            )}
           </div>
         )}
 
@@ -804,6 +933,16 @@ export default function ReservationPage() {
 }
 
 // ─── Sub-components ───
+
+function AccountAutoAdvance({ onAdvance }: { onAdvance: () => void }) {
+  useEffect(() => { onAdvance() }, [])
+  return (
+    <div className="text-center py-12">
+      <Loader2 size={24} className="animate-spin mx-auto text-[#C9948E] mb-3" />
+      <p className="text-sm text-gray-400">Compte connecté, préparation de votre devis…</p>
+    </div>
+  )
+}
 
 function BackButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (

@@ -7,12 +7,23 @@ import { calcDeliveryFee } from "@/lib/delivery"
 import { createPaymentIntent } from "@/lib/stripe"
 import { getAvailableStock } from "@/lib/stock"
 import { sendBookingConfirmation } from "@/lib/order-confirmation"
+import { getCustomer, CUSTOMER_COOKIE } from "@/lib/customer-auth"
 import { COOKIE_NAME } from "@/lib/auth"
 import { sanitizeError } from "@/lib/security"
 import type { Booking, CartItem } from "@/lib/types"
 
 export async function POST(request: NextRequest) {
   try {
+    // Require customer session
+    const session = request.cookies.get(CUSTOMER_COOKIE)
+    if (!session?.value) {
+      return NextResponse.json({ error: "Vous devez être connecté pour envoyer une demande de devis" }, { status: 401 })
+    }
+    const customer = await getCustomer(session.value)
+    if (!customer) {
+      return NextResponse.json({ error: "Session invalide" }, { status: 401 })
+    }
+
     const body = await request.json()
     const { items, client } = body as { items: CartItem[]; client?: any }
 
@@ -106,6 +117,7 @@ export async function POST(request: NextRequest) {
       id: uuidv4().slice(0, 8).toUpperCase(),
       items: finalItems,
       client: client || {} as any,
+      customerEmail: customer.email,
       totalHt,
       totalTtc: totalTtcWithDelivery,
       depositAmount,
