@@ -184,7 +184,14 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
               {form.type === "image" ? (
                 <img src={form.mediaUrl} alt="Aperçu" className="w-40 h-40 object-cover rounded-xl border border-black/[0.07] dark:border-white/[0.08]" />
               ) : form.type === "video" ? (
-                <video src={form.mediaUrl} className="w-40 h-40 object-cover rounded-xl" muted />
+                <div className="relative">
+                  <video src={form.mediaUrl} className="w-40 h-40 object-cover rounded-xl" controls preload="metadata" />
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21" /></svg>
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <div className="w-40 h-40 bg-[#F8F5F0] dark:bg-neutral-700 rounded-xl flex items-center justify-center">
                   <FileText size={32} className="text-[#C9948E]/40" />
