@@ -1,10 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { getNouveautes, getNouveaute, saveNouveaute, deleteNouveaute } from "@/lib/db"
+import { COOKIE_NAME } from "@/lib/auth"
 import type { Nouveaute } from "@/lib/types"
 
 function checkAuth(req: NextRequest) {
-  const cookie = req.cookies.get("admin_session")
-  return cookie?.value === "authenticated"
+  const cookie = req.cookies.get(COOKIE_NAME)
+  return !!cookie?.value
 }
 
 export async function GET(req: NextRequest) {

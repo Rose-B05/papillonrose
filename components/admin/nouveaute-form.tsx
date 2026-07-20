@@ -16,6 +16,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState("")
+  const [saveError, setSaveError] = useState("")
   const [form, setForm] = useState({
     titre: "",
     description: "",
@@ -73,17 +74,26 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
 
   const handleSave = async (statut?: "brouillon" | "publie") => {
     setSaving(true)
+    setSaveError("")
     try {
       const body = { ...form, statut: statut || form.statut }
       const method = isEdit ? "PUT" : "POST"
-      await fetch("/api/admin/nouveautes", {
+      const res = await fetch("/api/admin/nouveautes", {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(isEdit ? { id: editId, ...body } : body),
       })
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: "Erreur inconnue" }))
+        setSaveError(err.error || "Échec de l'enregistrement")
+        return
+      }
       router.push("/admin/nouveautes")
-    } catch {}
-    setSaving(false)
+    } catch {
+      setSaveError("Erreur réseau lors de l'enregistrement")
+    } finally {
+      setSaving(false)
+    }
   }
 
   const typeOptions: { value: NouveauteType; label: string; icon: typeof Image }[] = [
@@ -251,6 +261,14 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
               />
             </div>
           </>
+        )}
+
+        {saveError && (
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-4">
+            <p className="text-red-600 dark:text-red-400 text-sm flex items-center gap-2">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-500" /> {saveError}
+            </p>
+          </div>
         )}
 
         {/* Actions */}
