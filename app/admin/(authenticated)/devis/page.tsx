@@ -4,22 +4,22 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import AdminShell from "@/components/admin/AdminShell"
 import DevisTable from "@/components/admin/devis/DevisTable"
-import type { Devis, DevisStatut } from "@/lib/devis/types"
 
-const STATUT_FILTERS: Array<{ label: string; value: DevisStatut | "all" }> = [
+const STATUT_FILTERS: Array<{ label: string; value: string }> = [
   { label: "Tous", value: "all" },
-  { label: "En attente", value: "en_attente" },
-  { label: "En préparation", value: "en_preparation" },
-  { label: "Envoyés", value: "envoye" },
-  { label: "Acceptés", value: "accepte" },
-  { label: "Refusés", value: "refuse" },
+  { label: "En attente", value: "pending-quote" },
+  { label: "Devis envoyé", value: "quote-sent" },
+  { label: "Acompte en attente", value: "deposit-pending" },
+  { label: "Confirmée", value: "confirmed" },
+  { label: "Annulée", value: "cancelled" },
+  { label: "Restituée", value: "returned" },
 ]
 
 export default function DevisListePage() {
   const router = useRouter()
-  const [devis, setDevis] = useState<Devis[]>([])
+  const [devis, setDevis] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [filter, setFilter] = useState<DevisStatut | "all">("all")
+  const [filter, setFilter] = useState<string>("all")
   const [search, setSearch] = useState("")
   const [sendingId, setSendingId] = useState<string | null>(null)
 
@@ -45,15 +45,15 @@ export default function DevisListePage() {
       const q = search.toLowerCase()
       return (
         d.quoteNumber.toLowerCase().includes(q) ||
-        d.client.nom.toLowerCase().includes(q) ||
-        d.client.prenom.toLowerCase().includes(q) ||
-        d.client.email.toLowerCase().includes(q)
+        (d.client?.nom || "").toLowerCase().includes(q) ||
+        (d.client?.prenom || "").toLowerCase().includes(q) ||
+        (d.client?.email || "").toLowerCase().includes(q)
       )
     }
     return true
   })
 
-  async function handleStatusChange(id: string, statut: DevisStatut) {
+  async function handleStatusChange(id: string, statut: string) {
     await fetch(`/api/admin/devis/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -63,8 +63,12 @@ export default function DevisListePage() {
   }
 
   async function handleDelete(id: string) {
-    await fetch(`/api/admin/devis/${id}`, { method: "DELETE" })
-    setDevis((prev) => prev.filter((d) => d.id !== id))
+    await fetch(`/api/admin/devis/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ statut: "cancelled" }),
+    })
+    setDevis((prev) => prev.map((d) => (d.id === id ? { ...d, statut: "cancelled" } : d)))
   }
 
   async function handleSend(id: string) {
@@ -78,12 +82,9 @@ export default function DevisListePage() {
       if (res.ok) {
         setDevis((prev) =>
           prev.map((d) =>
-            d.id === id
-              ? { ...d, statut: "envoye" as DevisStatut, envoyeLe: new Date().toISOString() }
-              : d
+            d.id === id ? { ...d, statut: "quote-sent" } : d
           )
         )
-        alert("Devis envoyé !")
       } else {
         const data = await res.json()
         alert(data.error || "Erreur lors de l'envoi")
@@ -97,26 +98,24 @@ export default function DevisListePage() {
   return (
     <AdminShell title="Devis">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <p className="text-sm text-gray-500 dark:text-white/60">
-              {filtered.length} devis{filter !== "all" ? ` (filtré)` : ""}
+              {filtered.length} réservation{filtered.length > 1 ? "s" : ""}{filter !== "all" ? ` (filtré)` : ""}
             </p>
           </div>
           <button
             onClick={() => router.push("/admin/devis/new")}
             className="px-4 py-2 bg-[#C9948E] text-white rounded-xl text-sm font-medium hover:bg-[#B8807A] transition-colors"
           >
-            + Nouveau devis
+            + Nouvelle réservation
           </button>
         </div>
 
-        {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <input
             type="text"
-            placeholder="Rechercher un devis..."
+            placeholder="Rechercher une réservation..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="flex-1 px-4 py-2.5 bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.1] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/30"
@@ -138,7 +137,6 @@ export default function DevisListePage() {
           </div>
         </div>
 
-        {/* Table */}
         {loading ? (
           <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
         ) : (

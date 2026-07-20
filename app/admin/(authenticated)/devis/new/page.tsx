@@ -10,7 +10,6 @@ interface LigneForm {
   nom: string
   quantite: number
   prixUnitaire: number
-  dimension: string
 }
 
 export default function NewDevisPage() {
@@ -22,13 +21,8 @@ export default function NewDevisPage() {
     email: "",
     telephone: "",
   })
-  const [dateDebut, setDateDebut] = useState("")
-  const [dateFin, setDateFin] = useState("")
-  const [fraisLivraison, setFraisLivraison] = useState(0)
-  const [remise, setRemise] = useState(0)
-  const [notesInternes, setNotesInternes] = useState("")
   const [lignes, setLignes] = useState<LigneForm[]>([
-    { productId: 0, nom: "", quantite: 1, prixUnitaire: 0, dimension: "" },
+    { productId: 0, nom: "", quantite: 1, prixUnitaire: 0 },
   ])
 
   function updateLigne(index: number, field: keyof LigneForm, value: string | number) {
@@ -44,14 +38,13 @@ export default function NewDevisPage() {
   function addLigne() {
     setLignes((prev) => [
       ...prev,
-      { productId: 0, nom: "", quantite: 1, prixUnitaire: 0, dimension: "" },
+      { productId: 0, nom: "", quantite: 1, prixUnitaire: 0 },
     ])
   }
 
   const totalHt = lignes.reduce((s, l) => s + l.prixUnitaire * l.quantite, 0)
-  const remiseMontant = totalHt * remise / 100
-  const tva = (totalHt - remiseMontant) * 0.2
-  const totalTtc = totalHt - remiseMontant + tva + fraisLivraison
+  const tva = totalHt * 0.2
+  const totalTtc = totalHt + tva
 
   async function handleCreate() {
     if (!client.nom || !client.prenom || !client.email) {
@@ -70,17 +63,13 @@ export default function NewDevisPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           client,
-          lignes: lignes
+          items: lignes
             .filter((l) => l.nom)
             .map((l) => ({
-              ...l,
-              sousTotal: l.prixUnitaire * l.quantite,
+              productId: l.productId || 0,
+              qty: l.quantite,
+              prixUnitaire: l.prixUnitaire,
             })),
-          dateDebut,
-          dateFin,
-          fraisLivraison,
-          remise,
-          notesInternes,
         }),
       })
       if (res.ok) {
@@ -97,7 +86,7 @@ export default function NewDevisPage() {
   }
 
   return (
-    <AdminShell title="Nouveau devis">
+    <AdminShell title="Nouvelle réservation">
       <div className="max-w-4xl mx-auto space-y-6">
         <button
           onClick={() => router.push("/admin/devis")}
@@ -106,7 +95,6 @@ export default function NewDevisPage() {
           <ArrowLeft size={15} /> Retour à la liste
         </button>
 
-        {/* Client */}
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
           <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Informations client</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -144,29 +132,8 @@ export default function NewDevisPage() {
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-            <div>
-              <label className="block text-xs text-gray-500 dark:text-white/60 mb-1">Date de début</label>
-              <input
-                type="date"
-                value={dateDebut}
-                onChange={(e) => setDateDebut(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-50 dark:bg-neutral-700 border border-black/[0.08] dark:border-white/[0.1] rounded-lg text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 dark:text-white/60 mb-1">Date de fin</label>
-              <input
-                type="date"
-                value={dateFin}
-                onChange={(e) => setDateFin(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-50 dark:bg-neutral-700 border border-black/[0.08] dark:border-white/[0.1] rounded-lg text-sm"
-              />
-            </div>
-          </div>
         </div>
 
-        {/* Articles */}
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">Articles</h3>
@@ -182,12 +149,6 @@ export default function NewDevisPage() {
                   onChange={(e) => updateLigne(i, "nom", e.target.value)}
                   placeholder="Nom de l'article"
                   className="flex-1 px-3 py-2 bg-white dark:bg-neutral-700 border border-black/[0.08] dark:border-white/[0.1] rounded-lg text-sm"
-                />
-                <input
-                  value={ligne.dimension}
-                  onChange={(e) => updateLigne(i, "dimension", e.target.value)}
-                  placeholder="Dimension"
-                  className="w-28 px-3 py-2 bg-white dark:bg-neutral-700 border border-black/[0.08] dark:border-white/[0.1] rounded-lg text-sm"
                 />
                 <input
                   type="number"
@@ -218,61 +179,24 @@ export default function NewDevisPage() {
           </div>
         </div>
 
-        {/* Totals & Notes */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
-            <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Totaux</h3>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-500 dark:text-white/60">Total HT</span>
-                <span>{totalHt.toFixed(2)} €</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-500 dark:text-white/60">Remise (%)</span>
-                <input
-                  type="number"
-                  min={0}
-                  max={100}
-                  value={remise}
-                  onChange={(e) => setRemise(Number(e.target.value))}
-                  className="w-20 px-2 py-1 bg-gray-50 dark:bg-neutral-700 border border-black/[0.08] dark:border-white/[0.1] rounded text-sm text-right"
-                />
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500 dark:text-white/60">TVA (20%)</span>
-                <span>{tva.toFixed(2)} €</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-500 dark:text-white/60">Livraison (€)</span>
-                <input
-                  type="number"
-                  min={0}
-                  step={0.5}
-                  value={fraisLivraison}
-                  onChange={(e) => setFraisLivraison(Number(e.target.value))}
-                  className="w-20 px-2 py-1 bg-gray-50 dark:bg-neutral-700 border border-black/[0.08] dark:border-white/[0.1] rounded text-sm text-right"
-                />
-              </div>
-              <div className="flex justify-between pt-2 border-t border-black/[0.06] dark:border-white/[0.08] font-semibold text-[#C9948E] dark:text-[#E8B4AE]">
-                <span>Total TTC</span>
-                <span>{totalTtc.toFixed(2)} €</span>
-              </div>
+        <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
+          <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Totaux</h3>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-500 dark:text-white/60">Total HT</span>
+              <span>{totalHt.toFixed(2)} €</span>
             </div>
-          </div>
-
-          <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
-            <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Notes internes</h3>
-            <textarea
-              value={notesInternes}
-              onChange={(e) => setNotesInternes(e.target.value)}
-              rows={6}
-              className="w-full px-3 py-2 bg-gray-50 dark:bg-neutral-700 border border-black/[0.08] dark:border-white/[0.1] rounded-lg text-sm resize-none"
-              placeholder="Notes visibles uniquement par l'admin…"
-            />
+            <div className="flex justify-between">
+              <span className="text-gray-500 dark:text-white/60">TVA (20%)</span>
+              <span>{tva.toFixed(2)} €</span>
+            </div>
+            <div className="flex justify-between pt-2 border-t border-black/[0.06] dark:border-white/[0.08] font-semibold text-[#C9948E] dark:text-[#E8B4AE]">
+              <span>Total TTC</span>
+              <span>{totalTtc.toFixed(2)} €</span>
+            </div>
           </div>
         </div>
 
-        {/* Actions */}
         <div className="flex justify-end gap-3">
           <button
             onClick={() => router.push("/admin/devis")}
@@ -285,7 +209,7 @@ export default function NewDevisPage() {
             disabled={saving}
             className="px-5 py-2.5 text-sm bg-[#C9948E] text-white rounded-xl hover:bg-[#B8807A] transition-colors disabled:opacity-50"
           >
-            {saving ? "Création…" : "Créer le devis"}
+            {saving ? "Création…" : "Créer la réservation"}
           </button>
         </div>
       </div>

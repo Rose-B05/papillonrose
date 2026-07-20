@@ -1,3 +1,7 @@
+// @deprecated — Cette route publique est obsolète et non utilisée.
+// Les réservations sont désormais gérées via /api/bookings (Booking).
+// Conservée temporairement pour référence avant suppression définitive.
+
 import { NextRequest, NextResponse } from "next/server"
 import { saveDevis, getNextDevisNumber, buildDevisLignes, calculateDevis } from "@/lib/devis/db"
 import type { Devis, DevisStatut } from "@/lib/devis/types"

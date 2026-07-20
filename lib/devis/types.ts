@@ -1,3 +1,7 @@
+// @deprecated — Ce module est obsolète et non utilisé.
+// Les devis/réservations sont désormais gérés via Booking dans lib/types.ts.
+// Conservé temporairement pour référence avant suppression définitive.
+
 export interface DevisLigne {
   productId: number
   nom: string

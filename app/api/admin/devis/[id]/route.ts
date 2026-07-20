@@ -1,55 +1,54 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getDevis, saveDevis, deleteDevis } from "@/lib/devis/db"
+import { getBooking, saveBooking } from "@/lib/db"
 import { COOKIE_NAME } from "@/lib/auth"
 
-// GET — single devis
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  const session = request.cookies.get(COOKIE_NAME)
+export async function GET(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const session = _request.cookies.get(COOKIE_NAME)
   if (!session?.value) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
   }
 
-  const all = await getDevis()
-  const devis = all.find((d) => d.id === params.id)
-  if (!devis) {
-    return NextResponse.json({ error: "Devis introuvable" }, { status: 404 })
+  const { id } = await params
+  const booking = await getBooking(id)
+  if (!booking) {
+    return NextResponse.json({ error: "Réservation introuvable" }, { status: 404 })
   }
-  return NextResponse.json({ devis })
+  return NextResponse.json({ devis: booking })
 }
 
-// DELETE — delete devis
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const session = request.cookies.get(COOKIE_NAME)
   if (!session?.value) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
   }
 
-  await deleteDevis(params.id)
-  return NextResponse.json({ ok: true })
-}
-
-// PATCH — update status only
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
-  const session = request.cookies.get(COOKIE_NAME)
-  if (!session?.value) {
-    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
-  }
-
+  const { id } = await params
   const body = await request.json()
   const { statut } = body
 
-  const all = await getDevis()
-  const devis = all.find((d) => d.id === params.id)
-  if (!devis) {
-    return NextResponse.json({ error: "Devis introuvable" }, { status: 404 })
+  const booking = await getBooking(id)
+  if (!booking) {
+    return NextResponse.json({ error: "Réservation introuvable" }, { status: 404 })
   }
 
-  const now = new Date().toISOString()
-  devis.statut = statut
-  if (statut === "envoye") devis.envoyeLe = now
-  if (statut === "accepte") devis.accepteLe = now
-  if (statut === "refuse") devis.refuseLe = now
+  const validStatuses = ["pending-quote", "quote-sent", "deposit-pending", "confirmed", "cancelled", "returned"]
+  if (!validStatuses.includes(statut)) {
+    return NextResponse.json({ error: "Statut invalide" }, { status: 400 })
+  }
 
-  await saveDevis(devis)
-  return NextResponse.json({ devis })
+  booking.status = statut
+  booking.updatedAt = new Date().toISOString()
+
+  if (statut === "cancelled") {
+    booking.status = "cancelled"
+  }
+
+  await saveBooking(booking)
+  return NextResponse.json({ devis: booking })
 }

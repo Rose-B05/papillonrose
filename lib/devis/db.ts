@@ -1,3 +1,7 @@
+// @deprecated — Ce module est obsolète et non utilisé.
+// Les devis/réservations sont désormais gérés via Booking dans lib/db.ts.
+// Conservé temporairement pour référence avant suppression définitive.
+
 import { kv } from "@vercel/kv"
 import type { Devis } from "./types"
 import type { Produit } from "@/data/produits"

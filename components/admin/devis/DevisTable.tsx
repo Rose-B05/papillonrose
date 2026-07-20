@@ -1,9 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { Eye, Pencil, Send, Trash2 } from "lucide-react"
+import { Eye, Pencil, Send, XCircle } from "lucide-react"
 import DevisStatutBadge from "./DevisStatutBadge"
-import type { Devis, DevisStatut } from "@/lib/devis/types"
 
 function formatDate(dateStr: string) {
   if (!dateStr) return "—"
@@ -14,9 +13,21 @@ function formatDate(dateStr: string) {
   })
 }
 
+interface DevisTableRow {
+  id: string
+  quoteNumber: string
+  client: { nom: string; prenom: string; email: string }
+  itemCount: number
+  dateDebut: string
+  dateFin: string
+  totalTtc: number
+  statut: string
+  creeLe: string
+}
+
 interface DevisTableProps {
-  devis: Devis[]
-  onStatusChange?: (id: string, statut: DevisStatut) => void
+  devis: DevisTableRow[]
+  onStatusChange?: (id: string, statut: string) => void
   onDelete?: (id: string) => void
   onSend?: (id: string) => void
   sendingId?: string | null
@@ -68,7 +79,7 @@ export default function DevisTable({ devis, onStatusChange, onDelete, onSend, se
               </td>
               <td className="py-3 px-4 hidden md:table-cell">
                 <p className="text-xs text-gray-500 dark:text-white/60">
-                  {d.lignes.length} article{d.lignes.length > 1 ? "s" : ""}
+                  {d.itemCount} article{d.itemCount > 1 ? "s" : ""}
                 </p>
               </td>
               <td className="py-3 px-4 text-right font-semibold text-[#C9948E] dark:text-[#E8B4AE] whitespace-nowrap">
@@ -93,25 +104,25 @@ export default function DevisTable({ devis, onStatusChange, onDelete, onSend, se
                   >
                     <Pencil size={15} />
                   </Link>
-                  {(d.statut === "en_attente" || d.statut === "en_preparation") && onSend && (
+                  {(d.statut === "pending-quote") && onSend && (
                     <button
                       onClick={() => onSend(d.id)}
                       disabled={sendingId === d.id}
                       className="p-1.5 rounded-lg hover:bg-black/[0.05] dark:hover:bg-white/[0.08] text-gray-400 hover:text-green-600 transition-colors disabled:opacity-50"
-                      title="Envoyer"
+                      title="Envoyer le devis"
                     >
                       <Send size={15} />
                     </button>
                   )}
-                  {onDelete && (
+                  {onDelete && d.statut !== "cancelled" && (
                     <button
                       onClick={() => {
-                        if (confirm("Supprimer ce devis ?")) onDelete(d.id)
+                        if (confirm("Annuler cette réservation ?")) onDelete(d.id)
                       }}
                       className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-400 hover:text-red-500 transition-colors"
-                      title="Supprimer"
+                      title="Annuler"
                     >
-                      <Trash2 size={15} />
+                      <XCircle size={15} />
                     </button>
                   )}
                 </div>

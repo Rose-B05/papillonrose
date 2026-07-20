@@ -1,24 +1,47 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getDevis, saveDevis, getNextDevisNumber, calculateDevis } from "@/lib/devis/db"
+import { getBookings, saveBooking, getNextAdminProductId, logActivity } from "@/lib/db"
 import { COOKIE_NAME } from "@/lib/auth"
-import { logActivity } from "@/lib/db"
-import type { Devis, DevisStatut } from "@/lib/devis/types"
+import { produits } from "@/data/produits"
+import type { Booking, ClientInfo } from "@/lib/types"
 
-// GET — list all devis
+function formatDate(iso: string) {
+  if (!iso) return ""
+  return new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })
+}
+
+function mapBooking(b: Booking) {
+  const dates = b.items
+    .filter((i) => i.dateStart && i.dateEnd)
+    .map((i) => ({ start: i.dateStart, end: i.dateEnd }))
+  const dateDebut = dates.length > 0 ? dates.reduce((a, b) => (a.start < b.start ? a : b)).start : ""
+  const dateFin = dates.length > 0 ? dates.reduce((a, b) => (a.end > b.end ? a : b)).end : ""
+  return {
+    id: b.id,
+    quoteNumber: b.quoteNumber || `BK-${b.id}`,
+    client: b.client,
+    itemCount: b.items.length,
+    dateDebut,
+    dateFin,
+    totalHt: b.totalHt,
+    totalTtc: b.totalTtc,
+    statut: b.status,
+    creeLe: b.createdAt,
+  }
+}
+
 export async function GET(request: NextRequest) {
   const session = request.cookies.get(COOKIE_NAME)
   if (!session?.value) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
   }
 
-  const devis = await getDevis()
-  const sorted = [...devis].sort(
-    (a, b) => new Date(b.creeLe).getTime() - new Date(a.creeLe).getTime()
+  const bookings = await getBookings()
+  const sorted = [...bookings].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   )
-  return NextResponse.json({ devis: sorted })
+  return NextResponse.json({ devis: sorted.map(mapBooking) })
 }
 
-// POST — create new devis (admin-initiated)
 export async function POST(request: NextRequest) {
   const session = request.cookies.get(COOKIE_NAME)
   if (!session?.value) {
@@ -27,88 +50,62 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { client, lignes, dateDebut, dateFin, adresse, fraisLivraison, remise, notesInternes } = body
+    const { client, items } = body
 
     if (!client?.nom || !client?.prenom || !client?.email) {
       return NextResponse.json({ error: "Informations client incomplètes" }, { status: 400 })
     }
-    if (!lignes || lignes.length === 0) {
-      return NextResponse.json({ error: "Aucune ligne" }, { status: 400 })
+    if (!items || items.length === 0) {
+      return NextResponse.json({ error: "Aucun article" }, { status: 400 })
     }
 
-    const calc = calculateDevis(lignes, remise || 0, fraisLivraison || 0)
-    const quoteNumber = await getNextDevisNumber()
+    const itemsWithPrix = items.map((item: any) => {
+      const p = produits.find((prod) => prod.id === item.productId)
+      return { ...item, prix: p?.prix || item.prixUnitaire || 0 }
+    })
 
-    const devis: Devis = {
+    const totalHt = itemsWithPrix.reduce((s: number, i: any) => s + (i.prixUnitaire || i.prix || 0) * i.qty, 0)
+    const totalTtc = Math.round(totalHt * 1.2 * 100) / 100
+    const depositAmount = Math.round(totalTtc * 0.3 * 100) / 100
+
+    const nextNum = await getNextAdminProductId()
+    const quoteNumber = `DEV-${new Date().getFullYear()}-${String(nextNum).padStart(4, "0")}`
+
+    const booking: Booking = {
       id: crypto.randomUUID(),
+      items: items.map((i: any) => ({
+        productId: i.productId,
+        qty: i.qty || 1,
+        dateStart: i.dateStart || "",
+        dateEnd: i.dateEnd || "",
+        variantLabel: i.variantLabel,
+      })),
+      client: {
+        nom: client.nom,
+        prenom: client.prenom,
+        email: client.email,
+        telephone: client.telephone || "",
+        typeEvenement: client.typeEvenement || "Devis manuel",
+        dateEvenement: client.dateEvenement || "",
+        lieuEvenement: client.lieuEvenement || "",
+        nbInvites: client.nbInvites || 0,
+        besoinLivraison: client.besoinLivraison || false,
+        message: client.message || "",
+      },
+      totalHt,
+      totalTtc,
+      depositAmount,
+      status: "pending-quote",
       quoteNumber,
-      client,
-      lignes,
-      dateDebut: dateDebut || "",
-      dateFin: dateFin || "",
-      adresse,
-      fraisLivraison: fraisLivraison || 0,
-      remise: remise || 0,
-      notesInternes: notesInternes || "",
-      totalHt: calc.totalHt,
-      totalTtc: calc.totalTtc,
-      statut: "en_attente",
-      creeLe: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     }
 
-    await saveDevis(devis)
-    await logActivity({ type: "devis_created", description: `Devis ${quoteNumber} créé pour ${client.prenom} ${client.nom}`, reference: devis.id })
-    return NextResponse.json({ devis }, { status: 201 })
+    await saveBooking(booking)
+    await logActivity({ type: "devis_created", description: `Devis ${quoteNumber} créé pour ${client.prenom} ${client.nom}`, reference: booking.id })
+    return NextResponse.json({ devis: mapBooking(booking) }, { status: 201 })
   } catch (err) {
     console.error("Error creating admin devis:", err)
-    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 })
-  }
-}
-
-// PUT — update devis
-export async function PUT(request: NextRequest) {
-  const session = request.cookies.get(COOKIE_NAME)
-  if (!session?.value) {
-    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
-  }
-
-  try {
-    const body = await request.json()
-    const { id, statut, client, lignes, dateDebut, dateFin, adresse, fraisLivraison, remise, notesInternes } = body
-
-    if (!id) {
-      return NextResponse.json({ error: "ID manquant" }, { status: 400 })
-    }
-
-    const existing = await getDevis().then((d) => d.find((d) => d.id === id))
-    if (!existing) {
-      return NextResponse.json({ error: "Devis introuvable" }, { status: 404 })
-    }
-
-    const calc = lignes ? calculateDevis(lignes, remise ?? existing.remise, fraisLivraison ?? existing.fraisLivraison) : { totalHt: existing.totalHt, totalTtc: existing.totalTtc }
-
-    const updated: Devis = {
-      ...existing,
-      client: client || existing.client,
-      lignes: lignes || existing.lignes,
-      dateDebut: dateDebut ?? existing.dateDebut,
-      dateFin: dateFin ?? existing.dateFin,
-      adresse: adresse ?? existing.adresse,
-      fraisLivraison: fraisLivraison ?? existing.fraisLivraison,
-      remise: remise ?? existing.remise,
-      notesInternes: notesInternes ?? existing.notesInternes,
-      totalHt: calc.totalHt,
-      totalTtc: calc.totalTtc,
-      statut: statut || existing.statut,
-      envoyeLe: statut === "envoye" && !existing.envoyeLe ? new Date().toISOString() : existing.envoyeLe,
-      accepteLe: statut === "accepte" && !existing.accepteLe ? new Date().toISOString() : existing.accepteLe,
-      refuseLe: statut === "refuse" && !existing.refuseLe ? new Date().toISOString() : existing.refuseLe,
-    }
-
-    await saveDevis(updated)
-    return NextResponse.json({ devis: updated })
-  } catch (err) {
-    console.error("Error updating devis:", err)
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 })
   }
 }
