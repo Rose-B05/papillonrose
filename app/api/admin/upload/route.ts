@@ -29,14 +29,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Aucun fichier fourni" }, { status: 400 })
     }
 
-    if (file.size > 10 * 1024 * 1024) {
-      return NextResponse.json({ error: "Fichier trop volumineux (max 10 Mo)" }, { status: 400 })
+    const isVideo = file.type.startsWith("video/")
+    const maxSize = isVideo ? 50 * 1024 * 1024 : 10 * 1024 * 1024
+    if (file.size > maxSize) {
+      const label = isVideo ? "50 Mo" : "10 Mo"
+      return NextResponse.json({ error: `Fichier trop volumineux (max ${label})` }, { status: 400 })
     }
 
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"]
+    const allowedTypes = [
+      "image/jpeg", "image/png", "image/webp", "image/gif",
+      "video/mp4", "video/webm", "video/quicktime", "video/x-msvideo", "video/x-matroska",
+    ]
     if (!allowedTypes.includes(file.type)) {
+      const supported = "JPEG, PNG, WebP, GIF · MP4, WebM, MOV, AVI, MKV"
       return NextResponse.json(
-        { error: "Type de fichier non supporté (JPEG, PNG, WebP, GIF uniquement)" },
+        { error: `Type de fichier non supporté (${supported})` },
         { status: 400 }
       )
     }
