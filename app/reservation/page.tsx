@@ -868,7 +868,7 @@ function Totals({ totalHt, totalTtc, deposit, deliveryFee }: { totalHt: number; 
         <span className="text-gray-500 dark:text-white/70">TVA (20%)</span>
         <span className="font-semibold">{fmt(totalTtc - totalHt)}</span>
       </div>
-      {deliveryFee && deliveryFee > 0 && (
+      {typeof deliveryFee === "number" && deliveryFee > 0 && (
         <div className="flex justify-between text-sm mb-2">
           <span className="text-gray-400 dark:text-white/60 flex items-center gap-1.5">
             <Truck size={12} /> Livraison
@@ -878,7 +878,7 @@ function Totals({ totalHt, totalTtc, deposit, deliveryFee }: { totalHt: number; 
       )}
       <div className="flex justify-between text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 pt-2 border-t border-black/[0.07] dark:border-white/[0.08]">
         <span>Total TTC</span>
-        <span>{deliveryFee && deliveryFee > 0 ? fmt(totalTtc + deliveryFee) : fmt(totalTtc)}</span>
+        <span>{typeof deliveryFee === "number" && deliveryFee > 0 ? fmt(totalTtc + deliveryFee) : fmt(totalTtc)}</span>
       </div>
       <div className="flex justify-between text-sm mt-1 text-[#C9948E] dark:text-[#E8B4AE]">
         <span>Acompte 30%</span>

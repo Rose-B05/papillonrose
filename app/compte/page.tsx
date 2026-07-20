@@ -510,11 +510,23 @@ export default function ComptePage() {
           {quotesLoading ? (
             <p className="text-sm text-gray-400 dark:text-white/60">Chargement…</p>
           ) : quotes.length === 0 ? (
-            <p className="text-sm text-gray-400 dark:text-white/60">Aucun devis pour le moment.</p>
+            <>
+              <p className="text-sm text-gray-400 dark:text-white/60 mb-4">Aucun devis pour le moment.</p>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 bg-[#C9948E] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#B8807A] transition-colors w-fit"
+              >
+                Découvrir le catalogue
+              </Link>
+            </>
           ) : (
             <div className="space-y-3">
               {quotes.map((q) => (
-                <div key={q.id} className="flex items-center justify-between bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3">
+                <Link
+                  key={q.id}
+                  href={`/compte/devis/${q.id}`}
+                  className="flex items-center justify-between bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3 hover:bg-[#F0EBE4] dark:hover:bg-neutral-800 transition-colors"
+                >
                   <div>
                     <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">{q.quoteNumber}</p>
                     <p className="text-xs text-gray-400 dark:text-white/60">{formatDate(q.createdAt)} — {q.itemCount} article{q.itemCount > 1 ? "s" : ""}</p>
@@ -525,7 +537,7 @@ export default function ComptePage() {
                     </span>
                     <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mt-1">{q.totalTtc.toFixed(2)} €</p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

@@ -158,13 +158,6 @@ export default function Header() {
                 }
               />
             </a>
-            <Link
-              href="/reservation"
-              className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors bg-[#C9948E]/90 dark:bg-[#C9948E]/90 text-white hover:bg-[#B8807A] dark:hover:bg-[#B8807A]"
-            >
-              <FileText size={15} />
-              <span className="font-medium">Devis</span>
-            </Link>
             <button
               onClick={() => setShowMenu(true)}
               aria-label="Menu"

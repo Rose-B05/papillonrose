@@ -9,6 +9,7 @@ export type Produit = {
   badge?: "stock-limite" | "epuise";
   actif?: boolean;
   dateAjout?: string;
+  variants?: { label: string; prix: number | string }[];
 };
 
 const PLACEHOLDER_PATTERNS = [

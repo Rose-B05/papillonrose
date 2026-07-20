@@ -350,12 +350,6 @@ export default function Footer() {
               Location de mobilier et décoration pour événements, mariages et
               réceptions.
             </p>
-            <a
-              href="/reservation"
-              className="inline-flex items-center gap-2 bg-[#C9948E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#D4A09A] transition-colors whitespace-nowrap"
-            >
-              Demander un devis
-            </a>
           </div>
 
           {/* Colonne 2 — Menus empilés */}
@@ -412,12 +406,6 @@ export default function Footer() {
               Location de mobilier et décoration pour événements, mariages et
               réceptions.
             </p>
-            <a
-              href="/reservation"
-              className="inline-flex items-center gap-2 bg-[#C9948E] text-[#1C1A17] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#D4A09A] transition-colors whitespace-nowrap"
-            >
-              Demander un devis
-            </a>
           </div>
 
           {/* Colonne 2 — Menus empilés */}
