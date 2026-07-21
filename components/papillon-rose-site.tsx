@@ -914,7 +914,7 @@ export default function PapillonRoseSite() {
                     <div className="relative z-10 w-14 h-14 rounded-full bg-[#C9948E]/10 dark:bg-[#C9948E]/10 flex items-center justify-center mb-4 group-hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 transition-colors">
                       <span
                         style={DP}
-                        className="absolute -top-1 -right-1 w-5 h-5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-[10px] font-bold rounded-full flex items-center justify-center"
+                        className="absolute -top-2 -right-2 text-2xl font-bold text-[#C9948E] dark:text-[#E8B4AE]"
                       >
                         {step}
                       </span>
@@ -922,7 +922,7 @@ export default function PapillonRoseSite() {
                     </div>
                     <h3
                       style={DP}
-                      className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1.5"
+                      className={`text-sm ${step === 2 ? "font-bold" : "font-semibold"} text-[#2E2E2E] dark:text-neutral-100 mb-1.5`}
                     >
                       {title}
                     </h3>
