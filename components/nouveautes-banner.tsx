@@ -76,7 +76,7 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
         )}
       </div>
 
-      <div className="relative rounded-none md:rounded-2xl overflow-hidden bg-[#F8F5F0] dark:bg-neutral-800 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
+      <div className="relative -mx-5 md:mx-0 rounded-none md:rounded-2xl overflow-hidden bg-[#F8F5F0] dark:bg-neutral-800 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
         {/* Image / Video background */}
         {item.type === "image" && (
           <div className="absolute inset-0">
