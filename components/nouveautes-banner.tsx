@@ -92,7 +92,8 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
           <div className="absolute inset-0 overflow-hidden">
             <video
               src={item.mediaUrl}
-              className="absolute top-[-28%] left-[-10%] w-[120%] h-[148%] object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ objectPosition: "50% 25%" }}
               autoPlay
               muted={muted}
               loop
