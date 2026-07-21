@@ -52,7 +52,7 @@ export default function AProposPage() {
 
         {/* Notre histoire */}
         <section className="mt-8 mb-16 -mx-5 md:-mx-10 px-5 md:px-10">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_500px] gap-8 md:gap-12 items-start">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_380px] gap-8 md:gap-12 items-center">
             <div>
               <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
                 Notre histoire
@@ -120,7 +120,7 @@ export default function AProposPage() {
                 alt="Femme en robe élégante, illustration Papillon Rose"
                 width={1254}
                 height={1254}
-                className="w-full max-w-[340px] md:max-w-[420px] h-auto rounded-2xl object-contain"
+                className="w-full max-w-[320px] md:max-w-[380px] h-auto rounded-2xl object-contain"
                 priority
               />
             </div>
