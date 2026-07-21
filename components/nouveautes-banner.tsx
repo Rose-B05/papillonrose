@@ -76,7 +76,7 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
         )}
       </div>
 
-      <div className="relative rounded-2xl overflow-hidden bg-[#F8F5F0] dark:bg-neutral-800 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
+      <div className="relative rounded-none md:rounded-2xl overflow-hidden bg-[#F8F5F0] dark:bg-neutral-800 shadow-sm border border-black/[0.07] dark:border-white/[0.08]">
         {/* Image / Video background */}
         {item.type === "image" && (
           <div className="absolute inset-0">
@@ -92,7 +92,7 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
           <div className="absolute inset-0 overflow-hidden">
             <video
               src={item.mediaUrl}
-              className="absolute top-[-22%] left-0 w-full h-[140%] object-cover"
+              className="absolute top-[-15%] h-[115%] md:top-[-22%] md:h-[140%] left-0 w-full object-cover"
               autoPlay
               muted={muted}
               loop
