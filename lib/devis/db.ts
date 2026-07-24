@@ -4,6 +4,7 @@
 
 import { kv } from "@vercel/kv"
 import type { Devis } from "./types"
+import type { Booking } from "@/lib/types"
 import type { Produit } from "@/data/produits"
 
 // ─── Devis CRUD (KV) ─────────────────────────────────────────────────────────
@@ -117,10 +118,10 @@ export function calculateDevis(
 }
 
 // ─── Generate PDF (server-side via @react-pdf/renderer) ───────────────────────
-export async function generateDevisPdf(devis: Devis): Promise<Buffer> {
+export async function generateDevisPdf(booking: Booking): Promise<Buffer> {
   const { renderToBuffer } = await import("@react-pdf/renderer")
   const { devisPdfTemplate } = await import("./pdf-template")
-  const pdfElement = devisPdfTemplate(devis)
+  const pdfElement = devisPdfTemplate(booking)
   const buffer = await renderToBuffer(pdfElement)
   return buffer as unknown as Buffer
 }
