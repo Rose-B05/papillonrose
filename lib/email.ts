@@ -212,6 +212,30 @@ export async function sendPasswordResetEmail(to: string, resetUrl: string) {
   })
 }
 
+export async function sendQuoteExpiryReminder(to: string, quoteNumber: string, clientPrenom: string, lienDevis: string, joursRestants: number) {
+  const transport = getTransport()
+  await transport.sendMail({
+    from: `"Papillon Rose" <${FROM}>`,
+    to,
+    subject: `Votre devis n°${quoteNumber} expire bientôt - Papillon Rose`,
+    html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
+      <h2 style="color:#C9948E">Votre devis expire bientôt</h2>
+      <p>Bonjour ${clientPrenom},</p>
+      <p>Votre devis <strong>n°${quoteNumber}</strong> arrive bientôt à expiration.</p>
+      <p style="background:#fef3c7;padding:12px 16px;border-radius:8px;margin:16px 0">
+        ⏳ Il vous reste <strong style="color:#d97706">${joursRestants} jour${joursRestants > 1 ? "s" : ""}</strong> pour confirmer votre réservation.
+      </p>
+      <p>Si vous souhaitez réserver ces articles pour vos dates, nous vous invitons à finaliser votre commande dès maintenant.</p>
+      <p style="text-align:center;margin:24px 0">
+        <a href="${lienDevis}" style="background:#C9948E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Voir mon devis</a>
+      </p>
+      <p style="color:#888;font-size:12px">Passé ce délai, les disponibilités pourraient ne plus être garanties.</p>
+      <p>Pour toute question, contactez-nous à <a href="mailto:papillonrosebertha@gmail.com">papillonrosebertha@gmail.com</a>.</p>
+      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+    </div>`,
+  })
+}
+
 export async function sendChatbotLead(data: {
   nom: string
   prenom: string

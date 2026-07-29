@@ -40,6 +40,7 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 md:gap-4">
         {produits.map((p) => {
           const inCart = isInCart(p.id)
+          const outOfStock = getEffectiveStock(p) === 0 || p.badge === "epuise"
           return (
             <div
               key={p.id}
@@ -61,6 +62,13 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                   <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10">
                     Unique
                   </span>
+                )}
+                {(getEffectiveStock(p) === 0 || p.badge === "epuise") && (
+                  <div className="absolute inset-0 bg-white/70 dark:bg-black/60 flex items-center justify-center z-10">
+                    <span className="text-[10px] text-gray-400 dark:text-gray-300 uppercase tracking-widest font-medium">
+                      Indisponible
+                    </span>
+                  </div>
                 )}
               </Link>
 
@@ -84,17 +92,17 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                 <div className="mt-auto pt-2.5 flex items-center gap-2">
                   <button
                     onClick={() => onAddCart(p.id)}
-                    disabled={inCart}
-                    aria-label={inCart ? "Déjà dans le panier" : "Ajouter au panier"}
+                    disabled={inCart || outOfStock}
+                    aria-label={inCart ? "Déjà dans le panier" : outOfStock ? "Indisponible" : "Ajouter au panier"}
                     className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
-                      inCart
+                      inCart || outOfStock
                         ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-white/60 cursor-not-allowed"
                         : "bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#B8807A]"
                     }`}
                   >
                     <ShoppingBag size={13} />
-                    <span className="hidden sm:inline">{inCart ? "Déjà dans le panier" : "Ajouter au panier"}</span>
-                    <span className="sm:hidden">{inCart ? "Ajouté" : "Ajouter"}</span>
+                    <span className="hidden sm:inline">{inCart ? "Déjà dans le panier" : outOfStock ? "Indisponible" : "Ajouter au panier"}</span>
+                    <span className="sm:hidden">{inCart ? "Ajouté" : outOfStock ? "Indisponible" : "Ajouter"}</span>
                   </button>
                   <button
                     onClick={() => onFav(p.id)}
