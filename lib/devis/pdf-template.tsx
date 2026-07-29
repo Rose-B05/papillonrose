@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   hr: { borderBottomWidth: 1.2, borderBottomColor: COLORS.rose, marginBottom: 14 },
   eventTitle: { fontFamily: "PlayfairDisplay", fontWeight: 700, fontSize: 19, color: COLORS.ink, marginBottom: 4 },
   eventMeta: { fontSize: 9.5, color: COLORS.grey, lineHeight: 1.5, marginBottom: 14 },
+  eventType: { fontSize: 10.5, color: COLORS.gold, fontFamily: "PlayfairDisplay", marginBottom: 2 },
 
   table: { borderRadius: 4, overflow: "hidden", marginBottom: 12 },
   tHeadRow: { flexDirection: "row", backgroundColor: COLORS.roseDark, paddingVertical: 7, paddingHorizontal: 8 },
@@ -148,7 +149,8 @@ export function devisPdfTemplate(booking: Booking) {
   const docType = booking.balancePaidAt ? "FACTURE" : "DEVIS"
   const docNumber = booking.quoteNumber || `BK-${booking.id}`
   const clientName = `${booking.client.prenom} ${booking.client.nom}`
-  const eventTitle = `${booking.client.typeEvenement} ${clientName}`
+  const eventTitle = clientName
+  const eventType = booking.client.typeEvenement
   const depositAmount = booking.depositAmount
   const remainingAmount = booking.balancePaidAt ? 0 : Math.max(0, booking.totalTtc - depositAmount)
   const totalLabel = booking.balancePaidAt
@@ -167,9 +169,14 @@ export function devisPdfTemplate(booking: Booking) {
     const lineTotal = price * item.qty * days
     const note = item.variantLabel ? `(${item.variantLabel})` : undefined
 
+    const dayNote = days > 1
+      ? `${days} jours de location`
+      : undefined
+
     return {
       description: product?.nom || `Produit #${item.productId}`,
       note,
+      dayNote,
       qty: item.qty,
       unitPrice: price,
       total: lineTotal,
@@ -208,10 +215,11 @@ export function devisPdfTemplate(booking: Booking) {
         <View style={styles.hr} />
 
         <Text style={styles.eventTitle}>{eventTitle}</Text>
+        {eventType !== "Autre" && eventType !== "" ? (
+          <Text style={styles.eventType}>{eventType}</Text>
+        ) : null}
         <Text style={styles.eventMeta}>
           {formatDate(booking.client.dateEvenement)} · {booking.client.lieuEvenement}
-          {"\n"}
-          {booking.client.typeEvenement}
           {booking.client.nbInvites ? ` — ${booking.client.nbInvites} invités` : ""}
         </Text>
 
@@ -241,6 +249,9 @@ export function devisPdfTemplate(booking: Booking) {
                   {item.description}
                   {item.note ? <Text style={styles.tNoteText}> {item.note}</Text> : null}
                 </Text>
+                {item.dayNote ? (
+                  <Text style={styles.tNoteText}>{item.dayNote}</Text>
+                ) : null}
               </View>
               <Text style={styles.tQtyCell}>{item.qty || "—"}</Text>
               <Text style={styles.tPriceCell}>{formatEUR(item.unitPrice)}</Text>
