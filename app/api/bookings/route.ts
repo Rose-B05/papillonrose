@@ -44,6 +44,9 @@ export async function POST(request: NextRequest) {
       if (!item.qty || item.qty < 1 || item.qty > 100 || typeof item.qty !== "number") {
         return NextResponse.json({ error: "Quantité invalide" }, { status: 400 })
       }
+      if (!item.dateStart || !item.dateEnd) {
+        return NextResponse.json({ error: "Dates de location requises pour chaque article" }, { status: 400 })
+      }
     }
 
     // Verify product exists & enforce stock limits per date range

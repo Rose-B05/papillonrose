@@ -10,7 +10,9 @@ import type { Booking } from "@/lib/types"
 
 function formatDate(dateStr: string) {
   if (!dateStr) return "—"
-  return new Date(dateStr).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return "Dates à confirmer"
+  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })
 }
 
 function getProductName(productId: number): string {

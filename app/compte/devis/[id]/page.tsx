@@ -151,9 +151,13 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
               const product = getProduct(item.productId)
               if (!product) return null
               const prixUnitaire = getPrix(product, item.variantLabel)
-              const nbJours = Math.max(1, Math.ceil(
-                (new Date(item.dateEnd).getTime() - new Date(item.dateStart).getTime()) / (1000 * 60 * 60 * 24)
-              ))
+              const hasValidDates = item.dateStart && item.dateEnd
+              const startMs = hasValidDates ? new Date(item.dateStart).getTime() : NaN
+              const endMs = hasValidDates ? new Date(item.dateEnd).getTime() : NaN
+              const nbJours = hasValidDates && !isNaN(startMs) && !isNaN(endMs)
+                ? Math.max(1, Math.ceil((endMs - startMs) / (1000 * 60 * 60 * 24)))
+                : 0
+              const totalLigne = nbJours > 0 ? (prixUnitaire * item.qty * nbJours) : NaN
               return (
                 <div key={idx} className="flex gap-3 bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl p-3">
                   <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-200 dark:bg-neutral-800 shrink-0">
@@ -166,10 +170,10 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                     </p>
                     <p className="text-xs text-gray-400 dark:text-white/60 mt-0.5">
                       {formatDateFr(item.dateStart)} → {formatDateFr(item.dateEnd)}
-                      <br />× {item.qty} &middot; {prixUnitaire.toFixed(2)} € / jour
+                      {nbJours > 0 && <><br />× {item.qty} &middot; {prixUnitaire.toFixed(2)} € / jour</>}
                     </p>
-                    <p className="text-sm font-semibold text-[#C9948E] dark:text-[#E8B4AE] mt-1">
-                      {(prixUnitaire * item.qty * nbJours).toFixed(2)} €
+                    <p className={`text-sm font-semibold mt-1 ${isNaN(totalLigne) ? "text-gray-400" : "text-[#C9948E] dark:text-[#E8B4AE]"}`}>
+                      {isNaN(totalLigne) ? "Prix sur devis" : `${totalLigne.toFixed(2)} €`}
                     </p>
                   </div>
                 </div>

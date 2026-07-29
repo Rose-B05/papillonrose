@@ -232,6 +232,11 @@ export default function ReservationPage() {
         dateStart: dateEdits[i.productId]?.start || "",
         dateEnd: dateEdits[i.productId]?.end || "",
       }))
+
+      const missingDates = cartItems.filter((i) => !i.dateStart || !i.dateEnd)
+      if (missingDates.length > 0) {
+        throw new Error("Veuillez choisir des dates de location pour tous les articles avant de confirmer")
+      }
       const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
