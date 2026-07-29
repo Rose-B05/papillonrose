@@ -38,6 +38,8 @@ export default function ReservationPage() {
   const [deliveryResult, setDeliveryResult] = useState<DeliveryResult | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [showErrors, setShowErrors] = useState(false)
+  const [conditionsError, setConditionsError] = useState("")
+  const [dateError, setDateError] = useState("")
   const [isDark, setIsDark] = useState(false)
   // Account step
   const [accountMode, setAccountMode] = useState<"register" | "login">("register")
@@ -451,7 +453,8 @@ export default function ReservationPage() {
                 )
               })}
             </div>
-            <NextButton onClick={() => setStep("client")} disabled={!validateDates()} label="Continuer" />
+            {dateError && <p className="text-red-600 dark:text-red-400 text-sm mb-4">{dateError}</p>}
+            <button onClick={() => { setDateError(""); if (!validateDates()) { setDateError("Veuillez choisir des dates de location pour chaque article"); return } setStep("client") }} className="w-full bg-[#C9948E] dark:bg-[#C9948E] text-white py-3.5 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors mt-6 flex items-center justify-center gap-2">Continuer <ArrowRight size={14} /></button>
           </div>
         )}
 
@@ -464,7 +467,7 @@ export default function ReservationPage() {
                 Retour à l&apos;accueil
               </button>
             </div>
-            <form onSubmit={(e) => { e.preventDefault(); const errs = validateClientFields(); setFieldErrors(errs); setShowErrors(true); if (Object.keys(errs).length > 0) { const firstKey = Object.keys(errs)[0]; document.getElementById(`field-${firstKey}`)?.scrollIntoView({ behavior: "smooth", block: "center" }); } else { setStep("compte") } }} className="space-y-4">
+            <form onSubmit={(e) => { e.preventDefault(); setConditionsError(""); const errs = validateClientFields(); setFieldErrors(errs); setShowErrors(true); if (!acceptedConditions) { setConditionsError("Veuillez accepter les conditions de location"); document.getElementById("conditions-checkbox")?.scrollIntoView({ behavior: "smooth", block: "center" }); return } if (Object.keys(errs).length > 0) { const firstKey = Object.keys(errs)[0]; document.getElementById(`field-${firstKey}`)?.scrollIntoView({ behavior: "smooth", block: "center" }); } else { setStep("compte") } }} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <InputField fieldId="field-prenom" label="Prénom" value={client.prenom} onChange={(v) => { setClient((c) => ({ ...c, prenom: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.prenom; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.prenom : undefined} />
                 <InputField fieldId="field-nom" label="Nom" value={client.nom} onChange={(v) => { setClient((c) => ({ ...c, nom: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.nom; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.nom : undefined} />
@@ -771,6 +774,7 @@ export default function ReservationPage() {
               </div>
 
               {/* Checkbox obligatoire */}
+              <div id="conditions-checkbox">
               <label className="flex items-start gap-3 bg-white dark:bg-neutral-800 rounded-2xl px-5 py-4 border border-black/[0.07] dark:border-white/[0.08] shadow-sm cursor-pointer select-none">
                 <div
                   className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors mt-0.5"
@@ -779,7 +783,7 @@ export default function ReservationPage() {
                     backgroundColor: acceptedConditions ? "#C9948E" : "transparent",
                     borderRadius: "6px",
                   }}
-                  onClick={() => setAcceptedConditions(!acceptedConditions)}
+                  onClick={() => { setAcceptedConditions(!acceptedConditions); setConditionsError("") }}
                 >
                   {acceptedConditions && (
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -789,7 +793,7 @@ export default function ReservationPage() {
                   <input
                     type="checkbox"
                     checked={acceptedConditions}
-                    onChange={() => setAcceptedConditions(!acceptedConditions)}
+                    onChange={() => { setAcceptedConditions(!acceptedConditions); setConditionsError("") }}
                     className="absolute inset-0 opacity-0 cursor-pointer"
                   />
                 </div>
@@ -800,8 +804,10 @@ export default function ReservationPage() {
                   </a>
                 </span>
               </label>
+              {conditionsError && <p className="text-red-600 dark:text-red-400 text-xs mt-2">{conditionsError}</p>}
+              </div>
 
-              <button type="submit" disabled={!validateClient() || !acceptedConditions || loading}
+              <button type="submit" disabled={loading}
                 className="w-full bg-[#C9948E] dark:bg-[#C9948E] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                 {loading ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />}
                 {loading ? "Envoi en cours..." : "Continuer"}
@@ -982,10 +988,10 @@ function SelectField({ label, value, onChange, options, required, error, fieldId
     <div>
       <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
       <select id={fieldId} value={value} onChange={(e) => onChange(e.target.value)} onBlur={onBlur} required={required}
-        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
-        style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}>
+        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'} ${value ? 'text-[#2E2E2E] dark:text-neutral-100' : 'text-gray-400 dark:text-white/50'}`}
+        style={{ color: value ? "#2E2E2E" : "#9ca3af", WebkitTextFillColor: value ? "#2E2E2E" : "#9ca3af" } as React.CSSProperties}>
         <option value="">Sélectionner</option>
-        {options.map((o) => <option key={o} value={o}>{o}</option>)}
+        {options.map((o) => <option key={o} value={o} className="text-[#2E2E2E] dark:text-neutral-100">{o}</option>)}
       </select>
       {error && <p className="text-red-600 dark:text-red-400 text-xs mt-1">{error}</p>}
     </div>
