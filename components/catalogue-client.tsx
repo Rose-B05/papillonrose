@@ -138,7 +138,7 @@ export default function CatalogueClient() {
         }
         return true
       }),
-    [search, category, tagFilters]
+    [search, category, tagFilters, VISIBLE_PRODUCTS]
   )
 
   return (
