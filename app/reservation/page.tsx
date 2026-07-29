@@ -478,7 +478,7 @@ export default function ReservationPage() {
                 <InputField fieldId="field-dateEvenement" label="Date de l'événement" type="date" value={client.dateEvenement} onChange={(v) => { setClient((c) => ({ ...c, dateEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.dateEvenement; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.dateEvenement : undefined} />
               </div>
               <InputField fieldId="field-lieuEvenement" label="Lieu de l'événement (adresse)" value={client.lieuEvenement} onChange={(v) => { setClient((c) => ({ ...c, lieuEvenement: v })); if (showErrors) setFieldErrors((e) => { const n = { ...e }; delete n.lieuEvenement; return n }) }} onBlur={() => { if (showErrors) { const errs = validateClientFields(); setFieldErrors(errs) } }} required error={showErrors ? fieldErrors.lieuEvenement : undefined} />
-              <InputField label="Nombre d'invités" type="number" value={String(client.nbInvites || "")} onChange={(v) => setClient((c) => ({ ...c, nbInvites: Number(v) }))} required />
+              <InputField label="Nombre d'invités" type="number" value={String(client.nbInvites || "")} onChange={(v) => setClient((c) => ({ ...c, nbInvites: Number(v) }))} />
               <div className="space-y-3">
                 {/* Option retrait sur place */}
                 <div className="flex items-center gap-3 bg-white dark:bg-neutral-800 rounded-2xl px-4 sm:px-5 py-3.5 sm:py-4 border border-black/[0.07] dark:border-white/[0.08] shadow-sm">
