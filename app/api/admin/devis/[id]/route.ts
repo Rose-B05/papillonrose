@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getBooking, saveBooking } from "@/lib/db"
+import { getBooking, saveBooking, unblockDates } from "@/lib/db"
 import { COOKIE_NAME } from "@/lib/auth"
 
 export async function GET(
@@ -52,5 +52,10 @@ export async function PATCH(
   booking.updatedAt = new Date().toISOString()
 
   await saveBooking(booking)
+
+  if (booking.status === "cancelled") {
+    await unblockDates(id)
+  }
+
   return NextResponse.json({ devis: booking })
 }
