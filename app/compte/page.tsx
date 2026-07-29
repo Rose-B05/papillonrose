@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Eye, EyeOff } from "lucide-react"
 import { produits } from "@/data/produits"
+import { prixTtc } from "@/lib/pricing"
 
 interface Customer {
   email: string
@@ -579,7 +580,7 @@ export default function ComptePage() {
                     <div className="p-2.5">
                       <p className="text-xs font-medium text-[#2E2E2E] dark:text-neutral-100 truncate">{p.nom}</p>
                       <p className="text-xs text-[#C9948E] dark:text-[#E8B4AE] font-semibold mt-0.5">
-                        {typeof p.prix === "number" ? `${p.prix} €` : p.prix}
+                        {prixTtc(p.prix).toFixed(2)} €
                       </p>
                     </div>
                   </Link>

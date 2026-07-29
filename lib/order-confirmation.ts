@@ -67,7 +67,7 @@ function buildItemsRows(booking: Booking): string {
               )
             )
           : 1
-      const lineTotal = parsePrix(product?.prix || 0) * item.qty * days
+      const lineTotal = Math.round(parsePrix(product?.prix || 0) * item.qty * days * 1.2 * 100) / 100
       const period =
         item.dateStart && item.dateEnd
           ? `${formatDateFr(item.dateStart)} → ${formatDateFr(item.dateEnd)}`
@@ -103,7 +103,7 @@ function buildSuggestionsHtml(booking: Booking): string {
           <a href="${SITE_URL}/catalogue?produit=${p.id}" style="text-decoration:none;color:inherit">
             <img src="${imageUrl}" alt="${p.nom}" style="width:100%;max-width:120px;height:auto;border-radius:8px;object-fit:cover;margin-bottom:6px" />
             <p style="font-size:12px;font-weight:600;color:#2E2E2E;margin:0">${p.nom}</p>
-            <p style="font-size:11px;color:#C9948E;margin:2px 0 0">${formatPrix(parsePrix(p.prix))} € / jour</p>
+            <p style="font-size:11px;color:#C9948E;margin:2px 0 0">${(Math.round(parsePrix(p.prix) * 1.2 * 100) / 100).toFixed(2)} € TTC / jour</p>
           </a>
         </td>`
     })
@@ -183,11 +183,7 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
   <!-- Totals -->
   <div style="background:#2E2E2E;border-radius:12px;padding:20px;margin:20px 0;color:white">
     <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-      <span style="opacity:0.7">Sous-total HT</span>
-      <span style="font-weight:600">${formatPrix(booking.totalHt)} €</span>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-      <span style="opacity:0.7">Total TTC (livraison incluse)</span>
+      <span style="opacity:0.7">Total TTC</span>
       <span style="font-weight:700;font-size:18px;color:#C9948E">${formatPrix(totalItems)} €</span>
     </div>
     <div style="display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1)">

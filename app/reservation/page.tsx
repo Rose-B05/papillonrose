@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useCart } from "@/components/cart-context"
 import { produits } from "@/data/produits"
 import AvailabilityCalendar from "@/components/calendar"
-import { parsePrix, calcTotalHt, calcTtc, calcDeposit, formatDateFr, getPrixForProduct } from "@/lib/utils"
+import { parsePrix, calcTotalHt, calcTtc, calcDeposit, formatDateFr, getPrixForProduct, TVA_RATE } from "@/lib/utils"
 import { calcRentalDates, calculateLateFee, getRuleSummary, formatDateLong, type RentalDates } from "@/lib/rental-dates"
 import { calcDeliveryFee, type DeliveryResult } from "@/lib/delivery"
 import { ShoppingBag, ArrowRight, ArrowLeft, Check, X, Trash2, Plus, Minus, Loader2, Package, RotateCcw, AlertTriangle, Truck, LogIn, UserPlus } from "lucide-react"
@@ -363,7 +363,7 @@ export default function ReservationPage() {
                         <div className="flex-1 min-w-0">
                           <p className="font-medium text-sm text-[#2E2E2E] dark:text-neutral-100">{p?.nom}</p>
                           {item.variantLabel && <p className="text-[11px] text-[#C9948E] dark:text-[#E8B4AE] font-medium">{item.variantLabel}</p>}
-                          <p className="text-[11px] text-gray-400 dark:text-white/60 mt-0.5">{parsePrix(itemPrix)} € / jour</p>
+                          <p className="text-[11px] text-gray-400 dark:text-white/60 mt-0.5">{Math.round(parsePrix(itemPrix) * (1 + TVA_RATE) * 100) / 100} € TTC / jour</p>
                           <div className="flex items-center gap-2 mt-2">
                             <button onClick={() => updateItem(item.productId, item.variantLabel, { qty: Math.max(1, item.qty - 1) })} className="w-6 h-6 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm"><Minus size={10} /></button>
                             <span className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 w-7 text-center">{item.qty}</span>
@@ -1010,14 +1010,6 @@ function fmt(n: number) {
 function Totals({ totalHt, totalTtc, deposit, deliveryFee }: { totalHt: number; totalTtc: number; deposit: number; deliveryFee?: number }) {
   return (
     <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 shadow-sm border border-black/[0.07] dark:border-white/[0.08] mb-6">
-      <div className="flex justify-between text-sm mb-2">
-        <span className="text-gray-500 dark:text-white/70">Total HT</span>
-        <span className="font-semibold">{fmt(totalHt)}</span>
-      </div>
-      <div className="flex justify-between text-sm mb-2">
-        <span className="text-gray-500 dark:text-white/70">TVA (20%)</span>
-        <span className="font-semibold">{fmt(totalTtc - totalHt)}</span>
-      </div>
       {typeof deliveryFee === "number" && deliveryFee > 0 && (
         <div className="flex justify-between text-sm mb-2">
           <span className="text-gray-400 dark:text-white/60 flex items-center gap-1.5">

@@ -7,7 +7,7 @@ import { useFavorites } from "@/components/favorites-context"
 import { useCart } from "@/components/cart-context"
 import { type Produit } from "@/data/produits"
 import { getProductSlug } from "@/lib/product-helpers"
-import { formatPrix } from "@/lib/utils"
+import { prixTtc } from "@/lib/pricing"
 import ProductImage from "@/components/product-image"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
@@ -102,8 +102,8 @@ export default function FavorisClient() {
                       {p.nom}
                     </h3>
                     <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
-                      {formatPrix(p.prix)}€
-                      <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">/jour</span>
+                      {prixTtc(p.prix).toFixed(2)} €
+                      <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">TTC / jour</span>
                     </p>
                   </div>
                   <div className="mt-auto pt-2.5 flex items-center gap-2">

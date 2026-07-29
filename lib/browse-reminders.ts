@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
 import { getProductViews, markReminderSent, getBookings, saveEmailLog, cleanupOldProductViews } from "./db"
 import { getCustomer } from "./customer-auth"
-import { formatPrix } from "./utils"
+
 import type { ProductView, EmailLog } from "./types"
 
 const FROM = process.env.SMTP_FROM || "papillonrosebertha@gmail.com"
@@ -62,7 +62,7 @@ function buildReminderEmail(
             <a href="${SITE_URL}/catalogue?produit=${s.id}" style="text-decoration:none;color:inherit">
               <img src="${img}" alt="${s.nom}" style="width:100%;max-width:120px;height:auto;border-radius:8px;object-fit:cover;margin-bottom:6px" />
               <p style="font-size:12px;font-weight:600;color:#2E2E2E;margin:0">${s.nom}</p>
-              <p style="font-size:11px;color:#C9948E;margin:2px 0 0">${formatPrix(parsePrix(s.prix))} € / jour</p>
+              <p style="font-size:11px;color:#C9948E;margin:2px 0 0">${(Math.round(parsePrix(s.prix) * 1.2 * 100) / 100).toFixed(2)} € TTC / jour</p>
             </a>
           </td>`
       })
@@ -102,7 +102,7 @@ function buildReminderEmail(
   <div style="background:#f8f5f0;border-radius:12px;padding:20px;margin:20px 0">
     <h3 style="color:#2E2E2E;font-size:18px;margin:0 0 4px;text-align:center">${product.nom}</h3>
     <p style="color:#C9948E;font-size:16px;font-weight:700;text-align:center;margin:8px 0 16px">
-      ${formatPrix(parsePrix(product.prix))} € / jour
+      ${(Math.round(parsePrix(product.prix) * 1.2 * 100) / 100).toFixed(2)} € TTC / jour
     </p>
     <p style="text-align:center;margin:0">
       <a href="${productUrl}" style="display:inline-block;background:#C9948E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600">

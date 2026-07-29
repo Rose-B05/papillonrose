@@ -14,6 +14,7 @@ import {
 } from "@/lib/product-helpers"
 import { getRobotsMeta } from "@/lib/site-mode"
 import { getAdminProducts } from "@/lib/db"
+import { prixTtc } from "@/lib/pricing"
 import ProductImage from "@/components/product-image"
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
@@ -118,8 +119,8 @@ export default async function CategoryPage({ params }: Props) {
                 <h3 className="text-[13px] font-semibold text-[#2E2E2E] dark:text-neutral-100 leading-snug truncate">{p.nom}</h3>
                 {p.dimension && <p className="text-[10px] text-gray-400 dark:text-white/60 truncate">{p.dimension}</p>}
                 <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
-                  {typeof p.prix === "number" ? `${p.prix} €` : `${p.prix} €`}
-                  <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">/jour</span>
+                  {prixTtc(p.prix).toFixed(2)} €
+                  <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">TTC / jour</span>
                 </p>
               </div>
             </Link>

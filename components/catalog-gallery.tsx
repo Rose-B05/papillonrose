@@ -7,6 +7,7 @@ import type { CartItem } from "@/lib/types"
 import GalleryLightbox from "./gallery-lightbox"
 import { Heart, ShoppingBag } from "lucide-react"
 import { getProductSlug } from "@/lib/product-helpers"
+import { prixTtc } from "@/lib/pricing"
 import ProductImage from "@/components/product-image"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
@@ -84,8 +85,8 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                     <p className="text-[10px] text-gray-400 dark:text-white/60 truncate">{p.dimension}</p>
                   )}
                   <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
-                    {typeof p.prix === "number" ? `${p.prix} €` : `${p.prix} €`}
-                    <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">/jour</span>
+                    {prixTtc(p.prix).toFixed(2)} €
+                    <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">TTC / jour</span>
                   </p>
                 </div>
 
