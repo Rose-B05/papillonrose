@@ -117,6 +117,10 @@ const styles = StyleSheet.create({
   thanks: { fontFamily: "PlayfairDisplay", fontWeight: 700, fontSize: 12, color: COLORS.roseDark, marginBottom: 3 },
   thanksSub: { fontSize: 9.5, color: COLORS.grey, lineHeight: 1.5 },
   signLabel: { fontSize: 9, color: COLORS.grey, fontStyle: "italic" },
+  signatureBox: { width: 200, borderWidth: 1, borderColor: COLORS.lineGrey, borderRadius: 4, padding: 10 },
+  signatureBoxLabel: { fontSize: 9, color: COLORS.grey, fontStyle: "italic", marginBottom: 10 },
+  sigDateLine: { fontSize: 9, color: COLORS.ink, borderBottomWidth: 0.5, borderBottomColor: COLORS.lineGrey, paddingBottom: 4, marginBottom: 10 },
+  sigSignLine: { fontSize: 9, color: COLORS.ink, borderBottomWidth: 0.5, borderBottomColor: COLORS.lineGrey, paddingBottom: 18 },
 
   footer: { position: "absolute", bottom: 30, left: 46, right: 46 },
   footerHr: { borderBottomWidth: 0.6, borderBottomColor: COLORS.lineGrey, marginBottom: 6 },
@@ -293,8 +297,10 @@ export function devisPdfTemplate(booking: Booking) {
             <Text style={styles.thanks}>Merci de votre confiance.</Text>
             <Text style={styles.thanksSub}>Cordialement,{"\n"}Rose — {COMPANY.name}</Text>
           </View>
-          <View>
-            <Text style={styles.signLabel}>Bon pour accord — date et signature du client :</Text>
+          <View style={styles.signatureBox}>
+            <Text style={styles.signatureBoxLabel}>Bon pour accord</Text>
+            <Text style={styles.sigDateLine}>Date :</Text>
+            <Text style={styles.sigSignLine}>Signature :</Text>
           </View>
         </View>
 
