@@ -145,19 +145,17 @@ function resolveProduct(productId: number) {
 
 export function devisPdfTemplate(booking: Booking) {
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
-  const docType = booking.status === "solde_paye" ? "FACTURE" : "DEVIS"
+  const docType = booking.balancePaidAt ? "FACTURE" : "DEVIS"
   const docNumber = booking.quoteNumber || `BK-${booking.id}`
   const clientName = `${booking.client.prenom} ${booking.client.nom}`
   const eventTitle = `${booking.client.typeEvenement} ${clientName}`
   const depositAmount = booking.depositAmount
-  const remainingAmount = Math.max(0, booking.totalTtc - depositAmount)
-  const isPaid = booking.status === "confirmed" && !!booking.depositPaidAt
-  const isReturned = booking.status === "returned"
-  const totalLabel = isPaid || isReturned
-    ? `TOTAL — réglé le ${booking.depositPaidAt ? formatDate(booking.depositPaidAt) : ""}`
+  const remainingAmount = booking.balancePaidAt ? 0 : Math.max(0, booking.totalTtc - depositAmount)
+  const totalLabel = booking.balancePaidAt
+    ? `TOTAL — réglé le ${formatDate(booking.balancePaidAt)}`
     : "TOTAL à régler"
-  const soldeLabel = isPaid || isReturned
-    ? "Solde réglé"
+  const soldeLabel = booking.balancePaidAt
+    ? `Solde réglé le ${formatDate(booking.balancePaidAt)}`
     : "Solde restant dû"
 
   const items = booking.items.map((item) => {

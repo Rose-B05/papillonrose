@@ -40,6 +40,7 @@ export interface Booking {
   updatedAt: string
   paymentIntentId?: string
   depositPaidAt?: string
+  balancePaidAt?: string
   returnedAt?: string
 }
 

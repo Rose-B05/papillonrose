@@ -30,24 +30,26 @@ export async function PATCH(
 
   const { id } = await params
   const body = await request.json()
-  const { statut } = body
+  const { statut, balancePaidAt } = body
 
   const booking = await getBooking(id)
   if (!booking) {
     return NextResponse.json({ error: "Réservation introuvable" }, { status: 404 })
   }
 
-  const validStatuses = ["pending-quote", "quote-sent", "deposit-pending", "confirmed", "cancelled", "returned"]
-  if (!validStatuses.includes(statut)) {
-    return NextResponse.json({ error: "Statut invalide" }, { status: 400 })
+  if (statut !== undefined) {
+    const validStatuses = ["pending-quote", "quote-sent", "deposit-pending", "confirmed", "cancelled", "returned"]
+    if (!validStatuses.includes(statut)) {
+      return NextResponse.json({ error: "Statut invalide" }, { status: 400 })
+    }
+    booking.status = statut
   }
 
-  booking.status = statut
+  if (balancePaidAt !== undefined) {
+    booking.balancePaidAt = balancePaidAt
+  }
+
   booking.updatedAt = new Date().toISOString()
-
-  if (statut === "cancelled") {
-    booking.status = "cancelled"
-  }
 
   await saveBooking(booking)
   return NextResponse.json({ devis: booking })

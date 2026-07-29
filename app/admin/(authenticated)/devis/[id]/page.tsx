@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation"
 import { useAdminHeader } from "@/components/admin/AdminHeaderContext"
 import DevisStatutBadge from "@/components/admin/devis/DevisStatutBadge"
 import { produits } from "@/data/produits"
-import { ArrowLeft, Send, XCircle } from "lucide-react"
+import { ArrowLeft, Send, XCircle, Download, CheckCircle } from "lucide-react"
 import type { Booking } from "@/lib/types"
 
 function formatDate(dateStr: string) {
@@ -36,9 +36,25 @@ export default function DevisDetailPage() {
   const [sending, setSending] = useState(false)
 
   const headerTitle = loading ? "Réservation" : !booking ? "Réservation introuvable" : booking.quoteNumber || booking.id
+  const docType = booking?.balancePaidAt ? "Facture" : "Devis"
+
   const headerAction = booking && !loading ? (
     <div className="flex items-center gap-2">
-      {(booking.status === "pending-quote") && (
+      {booking.status === "confirmed" && !booking.balancePaidAt && (
+        <button
+          onClick={handleMarkSold}
+          className="px-3 py-1.5 text-xs bg-[#7C9473] text-white rounded-lg hover:bg-[#6B8362] transition-colors"
+        >
+          <CheckCircle size={13} className="inline mr-1" />
+          Marquer comme soldé
+        </button>
+      )}
+      {booking.balancePaidAt && (
+        <span className="text-xs text-[#7C9473] font-medium">
+          Soldé le {formatDate(booking.balancePaidAt)}
+        </span>
+      )}
+      {booking.status === "pending-quote" && !booking.balancePaidAt && (
         <button
           onClick={handleSend}
           disabled={sending}
@@ -57,6 +73,13 @@ export default function DevisDetailPage() {
           <XCircle size={15} />
         </button>
       )}
+      <button
+        onClick={handleDownloadPdf}
+        className="px-3 py-1.5 text-xs bg-[#C9948E] text-white rounded-lg hover:bg-[#B9807A] transition-colors"
+      >
+        <Download size={13} className="inline mr-1" />
+        Télécharger le {docType} PDF
+      </button>
     </div>
   ) : null
 
@@ -113,6 +136,39 @@ export default function DevisDetailPage() {
   async function handleCancel() {
     if (!confirm("Annuler cette réservation ?")) return
     await handleStatusChange("cancelled")
+  }
+
+  async function handleMarkSold() {
+    if (!confirm("Marquer cette réservation comme soldée ?")) return
+    const res = await fetch(`/api/admin/devis/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ balancePaidAt: new Date().toISOString() }),
+    })
+    if (res.ok) {
+      await loadBooking()
+    }
+  }
+
+  async function handleDownloadPdf() {
+    const res = await fetch(`/api/admin/devis/${id}/pdf`)
+    if (res.status === 401) {
+      router.push("/admin/login")
+      return
+    }
+    if (!res.ok) {
+      alert("Erreur lors de la génération du PDF")
+      return
+    }
+    const blob = await res.blob()
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `${docType}_${booking?.quoteNumber || booking?.id || "document"}.pdf`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
   }
 
   if (loading) {
