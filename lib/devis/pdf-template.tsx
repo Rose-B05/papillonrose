@@ -156,6 +156,7 @@ export function devisPdfTemplate(booking: Booking) {
   const totalLabel = booking.balancePaidAt
     ? `TOTAL — réglé le ${formatDate(booking.balancePaidAt)}`
     : "TOTAL à régler"
+  const depositDate = booking.depositPaidAt || booking.balancePaidAt
   const soldeLabel = booking.balancePaidAt
     ? `Solde réglé le ${formatDate(booking.balancePaidAt)}`
     : "Solde restant dû"
@@ -268,8 +269,8 @@ export function devisPdfTemplate(booking: Booking) {
         <View>
           <View style={styles.payRow}>
             <Text style={styles.payLabel}>
-              {booking.depositPaidAt
-                ? `Acompte réglé le ${formatDate(booking.depositPaidAt)}`
+              {depositDate
+                ? `Acompte réglé le ${formatDate(depositDate)}`
                 : "Acompte à verser (30%)"}
             </Text>
             <Text style={styles.payValue}>{formatEUR(depositAmount)}</Text>
