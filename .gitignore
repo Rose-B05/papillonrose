@@ -25,3 +25,7 @@ out/
 .DS_Store
 .vercel
 .env*
+
+# Design assets
+camille persona principal.png
+femme papillon rose 1.png

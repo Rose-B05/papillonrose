@@ -537,7 +537,7 @@ export default function ComptePage() {
             <>
               <p className="text-sm text-gray-400 dark:text-white/60 mb-4">Aucun devis pour le moment.</p>
               <Link
-                href="/"
+                href="/catalogue"
                 className="inline-flex items-center gap-2 bg-[#C9948E] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#B8807A] transition-colors w-fit"
               >
                 Découvrir le catalogue

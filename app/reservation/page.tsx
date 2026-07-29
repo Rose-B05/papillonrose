@@ -338,7 +338,7 @@ export default function ReservationPage() {
                   <ShoppingBag size={24} className="text-[#C9948E]/40" />
                 </div>
                 <p className="text-gray-400 dark:text-white/60 mb-5">Votre panier est vide</p>
-                <a href="/" className="bg-[#C9948E] dark:bg-[#C9948E] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors inline-block">
+                <a href="/catalogue" className="bg-[#C9948E] dark:bg-[#C9948E] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors inline-block">
                   Découvrir le catalogue
                 </a>
               </div>
