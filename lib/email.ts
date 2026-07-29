@@ -194,6 +194,24 @@ export async function sendWelcomeEmail(to: string, prenom: string) {
   })
 }
 
+export async function sendPasswordResetEmail(to: string, resetUrl: string) {
+  const transport = getTransport()
+  await transport.sendMail({
+    from: `"Papillon Rose" <${FROM}>`,
+    to,
+    subject: "Réinitialisation de votre mot de passe - Papillon Rose",
+    html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px;text-align:center">
+      <h2 style="color:#C9948E;margin-bottom:8px">Réinitialisation de mot de passe</h2>
+      <p style="color:#555;font-size:14px">Vous avez demandé la réinitialisation de votre mot de passe.</p>
+      <p style="text-align:center;margin:24px 0">
+        <a href="${resetUrl}" style="background:#C9948E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Réinitialiser mon mot de passe</a>
+      </p>
+      <p style="color:#888;font-size:12px">Ce lien expire dans 15 minutes.</p>
+      <p style="color:#888;font-size:12px">Si vous n'avez pas demandé cette réinitialisation, ignorez cet email.</p>
+    </div>`,
+  })
+}
+
 export async function sendChatbotLead(data: {
   nom: string
   prenom: string

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { Eye, EyeOff } from "lucide-react"
 import { produits } from "@/data/produits"
 
 interface Customer {
@@ -124,6 +125,7 @@ export default function ComptePage() {
   // Login
   const [loginEmail, setLoginEmail] = useState("")
   const [loginPassword, setLoginPassword] = useState("")
+  const [showLoginPassword, setShowLoginPassword] = useState(false)
   const [loginError, setLoginError] = useState("")
   const [loginLoading, setLoginLoading] = useState(false)
 
@@ -132,7 +134,9 @@ export default function ComptePage() {
   const [regNom, setRegNom] = useState("")
   const [regEmail, setRegEmail] = useState("")
   const [regPassword, setRegPassword] = useState("")
+  const [showRegPassword, setShowRegPassword] = useState(false)
   const [regPassword2, setRegPassword2] = useState("")
+  const [showRegPassword2, setShowRegPassword2] = useState(false)
   const [regError, setRegError] = useState("")
   const [regLoading, setRegLoading] = useState(false)
   const [regNewsletter, setRegNewsletter] = useState(false)
@@ -353,7 +357,17 @@ export default function ComptePage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Mot de passe</label>
-                  <input type="password" required value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                  <div className="relative">
+                    <input type={showLoginPassword ? "text" : "password"} required value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                    <button type="button" onClick={() => setShowLoginPassword(!showLoginPassword)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
+                      {showLoginPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
+                </div>
+                <div className="text-right -mt-2">
+                  <Link href="/compte/mot-de-passe-oublie" className="text-xs text-gray-400 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">
+                    Mot de passe oublié ?
+                  </Link>
                 </div>
                 {loginError && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{loginError}</p>}
                 <button type="submit" disabled={loginLoading} className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50">
@@ -380,11 +394,21 @@ export default function ComptePage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Mot de passe</label>
-                  <input type="password" required minLength={6} value={regPassword} onChange={(e) => setRegPassword(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                  <div className="relative">
+                    <input type={showRegPassword ? "text" : "password"} required minLength={6} value={regPassword} onChange={(e) => setRegPassword(e.target.value)} className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                    <button type="button" onClick={() => setShowRegPassword(!showRegPassword)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
+                      {showRegPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Confirmer le mot de passe</label>
-                  <input type="password" required minLength={6} value={regPassword2} onChange={(e) => setRegPassword2(e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                  <div className="relative">
+                    <input type={showRegPassword2 ? "text" : "password"} required minLength={6} value={regPassword2} onChange={(e) => setRegPassword2(e.target.value)} className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+                    <button type="button" onClick={() => setShowRegPassword2(!showRegPassword2)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
+                      {showRegPassword2 ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </div>
                 <label className="flex items-start gap-2 cursor-pointer">
                   <input
