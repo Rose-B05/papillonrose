@@ -32,7 +32,7 @@ const COLORS = {
 const styles = StyleSheet.create({
   page: {
     paddingTop: 34,
-    paddingBottom: 30,
+    paddingBottom: 55,
     paddingHorizontal: 46,
     backgroundColor: COLORS.white,
     fontFamily: "Helvetica",
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
   thanksSub: { fontSize: 9.5, color: COLORS.grey, lineHeight: 1.5 },
   signLabel: { fontSize: 9, color: COLORS.grey, fontStyle: "italic" },
 
+  footer: { position: "absolute", bottom: 30, left: 46, right: 46 },
   footerHr: { borderBottomWidth: 0.6, borderBottomColor: COLORS.lineGrey, marginBottom: 6 },
   footerLegal: { fontSize: 7.4, color: COLORS.grey, lineHeight: 1.4 },
 })
@@ -297,13 +298,15 @@ export function devisPdfTemplate(booking: Booking) {
           </View>
         </View>
 
-        <View style={styles.footerHr} />
-        <Text style={styles.footerLegal}>
-          {COMPANY.name} — Micro-entreprise (auto-entrepreneur) · SIRET : {COMPANY.siret} ·
-          TVA non applicable, art. 293 B du CGI · {COMPANY.addressLines.join(", ")}
-          {"\n"}
-          {docType} n° {docNumber} — numérotation séquentielle et unique, conforme à l'article L441-9 du Code de commerce.
-        </Text>
+        <View style={styles.footer} fixed>
+          <View style={styles.footerHr} />
+          <Text style={styles.footerLegal}>
+            {COMPANY.name} — Micro-entreprise (auto-entrepreneur) · SIRET : {COMPANY.siret} ·
+            TVA non applicable, art. 293 B du CGI · {COMPANY.addressLines.join(", ")}
+            {"\n"}
+            {docType} n° {docNumber} — numérotation séquentielle et unique, conforme à l'article L441-9 du Code de commerce.
+          </Text>
+        </View>
       </Page>
     </Document>
   )
