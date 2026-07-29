@@ -7,15 +7,17 @@ import { ShoppingCart, Check } from "lucide-react"
 export default function AddToCartButton({
   productId,
   stock,
+  badge,
   productName,
 }: {
   productId: number
   stock: number
+  badge?: string
   productName: string
 }) {
   const { addItem } = useCart()
   const [showToast, setShowToast] = useState(false)
-  const disabled = stock <= 0
+  const disabled = stock <= 0 || badge === "epuise"
 
   const handleClick = () => {
     if (disabled) return

@@ -143,7 +143,7 @@ export default async function ProductPage({ params }: Props) {
 
             {/* Actions */}
             <div className="mt-6 flex flex-col gap-3">
-              <AddToCartButton productId={product.id} stock={product.stock} productName={product.nom} />
+              <AddToCartButton productId={product.id} stock={product.stock} badge={product.badge} productName={product.nom} />
               <FavoriteButton productId={product.id} />
             </div>
 

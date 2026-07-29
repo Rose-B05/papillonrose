@@ -217,6 +217,7 @@ export async function sendQuoteExpiryReminder(to: string, quoteNumber: string, c
   await transport.sendMail({
     from: `"Papillon Rose" <${FROM}>`,
     to,
+    bcc: TO,
     subject: `Votre devis n°${quoteNumber} expire bientôt - Papillon Rose`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
       <h2 style="color:#C9948E">Votre devis expire bientôt</h2>

@@ -89,9 +89,13 @@ export async function POST(request: NextRequest) {
     // Vérification du stock pour chaque article
     const unavailableItems: string[] = []
     for (const item of items) {
+      const product = produits.find((p) => p.id === item.productId)
+      if (product?.badge === "epuise") {
+        unavailableItems.push(`${product.nom} n'est plus disponible`)
+        continue
+      }
       const available = await getAvailableStock(item.productId, item.dateStart, item.dateEnd)
       if (available < item.qty) {
-        const product = produits.find((p) => p.id === item.productId)
         unavailableItems.push(`${product?.nom || "Article"} (${item.qty} demandé(s), ${available} disponible(s))`)
       }
     }

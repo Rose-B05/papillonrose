@@ -53,6 +53,10 @@ export async function POST(request: NextRequest) {
       const product = produits.find((p) => p.id === item.productId)
       if (!product) return NextResponse.json({ error: `Produit ${item.productId} introuvable` }, { status: 400 })
 
+      if (product.badge === "epuise") {
+        return NextResponse.json({ error: `${product.nom} n'est plus disponible` }, { status: 400 })
+      }
+
       if (item.dateStart && item.dateEnd) {
         const available = await getAvailableStock(item.productId, item.dateStart, item.dateEnd)
         if (available <= 0) {
