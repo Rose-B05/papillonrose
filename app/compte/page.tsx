@@ -13,33 +13,31 @@ interface Customer {
   adresse: string
 }
 
-interface QuoteSummary {
+interface BookingSummary {
   id: string
   quoteNumber: string
-  statut: string
+  status: string
   totalTtc: number
   createdAt: string
   itemCount: number
 }
 
 const STATUT_LABELS: Record<string, string> = {
-  recu: "Reçu",
-  en_traitement: "En traitement",
-  confirme_stock: "Stock confirmé",
-  refuse_stock: "Stock refusé",
-  envoye: "Devis envoyé",
-  acompte_paye: "Acompte payé",
-  solde_paye: "Soldé",
+  "pending-quote": "En attente de devis",
+  "quote-sent": "Devis envoyé",
+  "deposit-pending": "En attente de paiement",
+  confirmed: "Confirmée",
+  cancelled: "Annulée",
+  returned: "Terminée",
 }
 
 const STATUT_COLORS: Record<string, string> = {
-  recu: "bg-gray-100 dark:bg-neutral-800 text-gray-600",
-  en_traitement: "bg-blue-50 text-blue-700",
-  confirme_stock: "bg-green-50 text-green-700",
-  refuse_stock: "bg-red-50 text-red-700",
-  envoye: "bg-purple-50 text-purple-700",
-  acompte_paye: "bg-amber-50 text-amber-700",
-  solde_paye: "bg-emerald-50 text-emerald-700",
+  "pending-quote": "bg-gray-100 dark:bg-neutral-800 text-gray-600",
+  "quote-sent": "bg-purple-50 text-purple-700",
+  "deposit-pending": "bg-amber-50 text-amber-700",
+  confirmed: "bg-green-50 text-green-700",
+  cancelled: "bg-red-50 text-red-700",
+  returned: "bg-emerald-50 text-emerald-700",
 }
 
 // ─── Newsletter Toggle ─────────────────────────────────────────────────────
@@ -143,7 +141,7 @@ export default function ComptePage() {
   const [profileMsg, setProfileMsg] = useState("")
 
   // Quotes
-  const [quotes, setQuotes] = useState<QuoteSummary[]>([])
+  const [quotes, setQuotes] = useState<BookingSummary[]>([])
   const [quotesLoading, setQuotesLoading] = useState(false)
 
   // Favorites
@@ -186,9 +184,9 @@ export default function ComptePage() {
   async function loadQuotes() {
     setQuotesLoading(true)
     try {
-      const res = await fetch("/api/customer/quotes")
+      const res = await fetch("/api/customer/bookings")
       const data = await res.json()
-      setQuotes(data.quotes || [])
+      setQuotes(data.bookings || [])
     } catch {}
     setQuotesLoading(false)
   }
@@ -550,8 +548,8 @@ export default function ComptePage() {
                     <p className="text-xs text-gray-400 dark:text-white/60">{formatDate(q.createdAt)} — {q.itemCount} article{q.itemCount > 1 ? "s" : ""}</p>
                   </div>
                   <div className="text-right">
-                    <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-medium ${STATUT_COLORS[q.statut] || "bg-gray-100 dark:bg-neutral-800 text-gray-600"}`}>
-                      {STATUT_LABELS[q.statut] || q.statut}
+                    <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-medium ${STATUT_COLORS[q.status] || "bg-gray-100 dark:bg-neutral-800 text-gray-600"}`}>
+                      {STATUT_LABELS[q.status] || q.status}
                     </span>
                     <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mt-1">{q.totalTtc.toFixed(2)} €</p>
                   </div>

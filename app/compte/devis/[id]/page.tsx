@@ -4,26 +4,24 @@ import { useState, useEffect, use } from "react"
 import Link from "next/link"
 import { produits } from "@/data/produits"
 import { formatDateFr } from "@/lib/utils"
-import type { QuoteRequest } from "@/lib/types"
+import type { Booking } from "@/lib/types"
 
 const STATUT_LABELS: Record<string, string> = {
-  recu: "Reçu",
-  en_traitement: "En traitement",
-  confirme_stock: "Stock confirmé",
-  refuse_stock: "Stock refusé",
-  envoye: "Devis envoyé",
-  acompte_paye: "Acompte payé",
-  solde_paye: "Soldé",
+  "pending-quote": "En attente de devis",
+  "quote-sent": "Devis envoyé",
+  "deposit-pending": "En attente de paiement",
+  confirmed: "Confirmée",
+  cancelled: "Annulée",
+  returned: "Terminée",
 }
 
 const STATUT_COLORS: Record<string, string> = {
-  recu: "bg-gray-100 text-gray-600",
-  en_traitement: "bg-blue-50 text-blue-700",
-  confirme_stock: "bg-green-50 text-green-700",
-  refuse_stock: "bg-red-50 text-red-700",
-  envoye: "bg-purple-50 text-purple-700",
-  acompte_paye: "bg-amber-50 text-amber-700",
-  solde_paye: "bg-emerald-50 text-emerald-700",
+  "pending-quote": "bg-gray-100 text-gray-600",
+  "quote-sent": "bg-purple-50 text-purple-700",
+  "deposit-pending": "bg-amber-50 text-amber-700",
+  confirmed: "bg-green-50 text-green-700",
+  cancelled: "bg-red-50 text-red-700",
+  returned: "bg-emerald-50 text-emerald-700",
 }
 
 function getProduct(id: number) {
@@ -40,18 +38,18 @@ function getPrix(product: { prix: number | string; variants?: { label: string; p
 
 export default function DevisDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
-  const [quote, setQuote] = useState<QuoteRequest | null>(null)
+  const [quote, setQuote] = useState<Booking | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
   useEffect(() => {
-    fetch(`/api/customer/quotes/${id}`)
+    fetch(`/api/customer/bookings/${id}`)
       .then((r) => {
         if (!r.ok) throw new Error(r.status === 404 ? "Devis introuvable" : "Erreur de chargement")
         return r.json()
       })
       .then((data) => {
-        setQuote(data.quote)
+        setQuote(data.booking)
         setLoading(false)
       })
       .catch((e) => {
@@ -90,13 +88,13 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6 md:p-8 mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
             <div>
-              <h1 className="text-xl font-bold text-[#2E2E2E] dark:text-neutral-100">{quote.quoteNumber}</h1>
+              <h1 className="text-xl font-bold text-[#2E2E2E] dark:text-neutral-100">{quote.quoteNumber || `#${quote.id}`}</h1>
               <p className="text-sm text-gray-400 dark:text-white/60 mt-1">
                 Créé le {formatDateFr(quote.createdAt)}
               </p>
             </div>
-            <span className={`inline-block text-sm px-3 py-1.5 rounded-full font-medium w-fit ${STATUT_COLORS[quote.statut] || "bg-gray-100 text-gray-600"}`}>
-              {STATUT_LABELS[quote.statut] || quote.statut}
+            <span className={`inline-block text-sm px-3 py-1.5 rounded-full font-medium w-fit ${STATUT_COLORS[quote.status] || "bg-gray-100 text-gray-600"}`}>
+              {STATUT_LABELS[quote.status] || quote.status}
             </span>
           </div>
 
@@ -178,6 +176,18 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
               )
             })}
           </div>
+
+          {/* Payment status */}
+          {quote.depositPaidAt && (
+            <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-xl text-sm">
+              <p className="text-green-700 dark:text-green-300 font-medium">
+                Acompte payé le {formatDateFr(quote.depositPaidAt)} — {quote.depositAmount.toFixed(2)} €
+              </p>
+              {quote.balancePaidAt && (
+                <p className="text-green-600 dark:text-green-400 mt-1">Soldé le {formatDateFr(quote.balancePaidAt)}</p>
+              )}
+            </div>
+          )}
 
           {/* Totals */}
           <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08] space-y-1 text-sm">
