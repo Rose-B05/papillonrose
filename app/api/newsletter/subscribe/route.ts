@@ -1,5 +1,15 @@
 import { NextRequest, NextResponse } from "next/server"
 import { subscribeToNewsletter } from "@/lib/newsletter"
+import { getNewsletterSubscriber } from "@/lib/db"
+
+export async function GET(request: NextRequest) {
+  const email = request.nextUrl.searchParams.get("email")
+  if (!email) {
+    return NextResponse.json({ subscribed: false })
+  }
+  const sub = await getNewsletterSubscriber(email.toLowerCase().trim())
+  return NextResponse.json({ subscribed: sub?.status === "confirmed" })
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,6 +33,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      alreadyConfirmed: result.alreadyConfirmed,
       message: result.alreadyConfirmed
         ? "Vous êtes déjà inscrit à la newsletter."
         : "Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte de réception.",

@@ -49,18 +49,10 @@ function NewsletterToggle({ customerEmail }: { customerEmail: string }) {
   const [message, setMessage] = useState("")
 
   useEffect(() => {
-    fetch(`/api/newsletter/subscribe`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: customerEmail }),
-    })
+    fetch(`/api/newsletter/subscribe?email=${encodeURIComponent(customerEmail)}`)
       .then((r) => r.json())
       .then((data) => {
-        if (data.success) {
-          setStatus(data.alreadyConfirmed ? "subscribed" : "not_subscribed")
-        } else {
-          setStatus("not_subscribed")
-        }
+        setStatus(data.subscribed ? "subscribed" : "not_subscribed")
       })
       .catch(() => setStatus("not_subscribed"))
   }, [customerEmail])
@@ -76,7 +68,9 @@ function NewsletterToggle({ customerEmail }: { customerEmail: string }) {
       })
       const data = await res.json()
       if (res.ok) {
-        setStatus("subscribed")
+        if (data.alreadyConfirmed) {
+          setStatus("subscribed")
+        }
         setMessage(data.message || "Inscription confirmée !")
       } else {
         setMessage(data.error || "Erreur")
