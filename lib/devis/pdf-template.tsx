@@ -269,15 +269,17 @@ export function devisPdfTemplate(booking: Booking) {
           <View style={styles.payRow}>
             <Text style={styles.payLabel}>
               {booking.depositPaidAt
-                ? `Acompte versé le ${formatDate(booking.depositPaidAt)}`
+                ? `Acompte réglé le ${formatDate(booking.depositPaidAt)}`
                 : "Acompte à verser (30%)"}
             </Text>
             <Text style={styles.payValue}>{formatEUR(depositAmount)}</Text>
           </View>
-          <View style={styles.soldeRow}>
-            <Text style={styles.soldeLabel}>{soldeLabel}</Text>
-            <Text style={styles.soldeValue}>{formatEUR(remainingAmount)}</Text>
-          </View>
+          {booking.depositPaidAt || booking.balancePaidAt ? (
+            <View style={styles.soldeRow}>
+              <Text style={styles.soldeLabel}>{soldeLabel}</Text>
+              <Text style={styles.soldeValue}>{formatEUR(remainingAmount)}</Text>
+            </View>
+          ) : null}
         </View>
 
         <Text style={styles.conditions}>
