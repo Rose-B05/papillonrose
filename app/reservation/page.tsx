@@ -611,7 +611,7 @@ export default function ReservationPage() {
               </div>
               <div>
                 <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">Message (optionnel)</label>
-                <textarea value={client.message || ""} onChange={(e) => setClient((c) => ({ ...c, message: e.target.value }))} rows={3} placeholder="Informations complémentaires..." className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors resize-none shadow-sm" style={{ WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
+                <textarea value={client.message || ""} onChange={(e) => setClient((c) => ({ ...c, message: e.target.value }))} rows={3} placeholder="Optionnel" className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors resize-none shadow-sm" style={{ WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
               </div>
 
               {/* Recap */}
