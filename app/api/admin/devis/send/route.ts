@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
 
     // Update status to quote-sent
     booking.status = "quote-sent"
+    booking.quoteSentAt = new Date().toISOString()
     booking.updatedAt = new Date().toISOString()
     await saveBooking(booking)
 

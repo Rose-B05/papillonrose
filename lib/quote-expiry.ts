@@ -1,11 +1,26 @@
-import { getQuotes, saveEmailLog } from "./db"
+import { getQuotes, getBookings, saveBooking, saveEmailLog, unblockDates, logActivity } from "./db"
 import { sendQuoteExpiryReminder } from "./email"
-import type { QuoteRequest, EmailLog } from "./types"
+import type { QuoteRequest, Booking, EmailLog } from "./types"
 import { v4 as uuidv4 } from "uuid"
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
+
+// ─── QuoteRequest config (legacy, 15-day window) ───────────────────────────
 const QUOTE_EXPIRY_DAYS = Number(process.env.QUOTE_EXPIRY_DAYS) || 15
 const REMINDER_BEFORE_DAYS = Number(process.env.QUOTE_REMINDER_BEFORE_DAYS) || 2
+
+// ─── Booking config (48h from quoteSentAt) ──────────────────────────────────
+const BOOKING_QUOTE_VALIDITY_HOURS = 48
+const BOOKING_REMINDER_WINDOW_HOURS = 3
+
+// ─── Shared helpers ─────────────────────────────────────────────────────────
+
+function hoursSince(dateStr: string): number {
+  const then = new Date(dateStr)
+  const now = new Date()
+  const diff = now.getTime() - then.getTime()
+  return diff / (1000 * 60 * 60)
+}
 
 function daysSince(dateStr: string): number {
   const then = new Date(dateStr)
@@ -14,10 +29,8 @@ function daysSince(dateStr: string): number {
   return Math.floor(diff / (1000 * 60 * 60 * 24))
 }
 
-/**
- * Trouve les devis qui approchent de l'expiration et qui n'ont pas encore eu de relance.
- * Cible les statuts : "envoye" (en attente client) ou "acompte_paye" (solde pas encore réglé).
- */
+// ─── QuoteRequest logic (unchanged) ────────────────────────────────────────
+
 export async function findExpiringQuotes(): Promise<QuoteRequest[]> {
   const quotes = await getQuotes()
   const expiring: QuoteRequest[] = []
@@ -36,9 +49,6 @@ export async function findExpiringQuotes(): Promise<QuoteRequest[]> {
   return expiring
 }
 
-/**
- * Vérifie si un email de relance a déjà été envoyé pour ce devis aujourd'hui.
- */
 async function hasReminderBeenSentToday(quoteId: string): Promise<boolean> {
   const today = new Date().toISOString().split("T")[0]
   const logs = await import("./db").then((m) => m.getEmailLogs())
@@ -47,9 +57,96 @@ async function hasReminderBeenSentToday(quoteId: string): Promise<boolean> {
   )
 }
 
-/**
- * Traite tous les devis en voie d'expiration et envoie les relances.
- */
+// ─── Booking logic (48h validity from quoteSentAt) ─────────────────────────
+
+export async function processBookingExpiry(): Promise<{
+  processed: number
+  remindersSent: number
+  expired: number
+  errors: string[]
+  details: { quoteNumber: string; client: string; hoursRemaining: number; action: "reminder" | "expired" }[]
+}> {
+  const bookings = await getBookings()
+  const errors: string[] = []
+  const details: { quoteNumber: string; client: string; hoursRemaining: number; action: "reminder" | "expired" }[] = []
+  let remindersSent = 0
+  let expired = 0
+
+  for (const booking of bookings) {
+    if (booking.status !== "quote-sent") continue
+    if (!booking.quoteSentAt) continue
+
+    const hoursElapsed = hoursSince(booking.quoteSentAt)
+    const hoursRemaining = BOOKING_QUOTE_VALIDITY_HOURS - hoursElapsed
+    const quoteNumber = booking.quoteNumber || booking.id
+    const clientName = `${booking.client.prenom} ${booking.client.nom}`
+
+    // Expired: >= 48h since quoteSentAt
+    if (hoursElapsed >= BOOKING_QUOTE_VALIDITY_HOURS) {
+      try {
+        booking.status = "expired"
+        booking.updatedAt = new Date().toISOString()
+        await saveBooking(booking)
+        await unblockDates(booking.id)
+
+        await logActivity({
+          type: "booking_expired",
+          description: `Devis ${quoteNumber} expiré automatiquement (48h dépassées). Dates libérées.`,
+          reference: booking.id,
+        })
+
+        expired++
+        details.push({ quoteNumber, client: clientName, hoursRemaining: 0, action: "expired" })
+      } catch (err: any) {
+        errors.push(`Erreur expiration devis #${quoteNumber}: ${err.message}`)
+      }
+      continue
+    }
+
+    // Reminder window: 45h <= elapsed < 48h (i.e. 0 < hoursRemaining <= 3)
+    if (hoursElapsed >= BOOKING_QUOTE_VALIDITY_HOURS - BOOKING_REMINDER_WINDOW_HOURS && hoursElapsed < BOOKING_QUOTE_VALIDITY_HOURS) {
+      if (booking.quoteReminderSentAt) continue
+
+      try {
+        const lienDevis = `${SITE_URL}/compte/devis/${booking.id}`
+        const joursRestants = Math.max(1, Math.ceil(hoursRemaining / 24))
+
+        await sendQuoteExpiryReminder(
+          booking.customerEmail || booking.client.email,
+          quoteNumber,
+          booking.client.prenom,
+          lienDevis,
+          joursRestants,
+        )
+
+        const log: EmailLog = {
+          id: uuidv4().slice(0, 8),
+          to: booking.customerEmail || booking.client.email,
+          type: "quote-expiry-reminder",
+          subject: `Votre devis n°${quoteNumber} expire bientôt`,
+          status: "sent",
+          bookingId: booking.id,
+          sentAt: new Date().toISOString(),
+        }
+        await saveEmailLog(log)
+
+        booking.quoteReminderSentAt = new Date().toISOString()
+        booking.updatedAt = new Date().toISOString()
+        await saveBooking(booking)
+
+        remindersSent++
+        details.push({ quoteNumber, client: clientName, hoursRemaining, action: "reminder" })
+      } catch (err: any) {
+        errors.push(`Erreur rappel devis #${quoteNumber}: ${err.message}`)
+      }
+    }
+  }
+
+  return { processed: 0, remindersSent, expired, errors, details }
+}
+
+// ─── Combined processor (called by cron) ───────────────────────────────────
+
 export async function processQuoteExpiry(): Promise<{
   processed: number
   remindersSent: number
@@ -61,6 +158,7 @@ export async function processQuoteExpiry(): Promise<{
   const errors: string[] = []
   let remindersSent = 0
 
+  // ── QuoteRequest processing (unchanged) ──
   for (const quote of expiring) {
     const age = daysSince(quote.createdAt)
     const daysUntilExpiry = QUOTE_EXPIRY_DAYS - age
@@ -99,5 +197,17 @@ export async function processQuoteExpiry(): Promise<{
     }
   }
 
-  return { processed: expiring.length, remindersSent, errors, details }
+  // ── Booking processing (48h from quoteSentAt) ──
+  const bookingResult = await processBookingExpiry()
+  errors.push(...bookingResult.errors)
+  for (const d of bookingResult.details) {
+    details.push({
+      quoteNumber: d.quoteNumber,
+      client: d.client,
+      joursRestants: Math.ceil(d.hoursRemaining / 24),
+    })
+  }
+  remindersSent += bookingResult.remindersSent
+
+  return { processed: expiring.length + bookingResult.expired, remindersSent, errors, details }
 }
