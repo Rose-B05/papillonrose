@@ -30,7 +30,7 @@ export async function PATCH(
 
   const { id } = await params
   const body = await request.json()
-  const { statut, balancePaidAt } = body
+  const { statut, balancePaidAt, items, quoteSentAt } = body
 
   const booking = await getBooking(id)
   if (!booking) {
@@ -49,13 +49,39 @@ export async function PATCH(
     booking.balancePaidAt = balancePaidAt
   }
 
-  booking.updatedAt = new Date().toISOString()
+  if (quoteSentAt !== undefined) {
+    booking.quoteSentAt = quoteSentAt
+  }
 
-  await saveBooking(booking)
+  if (items !== undefined && Array.isArray(items)) {
+    booking.items = items.map((item: any) => ({
+      productId: item.productId,
+      qty: item.qty || 1,
+      dateStart: item.dateStart || "",
+      dateEnd: item.dateEnd || "",
+      variantLabel: item.variantLabel,
+      prix: item.prix || 0,
+    }))
+
+    const totalHt = booking.items.reduce((sum: number, item: any) => {
+      const prix = Number(item.prix) || 0
+      const dates = item.dateStart && item.dateEnd
+        ? Math.max(1, Math.ceil((new Date(item.dateEnd).getTime() - new Date(item.dateStart).getTime()) / (1000 * 60 * 60 * 24)))
+        : 1
+      return sum + (prix * (item.qty || 1) * dates)
+    }, 0)
+    booking.totalHt = Math.round(totalHt * 100) / 100
+    booking.totalTtc = Math.round(totalHt * 1.2 * 100) / 100
+    booking.depositAmount = Math.round(booking.totalTtc * 0.3 * 100) / 100
+  }
+
+  booking.updatedAt = new Date().toISOString()
 
   if (booking.status === "cancelled") {
     await unblockDates(id)
   }
+
+  await saveBooking(booking)
 
   return NextResponse.json({ devis: booking })
 }

@@ -84,3 +84,24 @@ export function formatDateFr(dateStr: string): string {
 
 export const TVA_RATE = 0.2
 export const DEPOSIT_RATE = 0.3
+
+const QUOTE_VALIDITY_MS = 48 * 60 * 60 * 1000
+
+export type QuoteTimeInput = { status: string; quoteSentAt?: string }
+
+export type QuoteTimeResult =
+  | { expired: true }
+  | { expired: false; hoursRemaining: number; minutesRemaining: number }
+
+export function getQuoteTimeRemaining(booking: QuoteTimeInput): QuoteTimeResult | null {
+  if (booking.status !== "quote-sent" || !booking.quoteSentAt) return null
+  const deadline = new Date(booking.quoteSentAt).getTime() + QUOTE_VALIDITY_MS
+  const remaining = deadline - Date.now()
+  if (remaining <= 0) return { expired: true }
+  const totalMinutes = Math.floor(remaining / 60000)
+  return {
+    expired: false,
+    hoursRemaining: Math.floor(totalMinutes / 60),
+    minutesRemaining: totalMinutes % 60,
+  }
+}

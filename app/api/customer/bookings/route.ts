@@ -24,6 +24,7 @@ export async function GET(request: NextRequest) {
       totalTtc: b.totalTtc,
       createdAt: b.createdAt,
       itemCount: b.items.length,
+      quoteSentAt: b.quoteSentAt,
     }))
 
   return NextResponse.json({ bookings: customerBookings })

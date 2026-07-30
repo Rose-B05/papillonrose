@@ -7,6 +7,7 @@ import DevisStatutBadge from "@/components/admin/devis/DevisStatutBadge"
 import { produits } from "@/data/produits"
 import { ArrowLeft, Send, XCircle, Download, CheckCircle } from "lucide-react"
 import type { Booking } from "@/lib/types"
+import QuoteCountdown from "@/components/QuoteCountdown"
 
 function formatDate(dateStr: string) {
   if (!dateStr) return "—"
@@ -195,6 +196,7 @@ export default function DevisDetailPage() {
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
           <div className="flex items-center gap-3 mb-4">
             <DevisStatutBadge statut={booking.status} />
+            <QuoteCountdown booking={booking} />
             <span className="text-xs text-gray-400 dark:text-white/50">
               Créé le {formatDate(booking.createdAt)}
             </span>

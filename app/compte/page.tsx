@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Eye, EyeOff } from "lucide-react"
 import { produits } from "@/data/produits"
 import { prixTtc } from "@/lib/pricing"
+import QuoteCountdown from "@/components/QuoteCountdown"
 
 interface Customer {
   email: string
@@ -21,6 +22,7 @@ interface BookingSummary {
   totalTtc: number
   createdAt: string
   itemCount: number
+  quoteSentAt?: string
 }
 
 const STATUT_LABELS: Record<string, string> = {
@@ -29,6 +31,7 @@ const STATUT_LABELS: Record<string, string> = {
   "deposit-pending": "En attente de paiement",
   confirmed: "Confirmée",
   cancelled: "Annulée",
+  expired: "Expiré",
   returned: "Terminée",
 }
 
@@ -38,6 +41,7 @@ const STATUT_COLORS: Record<string, string> = {
   "deposit-pending": "bg-amber-50 text-amber-700",
   confirmed: "bg-green-50 text-green-700",
   cancelled: "bg-red-50 text-red-700",
+  expired: "bg-orange-50 text-orange-700",
   returned: "bg-emerald-50 text-emerald-700",
 }
 
@@ -542,18 +546,25 @@ export default function ComptePage() {
                 <Link
                   key={q.id}
                   href={`/compte/devis/${q.id}`}
-                  className="flex items-center justify-between bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3 hover:bg-[#F0EBE4] dark:hover:bg-neutral-800 transition-colors"
+                  className="block bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3 hover:bg-[#F0EBE4] dark:hover:bg-neutral-800 transition-colors"
                 >
-                  <div>
-                    <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">{q.quoteNumber}</p>
-                    <p className="text-xs text-gray-400 dark:text-white/60">{formatDate(q.createdAt)} — {q.itemCount} article{q.itemCount > 1 ? "s" : ""}</p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">{q.quoteNumber}</p>
+                      <p className="text-xs text-gray-400 dark:text-white/60">{formatDate(q.createdAt)} — {q.itemCount} article{q.itemCount > 1 ? "s" : ""}</p>
+                    </div>
+                    <div className="text-right">
+                      <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-medium ${STATUT_COLORS[q.status] || "bg-gray-100 dark:bg-neutral-800 text-gray-600"}`}>
+                        {STATUT_LABELS[q.status] || q.status}
+                      </span>
+                      <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mt-1">{q.totalTtc.toFixed(2)} €</p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-medium ${STATUT_COLORS[q.status] || "bg-gray-100 dark:bg-neutral-800 text-gray-600"}`}>
-                      {STATUT_LABELS[q.status] || q.status}
-                    </span>
-                    <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mt-1">{q.totalTtc.toFixed(2)} €</p>
-                  </div>
+                  {q.status === "quote-sent" && q.quoteSentAt && (
+                    <div className="mt-2">
+                      <QuoteCountdown booking={{ status: q.status, quoteSentAt: q.quoteSentAt }} variant="client" />
+                    </div>
+                  )}
                 </Link>
               ))}
             </div>
