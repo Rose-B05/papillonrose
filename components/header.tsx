@@ -119,7 +119,7 @@ export default function Header() {
                 </span>
               )}
             </Link>
-            <a
+            <Link
               href="/reservation"
               className="relative p-2 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors"
               aria-label="Panier"
@@ -139,7 +139,7 @@ export default function Header() {
                   {cartCount}
                 </span>
               )}
-            </a>
+            </Link>
             <a
               href="/compte"
               className={`relative p-2 transition-colors ${

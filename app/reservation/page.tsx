@@ -61,6 +61,8 @@ export default function ReservationPage() {
       if (savedDateEdits) setDateEdits(JSON.parse(savedDateEdits))
       const savedClient = sessionStorage.getItem("reservation_client")
       if (savedClient) setClient(JSON.parse(savedClient))
+      const savedBookingId = sessionStorage.getItem("reservation_bookingId")
+      if (savedBookingId) setBookingId(savedBookingId)
     } catch {}
     setHydrated(true)
   }, [])
@@ -77,12 +79,14 @@ export default function ReservationPage() {
   useEffect(() => { sessionStorage.setItem("reservation_step", step) }, [step])
   useEffect(() => { sessionStorage.setItem("reservation_dateEdits", JSON.stringify(dateEdits)) }, [dateEdits])
   useEffect(() => { sessionStorage.setItem("reservation_client", JSON.stringify(client)) }, [client])
+  useEffect(() => { if (bookingId) sessionStorage.setItem("reservation_bookingId", bookingId) }, [bookingId])
 
   // Clear sessionStorage on successful booking creation
   const clearReservationSession = () => {
     sessionStorage.removeItem("reservation_step")
     sessionStorage.removeItem("reservation_dateEdits")
     sessionStorage.removeItem("reservation_client")
+    sessionStorage.removeItem("reservation_bookingId")
   }
 
   const getProduct = (id: number) => produits.find((p) => p.id === id)
@@ -149,7 +153,7 @@ export default function ReservationPage() {
     for (const item of items) {
       const max = getMaxQty(item.productId)
       if (max > 0 && item.qty > max) {
-        updateItem(item.productId, item.variantLabel, { qty: max })
+        updateItem(item.productId, { qty: max }, item.variantLabel)
       }
     }
   }, [availableStock])
@@ -365,10 +369,10 @@ export default function ReservationPage() {
                           {item.variantLabel && <p className="text-[11px] text-[#C9948E] dark:text-[#E8B4AE] font-medium">{item.variantLabel}</p>}
                           <p className="text-[11px] text-gray-400 dark:text-white/60 mt-0.5">{Math.round(parsePrix(itemPrix) * (1 + TVA_RATE) * 100) / 100} € TTC / jour</p>
                           <div className="flex items-center gap-2 mt-2">
-                            <button onClick={() => updateItem(item.productId, item.variantLabel, { qty: Math.max(1, item.qty - 1) })} className="w-6 h-6 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm"><Minus size={10} /></button>
+                            <button onClick={() => updateItem(item.productId, { qty: Math.max(1, item.qty - 1) }, item.variantLabel)} className="w-6 h-6 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm"><Minus size={10} /></button>
                             <span className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 w-7 text-center">{item.qty}</span>
                             <button
-                              onClick={() => { if (!atMax) updateItem(item.productId, item.variantLabel, { qty: item.qty + 1 }) }}
+                              onClick={() => { if (!atMax) updateItem(item.productId, { qty: item.qty + 1 }, item.variantLabel) }}
                               disabled={atMax}
                               className="w-6 h-6 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
                             ><Plus size={10} /></button>
@@ -416,10 +420,10 @@ export default function ReservationPage() {
                         {item.variantLabel && <p className="text-[11px] text-[#C9948E] dark:text-[#E8B4AE] font-medium">{item.variantLabel}</p>}
                         <div className="flex items-center gap-3 mt-1">
                           <div className="flex items-center gap-1.5">
-                            <button onClick={() => { if (item.qty > 1) updateItem(item.productId, item.variantLabel, { qty: item.qty - 1 }) }} className="w-5 h-5 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm"><Minus size={9} /></button>
+                            <button onClick={() => { if (item.qty > 1) updateItem(item.productId, { qty: item.qty - 1 }, item.variantLabel) }} className="w-5 h-5 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm"><Minus size={9} /></button>
                             <span className="text-xs font-semibold w-5 text-center">{item.qty}</span>
                             <button
-                              onClick={() => { if (!atMax) updateItem(item.productId, item.variantLabel, { qty: item.qty + 1 }) }}
+                              onClick={() => { if (!atMax) updateItem(item.productId, { qty: item.qty + 1 }, item.variantLabel) }}
                               disabled={atMax}
                               className="w-5 h-5 bg-[#C9948E] dark:bg-[#C9948E] text-white rounded-full flex items-center justify-center hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
                             ><Plus size={9} /></button>
