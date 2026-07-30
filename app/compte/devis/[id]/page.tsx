@@ -40,12 +40,19 @@ function getPrix(product: { prix: number | string; variants?: { label: string; p
 }
 
 function getDaysUntilEvent(dateEvenement: string): number {
+  if (!dateEvenement) return NaN
   const now = new Date()
   const todayUtc = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
   const eventDate = new Date(dateEvenement)
+  if (isNaN(eventDate.getTime())) return NaN
   const eventUtc = new Date(Date.UTC(eventDate.getUTCFullYear(), eventDate.getUTCMonth(), eventDate.getUTCDate()))
   const diffMs = eventUtc.getTime() - todayUtc.getTime()
   return Math.ceil(diffMs / (1000 * 60 * 60 * 24))
+}
+
+function isValidDate(dateStr: string): boolean {
+  if (!dateStr) return false
+  return !isNaN(new Date(dateStr).getTime())
 }
 
 const CANCELLABLE_STATUSES = ["pending-quote", "quote-sent", "deposit-pending", "confirmed"]
@@ -247,9 +254,12 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
           </div>
 
           {/* Cancel section */}
-          {CANCELLABLE_STATUSES.includes(quote.status) && quote.client.dateEvenement && (() => {
-            const daysLeft = getDaysUntilEvent(quote.client.dateEvenement)
-            if (daysLeft > 7) {
+          {CANCELLABLE_STATUSES.includes(quote.status) && (() => {
+            const dateEvenement = quote.client.dateEvenement
+            const hasValidDate = isValidDate(dateEvenement)
+            const daysLeft = hasValidDate ? getDaysUntilEvent(dateEvenement) : NaN
+
+            if (!hasValidDate || isNaN(daysLeft) || daysLeft > 7) {
               return (
                 <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
                   {cancelMsg && (
@@ -267,35 +277,29 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                 </div>
               )
             }
-            const deadline = new Date(quote.client.dateEvenement)
+
+            if (daysLeft <= 0) {
+              return (
+                <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
+                  <p className="text-sm text-gray-500 dark:text-white/60 bg-[#F8F5F0] dark:bg-neutral-900/60 px-4 py-3 rounded-xl">
+                    Votre événement du <strong>{formatDateFr(dateEvenement)}</strong> est passé. L&apos;annulation en ligne n&apos;est plus disponible.
+                  </p>
+                </div>
+              )
+            }
+
+            const deadline = new Date(dateEvenement)
             deadline.setDate(deadline.getDate() - 7)
+            const deadlineStr = isValidDate(deadline.toISOString()) ? formatDateFr(deadline.toISOString()) : formatDateFr(dateEvenement)
+
             return (
               <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
                 <p className="text-sm text-gray-500 dark:text-white/60 bg-[#F8F5F0] dark:bg-neutral-900/60 px-4 py-3 rounded-xl">
-                  {daysLeft > 0
-                    ? <>Votre événement a lieu le <strong>{formatDateFr(quote.client.dateEvenement)}</strong>, dans <strong>{daysLeft} jour(s)</strong>. L&apos;annulation en ligne n&apos;est plus possible depuis le <strong>{formatDateFr(deadline.toISOString())}</strong>. Contactez-nous directement si besoin. Conformément à nos CGV, l&apos;acompte n&apos;est plus remboursable.</>
-                    : <>Votre événement du <strong>{formatDateFr(quote.client.dateEvenement)}</strong> est passé. L&apos;annulation en ligne n&apos;est plus disponible.</>
-                  }
+                  Votre événement a lieu le <strong>{formatDateFr(dateEvenement)}</strong>, dans <strong>{daysLeft} jour(s)</strong>. L&apos;annulation en ligne n&apos;est plus possible depuis le <strong>{deadlineStr}</strong>. Contactez-nous directement si besoin. Conformément à nos CGV, l&apos;acompte n&apos;est plus remboursable.
                 </p>
               </div>
             )
           })()}
-          {CANCELLABLE_STATUSES.includes(quote.status) && !quote.client.dateEvenement && (
-            <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
-              {cancelMsg && (
-                <p className={`text-sm mb-3 px-3 py-2 rounded-lg ${cancelMsg.includes("Erreur") ? "text-red-600 bg-red-50" : "text-green-700 bg-green-50"}`}>
-                  {cancelMsg}
-                </p>
-              )}
-              <button
-                onClick={handleCancel}
-                disabled={cancelling}
-                className="px-4 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50"
-              >
-                {cancelling ? "Annulation en cours…" : "Annuler mon devis"}
-              </button>
-            </div>
-          )}
         </div>
 
         <p className="text-center text-xs text-gray-400 dark:text-white/60">
