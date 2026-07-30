@@ -13,6 +13,7 @@ import {
 } from "@/lib/product-helpers"
 import { getRobotsMeta } from "@/lib/site-mode"
 import { getAdminProducts } from "@/lib/db"
+import { prixTtc } from "@/lib/pricing"
 import ProductImage from "@/components/product-image"
 import ProductGallery from "./ProductGallery"
 import AddToCartButton from "./AddToCartButton"
@@ -38,15 +39,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const robots = await getRobotsMeta()
   const image = getProductImage(product)
-  const price = formatPrix(product.prix)
+  const priceTTC = prixTtc(product.prix)
 
   return {
     title: `${product.nom} — Location ${product.categorie}`,
-    description: `${product.nom} disponible à la location en Île-de-France. ${product.dimension ? `${product.dimension}. ` : ''}${price}/jour. Livraison inclusion dans les départements 94, 93, 95, 77, 91.`,
+    description: `${product.nom} disponible à la location en Île-de-France. ${product.dimension ? `${product.dimension}. ` : ''}${priceTTC.toFixed(2)} € TTC/jour. Livraison inclusion dans les départements 94, 93, 95, 77, 91.`,
     alternates: { canonical: `${SITE_URL}/produit/${slug}` },
     openGraph: {
       title: `${product.nom} — Papillon Rose`,
-      description: `${product.nom} disponible à la location. ${price}/jour.`,
+      description: `${product.nom} disponible à la location. ${priceTTC.toFixed(2)} € TTC/jour.`,
       url: `${SITE_URL}/produit/${slug}`,
       images: [{ url: image, width: 800, height: 800, alt: product.nom }],
       type: "website",
@@ -77,7 +78,7 @@ export default async function ProductPage({ params }: Props) {
 
   const categorySlug = getCategorySlug(product.categorie)
   const images = getAllProductImages(product)
-  const price = formatPrix(product.prix)
+  const priceTTC = prixTtc(product.prix)
 
   return (
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 pt-16 md:pt-20">
@@ -118,8 +119,8 @@ export default async function ProductPage({ params }: Props) {
             )}
 
             <p className="text-2xl font-bold text-[#2E2E2E] dark:text-neutral-100 mt-4">
-              {price}
-              <span className="text-sm font-normal text-gray-400 dark:text-white/60 ml-1">/jour</span>
+              {priceTTC.toFixed(2)} €
+              <span className="text-sm font-normal text-gray-400 dark:text-white/60 ml-1">TTC / jour</span>
             </p>
 
             {/* Stock */}
@@ -143,7 +144,7 @@ export default async function ProductPage({ params }: Props) {
 
             {/* Actions */}
             <div className="mt-6 flex flex-col gap-3">
-              <AddToCartButton productId={product.id} stock={product.stock} productName={product.nom} />
+              <AddToCartButton productId={product.id} stock={product.stock} badge={product.badge} productName={product.nom} />
               <FavoriteButton productId={product.id} />
             </div>
 
@@ -153,7 +154,7 @@ export default async function ProductPage({ params }: Props) {
               <ul className="text-sm text-gray-500 dark:text-white/70 space-y-1.5">
                 <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Catégorie :</span> {product.categorie}</li>
                 {product.dimension && <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Dimensions :</span> {product.dimension}</li>}
-                <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Tarif :</span> {price}/jour</li>
+                <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Tarif :</span> {priceTTC.toFixed(2)} € TTC / jour</li>
                 <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Disponibilité :</span> {product.stock > 0 ? "Disponible" : "Indisponible"}</li>
               </ul>
             </div>

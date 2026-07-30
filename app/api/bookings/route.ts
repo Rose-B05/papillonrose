@@ -44,6 +44,9 @@ export async function POST(request: NextRequest) {
       if (!item.qty || item.qty < 1 || item.qty > 100 || typeof item.qty !== "number") {
         return NextResponse.json({ error: "Quantité invalide" }, { status: 400 })
       }
+      if (!item.dateStart || !item.dateEnd) {
+        return NextResponse.json({ error: "Dates de location requises pour chaque article" }, { status: 400 })
+      }
     }
 
     // Verify product exists & enforce stock limits per date range
@@ -52,6 +55,10 @@ export async function POST(request: NextRequest) {
     for (const item of items) {
       const product = produits.find((p) => p.id === item.productId)
       if (!product) return NextResponse.json({ error: `Produit ${item.productId} introuvable` }, { status: 400 })
+
+      if (product.badge === "epuise") {
+        return NextResponse.json({ error: `${product.nom} n'est plus disponible` }, { status: 400 })
+      }
 
       if (item.dateStart && item.dateEnd) {
         const available = await getAvailableStock(item.productId, item.dateStart, item.dateEnd)

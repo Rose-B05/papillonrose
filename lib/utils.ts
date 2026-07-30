@@ -72,7 +72,10 @@ export function calcDeposit(ttc: number): number {
 }
 
 export function formatDateFr(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("fr-FR", {
+  if (!dateStr) return "Dates à confirmer"
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return "Dates à confirmer"
+  return d.toLocaleDateString("fr-FR", {
     day: "numeric",
     month: "long",
     year: "numeric",

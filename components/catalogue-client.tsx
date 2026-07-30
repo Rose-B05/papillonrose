@@ -85,6 +85,7 @@ export default function CatalogueClient() {
     const val = typeof p === "number" ? p : parseFloat(String(p).replace(/[^\d.,]/g, "").replace(",", "."))
     return isNaN(val) ? 0 : val
   }
+  const prixTtc = (p: string | number): number => Math.round(parsePrix(p) * 1.2 * 100) / 100
 
   const addToCartWithToast = useCallback(
     (productId: number, qty: number = 1, variantLabel?: string) => {
@@ -262,7 +263,7 @@ export default function CatalogueClient() {
               <p className="text-xs text-gray-400 dark:text-white/60 mb-3">{modalProduct.dimension}</p>
             )}
             <p className="text-xl font-bold text-[#2E2E2E] dark:text-neutral-100 mb-4">
-              {parsePrix(modalProduct.prix)} €<span className="text-xs font-normal text-gray-400 ml-1">/jour</span>
+              {prixTtc(modalProduct.prix).toFixed(2)} €<span className="text-xs font-normal text-gray-400 ml-1">TTC / jour</span>
             </p>
             <div className="flex gap-3">
               <button

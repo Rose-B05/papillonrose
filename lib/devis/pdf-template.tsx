@@ -142,7 +142,9 @@ function formatEUR(amount: number) {
 
 function calcDays(start: string, end: string) {
   if (!start || !end) return 1
-  return Math.max(1, Math.ceil((new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60 * 24)))
+  const ms = new Date(end).getTime() - new Date(start).getTime()
+  if (isNaN(ms)) return 1
+  return Math.max(1, Math.ceil(ms / (1000 * 60 * 60 * 24)))
 }
 
 function resolveProduct(productId: number) {
