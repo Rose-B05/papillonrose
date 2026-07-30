@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server"
-import { getSiteMode } from "@/lib/db"
+import { getSiteMode, getAdminProducts } from "@/lib/db"
 import { produits } from "@/data/produits"
 import {
   CATEGORIES,
   getCategorySlug,
   getProductSlug,
-  getActiveProducts,
+  getMergedProducts,
 } from "@/lib/product-helpers"
 
 export const runtime = "nodejs"
@@ -60,7 +60,14 @@ export async function GET() {
   </url>`
   }).join("\n")
 
-  const productUrls = getActiveProducts()
+  let adminProducts: Awaited<ReturnType<typeof getAdminProducts>> = []
+  try {
+    adminProducts = await getAdminProducts()
+  } catch {}
+
+  const mergedProducts = getMergedProducts(adminProducts).filter((p) => p.actif !== false)
+
+  const productUrls = mergedProducts
     .map((p) => {
       const slug = getProductSlug(p)
       return `  <url>
