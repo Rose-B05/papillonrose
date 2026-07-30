@@ -3,12 +3,27 @@
 /**
  * Test script for processBookingExpiry() logic from lib/quote-expiry.ts
  *
+ * ╔══════════════════════════════════════════════════════════════════════╗
+ * ║ Ne jamais écrire un jour de semaine en dur dans les logs de test.  ║
+ * ║ Toujours le calculer depuis l'objet Date utilisé, pour éviter     ║
+ * ║ toute incohérence non détectée.                                    ║
+ * ║                                                                    ║
+ * ║ Ne jamais utiliser toISOString() pour afficher une date locale :   ║
+ * ║ toISOString() renvoie UTC, donc setHours(0,0,0,0) sur un Date     ║
+ * ║ local produit "la veille" en UTC (décalage horaire).              ║
+ * ║ Utiliser plutôt :                                                  ║
+ * ║   d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()           ║
+ * ║ ou toLocaleDateString('fr-FR').                                    ║
+ * ╚══════════════════════════════════════════════════════════════════════╝
+ *
  * This script reimplements the exact same algorithm with in-memory state to
  * prove the logic works without needing @vercel/kv or any external dependency.
  *
  * Scenarios tested:
  *   A) Booking with quoteSentAt = 49h ago → must expire, unblockDates called
  *   B) Booking with quoteSentAt = 46h ago → must send reminder once, no double-send
+ *
+ * Run: node __tests__/test-quote-expiry.mjs
  */
 
 import { randomUUID } from "node:crypto"
@@ -19,7 +34,7 @@ const BOOKING_REMINDER_WINDOW_HOURS = 3
 
 // ─── In-memory state ────────────────────────────────────────────────────────
 const bookings = []
-const blockedDates = new Map() // key: `blocked:product:${productId}`, value: Record<date, bookingId>
+const blockedDates = new Map()
 const emailLogs = []
 const activityLogs = []
 let emailSendCount = 0
@@ -181,13 +196,17 @@ function assert(condition, label) {
   }
 }
 
+// ─── Display real now (for reference) ─────────────────────────────────────
+const DAY_NAMES_FR = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+const now = new Date()
+console.log(`Real now: ${DAY_NAMES_FR[now.getDay()]} ${now.toLocaleDateString("fr-FR")} ${now.toLocaleTimeString("fr-FR")}`)
+
 // ─── SCENARIO A: 49h → must expire ─────────────────────────────────────────
-console.log("═══════════════════════════════════════════════════════════")
+console.log("\n═══════════════════════════════════════════════════════════")
 console.log("SCENARIO A: Booking with quoteSentAt = 49h ago")
 console.log("Expected: status → expired, unblockDates called, dates freed")
 console.log("═══════════════════════════════════════════════════════════")
 
-// Setup: add a blocked date for product 1
 const testBookingA = makeBooking("booking-a", 49)
 bookings.push(testBookingA)
 blockedDates.set("blocked:product:1", { "2026-08-01": "booking-a", "2026-08-02": "booking-a", "2026-08-03": "booking-a" })
