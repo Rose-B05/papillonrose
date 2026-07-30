@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { Eye, Pencil, Send, XCircle, PackageCheck } from "lucide-react"
 import DevisStatutBadge from "./DevisStatutBadge"
+import QuoteCountdown from "@/components/QuoteCountdown"
 
 function formatDate(dateStr: string) {
   if (!dateStr) return "—"
@@ -23,6 +24,7 @@ interface DevisTableRow {
   totalTtc: number
   statut: string
   creeLe: string
+  quoteSentAt?: string
 }
 
 interface DevisTableProps {
@@ -88,7 +90,12 @@ export default function DevisTable({ devis, onStatusChange, onDelete, onSend, on
                 {d.totalTtc.toFixed(2)} €
               </td>
               <td className="py-3 px-4">
-                <DevisStatutBadge statut={d.statut} />
+                <div className="flex flex-col gap-1">
+                  <DevisStatutBadge statut={d.statut} />
+                  {d.statut === "quote-sent" && d.quoteSentAt && (
+                    <QuoteCountdown booking={{ status: d.statut, quoteSentAt: d.quoteSentAt }} />
+                  )}
+                </div>
               </td>
               <td className="py-3 px-4">
                 <div className="flex items-center justify-end gap-1">

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getCustomer, CUSTOMER_COOKIE } from "@/lib/customer-auth"
-import { getQuotes } from "@/lib/db"
+import { getBookingsByEmail } from "@/lib/db"
 
 export async function GET(request: NextRequest) {
   const session = request.cookies.get(CUSTOMER_COOKIE)
@@ -13,18 +13,19 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ quotes: [] })
   }
 
-  const allQuotes = await getQuotes()
-  const customerQuotes = allQuotes
-    .filter((q) => q.customerEmail === customer.email)
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .map((q) => ({
-      id: q.id,
-      quoteNumber: q.quoteNumber,
-      statut: q.statut,
-      totalTtc: q.totalTtc,
-      createdAt: q.createdAt,
-      itemCount: q.items.length,
-    }))
+  const customerBookings = await getBookingsByEmail(customer.email)
+  const sorted = customerBookings.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  )
 
-  return NextResponse.json({ quotes: customerQuotes })
+  return NextResponse.json({
+    quotes: sorted.map((b) => ({
+      id: b.id,
+      quoteNumber: b.quoteNumber || b.id,
+      statut: b.status,
+      totalTtc: b.totalTtc,
+      createdAt: b.createdAt,
+      itemCount: b.items.length,
+    })),
+  })
 }

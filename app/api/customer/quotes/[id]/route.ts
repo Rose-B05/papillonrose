@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getCustomer, CUSTOMER_COOKIE } from "@/lib/customer-auth"
-import { getQuote } from "@/lib/db"
+import { getBooking } from "@/lib/db"
 
 export async function GET(
   _request: NextRequest,
@@ -18,14 +18,15 @@ export async function GET(
     return NextResponse.json({ error: "Non connecté" }, { status: 401 })
   }
 
-  const quote = await getQuote(id)
-  if (!quote) {
+  const booking = await getBooking(id)
+  if (!booking) {
     return NextResponse.json({ error: "Devis introuvable" }, { status: 404 })
   }
 
-  if (quote.customerEmail !== customer.email) {
+  const bookingEmail = booking.customerEmail?.toLowerCase() || booking.client?.email?.toLowerCase()
+  if (bookingEmail !== customer.email.toLowerCase()) {
     return NextResponse.json({ error: "Accès refusé" }, { status: 403 })
   }
 
-  return NextResponse.json({ quote })
+  return NextResponse.json({ booking })
 }

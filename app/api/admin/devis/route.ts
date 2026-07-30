@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getBookings, saveBooking, getNextAdminProductId, logActivity } from "@/lib/db"
+import { getBookings, saveBooking, getNextAdminProductId, logActivity, blockDates } from "@/lib/db"
 import { COOKIE_NAME } from "@/lib/auth"
 import { produits } from "@/data/produits"
 import type { Booking, ClientInfo } from "@/lib/types"
@@ -26,6 +26,7 @@ function mapBooking(b: Booking) {
     totalTtc: b.totalTtc,
     statut: b.status,
     creeLe: b.createdAt,
+    quoteSentAt: b.quoteSentAt,
   }
 }
 
@@ -102,6 +103,20 @@ export async function POST(request: NextRequest) {
     }
 
     await saveBooking(booking)
+
+    for (const item of booking.items) {
+      if (item.dateStart && item.dateEnd) {
+        const dates: string[] = []
+        const current = new Date(item.dateStart)
+        const endDate = new Date(item.dateEnd)
+        while (current <= endDate) {
+          dates.push(current.toISOString().split("T")[0])
+          current.setDate(current.getDate() + 1)
+        }
+        await blockDates(item.productId, dates, booking.id)
+      }
+    }
+
     await logActivity({ type: "devis_created", description: `Devis ${quoteNumber} créé pour ${client.prenom} ${client.nom}`, reference: booking.id })
     return NextResponse.json({ devis: mapBooking(booking) }, { status: 201 })
   } catch (err) {

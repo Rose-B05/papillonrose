@@ -34,10 +34,12 @@ export interface Booking {
   totalHt: number
   totalTtc: number
   depositAmount: number
-  status: "pending-quote" | "quote-sent" | "deposit-pending" | "confirmed" | "cancelled" | "returned"
+  status: "pending-quote" | "quote-sent" | "deposit-pending" | "confirmed" | "cancelled" | "returned" | "expired"
   quoteNumber?: string
   createdAt: string
   updatedAt: string
+  quoteSentAt?: string
+  quoteReminderSentAt?: string
   paymentIntentId?: string
   depositPaidAt?: string
   balancePaidAt?: string

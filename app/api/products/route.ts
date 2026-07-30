@@ -25,21 +25,23 @@ export async function GET() {
     const adminProducts = await getAdminProducts()
     const adminMap = new Map<number, AdminProduct>()
     for (const ap of adminProducts) {
-      if (ap.status === "publie") {
-        adminMap.set(ap.id, ap)
-      }
+      adminMap.set(ap.id, ap)
     }
 
     const merged: Produit[] = []
 
     for (const sp of produits) {
-      if (sp.actif === false) continue
       const adminOverride = adminMap.get(sp.id)
       if (adminOverride) {
-        if (adminOverride.status === "masque") continue
-        merged.push(adminToProduit(adminOverride))
+        if (adminOverride.status === "masque") {
+          adminMap.delete(sp.id)
+          continue
+        }
+        if (adminOverride.status === "publie") {
+          merged.push(adminToProduit(adminOverride))
+        }
         adminMap.delete(sp.id)
-      } else {
+      } else if (sp.actif !== false) {
         merged.push(sp)
       }
     }

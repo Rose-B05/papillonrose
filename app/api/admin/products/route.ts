@@ -29,6 +29,9 @@ function validateProduct(data: any): string[] {
   if (data.nom && data.nom.length > 200) {
     errors.push("Le nom ne doit pas dépasser 200 caractères")
   }
+  if ((data.status === "publie" || data.status === "masque") && (!data.image || typeof data.image !== "string" || data.image.trim().length === 0)) {
+    errors.push("Une image est requise avant de publier ou masquer un produit")
+  }
   return errors
 }
 
@@ -109,30 +112,40 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const errors = validateProduct(body)
-    if (errors.length > 0) {
-      return NextResponse.json({ error: "Validation échouée", details: errors }, { status: 400 })
+
+    const isStatusOnlyOverride = body.id && body.status && !body.prix && !body.categorie
+    if (!isStatusOnlyOverride) {
+      const errors = validateProduct(body)
+      if (errors.length > 0) {
+        return NextResponse.json({ error: "Validation échouée", details: errors }, { status: 400 })
+      }
     }
 
     const existingAdmin = body.id ? await getAdminProduct(body.id) : null
+
+    let staticProductData: any = null
+    if (body.id && !existingAdmin) {
+      staticProductData = produits.find((p) => p.id === body.id)
+    }
+
     const id = existingAdmin?.id || body.id || await getNextAdminProductId()
     const now = new Date().toISOString()
 
     const product: AdminProduct = {
       id,
-      nom: body.nom.trim(),
-      categorie: body.categorie,
-      stock: body.pieceUnique ? 1 : (body.stock || 1),
-      dimension: body.dimension || undefined,
-      prix: body.prix,
-      image: body.image || "",
+      nom: body.nom?.trim() || staticProductData?.nom || "Produit",
+      categorie: body.categorie || staticProductData?.categorie || "",
+      stock: body.pieceUnique ? 1 : (body.stock || staticProductData?.stock || 1),
+      dimension: body.dimension || staticProductData?.dimension || undefined,
+      prix: body.prix || staticProductData?.prix || 0,
+      image: body.image || staticProductData?.image || "",
       gallerie: body.gallerie || [],
       description: body.description || undefined,
       pieceUnique: body.pieceUnique || false,
       tagsThemes: body.tagsThemes || [],
       tagsCouleurs: body.tagsCouleurs || [],
       status: body.status || "brouillon",
-      dateCreation: body.dateCreation || now,
+      dateCreation: body.dateCreation || staticProductData?.dateAjout || now,
       dateModification: now,
     }
 
@@ -166,19 +179,22 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: "Produit introuvable" }, { status: 404 })
     }
 
-    const errors = validateProduct(body)
-    if (errors.length > 0) {
-      return NextResponse.json({ error: "Validation échouée", details: errors }, { status: 400 })
+    const isStatusOnly = !body.nom && !body.prix && !body.categorie
+    if (!isStatusOnly) {
+      const errors = validateProduct(body)
+      if (errors.length > 0) {
+        return NextResponse.json({ error: "Validation échouée", details: errors }, { status: 400 })
+      }
     }
 
     const now = new Date().toISOString()
     const product: AdminProduct = {
       ...existing,
-      nom: body.nom.trim(),
-      categorie: body.categorie,
-      stock: body.pieceUnique ? 1 : (body.stock || 1),
-      dimension: body.dimension || undefined,
-      prix: body.prix,
+      nom: body.nom?.trim() || existing.nom,
+      categorie: body.categorie || existing.categorie,
+      stock: body.pieceUnique ? 1 : (body.stock || existing.stock),
+      dimension: body.dimension || existing.dimension,
+      prix: body.prix ?? existing.prix,
       image: body.image || existing.image,
       gallerie: body.gallerie || existing.gallerie,
       description: body.description || undefined,

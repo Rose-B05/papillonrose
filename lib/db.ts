@@ -132,6 +132,16 @@ export async function getBooking(id: string): Promise<Booking | undefined> {
   return b ?? undefined
 }
 
+export async function getBookingsByEmail(email: string): Promise<Booking[]> {
+  const all = await getBookings()
+  const lower = email.toLowerCase()
+  return all.filter(
+    (b) =>
+      b.customerEmail?.toLowerCase() === lower ||
+      b.client?.email?.toLowerCase() === lower,
+  )
+}
+
 export async function saveBooking(booking: Booking) {
   await kv.set(`bookings:${booking.id}`, booking)
   // Maintain index
@@ -198,6 +208,26 @@ export async function unblockDates(bookingId: string) {
 export async function areDatesAvailable(productId: number, dates: string[]): Promise<boolean> {
   const blocked = await getBlockedDatesForProduct(productId)
   return !dates.some((d) => blocked.includes(d))
+}
+
+export async function getActiveBlockedProductIds(): Promise<Set<number>> {
+  const today = new Date().toISOString().split("T")[0]
+  const keys = await kv.keys("blocked:product:*")
+  if (keys.length === 0) return new Set()
+  const values = await kv.mget<Record<string, string>[]>(...keys)
+  const blocked = new Set<number>()
+  for (let i = 0; i < keys.length; i++) {
+    const map = values[i]
+    if (!map) continue
+    const productId = Number(keys[i].split(":")[2])
+    for (const date of Object.keys(map)) {
+      if (date >= today) {
+        blocked.add(productId)
+        break
+      }
+    }
+  }
+  return blocked
 }
 
 export function getDatesBetween(start: string, end: string): string[] {
@@ -501,6 +531,7 @@ export type ActivityEventType =
   | "contact_received"
   | "quote_created"
   | "quote_sent"
+  | "booking_expired"
 
 export interface ActivityLog {
   id: string

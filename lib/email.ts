@@ -273,3 +273,33 @@ export async function sendChatbotLead(data: {
     </div>`,
   })
 }
+
+export async function sendCancellationConfirmation(to: string, quoteNumber: string, clientName: string) {
+  const transport = getTransport()
+  await transport.sendMail({
+    from: `"Papillon Rose" <${FROM}>`,
+    to,
+    subject: `Annulation de votre devis n°${quoteNumber} — Papillon Rose`,
+    html: `<div style="font-family:sans-serif;max-width:600px;margin:auto">
+      <h2 style="color:#C9948E">Confirmation d'annulation</h2>
+      <p>Bonjour ${clientName},</p>
+      <p>Votre devis <strong>n°${quoteNumber}</strong> a bien été annulé.</p>
+      <p>Les dates associées à cette réservation ont été libérées et sont de nouveau disponibles.</p>
+      <p>Si vous souhaitez créer une nouvelle demande de devis, n'hésitez pas à revenir vers nous.</p>
+      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+    </div>`,
+  })
+}
+
+export async function sendAdminCancellationNotification(quoteNumber: string, clientName: string, hadDeposit: boolean) {
+  const transport = getTransport()
+  const depositNote = hadDeposit
+    ? "\nUn acompte avait été payé. Un remboursement manuel doit être effectué."
+    : ""
+  await transport.sendMail({
+    from: `"Papillon Rose" <${FROM}>`,
+    to: TO,
+    subject: `Devis n°${quoteNumber} annulé par le client — ${clientName}`,
+    text: `Le devis n°${quoteNumber} de ${clientName} a été annulé par le client.${depositNote}`,
+  })
+}
