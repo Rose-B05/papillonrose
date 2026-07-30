@@ -14,6 +14,7 @@ import {
   RefreshCw,
 } from "lucide-react"
 import { CATEGORIES } from "@/lib/product-helpers"
+import { prixTtc } from "@/lib/pricing"
 
 const THEMES_TAGS = ["Mariage", "Anniversaire", "Événement pro", "Baptême", "Baby shower", "Noël"]
 const COULEURS_TAGS = ["Blanc", "Doré", "Rose", "Naturel", "Rouge", "Noir", "Bleu", "Vert"]
@@ -498,7 +499,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1.5">
-                Prix / jour (€) *
+                Prix HT / jour (€) *
               </label>
               <input
                 type="number"
@@ -509,6 +510,11 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                 placeholder="25"
                 className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C9948E]/50 transition-colors"
               />
+              {form.prix !== "" && form.prix !== undefined && (
+                <p className="text-xs text-gray-400 dark:text-white/60 mt-1.5">
+                  Soit <span className="font-medium text-[#2E2E2E] dark:text-neutral-100">{prixTtc(Number(form.prix)).toFixed(2)} € TTC</span> affiché au client
+                </p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1.5">

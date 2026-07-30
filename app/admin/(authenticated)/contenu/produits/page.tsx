@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Plus, Search, Eye, EyeOff, Edit, Trash2, Filter, Image as ImageIcon, EyeClosed } from "lucide-react"
+import { prixTtc } from "@/lib/pricing"
 
 interface AdminProduct {
   id: number
@@ -42,12 +43,27 @@ export default function ProductsListPage() {
   }
 
   const handleDelete = async (id: number, nom: string, isStatic?: boolean) => {
-    if (isStatic) return
-    if (!confirm(`Supprimer le produit "${nom}" ?`)) return
+    const action = isStatic ? "masquer" : "supprimer"
+    if (!confirm(`Voulez-vous ${action} le produit "${nom}" ?${isStatic ? "\n\nCe produit sera masqué du catalogue public mais pourra être réactivé." : "\n\nCette action est irréversible."}`)) return
     try {
-      const res = await fetch(`/api/admin/products?id=${id}`, { method: "DELETE" })
+      let res: Response
+      if (isStatic) {
+        res = await fetch("/api/admin/products", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, nom, status: "masque", categorie: "_masque", prix: 0 }),
+        })
+      } else {
+        res = await fetch(`/api/admin/products?id=${id}`, { method: "DELETE" })
+      }
       if (res.ok) {
-        setProducts((prev) => prev.filter((p) => p.id !== id))
+        if (isStatic) {
+          setProducts((prev) =>
+            prev.map((p) => (p.id === id ? { ...p, status: "masque" as const } : p))
+          )
+        } else {
+          setProducts((prev) => prev.filter((p) => p.id !== id))
+        }
       }
     } catch {}
   }
@@ -217,7 +233,12 @@ export default function ProductsListPage() {
                       <span className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
                         {typeof p.prix === "number" ? `${p.prix} €` : p.prix}
                       </span>
-                      <span className="text-xs text-gray-400 dark:text-white/60">/jour</span>
+                      <span className="text-xs text-gray-400 dark:text-white/60"> HT/jour</span>
+                      {typeof p.prix === "number" && (
+                        <div className="text-[11px] text-gray-400 dark:text-white/50">
+                          {prixTtc(p.prix).toFixed(2)} € TTC
+                        </div>
+                      )}
                     </td>
                     <td className="px-5 py-3 text-center">
                       <span
@@ -258,15 +279,13 @@ export default function ProductsListPage() {
                         >
                           <Edit className="w-4 h-4" />
                         </Link>
-                        {!p.isStatic && (
-                          <button
+                        <button
                             onClick={() => handleDelete(p.id, p.nom, p.isStatic)}
                             className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-white/60 hover:text-red-500 transition-colors"
-                            title="Supprimer"
+                            title={p.isStatic ? "Masquer du catalogue" : "Supprimer"}
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
-                        )}
                       </div>
                     </td>
                   </tr>

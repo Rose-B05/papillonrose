@@ -34,6 +34,7 @@ import AccessibilityPanel from "@/components/accessibility-panel"
 import NouveautesBanner from "@/components/nouveautes-banner"
 import { getTagsForProduct, type FilterState } from "@/lib/product-tags"
 import { FEATURED_IDS } from "@/lib/scenes"
+import { prixTtc } from "@/lib/pricing"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
@@ -137,6 +138,7 @@ function ProductCard({
   onView,
   onAddCart,
   dynamicStock,
+  isBooked,
 }: {
   product: Produit
   isFav: boolean
@@ -145,6 +147,7 @@ function ProductCard({
   onView: () => void
   onAddCart: () => void
   dynamicStock?: Record<number, number>
+  isBooked?: boolean
 }) {
   const getSrc = () => {
     if (product.image && !product.image.includes("placeholder")) return product.image
@@ -153,6 +156,7 @@ function ProductCard({
   }
   const [imgError, setImgError] = useState(false)
   const effectiveStock = dynamicStock?.[product.id] ?? product.stock
+  const outOfStock = effectiveStock <= 0 || product.badge === "epuise" || isBooked
   return (
     <div className="group relative bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
       <div
@@ -177,6 +181,13 @@ function ProductCard({
             Unique
           </span>
         )}
+        {outOfStock && (
+          <div className="absolute inset-0 bg-white/70 dark:bg-black/60 flex items-center justify-center z-10">
+            <span className="text-[10px] text-gray-400 dark:text-gray-300 uppercase tracking-widest font-medium">
+              Indisponible
+            </span>
+          </div>
+        )}
       </div>
       <div className="p-3.5 flex flex-col flex-1">
         <div className="min-w-0">
@@ -190,33 +201,24 @@ function ProductCard({
             <p className="text-[10px] text-gray-400 dark:text-white/60 truncate">{formatDecimalFr(product.dimension)}</p>
           )}
           <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
-            {product.variants && product.variants.length > 0 ? (
-              <>
-                <span className="text-[10px] font-normal text-gray-400 dark:text-white/60 mr-0.5">à partir de</span>
-                {formatPrix(getStartingPrix(product))} €
-              </>
-            ) : (
-              <>
-                {formatPrix(product.prix)} €
-              </>
-            )}
-            <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">/jour</span>
+            {prixTtc(product.prix).toFixed(2)} €
+            <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">TTC / jour</span>
           </p>
         </div>
         <div className="mt-auto pt-2.5 flex items-center gap-2">
           <button
-            onClick={(e) => { e.stopPropagation(); onAddCart() }}
-            disabled={isInCart}
-            aria-label={isInCart ? "Déjà dans le panier" : "Ajouter au panier"}
+            onClick={(e) => { e.stopPropagation(); if (!outOfStock) onAddCart() }}
+            disabled={isInCart || outOfStock}
+            aria-label={isInCart ? "Déjà dans le panier" : outOfStock ? "Indisponible" : "Ajouter au panier"}
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
-              isInCart
+              isInCart || outOfStock
                 ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-white/60 cursor-not-allowed"
                 : "bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#B8807A]"
             }`}
           >
             <ShoppingBag size={13} />
-            <span className="hidden sm:inline">{isInCart ? "Déjà dans le panier" : "Ajouter au panier"}</span>
-            <span className="sm:hidden">{isInCart ? "Ajouté" : "Ajouter"}</span>
+            <span className="hidden sm:inline">{isInCart ? "Déjà dans le panier" : outOfStock ? "Indisponible" : "Ajouter au panier"}</span>
+            <span className="sm:hidden">{isInCart ? "Ajouté" : outOfStock ? "Indisponible" : "Ajouter"}</span>
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); onFav() }}
@@ -440,6 +442,7 @@ export default function PapillonRoseSite() {
     inStockOnly: false,
   })
   const [dynamicStock, setDynamicStock] = useState<Record<number, number>>({})
+  const [blockedIds, setBlockedIds] = useState<Set<number>>(new Set())
   const [customer, setCustomer] = useState<{ email: string; prenom: string; nom: string; telephone: string; adresse: string } | null>(null)
   const [maskedIds, setMaskedIds] = useState<Set<number>>(new Set())
   const [fetchedProducts, setFetchedProducts] = useState<Produit[]>([])
@@ -525,6 +528,14 @@ export default function PapillonRoseSite() {
       .then((data) => setDynamicStock(data.stock || {}))
       .catch(() => {})
   }, [page])
+
+  // Fetch blocked product IDs
+  useEffect(() => {
+    fetch("/api/products/active-blocks")
+      .then((res) => res.json())
+      .then((data) => setBlockedIds(new Set(data.blockedIds || [])))
+      .catch(() => {})
+  }, [])
 
   const getEffectiveStock = useCallback((id: number) => {
     const all = fetchedProducts.length > 0 ? fetchedProducts : produits
@@ -621,7 +632,7 @@ export default function PapillonRoseSite() {
     return added
   }
 
-  const quoteTotal = quote.reduce((s, i) => s + parsePrix(i.product.prix) * i.qty, 0)
+  const quoteTotal = quote.reduce((s, i) => s + prixTtc(i.product.prix) * i.qty, 0)
   const quoteCount = quote.reduce((s, i) => s + i.qty, 0)
   const navTo = (p: Page) => {
     setPage(p)
@@ -844,6 +855,7 @@ export default function PapillonRoseSite() {
                       onView={() => { setModalProduct(p); setModalQty(1); setModalVariant(undefined) }}
                       onAddCart={() => addToCartWithToast(p.id)}
                       dynamicStock={dynamicStock}
+                      isBooked={p.stock === 1 && blockedIds.has(p.id)}
                     />
                   ))}
               </div>
@@ -1215,6 +1227,7 @@ export default function PapillonRoseSite() {
                     onView={() => setModalProduct(p)}
                     onAddCart={() => addToCartWithToast(p.id)}
                     dynamicStock={dynamicStock}
+                    isBooked={p.stock === 1 && blockedIds.has(p.id)}
                   />
                 ))}
               </div>
@@ -1315,7 +1328,7 @@ export default function PapillonRoseSite() {
                                 : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20"
                             }`}
                           >
-                            {v.label} — {formatPrix(v.prix)} €/jour
+                            {v.label} — {prixTtc(v.prix).toFixed(2)} € TTC/jour
                           </button>
                         ))}
                       </div>
@@ -1329,23 +1342,24 @@ export default function PapillonRoseSite() {
                           : getStartingPrix(modalProduct)
                         : modalProduct.prix
                     )
+                    const dayPrixTtc = prixTtc(dayPrix)
                     const effectiveEnd = modalDateEnd || modalDateStart
                     const hasDate = !!modalDateStart
                     const days = hasDate
                       ? Math.max(1, Math.ceil((new Date(effectiveEnd).getTime() - new Date(modalDateStart).getTime()) / (1000 * 60 * 60 * 24)))
                       : 0
-                    const total = hasDate ? dayPrix * days * modalQty : 0
+                    const total = hasDate ? dayPrixTtc * days * modalQty : 0
                     return (
                       <p style={DP} className="text-3xl font-bold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                         {hasDate
                           ? <>{formatPrix(total)} €</>
                           : <>
                               <span className="text-[10px] font-normal text-gray-400 dark:text-white/60 mr-0.5">à partir de</span>
-                              {formatPrix(dayPrix)} €
+                              {dayPrixTtc.toFixed(2)} €
                             </>
                         }
                         <span className="text-sm font-normal text-gray-400 dark:text-white/60 ml-1">
-                          {hasDate ? `total · ${days} jour${days > 1 ? "s" : ""} × ${modalQty}` : "/ jour"}
+                          {hasDate ? `total · ${days} jour${days > 1 ? "s" : ""} × ${modalQty}` : "TTC / jour"}
                         </span>
                       </p>
                     )
@@ -1436,7 +1450,7 @@ export default function PapillonRoseSite() {
                                 : modalProduct.prix
                             )
                             const days = Math.max(1, Math.ceil((new Date(effectiveEnd).getTime() - new Date(modalDateStart).getTime()) / (1000 * 60 * 60 * 24)))
-                            return `Ajouter au panier · ${formatPrix(dayPrix * days * modalQty)} €`
+                            return `Ajouter au panier · ${formatPrix(prixTtc(dayPrix) * days * modalQty)} €`
                           })()}
                     </button>
                     <p className="text-[10px] text-gray-400 dark:text-white/60 text-center -mt-1">
@@ -1548,7 +1562,7 @@ export default function PapillonRoseSite() {
                           {p.nom}
                         </p>
                         <p className="text-[11px] text-gray-400 dark:text-white/60 mt-0.5">
-                          {formatPrix(p.prix)} € / jour
+                          {prixTtc(p.prix).toFixed(2)} € TTC / jour
                         </p>
                         <div className="flex items-center gap-2 mt-2">
                           <button
@@ -1576,7 +1590,7 @@ export default function PapillonRoseSite() {
                       </div>
                       <div className="text-right flex-shrink-0">
                         <p className="font-bold text-sm text-[#2E2E2E] dark:text-neutral-100">
-                          {parsePrix(p.prix) * qty} €
+                          {prixTtc(p.prix) * qty} €
                         </p>
                         <button
                           onClick={() => updateQty(p.id, -qty)}

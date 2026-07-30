@@ -1,4 +1,6 @@
 ﻿import type { Metadata } from "next"
+
+export const dynamic = "force-dynamic"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import {
@@ -12,7 +14,7 @@ import {
   mergeAdminProduct,
 } from "@/lib/product-helpers"
 import { getRobotsMeta } from "@/lib/site-mode"
-import { getAdminProducts } from "@/lib/db"
+import { getAdminProducts, getBlockedDatesForProduct } from "@/lib/db"
 import { prixTtc } from "@/lib/pricing"
 import ProductImage from "@/components/product-image"
 import ProductGallery from "./ProductGallery"
@@ -76,6 +78,15 @@ export default async function ProductPage({ params }: Props) {
     }
   } catch {}
 
+  let isBlocked = false
+  if (product.stock === 1) {
+    try {
+      const blocked = await getBlockedDatesForProduct(product.id)
+      const today = new Date().toISOString().split("T")[0]
+      isBlocked = blocked.some((d) => d >= today)
+    } catch {}
+  }
+
   const categorySlug = getCategorySlug(product.categorie)
   const images = getAllProductImages(product)
   const priceTTC = prixTtc(product.prix)
@@ -125,9 +136,9 @@ export default async function ProductPage({ params }: Props) {
 
             {/* Stock */}
             <div className="mt-4 flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${product.stock > 0 ? "bg-green-500" : "bg-red-500"}`} />
+              <span className={`w-2 h-2 rounded-full ${product.stock > 0 && !isBlocked ? "bg-green-500" : "bg-red-500"}`} />
               <span className="text-sm text-gray-500 dark:text-white/70">
-                {product.stock > 0 ? `${product.stock} en stock` : "Rupture de stock"}
+                {isBlocked ? "Indisponible (réservé)" : product.stock > 0 ? `${product.stock} en stock` : "Rupture de stock"}
               </span>
             </div>
 
@@ -144,7 +155,7 @@ export default async function ProductPage({ params }: Props) {
 
             {/* Actions */}
             <div className="mt-6 flex flex-col gap-3">
-              <AddToCartButton productId={product.id} stock={product.stock} badge={product.badge} productName={product.nom} />
+              <AddToCartButton productId={product.id} stock={product.stock} badge={product.badge} productName={product.nom} isBlocked={isBlocked} />
               <FavoriteButton productId={product.id} />
             </div>
 
@@ -155,7 +166,7 @@ export default async function ProductPage({ params }: Props) {
                 <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Catégorie :</span> {product.categorie}</li>
                 {product.dimension && <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Dimensions :</span> {product.dimension}</li>}
                 <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Tarif :</span> {priceTTC.toFixed(2)} € TTC / jour</li>
-                <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Disponibilité :</span> {product.stock > 0 ? "Disponible" : "Indisponible"}</li>
+                <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Disponibilité :</span> {isBlocked ? "Indisponible (réservé)" : product.stock > 0 ? "Disponible" : "Indisponible"}</li>
               </ul>
             </div>
 

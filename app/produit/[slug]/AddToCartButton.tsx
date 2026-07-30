@@ -9,15 +9,17 @@ export default function AddToCartButton({
   stock,
   badge,
   productName,
+  isBlocked,
 }: {
   productId: number
   stock: number
   badge?: string
   productName: string
+  isBlocked?: boolean
 }) {
   const { addItem } = useCart()
   const [showToast, setShowToast] = useState(false)
-  const disabled = stock <= 0 || badge === "epuise"
+  const disabled = stock <= 0 || badge === "epuise" || isBlocked
 
   const handleClick = () => {
     if (disabled) return

@@ -1,6 +1,6 @@
 ﻿"use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import type { Produit } from "@/data/produits"
 import type { CartItem } from "@/lib/types"
@@ -25,6 +25,14 @@ interface GalleryProps {
 
 export default function CatalogGallery({ produits, favorites, cartItems, onFav, onAddCart, onAddQuote, onView }: GalleryProps) {
   const [lightbox, setLightbox] = useState<{ product: Produit; index: number } | null>(null)
+  const [blockedIds, setBlockedIds] = useState<Set<number>>(new Set())
+
+  useEffect(() => {
+    fetch("/api/products/active-blocks")
+      .then((res) => res.json())
+      .then((data) => setBlockedIds(new Set(data.blockedIds || [])))
+      .catch(() => {})
+  }, [])
 
   const getSrc = (p: Produit) => {
     if (p.image && !p.image.includes("placeholder")) return p.image
@@ -41,7 +49,8 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 md:gap-4">
         {produits.map((p) => {
           const inCart = isInCart(p.id)
-          const outOfStock = getEffectiveStock(p) === 0 || p.badge === "epuise"
+          const isBooked = p.stock === 1 && blockedIds.has(p.id)
+          const outOfStock = getEffectiveStock(p) === 0 || p.badge === "epuise" || isBooked
           return (
             <div
               key={p.id}

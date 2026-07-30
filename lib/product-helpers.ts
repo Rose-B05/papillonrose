@@ -165,19 +165,22 @@ export function mergeAdminProduct(staticProduct: Produit, adminOverride: AdminPr
 export function getMergedProducts(adminProducts: AdminProduct[]): Produit[] {
   const adminMap = new Map<number, AdminProduct>()
   for (const ap of adminProducts) {
-    if (ap.status === "publie") {
-      adminMap.set(ap.id, ap)
-    }
+    adminMap.set(ap.id, ap)
   }
 
   const merged: Produit[] = []
   for (const sp of produits) {
-    if (sp.actif === false) continue
     const adminOverride = adminMap.get(sp.id)
     if (adminOverride) {
-      merged.push(mergeAdminProduct(sp, adminOverride))
+      if (adminOverride.status === "masque") {
+        adminMap.delete(sp.id)
+        continue
+      }
+      if (adminOverride.status === "publie") {
+        merged.push(mergeAdminProduct(sp, adminOverride))
+      }
       adminMap.delete(sp.id)
-    } else {
+    } else if (sp.actif !== false) {
       merged.push(sp)
     }
   }
