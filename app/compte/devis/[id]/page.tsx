@@ -5,6 +5,7 @@ import Link from "next/link"
 import { produits } from "@/data/produits"
 import { formatDateFr } from "@/lib/utils"
 import type { Booking } from "@/lib/types"
+import QuoteCountdown from "@/components/QuoteCountdown"
 
 const STATUT_LABELS: Record<string, string> = {
   "pending-quote": "En attente de devis",
@@ -12,6 +13,7 @@ const STATUT_LABELS: Record<string, string> = {
   "deposit-pending": "En attente de paiement",
   confirmed: "Confirmée",
   cancelled: "Annulée",
+  expired: "Expiré",
   returned: "Terminée",
 }
 
@@ -21,6 +23,7 @@ const STATUT_COLORS: Record<string, string> = {
   "deposit-pending": "bg-amber-50 text-amber-700",
   confirmed: "bg-green-50 text-green-700",
   cancelled: "bg-red-50 text-red-700",
+  expired: "bg-orange-50 text-orange-700",
   returned: "bg-emerald-50 text-emerald-700",
 }
 
@@ -36,11 +39,24 @@ function getPrix(product: { prix: number | string; variants?: { label: string; p
   return typeof product.prix === "number" ? product.prix : parseFloat(product.prix) || 0
 }
 
+function getDaysUntilEvent(dateEvenement: string): number {
+  const now = new Date()
+  const todayUtc = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
+  const eventDate = new Date(dateEvenement)
+  const eventUtc = new Date(Date.UTC(eventDate.getUTCFullYear(), eventDate.getUTCMonth(), eventDate.getUTCDate()))
+  const diffMs = eventUtc.getTime() - todayUtc.getTime()
+  return Math.ceil(diffMs / (1000 * 60 * 60 * 24))
+}
+
+const CANCELLABLE_STATUSES = ["pending-quote", "quote-sent", "deposit-pending", "confirmed"]
+
 export default function DevisDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const [quote, setQuote] = useState<Booking | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [cancelling, setCancelling] = useState(false)
+  const [cancelMsg, setCancelMsg] = useState("")
 
   useEffect(() => {
     fetch(`/api/customer/bookings/${id}`)
@@ -57,6 +73,25 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
         setLoading(false)
       })
   }, [id])
+
+  async function handleCancel() {
+    if (!confirm("Êtes-vous sûr de vouloir annuler ce devis ? Cette action est irréversible.")) return
+    setCancelling(true)
+    setCancelMsg("")
+    try {
+      const res = await fetch(`/api/customer/quotes/${id}/cancel`, { method: "PATCH" })
+      const data = await res.json()
+      if (res.ok) {
+        setQuote((prev) => prev ? { ...prev, status: "cancelled" } : prev)
+        setCancelMsg("Votre devis a été annulé. Les dates ont été libérées.")
+      } else {
+        setCancelMsg(data.error || "Erreur lors de l'annulation")
+      }
+    } catch {
+      setCancelMsg("Erreur de connexion")
+    }
+    setCancelling(false)
+  }
 
   if (loading) {
     return (
@@ -97,6 +132,8 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
               {STATUT_LABELS[quote.status] || quote.status}
             </span>
           </div>
+
+          <QuoteCountdown booking={quote} variant="client" />
 
           {/* Client info */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm mb-6 p-4 bg-[#F8F5F0] dark:bg-neutral-900/60 rounded-xl">
@@ -208,6 +245,57 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
               <span>{quote.totalTtc.toFixed(2)} €</span>
             </div>
           </div>
+
+          {/* Cancel section */}
+          {CANCELLABLE_STATUSES.includes(quote.status) && quote.client.dateEvenement && (() => {
+            const daysLeft = getDaysUntilEvent(quote.client.dateEvenement)
+            if (daysLeft > 7) {
+              return (
+                <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
+                  {cancelMsg && (
+                    <p className={`text-sm mb-3 px-3 py-2 rounded-lg ${cancelMsg.includes("Erreur") || cancelMsg.includes("Délai") ? "text-red-600 bg-red-50" : "text-green-700 bg-green-50"}`}>
+                      {cancelMsg}
+                    </p>
+                  )}
+                  <button
+                    onClick={handleCancel}
+                    disabled={cancelling}
+                    className="px-4 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50"
+                  >
+                    {cancelling ? "Annulation en cours…" : "Annuler mon devis"}
+                  </button>
+                </div>
+              )
+            }
+            const deadline = new Date(quote.client.dateEvenement)
+            deadline.setDate(deadline.getDate() - 7)
+            return (
+              <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
+                <p className="text-sm text-gray-500 dark:text-white/60 bg-[#F8F5F0] dark:bg-neutral-900/60 px-4 py-3 rounded-xl">
+                  {daysLeft > 0
+                    ? <>Votre événement a lieu le <strong>{formatDateFr(quote.client.dateEvenement)}</strong>, dans <strong>{daysLeft} jour(s)</strong>. L&apos;annulation en ligne n&apos;est plus possible depuis le <strong>{formatDateFr(deadline.toISOString())}</strong>. Contactez-nous directement si besoin. Conformément à nos CGV, l&apos;acompte n&apos;est plus remboursable.</>
+                    : <>Votre événement du <strong>{formatDateFr(quote.client.dateEvenement)}</strong> est passé. L&apos;annulation en ligne n&apos;est plus disponible.</>
+                  }
+                </p>
+              </div>
+            )
+          })()}
+          {CANCELLABLE_STATUSES.includes(quote.status) && !quote.client.dateEvenement && (
+            <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
+              {cancelMsg && (
+                <p className={`text-sm mb-3 px-3 py-2 rounded-lg ${cancelMsg.includes("Erreur") ? "text-red-600 bg-red-50" : "text-green-700 bg-green-50"}`}>
+                  {cancelMsg}
+                </p>
+              )}
+              <button
+                onClick={handleCancel}
+                disabled={cancelling}
+                className="px-4 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50"
+              >
+                {cancelling ? "Annulation en cours…" : "Annuler mon devis"}
+              </button>
+            </div>
+          )}
         </div>
 
         <p className="text-center text-xs text-gray-400 dark:text-white/60">
