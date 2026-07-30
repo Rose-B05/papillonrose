@@ -53,7 +53,7 @@ export const RENTAL_RULES: RentalRule[] = [
     description:
       "Du vendredi au dimanche. Retrait le jeudi, restitution le lundi avant midi.",
     startDays: [5, 6, 0], // vendredi, samedi, dimanche
-    minAdvanceDays: 2,
+    minAdvanceDays: 0,
     minNights: 1,
     maxNights: 4,
   },
