@@ -35,6 +35,7 @@ import NouveautesBanner from "@/components/nouveautes-banner"
 import { getTagsForProduct, type FilterState } from "@/lib/product-tags"
 import { FEATURED_IDS } from "@/lib/scenes"
 import { prixTtc } from "@/lib/pricing"
+import { isNouveauProduit } from "@/lib/utils"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
@@ -179,6 +180,11 @@ function ProductCard({
         {effectiveStock === 1 && (
           <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10">
             Unique
+          </span>
+        )}
+        {isNouveauProduit(product.dateAjout) && (
+          <span className={`absolute left-2.5 bg-emerald-500 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10 ${effectiveStock === 1 ? "top-10" : "top-2.5"}`}>
+            Nouveau
           </span>
         )}
         {outOfStock && (
@@ -440,6 +446,7 @@ export default function PapillonRoseSite() {
     dateDebut: "",
     dateFin: "",
     inStockOnly: false,
+    sortBy: "default",
   })
   const [dynamicStock, setDynamicStock] = useState<Record<number, number>>({})
   const [blockedIds, setBlockedIds] = useState<Set<number>>(new Set())
@@ -544,8 +551,8 @@ export default function PapillonRoseSite() {
   }, [dynamicStock, fetchedProducts])
 
   const filtered = useMemo(
-    () =>
-      VISIBLE_PRODUCTS.filter((p) => {
+    () => {
+      const result = VISIBLE_PRODUCTS.filter((p) => {
         const pTags = getTagsForProduct(p.id)
         const pPrix = parsePrix(p.prix)
 
@@ -579,7 +586,18 @@ export default function PapillonRoseSite() {
           matchAmbiance &&
           matchBudget
         )
-      }),
+      })
+
+      if (tagFilters.sortBy === "newest") {
+        result.sort((a, b) => {
+          const dateA = a.dateAjout ? new Date(a.dateAjout).getTime() : 0
+          const dateB = b.dateAjout ? new Date(b.dateAjout).getTime() : 0
+          return dateB - dateA
+        })
+      }
+
+      return result
+    },
     [category, search, priceMax, tagFilters],
   )
 
@@ -658,6 +676,7 @@ export default function PapillonRoseSite() {
       dateDebut: "",
       dateFin: "",
       inStockOnly: false,
+      sortBy: "default",
     })
   }
 

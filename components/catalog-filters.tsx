@@ -1,7 +1,7 @@
 ﻿"use client"
 
 import { useState } from "react"
-import { ChevronDown, ChevronUp, X, Filter, Calendar, SlidersHorizontal, Sparkles, Palette, Sun } from "lucide-react"
+import { ChevronDown, ChevronUp, X, Filter, Calendar, SlidersHorizontal, Sparkles, Palette, Sun, ArrowUpDown } from "lucide-react"
 import { OCCASIONS, STYLES, AMBIANCES, BUDGET_RANGES, type FilterState } from "@/lib/product-tags"
 
 interface Props {
@@ -216,6 +216,23 @@ export default function CatalogFilters({ filters, onChange, resultCount }: Props
               <SlidersHorizontal size={12} className="text-[#C9948E] dark:text-[#E8B4AE]" />
               En stock uniquement
             </label>
+          </div>
+
+          <Divider />
+
+          {/* Tri */}
+          <div className="px-5 py-3 flex items-center gap-2 group">
+            <button
+              onClick={() => onChange({ ...filters, sortBy: filters.sortBy === "newest" ? "default" : "newest" })}
+              className={`flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider transition-all ${
+                filters.sortBy === "newest"
+                  ? "text-[#C9948E] dark:text-[#E8B4AE]"
+                  : "text-[#2E2E2E] dark:text-neutral-100 group-hover:text-[#C9948E] dark:group-hover:text-[#E8B4AE]"
+              }`}
+            >
+              <ArrowUpDown size={12} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+              Nouveautés d'abord
+            </button>
           </div>
 
           <Divider />

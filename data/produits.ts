@@ -44,6 +44,7 @@ export const produits: Produit[] = [
     dimension: "175 x 54 cm",
     prix: 30,
     image: "/images/PROD001.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 2,
@@ -53,6 +54,7 @@ export const produits: Produit[] = [
     dimension: "200 x 200 cm",
     prix: 60,
     image: "/images/PROD002.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 3,
@@ -61,6 +63,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 25,
     image: "/images/PROD003.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 4,
@@ -69,6 +72,7 @@ export const produits: Produit[] = [
     stock: 3,
     prix: 40,
     image: "/images/PROD004.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 5,
@@ -78,6 +82,7 @@ export const produits: Produit[] = [
     dimension: "H 230 x 65 cm",
     prix: 40,
     image: "/images/PROD005.png",
+    dateAjout: "2025-01-01",
   },
 
   // ── FIGURINES, STATUES ET JEUX ──
@@ -89,6 +94,7 @@ export const produits: Produit[] = [
     dimension: "44 x 15 cm",
     prix: 3,
     image: "/images/PROD006.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 7,
@@ -98,6 +104,7 @@ export const produits: Produit[] = [
     dimension: "4 cm",
     prix: 0.20,
     image: "/images/prod007.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 8,
@@ -107,6 +114,7 @@ export const produits: Produit[] = [
     dimension: "6.5 - 24 cm",
     prix: "0.50 - 0.80",
     image: "/images/PROD008.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 9,
@@ -116,6 +124,7 @@ export const produits: Produit[] = [
     dimension: "20 - 31 cm",
     prix: 3,
     image: "/images/PROD009.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 10,
@@ -125,6 +134,7 @@ export const produits: Produit[] = [
     dimension: "55 cm",
     prix: 5,
     image: "/images/PROD010.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 11,
@@ -133,6 +143,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 5,
     image: "/images/PROD011.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 12,
@@ -141,6 +152,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 20,
     image: "/images/prod012.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 13,
@@ -149,6 +161,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 10,
     image: "/images/prod013.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 14,
@@ -160,6 +173,7 @@ export const produits: Produit[] = [
     image: "/images/placeholder.png",
     badge: "stock-limite",
     actif: false,
+    dateAjout: "2025-01-01",
   },
 
   {
@@ -170,6 +184,7 @@ export const produits: Produit[] = [
     dimension: "300 cm",
     prix: 5,
     image: "/images/prod015.png",
+    dateAjout: "2025-01-01",
   },
 
   // ── BOUGEOIRS, LUSTRES, CHANDELIERS ET LANTERNES ──
@@ -181,6 +196,7 @@ export const produits: Produit[] = [
     dimension: "13 cm",
     prix: 4,
     image: "/images/prod016.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 17,
@@ -190,6 +206,7 @@ export const produits: Produit[] = [
     dimension: "7 cm",
     prix: 2,
     image: "/images/placeholder.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 18,
@@ -199,6 +216,7 @@ export const produits: Produit[] = [
     dimension: "H 21 cm",
     prix: 4,
     image: "/images/PROD018.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 19,
@@ -213,6 +231,7 @@ export const produits: Produit[] = [
       { label: "20 cm", prix: 6 },
       { label: "25 cm", prix: 7 },
     ],
+    dateAjout: "2025-01-01",
   },
   {
     id: 20,
@@ -227,6 +246,7 @@ export const produits: Produit[] = [
       { label: "18 cm", prix: 4 },
       { label: "16,3 cm", prix: 2 },
     ],
+    dateAjout: "2025-01-01",
   },
   {
     id: 21,
@@ -239,6 +259,7 @@ export const produits: Produit[] = [
       { label: "Moyen", prix: 8 },
       { label: "Grand", prix: 15 },
     ],
+    dateAjout: "2025-01-01",
   },
   {
     id: 22,
@@ -247,6 +268,7 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 5,
     image: "/images/PROD021.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 23,
@@ -255,6 +277,7 @@ export const produits: Produit[] = [
     stock: 7,
     prix: 5,
     image: "/images/PROD023.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 24,
@@ -264,6 +287,7 @@ export const produits: Produit[] = [
     dimension: "75 x 113 x 75 cm - 4 kg",
     prix: 80,
     image: "/images/lustre-12-branches.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 25,
@@ -273,6 +297,7 @@ export const produits: Produit[] = [
     dimension: "20 cm",
     prix: 6,
     image: "/images/PROD026.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 26,
@@ -281,6 +306,7 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 30,
     image: "/images/PROD026.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 27,
@@ -290,6 +316,7 @@ export const produits: Produit[] = [
     dimension: "26 cm",
     prix: 9,
     image: "/images/bougeoire-etincelle.png",
+    dateAjout: "2025-01-01",
   },
 
   // ── VERRERIES ──
@@ -300,6 +327,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 12,
     image: "/images/placeholder.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 29,
@@ -309,6 +337,7 @@ export const produits: Produit[] = [
     dimension: "18 x 18 x 5.5 cm",
     prix: 10,
     image: "/images/PROD029.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 30,
@@ -317,6 +346,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 7,
     image: "/images/PROD088.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 31,
@@ -326,6 +356,7 @@ export const produits: Produit[] = [
     dimension: "30 x 15 x 4 cm",
     prix: 7,
     image: "/images/PROD031.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 32,
@@ -334,6 +365,7 @@ export const produits: Produit[] = [
     stock: 7,
     prix: 20,
     image: "/images/PROD032.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 33,
@@ -343,6 +375,7 @@ export const produits: Produit[] = [
     prix: 0.30,
     image: "/images/PROD032.png",
     actif: false,
+    dateAjout: "2025-01-01",
   },
   {
     id: 34,
@@ -351,6 +384,7 @@ export const produits: Produit[] = [
     stock: 71,
     prix: 0.50,
     image: "/images/PROD034.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 35,
@@ -359,6 +393,7 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 0.10,
     image: "/images/PROD034.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 36,
@@ -368,6 +403,7 @@ export const produits: Produit[] = [
     dimension: "H 16 cm",
     prix: 8,
     image: "/images/PROD036.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 37,
@@ -377,6 +413,7 @@ export const produits: Produit[] = [
     dimension: "5.5 L",
     prix: 15,
     image: "/images/PROD037.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 38,
@@ -385,6 +422,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 4,
     image: "/images/PROD038.png",
+    dateAjout: "2025-01-01",
   },
 
   // ── CADRES ──
@@ -396,6 +434,7 @@ export const produits: Produit[] = [
     dimension: "10 x 10 cm",
     prix: 3,
     image: "/images/PROD39.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 40,
@@ -405,6 +444,7 @@ export const produits: Produit[] = [
     dimension: "18 x 13 cm",
     prix: 2.50,
     image: "/images/PROD040.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 41,
@@ -413,6 +453,7 @@ export const produits: Produit[] = [
     stock: 3,
     prix: 2.50,
     image: "/images/PROD041.png",
+    dateAjout: "2025-01-01",
   },
 
   // ── PRÉSENTOIRS ET PLATEAUX ──
@@ -424,6 +465,7 @@ export const produits: Produit[] = [
     dimension: "H18 x D15 cm",
     prix: 1,
     image: "/images/PROD042.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 43,
@@ -433,6 +475,7 @@ export const produits: Produit[] = [
     dimension: "H13 x D18 cm",
     prix: 2,
     image: "/images/PROD043.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 44,
@@ -441,6 +484,7 @@ export const produits: Produit[] = [
     stock: 4,
     prix: 1,
     image: "/images/PROD044.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 45,
@@ -450,6 +494,7 @@ export const produits: Produit[] = [
     dimension: "40 x 25 x 4 cm",
     prix: 1,
     image: "/images/placeholder.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 46,
@@ -458,6 +503,7 @@ export const produits: Produit[] = [
     stock: 4,
     prix: 1.50,
     image: "/images/PROD046.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 47,
@@ -466,6 +512,7 @@ export const produits: Produit[] = [
     stock: 6,
     prix: 2,
     image: "/images/PROD047.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 48,
@@ -474,6 +521,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 6,
     image: "/images/PROD048.png",
+    dateAjout: "2025-01-01",
   },
 
   // ── URNES ET ACCESSOIRES ──
@@ -489,6 +537,7 @@ export const produits: Produit[] = [
       { label: "Standard", prix: 7 },
       { label: "Grand", prix: 9 },
     ],
+    dateAjout: "2025-01-01",
   },
   {
     id: 50,
@@ -497,6 +546,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 7,
     image: "/images/PROD050.png",
+    dateAjout: "2025-01-01",
   },
 
   // ── ART DE LA TABLE ──
@@ -507,6 +557,7 @@ export const produits: Produit[] = [
     stock: 6,
     prix: 9,
     image: "/images/PROD051.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 52,
@@ -515,6 +566,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 4,
     image: "/images/PROD052.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 53,
@@ -523,6 +575,7 @@ export const produits: Produit[] = [
     stock: 330,
     prix: 1,
     image: "/images/PROD053.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 54,
@@ -531,6 +584,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 13,
     image: "/images/PROD054.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 55,
@@ -540,6 +594,7 @@ export const produits: Produit[] = [
     dimension: "45 x 45 cm",
     prix: 0.50,
     image: "/images/PROD055.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 56,
@@ -548,6 +603,7 @@ export const produits: Produit[] = [
     stock: 10,
     prix: 0.30,
     image: "/images/PROD056.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 57,
@@ -557,6 +613,7 @@ export const produits: Produit[] = [
     dimension: "250 cm",
     prix: 2,
     image: "/images/PROD057.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 58,
@@ -565,6 +622,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 2,
     image: "/images/PROD058.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 59,
@@ -574,6 +632,7 @@ export const produits: Produit[] = [
     dimension: "3.18 m",
     prix: 0.40,
     image: "/images/PROD059.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 60,
@@ -583,6 +642,7 @@ export const produits: Produit[] = [
     dimension: "22 cm",
     prix: 0.90,
     image: "/images/PROD060.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 61,
@@ -591,6 +651,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 50,
     image: "/images/PROD061.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 62,
@@ -599,6 +660,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 30,
     image: "/images/PROD062.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 63,
@@ -608,6 +670,7 @@ export const produits: Produit[] = [
     dimension: "H 7 cm, Ø 5 cm",
     prix: 2,
     image: "/images/PROD063.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 64,
@@ -616,6 +679,7 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 2,
     image: "/images/PROD064.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 65,
@@ -624,6 +688,7 @@ export const produits: Produit[] = [
     stock: 8,
     prix: 1,
     image: "/images/PROD065.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 66,
@@ -632,6 +697,7 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 9,
     image: "/images/PROD066.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 67,
@@ -641,6 +707,7 @@ export const produits: Produit[] = [
     prix: 20,
     image: "/images/placeholder.png",
     actif: false,
+    dateAjout: "2025-01-01",
   },
 
   // ── VASES ET POTS ──
@@ -652,6 +719,7 @@ export const produits: Produit[] = [
     dimension: "32 cm",
     prix: 5,
     image: "/images/PROD068.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 69,
@@ -662,6 +730,7 @@ export const produits: Produit[] = [
     prix: 0.50,
     image: "/images/placeholder.png",
     actif: false,
+    dateAjout: "2025-01-01",
   },
   {
     id: 70,
@@ -670,6 +739,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 1.50,
     image: "/images/PROD070.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 71,
@@ -678,6 +748,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 2,
     image: "/images/PROD071.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 72,
@@ -686,6 +757,7 @@ export const produits: Produit[] = [
     stock: 9,
     prix: 0.90,
     image: "/images/PROD072.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 73,
@@ -695,6 +767,7 @@ export const produits: Produit[] = [
     dimension: "5 L",
     prix: 7,
     image: "/images/PROD073.png",
+    dateAjout: "2025-01-01",
   },
 
   // ── DÉCORATION ──
@@ -705,6 +778,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 7,
     image: "/images/PROD074.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 75,
@@ -713,6 +787,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 5,
     image: "/images/PROD075.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 76,
@@ -722,6 +797,7 @@ export const produits: Produit[] = [
     dimension: "95 cm",
     prix: 0.50,
     image: "/images/PROD076.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 77,
@@ -731,6 +807,7 @@ export const produits: Produit[] = [
     dimension: "29 x 23 cm",
     prix: 2,
     image: "/images/placeholder.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 78,
@@ -739,6 +816,7 @@ export const produits: Produit[] = [
     stock: 1,
     prix: 4,
     image: "/images/PROD078.png",
+    dateAjout: "2025-01-01",
   },
 
   // ── FLEURS ET FEUILLAGES ──
@@ -750,6 +828,7 @@ export const produits: Produit[] = [
     dimension: "2 m",
     prix: 0.60,
     image: "/images/PROD079.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 80,
@@ -758,6 +837,7 @@ export const produits: Produit[] = [
     stock: 3,
     prix: 15,
     image: "/images/PROD080.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 81,
@@ -766,6 +846,7 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 10,
     image: "/images/PROD081.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 82,
@@ -775,6 +856,7 @@ export const produits: Produit[] = [
     dimension: "35 - 40 cm",
     prix: 0.30,
     image: "/images/PROD082.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 83,
@@ -783,6 +865,7 @@ export const produits: Produit[] = [
     stock: 2,
     prix: 10,
     image: "/images/gazon-artificiel.png",
+    dateAjout: "2025-01-01",
   },
   {
     id: 84,
@@ -791,5 +874,6 @@ export const produits: Produit[] = [
     stock: 3,
     prix: 15,
     image: "/images/PROD084.png",
+    dateAjout: "2025-01-01",
   },
 ];

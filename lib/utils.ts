@@ -82,6 +82,15 @@ export function formatDateFr(dateStr: string): string {
   })
 }
 
+const QUATORZE_JOURS_MS = 14 * 24 * 60 * 60 * 1000
+
+export function isNouveauProduit(dateAjout?: string): boolean {
+  if (!dateAjout) return false
+  const created = new Date(dateAjout).getTime()
+  if (Number.isNaN(created)) return false
+  return Date.now() - created < QUATORZE_JOURS_MS
+}
+
 export const TVA_RATE = 0.2
 export const DEPOSIT_RATE = 0.3
 

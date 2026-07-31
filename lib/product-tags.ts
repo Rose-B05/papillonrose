@@ -36,4 +36,5 @@ export type FilterState = {
   dateDebut: string
   dateFin: string
   inStockOnly: boolean
+  sortBy: "default" | "newest"
 }
