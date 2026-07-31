@@ -47,9 +47,10 @@ export default function AvailabilityCalendar({
     const now = new Date()
     setViewMonth(now.getMonth())
     setViewYear(now.getFullYear())
-    const t = new Date(now)
-    t.setHours(0, 0, 0, 0)
-    setTodayStr(t.toISOString().split("T")[0])
+    const y = now.getFullYear()
+    const m = String(now.getMonth() + 1).padStart(2, "0")
+    const d = String(now.getDate()).padStart(2, "0")
+    setTodayStr(`${y}-${m}-${d}`)
   }, [])
 
   useEffect(() => {
@@ -267,10 +268,13 @@ function formatDate(year: number, month: number, day: number): string {
 
 function getDatesBetween(start: string, end: string): string[] {
   const dates: string[] = []
-  const current = new Date(start)
-  const endDate = new Date(end)
+  const current = new Date(start + "T00:00:00")
+  const endDate = new Date(end + "T00:00:00")
   while (current <= endDate) {
-    dates.push(current.toISOString().split("T")[0])
+    const y = current.getFullYear()
+    const m = String(current.getMonth() + 1).padStart(2, "0")
+    const d = String(current.getDate()).padStart(2, "0")
+    dates.push(`${y}-${m}-${d}`)
     current.setDate(current.getDate() + 1)
   }
   return dates

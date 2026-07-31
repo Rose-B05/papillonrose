@@ -172,7 +172,7 @@ export default function SeoPage() {
         const url = URL.createObjectURL(blob)
         const a = document.createElement("a")
         a.href = url
-        a.download = `rapport-seo-${new Date().toISOString().split("T")[0]}.${format}`
+        a.download = `rapport-seo-${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, "0")}-${String(new Date().getDate()).padStart(2, "0")}.${format}`
         a.click()
         URL.revokeObjectURL(url)
       }

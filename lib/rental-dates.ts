@@ -16,7 +16,7 @@
  *   Restitution : le vendredi de la même semaine avant 12h
  *
  * RÈGLE 3 — Location du VENDREDI au DIMANCHE :
- *   Retrait    : le jeudi de la même semaine (veille)
+ *   Retrait    : la veille de la date de début (vendredi pour samedi, vendredi pour dimanche)
  *   Restitution : le lundi suivant avant 12h
  *
  * MAJORATION EN CAS DE RETARD (appliquée aux 3 cas) :
@@ -113,7 +113,7 @@ function previousFriday(date: Date): Date {
 }
 
 /**
- * Calcule le jeudi de la même semaine (pour la règle 3).
+ * Calcule le jeudi de la même semaine (pour la règle 3 — ancienne logique, plus appelée).
  */
 function sameWeekThursday(date: Date): Date {
   const result = new Date(date)
@@ -167,8 +167,8 @@ export function calcRentalDates(dateStart: string, dateEnd: string): RentalDates
     // ─── RÈGLE 3 : Location du VENDREDI au DIMANCHE ───
     rule = 3
     ruleLabel = "Location du week-end — restitution le lundi"
-    // Retrait : le jeudi de la même semaine
-    pickupDate = sameWeekThursday(startDate)
+    // Retrait : la veille de la date de début, sauf dimanche → vendredi
+    pickupDate = dayOfWeek === 0 ? addDays(startDate, -2) : addDays(startDate, -1)
     // Restitution : le lundi suivant
     const nextMonday = addDays(startDate, (8 - dayOfWeek) % 7 || 7)
     returnDeadline = nextBusinessDay(nextMonday)
