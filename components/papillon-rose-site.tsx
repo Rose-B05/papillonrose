@@ -33,9 +33,8 @@ import WhatsAppButton from "@/components/whatsapp-button"
 import AccessibilityPanel from "@/components/accessibility-panel"
 import NouveautesBanner from "@/components/nouveautes-banner"
 import { getTagsForProduct, type FilterState } from "@/lib/product-tags"
-import { FEATURED_IDS } from "@/lib/scenes"
-import { prixTtc } from "@/lib/pricing"
 import { isNouveauProduit } from "@/lib/utils"
+import { prixTtc } from "@/lib/pricing"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
@@ -499,6 +498,16 @@ export default function PapillonRoseSite() {
     [maskedIds, fetchedProducts]
   )
 
+  const featuredProducts = useMemo(() => {
+    return [...VISIBLE_PRODUCTS]
+      .sort((a, b) => {
+        const dateA = a.dateAjout ? new Date(a.dateAjout).getTime() : 0
+        const dateB = b.dateAjout ? new Date(b.dateAjout).getTime() : 0
+        return dateB - dateA
+      })
+      .slice(0, 10)
+  }, [VISIBLE_PRODUCTS])
+
   // When customer logs in, sync favorites to server
   useEffect(() => {
     if (customer && !prevCustomerRef.current) {
@@ -859,9 +868,7 @@ export default function PapillonRoseSite() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 md:gap-4">
-                {FEATURED_IDS
-                  .map((id) => VISIBLE_PRODUCTS.find((p) => p.id === id))
-                  .filter((p): p is Produit => !!p)
+                {featuredProducts
                   .filter((p) => category === "Tous" || p.categorie === category)
                   .slice(0, 10)
                   .map((p) => (
