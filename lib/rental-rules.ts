@@ -12,7 +12,7 @@
  *    · Restitution : vendredi de la même semaine avant midi
  *
  *  Règle 3 — Début vendredi → dimanche (week-end)
- *    · Retrait : jeudi de la même semaine
+ *    · Retrait : la veille de la date de début (vendredi pour samedi/dimanche)
  *    · Restitution : lundi suivant avant midi
  */
 
@@ -51,7 +51,7 @@ export const RENTAL_RULES: RentalRule[] = [
   {
     label: "Week-end",
     description:
-      "Du vendredi au dimanche. Retrait le jeudi, restitution le lundi avant midi.",
+      "Du vendredi au dimanche. Retrait la veille (vendredi), restitution le lundi avant midi.",
     startDays: [5, 6, 0], // vendredi, samedi, dimanche
     minAdvanceDays: 0,
     minNights: 1,
