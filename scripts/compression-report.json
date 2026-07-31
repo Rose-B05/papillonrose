@@ -1,0 +1,5083 @@
+{
+  "timestamp": "2026-07-31T21:30:36.114Z",
+  "dryRun": false,
+  "totalFiles": 291,
+  "processed": 291,
+  "compressed": 290,
+  "kept": 1,
+  "alphaPNG": {
+    "total": 226,
+    "compressed": 225
+  },
+  "nonAlphaPNG": {
+    "total": 2,
+    "compressed": 2
+  },
+  "webp": {
+    "total": 63,
+    "compressed": 63
+  },
+  "totalBeforeMB": 182.59,
+  "totalAfterMB": 42.34,
+  "totalSavedMB": 140.25,
+  "totalSavedPct": "76.8%",
+  "alphaResults": [
+    {
+      "file": "bougeoire-etincelle.png",
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "ChatGPT Image 28 juin 2026, 18_19_47.png",
+      "beforeKB": "250.6",
+      "afterKB": "80.0",
+      "savedPct": "68.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "ChatGPT Image 28 juin 2026, 21_33_23.png",
+      "beforeKB": "1657.8",
+      "afterKB": "552.0",
+      "savedPct": "66.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "femme-papillon-rose.png",
+      "beforeKB": "691.8",
+      "afterKB": "199.8",
+      "savedPct": "71.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "gazon-artificiel.png",
+      "beforeKB": "512.9",
+      "afterKB": "121.9",
+      "savedPct": "76.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "lustre-12-branches.png",
+      "beforeKB": "316.1",
+      "afterKB": "79.4",
+      "savedPct": "74.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\10.png",
+      "beforeKB": "344.8",
+      "afterKB": "71.3",
+      "savedPct": "79.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\36.png",
+      "beforeKB": "530.2",
+      "afterKB": "122.0",
+      "savedPct": "77.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\8.png",
+      "beforeKB": "342.5",
+      "afterKB": "71.1",
+      "savedPct": "79.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\bird-scoth.png",
+      "beforeKB": "553.5",
+      "afterKB": "113.7",
+      "savedPct": "79.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\boa.png",
+      "beforeKB": "490.9",
+      "afterKB": "84.8",
+      "savedPct": "82.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\bougeoir-or.png",
+      "beforeKB": "408.3",
+      "afterKB": "83.6",
+      "savedPct": "79.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\bougeoire-etincelle.png",
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\bride-to-be-led.png",
+      "beforeKB": "642.2",
+      "afterKB": "138.3",
+      "savedPct": "78.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\candy-bar.png",
+      "beforeKB": "406.6",
+      "afterKB": "90.6",
+      "savedPct": "77.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\chemin-table-rose.png",
+      "beforeKB": "531.6",
+      "afterKB": "121.8",
+      "savedPct": "77.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\coffret-verre-laiton.png",
+      "beforeKB": "929.0",
+      "afterKB": "173.7",
+      "savedPct": "81.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\coussins-velour.png",
+      "beforeKB": "538.6",
+      "afterKB": "81.8",
+      "savedPct": "84.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\feuille-or.png",
+      "beforeKB": "575.4",
+      "afterKB": "122.0",
+      "savedPct": "78.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\fontaine-agrume.png",
+      "beforeKB": "331.7",
+      "afterKB": "71.7",
+      "savedPct": "78.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\gazon-artificiel.png",
+      "beforeKB": "512.9",
+      "afterKB": "121.9",
+      "savedPct": "76.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\horloge.png",
+      "beforeKB": "401.3",
+      "afterKB": "93.1",
+      "savedPct": "76.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\lanterne-argent.png",
+      "beforeKB": "497.3",
+      "afterKB": "111.7",
+      "savedPct": "77.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\lanterne-blanche.png",
+      "beforeKB": "385.2",
+      "afterKB": "65.4",
+      "savedPct": "83.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\lanterne-noir.png",
+      "beforeKB": "441.4",
+      "afterKB": "68.7",
+      "savedPct": "84.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\lustre-12-branches.png",
+      "beforeKB": "316.1",
+      "afterKB": "79.4",
+      "savedPct": "74.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\nappe-papillon.png",
+      "beforeKB": "569.0",
+      "afterKB": "127.1",
+      "savedPct": "77.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\ours-blanc.png",
+      "beforeKB": "497.2",
+      "afterKB": "94.8",
+      "savedPct": "80.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\pack-candy-bar-verre.png",
+      "beforeKB": "925.8",
+      "afterKB": "208.7",
+      "savedPct": "77.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\pack-sou-verre.png",
+      "beforeKB": "499.8",
+      "afterKB": "105.6",
+      "savedPct": "78.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\panier-pain.png",
+      "beforeKB": "596.3",
+      "afterKB": "102.2",
+      "savedPct": "82.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\photophore-transparent.png",
+      "beforeKB": "492.8",
+      "afterKB": "116.2",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\porte-alliance-prisme-1.png",
+      "beforeKB": "288.4",
+      "afterKB": "58.4",
+      "savedPct": "79.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\porte-alliance-prisme-2.png",
+      "beforeKB": "304.4",
+      "afterKB": "64.0",
+      "savedPct": "79.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\porte-alliance-prisme.png",
+      "beforeKB": "318.5",
+      "afterKB": "63.3",
+      "savedPct": "80.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\porte-alliance-rectangle-1.png",
+      "beforeKB": "334.6",
+      "afterKB": "68.4",
+      "savedPct": "79.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\porte-alliance-rectangle-2.png",
+      "beforeKB": "305.1",
+      "afterKB": "66.1",
+      "savedPct": "78.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\porte-carte-or.png",
+      "beforeKB": "491.8",
+      "afterKB": "72.1",
+      "savedPct": "85.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\porte-serviettes.png",
+      "beforeKB": "520.2",
+      "afterKB": "90.3",
+      "savedPct": "82.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\presentoir-gateau-1.png",
+      "beforeKB": "557.1",
+      "afterKB": "139.8",
+      "savedPct": "74.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\presentoir-gateau-2.png",
+      "beforeKB": "670.1",
+      "afterKB": "199.7",
+      "savedPct": "70.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prisme.png",
+      "beforeKB": "435.3",
+      "afterKB": "82.1",
+      "savedPct": "81.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD001.png",
+      "beforeKB": "436.6",
+      "afterKB": "62.8",
+      "savedPct": "85.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod002.png",
+      "beforeKB": "388.9",
+      "afterKB": "119.5",
+      "savedPct": "69.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD003.png",
+      "beforeKB": "1856.1",
+      "afterKB": "290.3",
+      "savedPct": "84.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD004.png",
+      "beforeKB": "477.5",
+      "afterKB": "69.1",
+      "savedPct": "85.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD006.png",
+      "beforeKB": "579.2",
+      "afterKB": "159.4",
+      "savedPct": "72.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod007.png",
+      "beforeKB": "925.4",
+      "afterKB": "312.1",
+      "savedPct": "66.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod008.png",
+      "beforeKB": "756.5",
+      "afterKB": "253.5",
+      "savedPct": "66.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD009.png",
+      "beforeKB": "485.6",
+      "afterKB": "86.0",
+      "savedPct": "82.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD010.png",
+      "beforeKB": "459.9",
+      "afterKB": "115.3",
+      "savedPct": "74.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD011.png",
+      "beforeKB": "497.2",
+      "afterKB": "94.8",
+      "savedPct": "80.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod012.png",
+      "beforeKB": "356.8",
+      "afterKB": "97.4",
+      "savedPct": "72.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod013.png",
+      "beforeKB": "288.4",
+      "afterKB": "91.4",
+      "savedPct": "68.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod014.png",
+      "beforeKB": "304.7",
+      "afterKB": "118.5",
+      "savedPct": "61.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod015.png",
+      "beforeKB": "419.9",
+      "afterKB": "131.7",
+      "savedPct": "68.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod016.png",
+      "beforeKB": "344.5",
+      "afterKB": "96.2",
+      "savedPct": "72.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD019.png",
+      "beforeKB": "450.3",
+      "afterKB": "88.8",
+      "savedPct": "80.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD020.png",
+      "beforeKB": "497.3",
+      "afterKB": "111.7",
+      "savedPct": "77.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD021.png",
+      "beforeKB": "441.4",
+      "afterKB": "68.7",
+      "savedPct": "84.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD022.png",
+      "beforeKB": "408.3",
+      "afterKB": "83.6",
+      "savedPct": "79.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD023.png",
+      "beforeKB": "385.2",
+      "afterKB": "65.4",
+      "savedPct": "83.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD025 (2).png",
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod025-2.png",
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod025.png",
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD025_2.png",
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD026.png",
+      "beforeKB": "435.3",
+      "afterKB": "82.1",
+      "savedPct": "81.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD029.png",
+      "beforeKB": "929.0",
+      "afterKB": "173.7",
+      "savedPct": "81.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD030 (2).png",
+      "beforeKB": "304.4",
+      "afterKB": "64.0",
+      "savedPct": "79.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD030 (3).png",
+      "beforeKB": "288.4",
+      "afterKB": "58.4",
+      "savedPct": "79.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod030-2.png",
+      "beforeKB": "304.4",
+      "afterKB": "64.0",
+      "savedPct": "79.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod030-3.png",
+      "beforeKB": "288.4",
+      "afterKB": "58.4",
+      "savedPct": "79.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD030.png",
+      "beforeKB": "318.5",
+      "afterKB": "63.3",
+      "savedPct": "80.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD030_2.png",
+      "beforeKB": "304.4",
+      "afterKB": "64.0",
+      "savedPct": "79.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD030_3.png",
+      "beforeKB": "288.4",
+      "afterKB": "58.4",
+      "savedPct": "79.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD031 (2).png",
+      "beforeKB": "305.1",
+      "afterKB": "66.1",
+      "savedPct": "78.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod031-2.png",
+      "beforeKB": "305.1",
+      "afterKB": "66.1",
+      "savedPct": "78.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD031.png",
+      "beforeKB": "334.6",
+      "afterKB": "68.4",
+      "savedPct": "79.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD031_2.png",
+      "beforeKB": "305.1",
+      "afterKB": "66.1",
+      "savedPct": "78.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD032.png",
+      "beforeKB": "406.6",
+      "afterKB": "90.6",
+      "savedPct": "77.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD034.png",
+      "beforeKB": "492.8",
+      "afterKB": "116.2",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD036.png",
+      "beforeKB": "331.7",
+      "afterKB": "71.7",
+      "savedPct": "78.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD040.png",
+      "beforeKB": "342.5",
+      "afterKB": "71.1",
+      "savedPct": "79.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD041.png",
+      "beforeKB": "344.8",
+      "afterKB": "71.3",
+      "savedPct": "79.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD042.png",
+      "beforeKB": "283.1",
+      "afterKB": "56.0",
+      "savedPct": "80.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD046.png",
+      "beforeKB": "575.4",
+      "afterKB": "122.0",
+      "savedPct": "78.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD047.png",
+      "beforeKB": "1176.0",
+      "afterKB": "318.7",
+      "savedPct": "72.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD048 (2).png",
+      "beforeKB": "670.1",
+      "afterKB": "199.7",
+      "savedPct": "70.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\prod048-2.png",
+      "beforeKB": "670.1",
+      "afterKB": "199.7",
+      "savedPct": "70.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD048.png",
+      "beforeKB": "557.1",
+      "afterKB": "139.8",
+      "savedPct": "74.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD048_2.png",
+      "beforeKB": "670.1",
+      "afterKB": "199.7",
+      "savedPct": "70.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD049.png",
+      "beforeKB": "623.3",
+      "afterKB": "161.6",
+      "savedPct": "74.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD050.png",
+      "beforeKB": "553.5",
+      "afterKB": "113.7",
+      "savedPct": "79.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD051.png",
+      "beforeKB": "499.8",
+      "afterKB": "105.6",
+      "savedPct": "78.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD052.png",
+      "beforeKB": "520.2",
+      "afterKB": "90.3",
+      "savedPct": "82.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD053.png",
+      "beforeKB": "552.5",
+      "afterKB": "117.4",
+      "savedPct": "78.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD054.png",
+      "beforeKB": "450.1",
+      "afterKB": "81.0",
+      "savedPct": "82.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD055.png",
+      "beforeKB": "527.6",
+      "afterKB": "92.8",
+      "savedPct": "82.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD056.png",
+      "beforeKB": "1497.9",
+      "afterKB": "613.5",
+      "savedPct": "59.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD057.png",
+      "beforeKB": "800.2",
+      "afterKB": "294.9",
+      "savedPct": "63.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD058.png",
+      "beforeKB": "569.0",
+      "afterKB": "127.1",
+      "savedPct": "77.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD059.png",
+      "beforeKB": "531.6",
+      "afterKB": "121.8",
+      "savedPct": "77.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD060.png",
+      "beforeKB": "491.8",
+      "afterKB": "72.1",
+      "savedPct": "85.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD061.png",
+      "beforeKB": "593.5",
+      "afterKB": "127.5",
+      "savedPct": "78.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD063.png",
+      "beforeKB": "506.6",
+      "afterKB": "91.5",
+      "savedPct": "81.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD064.png",
+      "beforeKB": "596.3",
+      "afterKB": "102.2",
+      "savedPct": "82.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD065.png",
+      "beforeKB": "538.6",
+      "afterKB": "81.8",
+      "savedPct": "84.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD066.png",
+      "beforeKB": "568.2",
+      "afterKB": "91.9",
+      "savedPct": "83.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD071.png",
+      "beforeKB": "390.2",
+      "afterKB": "53.5",
+      "savedPct": "86.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD072.png",
+      "beforeKB": "272.1",
+      "afterKB": "40.7",
+      "savedPct": "85.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD074.png",
+      "beforeKB": "397.5",
+      "afterKB": "93.9",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD075.png",
+      "beforeKB": "289.8",
+      "afterKB": "64.9",
+      "savedPct": "77.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD076.png",
+      "beforeKB": "490.9",
+      "afterKB": "84.8",
+      "savedPct": "82.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD078.png",
+      "beforeKB": "434.9",
+      "afterKB": "89.0",
+      "savedPct": "79.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD080.png",
+      "beforeKB": "1359.3",
+      "afterKB": "438.3",
+      "savedPct": "67.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD081.png",
+      "beforeKB": "1388.0",
+      "afterKB": "414.4",
+      "savedPct": "70.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD082.png",
+      "beforeKB": "502.1",
+      "afterKB": "85.5",
+      "savedPct": "83.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD084.png",
+      "beforeKB": "512.9",
+      "afterKB": "121.9",
+      "savedPct": "76.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD098.png",
+      "beforeKB": "967.2",
+      "afterKB": "273.5",
+      "savedPct": "71.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\PROD39.png",
+      "beforeKB": "329.4",
+      "afterKB": "62.2",
+      "savedPct": "81.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\saliere-poivriere.png",
+      "beforeKB": "506.6",
+      "afterKB": "91.5",
+      "savedPct": "81.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\sauciere.png",
+      "beforeKB": "450.1",
+      "afterKB": "81.0",
+      "savedPct": "82.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\serviette-emeraude.png",
+      "beforeKB": "527.6",
+      "afterKB": "92.8",
+      "savedPct": "82.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\sonnette-comptoir.png",
+      "beforeKB": "289.8",
+      "afterKB": "64.9",
+      "savedPct": "77.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\sous-assiettes-or.png",
+      "beforeKB": "552.5",
+      "afterKB": "117.4",
+      "savedPct": "78.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\top-cake-diamand.png",
+      "beforeKB": "568.2",
+      "afterKB": "91.9",
+      "savedPct": "83.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\umbrella.png",
+      "beforeKB": "434.9",
+      "afterKB": "89.0",
+      "savedPct": "79.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\urne-cage.png",
+      "beforeKB": "623.3",
+      "afterKB": "161.6",
+      "savedPct": "74.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\vase-geometrique-blanc.png",
+      "beforeKB": "272.1",
+      "afterKB": "40.7",
+      "savedPct": "85.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\vase-oval.png",
+      "beforeKB": "390.2",
+      "afterKB": "53.5",
+      "savedPct": "86.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod\\velo.png",
+      "beforeKB": "443.3",
+      "afterKB": "93.7",
+      "savedPct": "78.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD001.png",
+      "beforeKB": "1800.6",
+      "afterKB": "264.6",
+      "savedPct": "85.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD002.png",
+      "beforeKB": "1594.8",
+      "afterKB": "198.1",
+      "savedPct": "87.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD003.png",
+      "beforeKB": "1856.1",
+      "afterKB": "290.3",
+      "savedPct": "84.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD004.png",
+      "beforeKB": "1854.6",
+      "afterKB": "264.3",
+      "savedPct": "85.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD006.png",
+      "beforeKB": "1772.3",
+      "afterKB": "452.1",
+      "savedPct": "74.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod007.png",
+      "beforeKB": "925.4",
+      "afterKB": "312.1",
+      "savedPct": "66.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD008.png",
+      "beforeKB": "250.6",
+      "afterKB": "80.0",
+      "savedPct": "68.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD009.png",
+      "beforeKB": "1964.4",
+      "afterKB": "318.5",
+      "savedPct": "83.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD010.png",
+      "beforeKB": "1791.0",
+      "afterKB": "539.5",
+      "savedPct": "69.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD011.png",
+      "beforeKB": "1694.4",
+      "afterKB": "322.8",
+      "savedPct": "80.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod012.png",
+      "beforeKB": "443.3",
+      "afterKB": "93.7",
+      "savedPct": "78.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod013.png",
+      "beforeKB": "593.7",
+      "afterKB": "116.6",
+      "savedPct": "80.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod014.png",
+      "beforeKB": "304.7",
+      "afterKB": "118.5",
+      "savedPct": "61.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod015.png",
+      "beforeKB": "419.9",
+      "afterKB": "131.7",
+      "savedPct": "68.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "prod016.png",
+      "beforeKB": "344.5",
+      "afterKB": "96.2",
+      "savedPct": "72.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD018.png",
+      "beforeKB": "1815.4",
+      "afterKB": "332.1",
+      "savedPct": "81.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD019.png",
+      "beforeKB": "1584.3",
+      "afterKB": "270.6",
+      "savedPct": "82.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD020 (2).png",
+      "beforeKB": "1670.3",
+      "afterKB": "293.5",
+      "savedPct": "82.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD020.png",
+      "beforeKB": "1542.1",
+      "afterKB": "325.8",
+      "savedPct": "78.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD021.png",
+      "beforeKB": "1571.3",
+      "afterKB": "229.2",
+      "savedPct": "85.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD022.png",
+      "beforeKB": "1654.1",
+      "afterKB": "391.4",
+      "savedPct": "76.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD023.png",
+      "beforeKB": "1511.7",
+      "afterKB": "228.0",
+      "savedPct": "84.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD025 (2).png",
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD025.png",
+      "beforeKB": "1610.5",
+      "afterKB": "373.5",
+      "savedPct": "76.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD026.png",
+      "beforeKB": "1897.0",
+      "afterKB": "368.1",
+      "savedPct": "80.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD029.png",
+      "beforeKB": "929.0",
+      "afterKB": "173.7",
+      "savedPct": "81.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD030 (2).png",
+      "beforeKB": "304.4",
+      "afterKB": "64.0",
+      "savedPct": "79.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD030 (3).png",
+      "beforeKB": "288.4",
+      "afterKB": "58.4",
+      "savedPct": "79.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD030.png",
+      "beforeKB": "318.5",
+      "afterKB": "63.3",
+      "savedPct": "80.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD031 (2).png",
+      "beforeKB": "305.1",
+      "afterKB": "66.1",
+      "savedPct": "78.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD031.png",
+      "beforeKB": "334.6",
+      "afterKB": "68.4",
+      "savedPct": "79.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD032.png",
+      "beforeKB": "1688.5",
+      "afterKB": "370.9",
+      "savedPct": "78.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD034.png",
+      "beforeKB": "492.8",
+      "afterKB": "116.2",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD036.png",
+      "beforeKB": "1736.6",
+      "afterKB": "351.5",
+      "savedPct": "79.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD037.png",
+      "beforeKB": "1687.0",
+      "afterKB": "359.2",
+      "savedPct": "78.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD038.png",
+      "beforeKB": "1521.0",
+      "afterKB": "303.9",
+      "savedPct": "80.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD039.png",
+      "beforeKB": "329.4",
+      "afterKB": "62.2",
+      "savedPct": "81.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD040.png",
+      "beforeKB": "1847.7",
+      "afterKB": "309.6",
+      "savedPct": "83.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD041.png",
+      "beforeKB": "2220.5",
+      "afterKB": "459.8",
+      "savedPct": "79.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD042.png",
+      "beforeKB": "2023.0",
+      "afterKB": "429.1",
+      "savedPct": "78.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD043.png",
+      "beforeKB": "1529.9",
+      "afterKB": "273.6",
+      "savedPct": "82.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD044.png",
+      "beforeKB": "1371.5",
+      "afterKB": "204.3",
+      "savedPct": "85.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD046.png",
+      "beforeKB": "2180.9",
+      "afterKB": "489.1",
+      "savedPct": "77.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD047.png",
+      "beforeKB": "2051.9",
+      "afterKB": "418.3",
+      "savedPct": "79.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD048 (2).png",
+      "beforeKB": "2533.7",
+      "afterKB": "711.8",
+      "savedPct": "71.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD048.png",
+      "beforeKB": "557.1",
+      "afterKB": "139.8",
+      "savedPct": "74.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD049.png",
+      "beforeKB": "2054.2",
+      "afterKB": "547.6",
+      "savedPct": "73.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD050.png",
+      "beforeKB": "2264.0",
+      "afterKB": "408.0",
+      "savedPct": "82.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD051.png",
+      "beforeKB": "2074.0",
+      "afterKB": "488.7",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD052.png",
+      "beforeKB": "2173.1",
+      "afterKB": "466.6",
+      "savedPct": "78.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD053.png",
+      "beforeKB": "2319.3",
+      "afterKB": "565.4",
+      "savedPct": "75.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD054.png",
+      "beforeKB": "1812.3",
+      "afterKB": "384.1",
+      "savedPct": "78.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD055.png",
+      "beforeKB": "2005.4",
+      "afterKB": "390.0",
+      "savedPct": "80.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD056.png",
+      "beforeKB": "1497.9",
+      "afterKB": "613.5",
+      "savedPct": "59.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD057.png",
+      "beforeKB": "800.2",
+      "afterKB": "294.9",
+      "savedPct": "63.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD058.png",
+      "beforeKB": "2144.0",
+      "afterKB": "454.2",
+      "savedPct": "78.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD059.png",
+      "beforeKB": "531.6",
+      "afterKB": "121.8",
+      "savedPct": "77.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD060.png",
+      "beforeKB": "1996.5",
+      "afterKB": "354.0",
+      "savedPct": "82.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD061.png",
+      "beforeKB": "2070.7",
+      "afterKB": "445.7",
+      "savedPct": "78.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD062.png",
+      "beforeKB": "2302.5",
+      "afterKB": "518.7",
+      "savedPct": "77.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD063.png",
+      "beforeKB": "506.6",
+      "afterKB": "91.5",
+      "savedPct": "81.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD064.png",
+      "beforeKB": "596.3",
+      "afterKB": "102.2",
+      "savedPct": "82.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD065.png",
+      "beforeKB": "538.6",
+      "afterKB": "81.8",
+      "savedPct": "84.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD066.png",
+      "beforeKB": "568.2",
+      "afterKB": "91.9",
+      "savedPct": "83.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD068.png",
+      "beforeKB": "474.7",
+      "afterKB": "97.7",
+      "savedPct": "79.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD070.png",
+      "beforeKB": "405.0",
+      "afterKB": "47.8",
+      "savedPct": "88.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD071.png",
+      "beforeKB": "390.2",
+      "afterKB": "53.5",
+      "savedPct": "86.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD072.png",
+      "beforeKB": "272.1",
+      "afterKB": "40.7",
+      "savedPct": "85.0%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD073(1).png",
+      "beforeKB": "692.4",
+      "afterKB": "217.9",
+      "savedPct": "68.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD073.png",
+      "beforeKB": "1648.7",
+      "afterKB": "322.3",
+      "savedPct": "80.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD074.png",
+      "beforeKB": "397.5",
+      "afterKB": "93.9",
+      "savedPct": "76.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD075.png",
+      "beforeKB": "289.8",
+      "afterKB": "64.9",
+      "savedPct": "77.6%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD076.png",
+      "beforeKB": "490.9",
+      "afterKB": "84.8",
+      "savedPct": "82.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD078.png",
+      "beforeKB": "2079.0",
+      "afterKB": "438.0",
+      "savedPct": "78.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD079.png",
+      "beforeKB": "573.0",
+      "afterKB": "237.8",
+      "savedPct": "58.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD080.png",
+      "beforeKB": "1359.3",
+      "afterKB": "438.3",
+      "savedPct": "67.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD081.png",
+      "beforeKB": "1388.0",
+      "afterKB": "414.4",
+      "savedPct": "70.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD082.png",
+      "beforeKB": "1743.2",
+      "afterKB": "232.5",
+      "savedPct": "86.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD084.png",
+      "beforeKB": "512.9",
+      "afterKB": "121.9",
+      "savedPct": "76.2%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD086.png",
+      "beforeKB": "947.0",
+      "afterKB": "257.7",
+      "savedPct": "72.8%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD087.png",
+      "beforeKB": "402.5",
+      "afterKB": "102.9",
+      "savedPct": "74.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD088.png",
+      "beforeKB": "967.7",
+      "afterKB": "234.9",
+      "savedPct": "75.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD089.png",
+      "beforeKB": "820.4",
+      "afterKB": "246.7",
+      "savedPct": "69.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD090.png",
+      "beforeKB": "667.0",
+      "afterKB": "176.8",
+      "savedPct": "73.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD091.png",
+      "beforeKB": "721.8",
+      "afterKB": "211.8",
+      "savedPct": "70.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD092.png",
+      "beforeKB": "1053.3",
+      "afterKB": "258.6",
+      "savedPct": "75.5%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD093.png",
+      "beforeKB": "884.0",
+      "afterKB": "217.3",
+      "savedPct": "75.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD094.png",
+      "beforeKB": "722.5",
+      "afterKB": "195.6",
+      "savedPct": "72.9%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD095.png",
+      "beforeKB": "619.6",
+      "afterKB": "172.8",
+      "savedPct": "72.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD096.png",
+      "beforeKB": "578.4",
+      "afterKB": "137.2",
+      "savedPct": "76.3%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD097.png",
+      "beforeKB": "740.9",
+      "afterKB": "219.0",
+      "savedPct": "70.4%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD098.png",
+      "beforeKB": "967.2",
+      "afterKB": "273.5",
+      "savedPct": "71.7%",
+      "method": "pngquant"
+    },
+    {
+      "file": "PROD39.png",
+      "beforeKB": "1945.3",
+      "afterKB": "425.1",
+      "savedPct": "78.1%",
+      "method": "pngquant"
+    },
+    {
+      "file": "_backup\\PROD013_old.png",
+      "beforeKB": "288.4",
+      "afterKB": "91.4",
+      "savedPct": "68.3%",
+      "method": "pngquant"
+    }
+  ],
+  "allResults": [
+    {
+      "file": "PROD050.png",
+      "beforeBytes": 2318325,
+      "afterBytes": 417803,
+      "beforeKB": "2264.0",
+      "afterKB": "408.0",
+      "savedKB": "1856.0",
+      "savedPct": "82.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD048 (2).png",
+      "beforeBytes": 2594473,
+      "afterBytes": 728920,
+      "beforeKB": "2533.7",
+      "afterKB": "711.8",
+      "savedKB": "1821.8",
+      "savedPct": "71.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD062.png",
+      "beforeBytes": 2357741,
+      "afterBytes": 531100,
+      "beforeKB": "2302.5",
+      "afterKB": "518.7",
+      "savedKB": "1783.8",
+      "savedPct": "77.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD041.png",
+      "beforeBytes": 2273751,
+      "afterBytes": 470854,
+      "beforeKB": "2220.5",
+      "afterKB": "459.8",
+      "savedKB": "1760.6",
+      "savedPct": "79.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD053.png",
+      "beforeBytes": 2375002,
+      "afterBytes": 578927,
+      "beforeKB": "2319.3",
+      "afterKB": "565.4",
+      "savedKB": "1754.0",
+      "savedPct": "75.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD052.png",
+      "beforeBytes": 2225261,
+      "afterBytes": 477820,
+      "beforeKB": "2173.1",
+      "afterKB": "466.6",
+      "savedKB": "1706.5",
+      "savedPct": "78.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD046.png",
+      "beforeBytes": 2233197,
+      "afterBytes": 500849,
+      "beforeKB": "2180.9",
+      "afterKB": "489.1",
+      "savedKB": "1691.7",
+      "savedPct": "77.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD058.png",
+      "beforeBytes": 2195505,
+      "afterBytes": 465120,
+      "beforeKB": "2144.0",
+      "afterKB": "454.2",
+      "savedKB": "1689.8",
+      "savedPct": "78.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD009.png",
+      "beforeBytes": 2011558,
+      "afterBytes": 326163,
+      "beforeKB": "1964.4",
+      "afterKB": "318.5",
+      "savedKB": "1645.9",
+      "savedPct": "83.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD060.png",
+      "beforeBytes": 2044466,
+      "afterBytes": 362450,
+      "beforeKB": "1996.5",
+      "afterKB": "354.0",
+      "savedKB": "1642.6",
+      "savedPct": "82.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD078.png",
+      "beforeBytes": 2128849,
+      "afterBytes": 448482,
+      "beforeKB": "2079.0",
+      "afterKB": "438.0",
+      "savedKB": "1641.0",
+      "savedPct": "78.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD047.png",
+      "beforeBytes": 2101162,
+      "afterBytes": 428375,
+      "beforeKB": "2051.9",
+      "afterKB": "418.3",
+      "savedKB": "1633.6",
+      "savedPct": "79.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD061.png",
+      "beforeBytes": 2120405,
+      "afterBytes": 456362,
+      "beforeKB": "2070.7",
+      "afterKB": "445.7",
+      "savedKB": "1625.0",
+      "savedPct": "78.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD055.png",
+      "beforeBytes": 2053559,
+      "afterBytes": 399344,
+      "beforeKB": "2005.4",
+      "afterKB": "390.0",
+      "savedKB": "1615.4",
+      "savedPct": "80.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD042.png",
+      "beforeBytes": 2071503,
+      "afterBytes": 439352,
+      "beforeKB": "2023.0",
+      "afterKB": "429.1",
+      "savedKB": "1593.9",
+      "savedPct": "78.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD004.png",
+      "beforeBytes": 1899113,
+      "afterBytes": 270614,
+      "beforeKB": "1854.6",
+      "afterKB": "264.3",
+      "savedKB": "1590.3",
+      "savedPct": "85.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD051.png",
+      "beforeBytes": 2123757,
+      "afterBytes": 500413,
+      "beforeKB": "2074.0",
+      "afterKB": "488.7",
+      "savedKB": "1585.3",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD005.png",
+      "beforeBytes": 2483731,
+      "afterBytes": 862650,
+      "beforeKB": "2425.5",
+      "afterKB": "842.4",
+      "savedKB": "1583.1",
+      "savedPct": "65.3%",
+      "kept": false,
+      "method": "c9-nopal",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD005.png",
+      "beforeBytes": 2483731,
+      "afterBytes": 862650,
+      "beforeKB": "2425.5",
+      "afterKB": "842.4",
+      "savedKB": "1583.1",
+      "savedPct": "65.3%",
+      "kept": false,
+      "method": "c9-nopal",
+      "hasAlpha": false
+    },
+    {
+      "file": "prod\\PROD003.png",
+      "beforeBytes": 1900688,
+      "afterBytes": 297231,
+      "beforeKB": "1856.1",
+      "afterKB": "290.3",
+      "savedKB": "1565.9",
+      "savedPct": "84.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD003.png",
+      "beforeBytes": 1900688,
+      "afterBytes": 297231,
+      "beforeKB": "1856.1",
+      "afterKB": "290.3",
+      "savedKB": "1565.9",
+      "savedPct": "84.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD040.png",
+      "beforeBytes": 1892014,
+      "afterBytes": 317058,
+      "beforeKB": "1847.7",
+      "afterKB": "309.6",
+      "savedKB": "1538.0",
+      "savedPct": "83.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD001.png",
+      "beforeBytes": 1843829,
+      "afterBytes": 270917,
+      "beforeKB": "1800.6",
+      "afterKB": "264.6",
+      "savedKB": "1536.0",
+      "savedPct": "85.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD026.png",
+      "beforeBytes": 1942543,
+      "afterBytes": 376906,
+      "beforeKB": "1897.0",
+      "afterKB": "368.1",
+      "savedKB": "1528.9",
+      "savedPct": "80.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD39.png",
+      "beforeBytes": 1991995,
+      "afterBytes": 435342,
+      "beforeKB": "1945.3",
+      "afterKB": "425.1",
+      "savedKB": "1520.2",
+      "savedPct": "78.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD082.png",
+      "beforeBytes": 1785030,
+      "afterBytes": 238070,
+      "beforeKB": "1743.2",
+      "afterKB": "232.5",
+      "savedKB": "1510.7",
+      "savedPct": "86.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD049.png",
+      "beforeBytes": 2103513,
+      "afterBytes": 560790,
+      "beforeKB": "2054.2",
+      "afterKB": "547.6",
+      "savedKB": "1506.6",
+      "savedPct": "73.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD018.png",
+      "beforeBytes": 1858957,
+      "afterBytes": 340093,
+      "beforeKB": "1815.4",
+      "afterKB": "332.1",
+      "savedKB": "1483.3",
+      "savedPct": "81.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD054.png",
+      "beforeBytes": 1855772,
+      "afterBytes": 393280,
+      "beforeKB": "1812.3",
+      "afterKB": "384.1",
+      "savedKB": "1428.2",
+      "savedPct": "78.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD002.png",
+      "beforeBytes": 1633067,
+      "afterBytes": 202861,
+      "beforeKB": "1594.8",
+      "afterKB": "198.1",
+      "savedKB": "1396.7",
+      "savedPct": "87.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD036.png",
+      "beforeBytes": 1778270,
+      "afterBytes": 359978,
+      "beforeKB": "1736.6",
+      "afterKB": "351.5",
+      "savedKB": "1385.1",
+      "savedPct": "79.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD020 (2).png",
+      "beforeBytes": 1710425,
+      "afterBytes": 300534,
+      "beforeKB": "1670.3",
+      "afterKB": "293.5",
+      "savedKB": "1376.8",
+      "savedPct": "82.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD011.png",
+      "beforeBytes": 1735035,
+      "afterBytes": 330590,
+      "beforeKB": "1694.4",
+      "afterKB": "322.8",
+      "savedKB": "1371.5",
+      "savedPct": "80.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD021.png",
+      "beforeBytes": 1609043,
+      "afterBytes": 234708,
+      "beforeKB": "1571.3",
+      "afterKB": "229.2",
+      "savedKB": "1342.1",
+      "savedPct": "85.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD037.png",
+      "beforeBytes": 1727456,
+      "afterBytes": 367868,
+      "beforeKB": "1687.0",
+      "afterKB": "359.2",
+      "savedKB": "1327.7",
+      "savedPct": "78.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD073.png",
+      "beforeBytes": 1688246,
+      "afterBytes": 330084,
+      "beforeKB": "1648.7",
+      "afterKB": "322.3",
+      "savedKB": "1326.3",
+      "savedPct": "80.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD006.png",
+      "beforeBytes": 1814858,
+      "afterBytes": 462902,
+      "beforeKB": "1772.3",
+      "afterKB": "452.1",
+      "savedKB": "1320.3",
+      "savedPct": "74.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD032.png",
+      "beforeBytes": 1729067,
+      "afterBytes": 379778,
+      "beforeKB": "1688.5",
+      "afterKB": "370.9",
+      "savedKB": "1317.7",
+      "savedPct": "78.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD019.png",
+      "beforeBytes": 1622309,
+      "afterBytes": 277144,
+      "beforeKB": "1584.3",
+      "afterKB": "270.6",
+      "savedKB": "1313.6",
+      "savedPct": "82.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD023.png",
+      "beforeBytes": 1547945,
+      "afterBytes": 233426,
+      "beforeKB": "1511.7",
+      "afterKB": "228.0",
+      "savedKB": "1283.7",
+      "savedPct": "84.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD022.png",
+      "beforeBytes": 1693751,
+      "afterBytes": 400811,
+      "beforeKB": "1654.1",
+      "afterKB": "391.4",
+      "savedKB": "1262.6",
+      "savedPct": "76.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD043.png",
+      "beforeBytes": 1566570,
+      "afterBytes": 280165,
+      "beforeKB": "1529.9",
+      "afterKB": "273.6",
+      "savedKB": "1256.3",
+      "savedPct": "82.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD010.png",
+      "beforeBytes": 1833956,
+      "afterBytes": 552475,
+      "beforeKB": "1791.0",
+      "afterKB": "539.5",
+      "savedKB": "1251.4",
+      "savedPct": "69.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD025.png",
+      "beforeBytes": 1649113,
+      "afterBytes": 382489,
+      "beforeKB": "1610.5",
+      "afterKB": "373.5",
+      "savedKB": "1236.9",
+      "savedPct": "76.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD038.png",
+      "beforeBytes": 1557471,
+      "afterBytes": 311221,
+      "beforeKB": "1521.0",
+      "afterKB": "303.9",
+      "savedKB": "1217.0",
+      "savedPct": "80.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD020.png",
+      "beforeBytes": 1579079,
+      "afterBytes": 333630,
+      "beforeKB": "1542.1",
+      "afterKB": "325.8",
+      "savedKB": "1216.3",
+      "savedPct": "78.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD044.png",
+      "beforeBytes": 1404424,
+      "afterBytes": 209196,
+      "beforeKB": "1371.5",
+      "afterKB": "204.3",
+      "savedKB": "1167.2",
+      "savedPct": "85.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "ChatGPT Image 28 juin 2026, 21_33_23.png",
+      "beforeBytes": 1697554,
+      "afterBytes": 565281,
+      "beforeKB": "1657.8",
+      "afterKB": "552.0",
+      "savedKB": "1105.7",
+      "savedPct": "66.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD081.png",
+      "beforeBytes": 1421363,
+      "afterBytes": 424327,
+      "beforeKB": "1388.0",
+      "afterKB": "414.4",
+      "savedKB": "973.7",
+      "savedPct": "70.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD081.png",
+      "beforeBytes": 1421363,
+      "afterBytes": 424327,
+      "beforeKB": "1388.0",
+      "afterKB": "414.4",
+      "savedKB": "973.7",
+      "savedPct": "70.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD080.png",
+      "beforeBytes": 1391913,
+      "afterBytes": 448823,
+      "beforeKB": "1359.3",
+      "afterKB": "438.3",
+      "savedKB": "921.0",
+      "savedPct": "67.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD080.png",
+      "beforeBytes": 1391913,
+      "afterBytes": 448823,
+      "beforeKB": "1359.3",
+      "afterKB": "438.3",
+      "savedKB": "921.0",
+      "savedPct": "67.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD056.png",
+      "beforeBytes": 1533883,
+      "afterBytes": 628238,
+      "beforeKB": "1497.9",
+      "afterKB": "613.5",
+      "savedKB": "884.4",
+      "savedPct": "59.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD056.png",
+      "beforeBytes": 1533883,
+      "afterBytes": 628238,
+      "beforeKB": "1497.9",
+      "afterKB": "613.5",
+      "savedKB": "884.4",
+      "savedPct": "59.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD047.png",
+      "beforeBytes": 1204250,
+      "afterBytes": 326305,
+      "beforeKB": "1176.0",
+      "afterKB": "318.7",
+      "savedKB": "857.4",
+      "savedPct": "72.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD092.png",
+      "beforeBytes": 1078558,
+      "afterBytes": 264770,
+      "beforeKB": "1053.3",
+      "afterKB": "258.6",
+      "savedKB": "794.7",
+      "savedPct": "75.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\coffret-verre-laiton.png",
+      "beforeBytes": 951305,
+      "afterBytes": 177843,
+      "beforeKB": "929.0",
+      "afterKB": "173.7",
+      "savedKB": "755.3",
+      "savedPct": "81.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD029.png",
+      "beforeBytes": 951305,
+      "afterBytes": 177843,
+      "beforeKB": "929.0",
+      "afterKB": "173.7",
+      "savedKB": "755.3",
+      "savedPct": "81.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD029.png",
+      "beforeBytes": 951305,
+      "afterBytes": 177843,
+      "beforeKB": "929.0",
+      "afterKB": "173.7",
+      "savedKB": "755.3",
+      "savedPct": "81.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD088.png",
+      "beforeBytes": 990928,
+      "afterBytes": 240491,
+      "beforeKB": "967.7",
+      "afterKB": "234.9",
+      "savedKB": "732.8",
+      "savedPct": "75.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\pack-candy-bar-verre.png",
+      "beforeBytes": 948030,
+      "afterBytes": 213674,
+      "beforeKB": "925.8",
+      "afterKB": "208.7",
+      "savedKB": "717.1",
+      "savedPct": "77.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD098.png",
+      "beforeBytes": 990380,
+      "afterBytes": 280024,
+      "beforeKB": "967.2",
+      "afterKB": "273.5",
+      "savedKB": "693.7",
+      "savedPct": "71.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD098.png",
+      "beforeBytes": 990380,
+      "afterBytes": 280024,
+      "beforeKB": "967.2",
+      "afterKB": "273.5",
+      "savedKB": "693.7",
+      "savedPct": "71.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD086.png",
+      "beforeBytes": 969741,
+      "afterBytes": 263903,
+      "beforeKB": "947.0",
+      "afterKB": "257.7",
+      "savedKB": "689.3",
+      "savedPct": "72.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD093.png",
+      "beforeBytes": 905252,
+      "afterBytes": 222510,
+      "beforeKB": "884.0",
+      "afterKB": "217.3",
+      "savedKB": "666.7",
+      "savedPct": "75.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod007.png",
+      "beforeBytes": 947566,
+      "afterBytes": 319594,
+      "beforeKB": "925.4",
+      "afterKB": "312.1",
+      "savedKB": "613.3",
+      "savedPct": "66.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod007.png",
+      "beforeBytes": 947566,
+      "afterBytes": 319594,
+      "beforeKB": "925.4",
+      "afterKB": "312.1",
+      "savedKB": "613.3",
+      "savedPct": "66.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD089.png",
+      "beforeBytes": 840098,
+      "afterBytes": 252659,
+      "beforeKB": "820.4",
+      "afterKB": "246.7",
+      "savedKB": "573.7",
+      "savedPct": "69.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD094.png",
+      "beforeBytes": 739795,
+      "afterBytes": 200343,
+      "beforeKB": "722.5",
+      "afterKB": "195.6",
+      "savedKB": "526.8",
+      "savedPct": "72.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD097.png",
+      "beforeBytes": 758686,
+      "afterBytes": 224262,
+      "beforeKB": "740.9",
+      "afterKB": "219.0",
+      "savedKB": "521.9",
+      "savedPct": "70.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD091.png",
+      "beforeBytes": 739140,
+      "afterBytes": 216846,
+      "beforeKB": "721.8",
+      "afterKB": "211.8",
+      "savedKB": "510.1",
+      "savedPct": "70.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD057.png",
+      "beforeBytes": 819453,
+      "afterBytes": 301931,
+      "beforeKB": "800.2",
+      "afterKB": "294.9",
+      "savedKB": "505.4",
+      "savedPct": "63.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD057.png",
+      "beforeBytes": 819453,
+      "afterBytes": 301931,
+      "beforeKB": "800.2",
+      "afterKB": "294.9",
+      "savedKB": "505.4",
+      "savedPct": "63.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\bride-to-be-led.png",
+      "beforeBytes": 657648,
+      "afterBytes": 141591,
+      "beforeKB": "642.2",
+      "afterKB": "138.3",
+      "savedKB": "504.0",
+      "savedPct": "78.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod008.png",
+      "beforeBytes": 774622,
+      "afterBytes": 259600,
+      "beforeKB": "756.5",
+      "afterKB": "253.5",
+      "savedKB": "503.0",
+      "savedPct": "66.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\panier-pain.png",
+      "beforeBytes": 610625,
+      "afterBytes": 104691,
+      "beforeKB": "596.3",
+      "afterKB": "102.2",
+      "savedKB": "494.1",
+      "savedPct": "82.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD064.png",
+      "beforeBytes": 610625,
+      "afterBytes": 104691,
+      "beforeKB": "596.3",
+      "afterKB": "102.2",
+      "savedKB": "494.1",
+      "savedPct": "82.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD064.png",
+      "beforeBytes": 610625,
+      "afterBytes": 104691,
+      "beforeKB": "596.3",
+      "afterKB": "102.2",
+      "savedKB": "494.1",
+      "savedPct": "82.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "femme-papillon-rose.png",
+      "beforeBytes": 708360,
+      "afterBytes": 204560,
+      "beforeKB": "691.8",
+      "afterKB": "199.8",
+      "savedKB": "492.0",
+      "savedPct": "71.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD090.png",
+      "beforeBytes": 683056,
+      "afterBytes": 181042,
+      "beforeKB": "667.0",
+      "afterKB": "176.8",
+      "savedKB": "490.2",
+      "savedPct": "73.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod013.png",
+      "beforeBytes": 607962,
+      "afterBytes": 119437,
+      "beforeKB": "593.7",
+      "afterKB": "116.6",
+      "savedKB": "477.1",
+      "savedPct": "80.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD066.png",
+      "beforeBytes": 581813,
+      "afterBytes": 94154,
+      "beforeKB": "568.2",
+      "afterKB": "91.9",
+      "savedKB": "476.2",
+      "savedPct": "83.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\top-cake-diamand.png",
+      "beforeBytes": 581813,
+      "afterBytes": 94154,
+      "beforeKB": "568.2",
+      "afterKB": "91.9",
+      "savedKB": "476.2",
+      "savedPct": "83.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD066.png",
+      "beforeBytes": 581813,
+      "afterBytes": 94154,
+      "beforeKB": "568.2",
+      "afterKB": "91.9",
+      "savedKB": "476.2",
+      "savedPct": "83.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD073(1).png",
+      "beforeBytes": 709045,
+      "afterBytes": 223139,
+      "beforeKB": "692.4",
+      "afterKB": "217.9",
+      "savedKB": "474.5",
+      "savedPct": "68.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\presentoir-gateau-2.png",
+      "beforeBytes": 686180,
+      "afterBytes": 204538,
+      "beforeKB": "670.1",
+      "afterKB": "199.7",
+      "savedKB": "470.4",
+      "savedPct": "70.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD048 (2).png",
+      "beforeBytes": 686180,
+      "afterBytes": 204538,
+      "beforeKB": "670.1",
+      "afterKB": "199.7",
+      "savedKB": "470.4",
+      "savedPct": "70.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod048-2.png",
+      "beforeBytes": 686180,
+      "afterBytes": 204538,
+      "beforeKB": "670.1",
+      "afterKB": "199.7",
+      "savedKB": "470.4",
+      "savedPct": "70.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD048_2.png",
+      "beforeBytes": 686180,
+      "afterBytes": 204538,
+      "beforeKB": "670.1",
+      "afterKB": "199.7",
+      "savedKB": "470.4",
+      "savedPct": "70.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD061.png",
+      "beforeBytes": 607709,
+      "afterBytes": 130593,
+      "beforeKB": "593.5",
+      "afterKB": "127.5",
+      "savedKB": "465.9",
+      "savedPct": "78.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD049.png",
+      "beforeBytes": 638305,
+      "afterBytes": 165474,
+      "beforeKB": "623.3",
+      "afterKB": "161.6",
+      "savedKB": "461.7",
+      "savedPct": "74.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\urne-cage.png",
+      "beforeBytes": 638305,
+      "afterBytes": 165474,
+      "beforeKB": "623.3",
+      "afterKB": "161.6",
+      "savedKB": "461.7",
+      "savedPct": "74.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\coussins-velour.png",
+      "beforeBytes": 551523,
+      "afterBytes": 83788,
+      "beforeKB": "538.6",
+      "afterKB": "81.8",
+      "savedKB": "456.8",
+      "savedPct": "84.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD065.png",
+      "beforeBytes": 551523,
+      "afterBytes": 83788,
+      "beforeKB": "538.6",
+      "afterKB": "81.8",
+      "savedKB": "456.8",
+      "savedPct": "84.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD065.png",
+      "beforeBytes": 551523,
+      "afterBytes": 83788,
+      "beforeKB": "538.6",
+      "afterKB": "81.8",
+      "savedKB": "456.8",
+      "savedPct": "84.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\feuille-or.png",
+      "beforeBytes": 589253,
+      "afterBytes": 124975,
+      "beforeKB": "575.4",
+      "afterKB": "122.0",
+      "savedKB": "453.4",
+      "savedPct": "78.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD046.png",
+      "beforeBytes": 589253,
+      "afterBytes": 124975,
+      "beforeKB": "575.4",
+      "afterKB": "122.0",
+      "savedKB": "453.4",
+      "savedPct": "78.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD095.png",
+      "beforeBytes": 634476,
+      "afterBytes": 176927,
+      "beforeKB": "619.6",
+      "afterKB": "172.8",
+      "savedKB": "446.8",
+      "savedPct": "72.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\nappe-papillon.png",
+      "beforeBytes": 582648,
+      "afterBytes": 130171,
+      "beforeKB": "569.0",
+      "afterKB": "127.1",
+      "savedKB": "441.9",
+      "savedPct": "77.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD058.png",
+      "beforeBytes": 582648,
+      "afterBytes": 130171,
+      "beforeKB": "569.0",
+      "afterKB": "127.1",
+      "savedKB": "441.9",
+      "savedPct": "77.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD096.png",
+      "beforeBytes": 592272,
+      "afterBytes": 140483,
+      "beforeKB": "578.4",
+      "afterKB": "137.2",
+      "savedKB": "441.2",
+      "savedPct": "76.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\bird-scoth.png",
+      "beforeBytes": 566774,
+      "afterBytes": 116384,
+      "beforeKB": "553.5",
+      "afterKB": "113.7",
+      "savedKB": "439.8",
+      "savedPct": "79.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD050.png",
+      "beforeBytes": 566774,
+      "afterBytes": 116384,
+      "beforeKB": "553.5",
+      "afterKB": "113.7",
+      "savedKB": "439.8",
+      "savedPct": "79.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD053.png",
+      "beforeBytes": 565758,
+      "afterBytes": 120173,
+      "beforeKB": "552.5",
+      "afterKB": "117.4",
+      "savedKB": "435.1",
+      "savedPct": "78.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\sous-assiettes-or.png",
+      "beforeBytes": 565758,
+      "afterBytes": 120173,
+      "beforeKB": "552.5",
+      "afterKB": "117.4",
+      "savedKB": "435.1",
+      "savedPct": "78.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD055.png",
+      "beforeBytes": 540258,
+      "afterBytes": 95033,
+      "beforeKB": "527.6",
+      "afterKB": "92.8",
+      "savedKB": "434.8",
+      "savedPct": "82.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\serviette-emeraude.png",
+      "beforeBytes": 540258,
+      "afterBytes": 95033,
+      "beforeKB": "527.6",
+      "afterKB": "92.8",
+      "savedKB": "434.8",
+      "savedPct": "82.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\porte-serviettes.png",
+      "beforeBytes": 532682,
+      "afterBytes": 92501,
+      "beforeKB": "520.2",
+      "afterKB": "90.3",
+      "savedKB": "429.9",
+      "savedPct": "82.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD052.png",
+      "beforeBytes": 532682,
+      "afterBytes": 92501,
+      "beforeKB": "520.2",
+      "afterKB": "90.3",
+      "savedKB": "429.9",
+      "savedPct": "82.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD006.png",
+      "beforeBytes": 593148,
+      "afterBytes": 163268,
+      "beforeKB": "579.2",
+      "afterKB": "159.4",
+      "savedKB": "419.8",
+      "savedPct": "72.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\porte-carte-or.png",
+      "beforeBytes": 503597,
+      "afterBytes": 73865,
+      "beforeKB": "491.8",
+      "afterKB": "72.1",
+      "savedKB": "419.7",
+      "savedPct": "85.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD060.png",
+      "beforeBytes": 503597,
+      "afterBytes": 73865,
+      "beforeKB": "491.8",
+      "afterKB": "72.1",
+      "savedKB": "419.7",
+      "savedPct": "85.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\presentoir-gateau-1.png",
+      "beforeBytes": 570460,
+      "afterBytes": 143205,
+      "beforeKB": "557.1",
+      "afterKB": "139.8",
+      "savedKB": "417.2",
+      "savedPct": "74.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD048.png",
+      "beforeBytes": 570460,
+      "afterBytes": 143205,
+      "beforeKB": "557.1",
+      "afterKB": "139.8",
+      "savedKB": "417.2",
+      "savedPct": "74.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD048.png",
+      "beforeBytes": 570460,
+      "afterBytes": 143205,
+      "beforeKB": "557.1",
+      "afterKB": "139.8",
+      "savedKB": "417.2",
+      "savedPct": "74.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD082.png",
+      "beforeBytes": 514184,
+      "afterBytes": 87579,
+      "beforeKB": "502.1",
+      "afterKB": "85.5",
+      "savedKB": "416.6",
+      "savedPct": "83.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD063.png",
+      "beforeBytes": 518787,
+      "afterBytes": 93685,
+      "beforeKB": "506.6",
+      "afterKB": "91.5",
+      "savedKB": "415.1",
+      "savedPct": "81.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\saliere-poivriere.png",
+      "beforeBytes": 518787,
+      "afterBytes": 93685,
+      "beforeKB": "506.6",
+      "afterKB": "91.5",
+      "savedKB": "415.1",
+      "savedPct": "81.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD063.png",
+      "beforeBytes": 518787,
+      "afterBytes": 93685,
+      "beforeKB": "506.6",
+      "afterKB": "91.5",
+      "savedKB": "415.1",
+      "savedPct": "81.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\chemin-table-rose.png",
+      "beforeBytes": 544327,
+      "afterBytes": 124716,
+      "beforeKB": "531.6",
+      "afterKB": "121.8",
+      "savedKB": "409.8",
+      "savedPct": "77.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD059.png",
+      "beforeBytes": 544327,
+      "afterBytes": 124716,
+      "beforeKB": "531.6",
+      "afterKB": "121.8",
+      "savedKB": "409.8",
+      "savedPct": "77.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD059.png",
+      "beforeBytes": 544327,
+      "afterBytes": 124716,
+      "beforeKB": "531.6",
+      "afterKB": "121.8",
+      "savedKB": "409.8",
+      "savedPct": "77.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD004.png",
+      "beforeBytes": 488928,
+      "afterBytes": 70756,
+      "beforeKB": "477.5",
+      "afterKB": "69.1",
+      "savedKB": "408.4",
+      "savedPct": "85.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\36.png",
+      "beforeBytes": 542960,
+      "afterBytes": 124971,
+      "beforeKB": "530.2",
+      "afterKB": "122.0",
+      "savedKB": "408.2",
+      "savedPct": "77.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\boa.png",
+      "beforeBytes": 502682,
+      "afterBytes": 86873,
+      "beforeKB": "490.9",
+      "afterKB": "84.8",
+      "savedKB": "406.1",
+      "savedPct": "82.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD076.png",
+      "beforeBytes": 502682,
+      "afterBytes": 86873,
+      "beforeKB": "490.9",
+      "afterKB": "84.8",
+      "savedKB": "406.1",
+      "savedPct": "82.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD076.png",
+      "beforeBytes": 502682,
+      "afterBytes": 86873,
+      "beforeKB": "490.9",
+      "afterKB": "84.8",
+      "savedKB": "406.1",
+      "savedPct": "82.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\ours-blanc.png",
+      "beforeBytes": 509182,
+      "afterBytes": 97077,
+      "beforeKB": "497.2",
+      "afterKB": "94.8",
+      "savedKB": "402.4",
+      "savedPct": "80.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD011.png",
+      "beforeBytes": 509182,
+      "afterBytes": 97077,
+      "beforeKB": "497.2",
+      "afterKB": "94.8",
+      "savedKB": "402.4",
+      "savedPct": "80.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD009.png",
+      "beforeBytes": 497253,
+      "afterBytes": 88092,
+      "beforeKB": "485.6",
+      "afterKB": "86.0",
+      "savedKB": "399.6",
+      "savedPct": "82.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\pack-sou-verre.png",
+      "beforeBytes": 511809,
+      "afterBytes": 108084,
+      "beforeKB": "499.8",
+      "afterKB": "105.6",
+      "savedKB": "394.3",
+      "savedPct": "78.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD051.png",
+      "beforeBytes": 511809,
+      "afterBytes": 108084,
+      "beforeKB": "499.8",
+      "afterKB": "105.6",
+      "savedKB": "394.3",
+      "savedPct": "78.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "gazon-artificiel.png",
+      "beforeBytes": 525163,
+      "afterBytes": 124848,
+      "beforeKB": "512.9",
+      "afterKB": "121.9",
+      "savedKB": "390.9",
+      "savedPct": "76.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\gazon-artificiel.png",
+      "beforeBytes": 525163,
+      "afterBytes": 124848,
+      "beforeKB": "512.9",
+      "afterKB": "121.9",
+      "savedKB": "390.9",
+      "savedPct": "76.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD084.png",
+      "beforeBytes": 525163,
+      "afterBytes": 124848,
+      "beforeKB": "512.9",
+      "afterKB": "121.9",
+      "savedKB": "390.9",
+      "savedPct": "76.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD084.png",
+      "beforeBytes": 525163,
+      "afterBytes": 124848,
+      "beforeKB": "512.9",
+      "afterKB": "121.9",
+      "savedKB": "390.9",
+      "savedPct": "76.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\lanterne-argent.png",
+      "beforeBytes": 509277,
+      "afterBytes": 114419,
+      "beforeKB": "497.3",
+      "afterKB": "111.7",
+      "savedKB": "385.6",
+      "savedPct": "77.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD020.png",
+      "beforeBytes": 509277,
+      "afterBytes": 114419,
+      "beforeKB": "497.3",
+      "afterKB": "111.7",
+      "savedKB": "385.6",
+      "savedPct": "77.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD068.png",
+      "beforeBytes": 486058,
+      "afterBytes": 100094,
+      "beforeKB": "474.7",
+      "afterKB": "97.7",
+      "savedKB": "376.9",
+      "savedPct": "79.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\photophore-transparent.png",
+      "beforeBytes": 504632,
+      "afterBytes": 119018,
+      "beforeKB": "492.8",
+      "afterKB": "116.2",
+      "savedKB": "376.6",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD034.png",
+      "beforeBytes": 504632,
+      "afterBytes": 119018,
+      "beforeKB": "492.8",
+      "afterKB": "116.2",
+      "savedKB": "376.6",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD034.png",
+      "beforeBytes": 504632,
+      "afterBytes": 119018,
+      "beforeKB": "492.8",
+      "afterKB": "116.2",
+      "savedKB": "376.6",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD001.png",
+      "beforeBytes": 447090,
+      "afterBytes": 64297,
+      "beforeKB": "436.6",
+      "afterKB": "62.8",
+      "savedKB": "373.8",
+      "savedPct": "85.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\lanterne-noir.png",
+      "beforeBytes": 451977,
+      "afterBytes": 70324,
+      "beforeKB": "441.4",
+      "afterKB": "68.7",
+      "savedKB": "372.7",
+      "savedPct": "84.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD021.png",
+      "beforeBytes": 451977,
+      "afterBytes": 70324,
+      "beforeKB": "441.4",
+      "afterKB": "68.7",
+      "savedKB": "372.7",
+      "savedPct": "84.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD054.png",
+      "beforeBytes": 460898,
+      "afterBytes": 82899,
+      "beforeKB": "450.1",
+      "afterKB": "81.0",
+      "savedKB": "369.1",
+      "savedPct": "82.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\sauciere.png",
+      "beforeBytes": 460898,
+      "afterBytes": 82899,
+      "beforeKB": "450.1",
+      "afterKB": "81.0",
+      "savedKB": "369.1",
+      "savedPct": "82.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD019.png",
+      "beforeBytes": 461078,
+      "afterBytes": 90937,
+      "beforeKB": "450.3",
+      "afterKB": "88.8",
+      "savedKB": "361.5",
+      "savedPct": "80.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD070.png",
+      "beforeBytes": 414676,
+      "afterBytes": 48974,
+      "beforeKB": "405.0",
+      "afterKB": "47.8",
+      "savedKB": "357.1",
+      "savedPct": "88.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prisme.png",
+      "beforeBytes": 445715,
+      "afterBytes": 84038,
+      "beforeKB": "435.3",
+      "afterKB": "82.1",
+      "savedKB": "353.2",
+      "savedPct": "81.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD026.png",
+      "beforeBytes": 445715,
+      "afterBytes": 84038,
+      "beforeKB": "435.3",
+      "afterKB": "82.1",
+      "savedKB": "353.2",
+      "savedPct": "81.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\velo.png",
+      "beforeBytes": 453976,
+      "afterBytes": 95972,
+      "beforeKB": "443.3",
+      "afterKB": "93.7",
+      "savedKB": "349.6",
+      "savedPct": "78.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod012.png",
+      "beforeBytes": 453976,
+      "afterBytes": 95972,
+      "beforeKB": "443.3",
+      "afterKB": "93.7",
+      "savedKB": "349.6",
+      "savedPct": "78.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD078.png",
+      "beforeBytes": 445301,
+      "afterBytes": 91088,
+      "beforeKB": "434.9",
+      "afterKB": "89.0",
+      "savedKB": "345.9",
+      "savedPct": "79.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\umbrella.png",
+      "beforeBytes": 445301,
+      "afterBytes": 91088,
+      "beforeKB": "434.9",
+      "afterKB": "89.0",
+      "savedKB": "345.9",
+      "savedPct": "79.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD010.png",
+      "beforeBytes": 470983,
+      "afterBytes": 118047,
+      "beforeKB": "459.9",
+      "afterKB": "115.3",
+      "savedKB": "344.7",
+      "savedPct": "74.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD071.png",
+      "beforeBytes": 399611,
+      "afterBytes": 54816,
+      "beforeKB": "390.2",
+      "afterKB": "53.5",
+      "savedKB": "336.7",
+      "savedPct": "86.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\vase-oval.png",
+      "beforeBytes": 399611,
+      "afterBytes": 54816,
+      "beforeKB": "390.2",
+      "afterKB": "53.5",
+      "savedKB": "336.7",
+      "savedPct": "86.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD071.png",
+      "beforeBytes": 399611,
+      "afterBytes": 54816,
+      "beforeKB": "390.2",
+      "afterKB": "53.5",
+      "savedKB": "336.7",
+      "savedPct": "86.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD079.png",
+      "beforeBytes": 586721,
+      "afterBytes": 243534,
+      "beforeKB": "573.0",
+      "afterKB": "237.8",
+      "savedKB": "335.1",
+      "savedPct": "58.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "bougeoire-etincelle.png",
+      "beforeBytes": 438311,
+      "afterBytes": 103386,
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedKB": "327.1",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\bougeoire-etincelle.png",
+      "beforeBytes": 438311,
+      "afterBytes": 103386,
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedKB": "327.1",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD025 (2).png",
+      "beforeBytes": 438311,
+      "afterBytes": 103386,
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedKB": "327.1",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod025-2.png",
+      "beforeBytes": 438311,
+      "afterBytes": 103386,
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedKB": "327.1",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod025.png",
+      "beforeBytes": 438311,
+      "afterBytes": 103386,
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedKB": "327.1",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD025_2.png",
+      "beforeBytes": 438311,
+      "afterBytes": 103386,
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedKB": "327.1",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD025 (2).png",
+      "beforeBytes": 438311,
+      "afterBytes": 103386,
+      "beforeKB": "428.0",
+      "afterKB": "101.0",
+      "savedKB": "327.1",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\bougeoir-or.png",
+      "beforeBytes": 418122,
+      "afterBytes": 85563,
+      "beforeKB": "408.3",
+      "afterKB": "83.6",
+      "savedKB": "324.8",
+      "savedPct": "79.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD022.png",
+      "beforeBytes": 418122,
+      "afterBytes": 85563,
+      "beforeKB": "408.3",
+      "afterKB": "83.6",
+      "savedKB": "324.8",
+      "savedPct": "79.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\lanterne-blanche.png",
+      "beforeBytes": 394395,
+      "afterBytes": 66974,
+      "beforeKB": "385.2",
+      "afterKB": "65.4",
+      "savedKB": "319.7",
+      "savedPct": "83.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD023.png",
+      "beforeBytes": 394395,
+      "afterBytes": 66974,
+      "beforeKB": "385.2",
+      "afterKB": "65.4",
+      "savedKB": "319.7",
+      "savedPct": "83.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\candy-bar.png",
+      "beforeBytes": 416395,
+      "afterBytes": 92740,
+      "beforeKB": "406.6",
+      "afterKB": "90.6",
+      "savedKB": "316.1",
+      "savedPct": "77.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD032.png",
+      "beforeBytes": 416395,
+      "afterBytes": 92740,
+      "beforeKB": "406.6",
+      "afterKB": "90.6",
+      "savedKB": "316.1",
+      "savedPct": "77.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\horloge.png",
+      "beforeBytes": 410968,
+      "afterBytes": 95296,
+      "beforeKB": "401.3",
+      "afterKB": "93.1",
+      "savedKB": "308.3",
+      "savedPct": "76.8%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD074.png",
+      "beforeBytes": 407025,
+      "afterBytes": 96129,
+      "beforeKB": "397.5",
+      "afterKB": "93.9",
+      "savedKB": "303.6",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD074.png",
+      "beforeBytes": 407025,
+      "afterBytes": 96129,
+      "beforeKB": "397.5",
+      "afterKB": "93.9",
+      "savedKB": "303.6",
+      "savedPct": "76.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD087.png",
+      "beforeBytes": 412184,
+      "afterBytes": 105412,
+      "beforeKB": "402.5",
+      "afterKB": "102.9",
+      "savedKB": "299.6",
+      "savedPct": "74.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod015.png",
+      "beforeBytes": 429996,
+      "afterBytes": 134827,
+      "beforeKB": "419.9",
+      "afterKB": "131.7",
+      "savedKB": "288.3",
+      "savedPct": "68.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod015.png",
+      "beforeBytes": 429996,
+      "afterBytes": 134827,
+      "beforeKB": "419.9",
+      "afterKB": "131.7",
+      "savedKB": "288.3",
+      "savedPct": "68.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\10.png",
+      "beforeBytes": 353065,
+      "afterBytes": 73052,
+      "beforeKB": "344.8",
+      "afterKB": "71.3",
+      "savedKB": "273.5",
+      "savedPct": "79.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD041.png",
+      "beforeBytes": 353065,
+      "afterBytes": 73052,
+      "beforeKB": "344.8",
+      "afterKB": "71.3",
+      "savedKB": "273.5",
+      "savedPct": "79.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\8.png",
+      "beforeBytes": 350687,
+      "afterBytes": 72827,
+      "beforeKB": "342.5",
+      "afterKB": "71.1",
+      "savedKB": "271.3",
+      "savedPct": "79.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD040.png",
+      "beforeBytes": 350687,
+      "afterBytes": 72827,
+      "beforeKB": "342.5",
+      "afterKB": "71.1",
+      "savedKB": "271.3",
+      "savedPct": "79.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod002.png",
+      "beforeBytes": 398184,
+      "afterBytes": 122398,
+      "beforeKB": "388.9",
+      "afterKB": "119.5",
+      "savedKB": "269.3",
+      "savedPct": "69.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD39.png",
+      "beforeBytes": 337288,
+      "afterBytes": 63676,
+      "beforeKB": "329.4",
+      "afterKB": "62.2",
+      "savedKB": "267.2",
+      "savedPct": "81.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD039.png",
+      "beforeBytes": 337288,
+      "afterBytes": 63676,
+      "beforeKB": "329.4",
+      "afterKB": "62.2",
+      "savedKB": "267.2",
+      "savedPct": "81.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\porte-alliance-rectangle-1.png",
+      "beforeBytes": 342626,
+      "afterBytes": 70085,
+      "beforeKB": "334.6",
+      "afterKB": "68.4",
+      "savedKB": "266.2",
+      "savedPct": "79.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD031.png",
+      "beforeBytes": 342626,
+      "afterBytes": 70085,
+      "beforeKB": "334.6",
+      "afterKB": "68.4",
+      "savedKB": "266.2",
+      "savedPct": "79.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD031.png",
+      "beforeBytes": 342626,
+      "afterBytes": 70085,
+      "beforeKB": "334.6",
+      "afterKB": "68.4",
+      "savedKB": "266.2",
+      "savedPct": "79.5%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\fontaine-agrume.png",
+      "beforeBytes": 339625,
+      "afterBytes": 73461,
+      "beforeKB": "331.7",
+      "afterKB": "71.7",
+      "savedKB": "259.9",
+      "savedPct": "78.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD036.png",
+      "beforeBytes": 339625,
+      "afterBytes": 73461,
+      "beforeKB": "331.7",
+      "afterKB": "71.7",
+      "savedKB": "259.9",
+      "savedPct": "78.4%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod012.png",
+      "beforeBytes": 365344,
+      "afterBytes": 99757,
+      "beforeKB": "356.8",
+      "afterKB": "97.4",
+      "savedKB": "259.4",
+      "savedPct": "72.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\porte-alliance-prisme.png",
+      "beforeBytes": 326100,
+      "afterBytes": 64825,
+      "beforeKB": "318.5",
+      "afterKB": "63.3",
+      "savedKB": "255.2",
+      "savedPct": "80.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD030.png",
+      "beforeBytes": 326100,
+      "afterBytes": 64825,
+      "beforeKB": "318.5",
+      "afterKB": "63.3",
+      "savedKB": "255.2",
+      "savedPct": "80.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD030.png",
+      "beforeBytes": 326100,
+      "afterBytes": 64825,
+      "beforeKB": "318.5",
+      "afterKB": "63.3",
+      "savedKB": "255.2",
+      "savedPct": "80.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod016.png",
+      "beforeBytes": 352746,
+      "afterBytes": 98463,
+      "beforeKB": "344.5",
+      "afterKB": "96.2",
+      "savedKB": "248.3",
+      "savedPct": "72.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod016.png",
+      "beforeBytes": 352746,
+      "afterBytes": 98463,
+      "beforeKB": "344.5",
+      "afterKB": "96.2",
+      "savedKB": "248.3",
+      "savedPct": "72.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\porte-alliance-prisme-2.png",
+      "beforeBytes": 311736,
+      "afterBytes": 65498,
+      "beforeKB": "304.4",
+      "afterKB": "64.0",
+      "savedKB": "240.5",
+      "savedPct": "79.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD030 (2).png",
+      "beforeBytes": 311736,
+      "afterBytes": 65498,
+      "beforeKB": "304.4",
+      "afterKB": "64.0",
+      "savedKB": "240.5",
+      "savedPct": "79.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod030-2.png",
+      "beforeBytes": 311736,
+      "afterBytes": 65498,
+      "beforeKB": "304.4",
+      "afterKB": "64.0",
+      "savedKB": "240.5",
+      "savedPct": "79.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD030_2.png",
+      "beforeBytes": 311736,
+      "afterBytes": 65498,
+      "beforeKB": "304.4",
+      "afterKB": "64.0",
+      "savedKB": "240.5",
+      "savedPct": "79.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD030 (2).png",
+      "beforeBytes": 311736,
+      "afterBytes": 65498,
+      "beforeKB": "304.4",
+      "afterKB": "64.0",
+      "savedKB": "240.5",
+      "savedPct": "79.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\porte-alliance-rectangle-2.png",
+      "beforeBytes": 312468,
+      "afterBytes": 67670,
+      "beforeKB": "305.1",
+      "afterKB": "66.1",
+      "savedKB": "239.1",
+      "savedPct": "78.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD031 (2).png",
+      "beforeBytes": 312468,
+      "afterBytes": 67670,
+      "beforeKB": "305.1",
+      "afterKB": "66.1",
+      "savedKB": "239.1",
+      "savedPct": "78.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod031-2.png",
+      "beforeBytes": 312468,
+      "afterBytes": 67670,
+      "beforeKB": "305.1",
+      "afterKB": "66.1",
+      "savedKB": "239.1",
+      "savedPct": "78.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD031_2.png",
+      "beforeBytes": 312468,
+      "afterBytes": 67670,
+      "beforeKB": "305.1",
+      "afterKB": "66.1",
+      "savedKB": "239.1",
+      "savedPct": "78.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD031 (2).png",
+      "beforeBytes": 312468,
+      "afterBytes": 67670,
+      "beforeKB": "305.1",
+      "afterKB": "66.1",
+      "savedKB": "239.1",
+      "savedPct": "78.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "lustre-12-branches.png",
+      "beforeBytes": 323671,
+      "afterBytes": 81314,
+      "beforeKB": "316.1",
+      "afterKB": "79.4",
+      "savedKB": "236.7",
+      "savedPct": "74.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\lustre-12-branches.png",
+      "beforeBytes": 323671,
+      "afterBytes": 81314,
+      "beforeKB": "316.1",
+      "afterKB": "79.4",
+      "savedKB": "236.7",
+      "savedPct": "74.9%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD072.png",
+      "beforeBytes": 278634,
+      "afterBytes": 41713,
+      "beforeKB": "272.1",
+      "afterKB": "40.7",
+      "savedKB": "231.4",
+      "savedPct": "85.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\vase-geometrique-blanc.png",
+      "beforeBytes": 278634,
+      "afterBytes": 41713,
+      "beforeKB": "272.1",
+      "afterKB": "40.7",
+      "savedKB": "231.4",
+      "savedPct": "85.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD072.png",
+      "beforeBytes": 278634,
+      "afterBytes": 41713,
+      "beforeKB": "272.1",
+      "afterKB": "40.7",
+      "savedKB": "231.4",
+      "savedPct": "85.0%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\porte-alliance-prisme-1.png",
+      "beforeBytes": 295340,
+      "afterBytes": 59807,
+      "beforeKB": "288.4",
+      "afterKB": "58.4",
+      "savedKB": "230.0",
+      "savedPct": "79.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD030 (3).png",
+      "beforeBytes": 295340,
+      "afterBytes": 59807,
+      "beforeKB": "288.4",
+      "afterKB": "58.4",
+      "savedKB": "230.0",
+      "savedPct": "79.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod030-3.png",
+      "beforeBytes": 295340,
+      "afterBytes": 59807,
+      "beforeKB": "288.4",
+      "afterKB": "58.4",
+      "savedKB": "230.0",
+      "savedPct": "79.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD030_3.png",
+      "beforeBytes": 295340,
+      "afterBytes": 59807,
+      "beforeKB": "288.4",
+      "afterKB": "58.4",
+      "savedKB": "230.0",
+      "savedPct": "79.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD030 (3).png",
+      "beforeBytes": 295340,
+      "afterBytes": 59807,
+      "beforeKB": "288.4",
+      "afterKB": "58.4",
+      "savedKB": "230.0",
+      "savedPct": "79.7%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD042.png",
+      "beforeBytes": 289932,
+      "afterBytes": 57393,
+      "beforeKB": "283.1",
+      "afterKB": "56.0",
+      "savedKB": "227.1",
+      "savedPct": "80.2%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\PROD075.png",
+      "beforeBytes": 296725,
+      "afterBytes": 66425,
+      "beforeKB": "289.8",
+      "afterKB": "64.9",
+      "savedKB": "224.9",
+      "savedPct": "77.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\sonnette-comptoir.png",
+      "beforeBytes": 296725,
+      "afterBytes": 66425,
+      "beforeKB": "289.8",
+      "afterKB": "64.9",
+      "savedKB": "224.9",
+      "savedPct": "77.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD075.png",
+      "beforeBytes": 296725,
+      "afterBytes": 66425,
+      "beforeKB": "289.8",
+      "afterKB": "64.9",
+      "savedKB": "224.9",
+      "savedPct": "77.6%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod013.png",
+      "beforeBytes": 295324,
+      "afterBytes": 93570,
+      "beforeKB": "288.4",
+      "afterKB": "91.4",
+      "savedKB": "197.0",
+      "savedPct": "68.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "_backup\\PROD013_old.png",
+      "beforeBytes": 295324,
+      "afterBytes": 93570,
+      "beforeKB": "288.4",
+      "afterKB": "91.4",
+      "savedKB": "197.0",
+      "savedPct": "68.3%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod\\prod014.png",
+      "beforeBytes": 311979,
+      "afterBytes": 121293,
+      "beforeKB": "304.7",
+      "afterKB": "118.5",
+      "savedKB": "186.2",
+      "savedPct": "61.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "prod014.png",
+      "beforeBytes": 311979,
+      "afterBytes": 121293,
+      "beforeKB": "304.7",
+      "afterKB": "118.5",
+      "savedKB": "186.2",
+      "savedPct": "61.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "ChatGPT Image 28 juin 2026, 18_19_47.png",
+      "beforeBytes": 256632,
+      "afterBytes": 81966,
+      "beforeKB": "250.6",
+      "afterKB": "80.0",
+      "savedKB": "170.6",
+      "savedPct": "68.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD008.png",
+      "beforeBytes": 256632,
+      "afterBytes": 81966,
+      "beforeKB": "250.6",
+      "afterKB": "80.0",
+      "savedKB": "170.6",
+      "savedPct": "68.1%",
+      "kept": false,
+      "method": "pngquant",
+      "hasAlpha": true
+    },
+    {
+      "file": "PROD081.webp",
+      "beforeBytes": 87618,
+      "afterBytes": 67542,
+      "beforeKB": "85.6",
+      "afterKB": "66.0",
+      "savedKB": "19.6",
+      "savedPct": "22.9%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD056.webp",
+      "beforeBytes": 100106,
+      "afterBytes": 84200,
+      "beforeKB": "97.8",
+      "afterKB": "82.2",
+      "savedKB": "15.5",
+      "savedPct": "15.9%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD005.webp",
+      "beforeBytes": 100966,
+      "afterBytes": 85436,
+      "beforeKB": "98.6",
+      "afterKB": "83.4",
+      "savedKB": "15.2",
+      "savedPct": "15.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD080.webp",
+      "beforeBytes": 88472,
+      "afterBytes": 72918,
+      "beforeKB": "86.4",
+      "afterKB": "71.2",
+      "savedKB": "15.2",
+      "savedPct": "17.6%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD047.webp",
+      "beforeBytes": 62986,
+      "afterBytes": 47596,
+      "beforeKB": "61.5",
+      "afterKB": "46.5",
+      "savedKB": "15.0",
+      "savedPct": "24.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "prod\\PROD048_2.webp",
+      "beforeBytes": 67874,
+      "afterBytes": 54788,
+      "beforeKB": "66.3",
+      "afterKB": "53.5",
+      "savedKB": "12.8",
+      "savedPct": "19.3%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD057.webp",
+      "beforeBytes": 72274,
+      "afterBytes": 61708,
+      "beforeKB": "70.6",
+      "afterKB": "60.3",
+      "savedKB": "10.3",
+      "savedPct": "14.6%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD050.webp",
+      "beforeBytes": 35554,
+      "afterBytes": 25070,
+      "beforeKB": "34.7",
+      "afterKB": "24.5",
+      "savedKB": "10.2",
+      "savedPct": "29.5%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD049.webp",
+      "beforeBytes": 58878,
+      "afterBytes": 48682,
+      "beforeKB": "57.5",
+      "afterKB": "47.5",
+      "savedKB": "10.0",
+      "savedPct": "17.3%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD062.webp",
+      "beforeBytes": 59006,
+      "afterBytes": 48808,
+      "beforeKB": "57.6",
+      "afterKB": "47.7",
+      "savedKB": "10.0",
+      "savedPct": "17.3%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD058.webp",
+      "beforeBytes": 34404,
+      "afterBytes": 26082,
+      "beforeKB": "33.6",
+      "afterKB": "25.5",
+      "savedKB": "8.1",
+      "savedPct": "24.2%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD048.webp",
+      "beforeBytes": 41772,
+      "afterBytes": 33620,
+      "beforeKB": "40.8",
+      "afterKB": "32.8",
+      "savedKB": "8.0",
+      "savedPct": "19.5%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD078.webp",
+      "beforeBytes": 39692,
+      "afterBytes": 31514,
+      "beforeKB": "38.8",
+      "afterKB": "30.8",
+      "savedKB": "8.0",
+      "savedPct": "20.6%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD006.webp",
+      "beforeBytes": 40126,
+      "afterBytes": 32222,
+      "beforeKB": "39.2",
+      "afterKB": "31.5",
+      "savedKB": "7.7",
+      "savedPct": "19.7%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD003.webp",
+      "beforeBytes": 17830,
+      "afterBytes": 10290,
+      "beforeKB": "17.4",
+      "afterKB": "10.0",
+      "savedKB": "7.4",
+      "savedPct": "42.3%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD030.webp",
+      "beforeBytes": 34454,
+      "afterBytes": 27090,
+      "beforeKB": "33.6",
+      "afterKB": "26.5",
+      "savedKB": "7.2",
+      "savedPct": "21.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD046.webp",
+      "beforeBytes": 39898,
+      "afterBytes": 32666,
+      "beforeKB": "39.0",
+      "afterKB": "31.9",
+      "savedKB": "7.1",
+      "savedPct": "18.1%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD061.webp",
+      "beforeBytes": 42874,
+      "afterBytes": 35766,
+      "beforeKB": "41.9",
+      "afterKB": "34.9",
+      "savedKB": "6.9",
+      "savedPct": "16.6%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD074.webp",
+      "beforeBytes": 36980,
+      "afterBytes": 30432,
+      "beforeKB": "36.1",
+      "afterKB": "29.7",
+      "savedKB": "6.4",
+      "savedPct": "17.7%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "prod\\PROD025_2.webp",
+      "beforeBytes": 33070,
+      "afterBytes": 26622,
+      "beforeKB": "32.3",
+      "afterKB": "26.0",
+      "savedKB": "6.3",
+      "savedPct": "19.5%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD065.webp",
+      "beforeBytes": 22510,
+      "afterBytes": 16252,
+      "beforeKB": "22.0",
+      "afterKB": "15.9",
+      "savedKB": "6.1",
+      "savedPct": "27.8%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD041.webp",
+      "beforeBytes": 30136,
+      "afterBytes": 23984,
+      "beforeKB": "29.4",
+      "afterKB": "23.4",
+      "savedKB": "6.0",
+      "savedPct": "20.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD059.webp",
+      "beforeBytes": 29158,
+      "afterBytes": 22996,
+      "beforeKB": "28.5",
+      "afterKB": "22.5",
+      "savedKB": "6.0",
+      "savedPct": "21.1%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD066.webp",
+      "beforeBytes": 37720,
+      "afterBytes": 31676,
+      "beforeKB": "36.8",
+      "afterKB": "30.9",
+      "savedKB": "5.9",
+      "savedPct": "16.0%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD053.webp",
+      "beforeBytes": 25762,
+      "afterBytes": 20072,
+      "beforeKB": "25.2",
+      "afterKB": "19.6",
+      "savedKB": "5.6",
+      "savedPct": "22.1%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD026.webp",
+      "beforeBytes": 32252,
+      "afterBytes": 26772,
+      "beforeKB": "31.5",
+      "afterKB": "26.1",
+      "savedKB": "5.4",
+      "savedPct": "17.0%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD011.webp",
+      "beforeBytes": 18688,
+      "afterBytes": 13430,
+      "beforeKB": "18.3",
+      "afterKB": "13.1",
+      "savedKB": "5.1",
+      "savedPct": "28.1%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "prod\\PROD030_2.webp",
+      "beforeBytes": 26222,
+      "afterBytes": 21146,
+      "beforeKB": "25.6",
+      "afterKB": "20.7",
+      "savedKB": "5.0",
+      "savedPct": "19.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD084.webp",
+      "beforeBytes": 22266,
+      "afterBytes": 17142,
+      "beforeKB": "21.7",
+      "afterKB": "16.7",
+      "savedKB": "5.0",
+      "savedPct": "23.0%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD051.webp",
+      "beforeBytes": 21504,
+      "afterBytes": 16444,
+      "beforeKB": "21.0",
+      "afterKB": "16.1",
+      "savedKB": "4.9",
+      "savedPct": "23.5%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD052.webp",
+      "beforeBytes": 24264,
+      "afterBytes": 19338,
+      "beforeKB": "23.7",
+      "afterKB": "18.9",
+      "savedKB": "4.8",
+      "savedPct": "20.3%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD002.webp",
+      "beforeBytes": 16330,
+      "afterBytes": 11534,
+      "beforeKB": "15.9",
+      "afterKB": "11.3",
+      "savedKB": "4.7",
+      "savedPct": "29.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD031.webp",
+      "beforeBytes": 24750,
+      "afterBytes": 20172,
+      "beforeKB": "24.2",
+      "afterKB": "19.7",
+      "savedKB": "4.5",
+      "savedPct": "18.5%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD036.webp",
+      "beforeBytes": 21742,
+      "afterBytes": 17222,
+      "beforeKB": "21.2",
+      "afterKB": "16.8",
+      "savedKB": "4.4",
+      "savedPct": "20.8%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD055.webp",
+      "beforeBytes": 22120,
+      "afterBytes": 17568,
+      "beforeKB": "21.6",
+      "afterKB": "17.2",
+      "savedKB": "4.4",
+      "savedPct": "20.6%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD064.webp",
+      "beforeBytes": 36704,
+      "afterBytes": 32188,
+      "beforeKB": "35.8",
+      "afterKB": "31.4",
+      "savedKB": "4.4",
+      "savedPct": "12.3%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD010.webp",
+      "beforeBytes": 25034,
+      "afterBytes": 20610,
+      "beforeKB": "24.4",
+      "afterKB": "20.1",
+      "savedKB": "4.3",
+      "savedPct": "17.7%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD068.webp",
+      "beforeBytes": 18086,
+      "afterBytes": 13824,
+      "beforeKB": "17.7",
+      "afterKB": "13.5",
+      "savedKB": "4.2",
+      "savedPct": "23.6%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD076.webp",
+      "beforeBytes": 18172,
+      "afterBytes": 13904,
+      "beforeKB": "17.7",
+      "afterKB": "13.6",
+      "savedKB": "4.2",
+      "savedPct": "23.5%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD020.webp",
+      "beforeBytes": 21268,
+      "afterBytes": 17152,
+      "beforeKB": "20.8",
+      "afterKB": "16.8",
+      "savedKB": "4.0",
+      "savedPct": "19.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD060.webp",
+      "beforeBytes": 20882,
+      "afterBytes": 16748,
+      "beforeKB": "20.4",
+      "afterKB": "16.4",
+      "savedKB": "4.0",
+      "savedPct": "19.8%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "prod\\PROD030_3.webp",
+      "beforeBytes": 19350,
+      "afterBytes": 15324,
+      "beforeKB": "18.9",
+      "afterKB": "15.0",
+      "savedKB": "3.9",
+      "savedPct": "20.8%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD029.webp",
+      "beforeBytes": 20002,
+      "afterBytes": 16234,
+      "beforeKB": "19.5",
+      "afterKB": "15.9",
+      "savedKB": "3.7",
+      "savedPct": "18.8%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD063.webp",
+      "beforeBytes": 23236,
+      "afterBytes": 19464,
+      "beforeKB": "22.7",
+      "afterKB": "19.0",
+      "savedKB": "3.7",
+      "savedPct": "16.2%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD082.webp",
+      "beforeBytes": 18150,
+      "afterBytes": 14372,
+      "beforeKB": "17.7",
+      "afterKB": "14.0",
+      "savedKB": "3.7",
+      "savedPct": "20.8%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD034.webp",
+      "beforeBytes": 20792,
+      "afterBytes": 17176,
+      "beforeKB": "20.3",
+      "afterKB": "16.8",
+      "savedKB": "3.5",
+      "savedPct": "17.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "prod\\PROD031_2.webp",
+      "beforeBytes": 17720,
+      "afterBytes": 14284,
+      "beforeKB": "17.3",
+      "afterKB": "13.9",
+      "savedKB": "3.4",
+      "savedPct": "19.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD004.webp",
+      "beforeBytes": 16750,
+      "afterBytes": 13218,
+      "beforeKB": "16.4",
+      "afterKB": "12.9",
+      "savedKB": "3.4",
+      "savedPct": "21.1%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD009.webp",
+      "beforeBytes": 20712,
+      "afterBytes": 17442,
+      "beforeKB": "20.2",
+      "afterKB": "17.0",
+      "savedKB": "3.2",
+      "savedPct": "15.8%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD075.webp",
+      "beforeBytes": 16562,
+      "afterBytes": 13288,
+      "beforeKB": "16.2",
+      "afterKB": "13.0",
+      "savedKB": "3.2",
+      "savedPct": "19.8%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD032.webp",
+      "beforeBytes": 14318,
+      "afterBytes": 11332,
+      "beforeKB": "14.0",
+      "afterKB": "11.1",
+      "savedKB": "2.9",
+      "savedPct": "20.9%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD042.webp",
+      "beforeBytes": 14806,
+      "afterBytes": 11792,
+      "beforeKB": "14.5",
+      "afterKB": "11.5",
+      "savedKB": "2.9",
+      "savedPct": "20.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD040.webp",
+      "beforeBytes": 15516,
+      "afterBytes": 12628,
+      "beforeKB": "15.2",
+      "afterKB": "12.3",
+      "savedKB": "2.8",
+      "savedPct": "18.6%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD019.webp",
+      "beforeBytes": 13302,
+      "afterBytes": 10942,
+      "beforeKB": "13.0",
+      "afterKB": "10.7",
+      "savedKB": "2.3",
+      "savedPct": "17.7%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD022.webp",
+      "beforeBytes": 13490,
+      "afterBytes": 11128,
+      "beforeKB": "13.2",
+      "afterKB": "10.9",
+      "savedKB": "2.3",
+      "savedPct": "17.5%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD39.webp",
+      "beforeBytes": 13910,
+      "afterBytes": 11560,
+      "beforeKB": "13.6",
+      "afterKB": "11.3",
+      "savedKB": "2.3",
+      "savedPct": "16.9%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD001.webp",
+      "beforeBytes": 12522,
+      "afterBytes": 10242,
+      "beforeKB": "12.2",
+      "afterKB": "10.0",
+      "savedKB": "2.2",
+      "savedPct": "18.2%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD021.webp",
+      "beforeBytes": 14146,
+      "afterBytes": 11884,
+      "beforeKB": "13.8",
+      "afterKB": "11.6",
+      "savedKB": "2.2",
+      "savedPct": "16.0%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD054.webp",
+      "beforeBytes": 13466,
+      "afterBytes": 11310,
+      "beforeKB": "13.2",
+      "afterKB": "11.0",
+      "savedKB": "2.1",
+      "savedPct": "16.0%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD070.webp",
+      "beforeBytes": 7372,
+      "afterBytes": 5576,
+      "beforeKB": "7.2",
+      "afterKB": "5.4",
+      "savedKB": "1.8",
+      "savedPct": "24.4%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD023.webp",
+      "beforeBytes": 8664,
+      "afterBytes": 6958,
+      "beforeKB": "8.5",
+      "afterKB": "6.8",
+      "savedKB": "1.7",
+      "savedPct": "19.7%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD072.webp",
+      "beforeBytes": 6434,
+      "afterBytes": 5130,
+      "beforeKB": "6.3",
+      "afterKB": "5.0",
+      "savedKB": "1.3",
+      "savedPct": "20.3%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    },
+    {
+      "file": "PROD071.webp",
+      "beforeBytes": 6184,
+      "afterBytes": 4948,
+      "beforeKB": "6.0",
+      "afterKB": "4.8",
+      "savedKB": "1.2",
+      "savedPct": "20.0%",
+      "kept": false,
+      "method": "sharp-webp",
+      "hasAlpha": false
+    }
+  ]
+}
