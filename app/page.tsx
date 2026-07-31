@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import PapillonRoseSite from "@/components/papillon-rose-site"
 import { getActiveProductsCount } from "@/data/produits"
 
+export const dynamic = "force-dynamic"
+
 const nbRef = getActiveProductsCount()
 
 export const metadata: Metadata = {

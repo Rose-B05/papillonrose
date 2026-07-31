@@ -18,6 +18,7 @@ import { getRobotsMeta } from "@/lib/site-mode"
 import { getAdminProducts } from "@/lib/db"
 import { prixTtc } from "@/lib/pricing"
 import ProductImage from "@/components/product-image"
+import { isNouveauProduit } from "@/lib/utils"
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
 
@@ -115,6 +116,11 @@ export default async function CategoryPage({ params }: Props) {
                   alt={p.nom}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
+                {isNouveauProduit(p.dateAjout) && (
+                  <span className="absolute top-2.5 left-2.5 bg-emerald-500 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10">
+                    Nouveau
+                  </span>
+                )}
               </div>
               <div className="p-3.5 flex flex-col flex-1">
                 <p className="text-[10px] font-medium text-[#C9948E] dark:text-[#E8B4AE] uppercase tracking-wider truncate">{p.categorie}</p>

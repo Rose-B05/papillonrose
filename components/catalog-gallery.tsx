@@ -8,6 +8,7 @@ import GalleryLightbox from "./gallery-lightbox"
 import { Heart, ShoppingBag } from "lucide-react"
 import { getProductSlug } from "@/lib/product-helpers"
 import { prixTtc } from "@/lib/pricing"
+import { isNouveauProduit } from "@/lib/utils"
 import ProductImage from "@/components/product-image"
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
@@ -71,6 +72,11 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                 {getEffectiveStock(p) === 1 && (
                   <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10">
                     Unique
+                  </span>
+                )}
+                {isNouveauProduit(p.dateAjout) && (
+                  <span className={`absolute left-2.5 bg-emerald-500 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10 ${getEffectiveStock(p) === 1 ? "top-10" : "top-2.5"}`}>
+                    Nouveau
                   </span>
                 )}
                 {(getEffectiveStock(p) === 0 || p.badge === "epuise") && (

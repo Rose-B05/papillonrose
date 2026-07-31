@@ -18,6 +18,7 @@ import { getAdminProducts, getBlockedDatesForProduct } from "@/lib/db"
 import { prixTtc } from "@/lib/pricing"
 import ProductImage from "@/components/product-image"
 import ProductGallery from "./ProductGallery"
+import { isNouveauProduit } from "@/lib/utils"
 import AddToCartButton from "./AddToCartButton"
 import FavoriteButton from "./FavoriteButton"
 
@@ -143,15 +144,20 @@ export default async function ProductPage({ params }: Props) {
             </div>
 
             {/* Badges */}
-            {product.badge && (
-              <div className="mt-3">
+            <div className="mt-3 flex flex-wrap gap-2">
+              {isNouveauProduit(product.dateAjout) && (
+                <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-emerald-100 text-emerald-700">
+                  Nouveau
+                </span>
+              )}
+              {product.badge && (
                 <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
                   product.badge === "stock-limite" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700"
                 }`}>
                   {product.badge === "stock-limite" ? "Stock limité" : "Épuisé"}
                 </span>
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Actions */}
             <div className="mt-6 flex flex-col gap-3">

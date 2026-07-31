@@ -67,6 +67,7 @@ export default function CatalogueClient() {
     dateDebut: "",
     dateFin: "",
     inStockOnly: false,
+    sortBy: "default",
   })
 
   useEffect(() => {
@@ -110,14 +111,15 @@ export default function CatalogueClient() {
       dateDebut: "",
       dateFin: "",
       inStockOnly: false,
+      sortBy: "default",
     })
   }
 
   const VISIBLE_PRODUCTS = useMemo(() => allProducts, [allProducts])
 
   const filtered = useMemo(
-    () =>
-      VISIBLE_PRODUCTS.filter((p) => {
+    () => {
+      const result = VISIBLE_PRODUCTS.filter((p) => {
         if (search) {
           const q = search.toLowerCase()
           if (
@@ -138,7 +140,18 @@ export default function CatalogueClient() {
           if (tagFilters.ambiances.length > 0 && !tagFilters.ambiances.some((a) => tags.ambiances.includes(a))) return false
         }
         return true
-      }),
+      })
+
+      if (tagFilters.sortBy === "newest") {
+        result.sort((a, b) => {
+          const dateA = a.dateAjout ? new Date(a.dateAjout).getTime() : 0
+          const dateB = b.dateAjout ? new Date(b.dateAjout).getTime() : 0
+          return dateB - dateA
+        })
+      }
+
+      return result
+    },
     [search, category, tagFilters, VISIBLE_PRODUCTS]
   )
 
