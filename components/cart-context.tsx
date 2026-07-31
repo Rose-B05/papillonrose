@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react"
+import { createContext, useContext, useState, useCallback, useEffect, useRef, type ReactNode } from "react"
 import type { CartItem } from "@/lib/types"
 import { produits } from "@/data/produits"
 
@@ -23,6 +23,8 @@ const STORAGE_KEY = "papillon-cart"
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
+  const itemsRef = useRef(items)
+  itemsRef.current = items
 
   useEffect(() => {
     try {
@@ -39,7 +41,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const product = produits.find((p) => p.id === item.productId)
     if (!product) return false
 
-    const ex = items.find((i) => matchItem(i, item.productId, item.variantLabel))
+    const currentItems = itemsRef.current
+    const ex = currentItems.find((i) => matchItem(i, item.productId, item.variantLabel))
     const currentQty = ex ? ex.qty : 0
     if (currentQty + item.qty > product.stock) return false
 
@@ -49,7 +52,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return [...prev, item]
     })
     return true
-  }, [items])
+  }, [])
 
   const updateItem = useCallback((productId: number, updates: Partial<CartItem>, variantLabel?: string) => {
     setItems((prev) => prev.map((i) => matchItem(i, productId, variantLabel) ? { ...i, ...updates } : i))
