@@ -1,5 +1,6 @@
 import { kv } from "@vercel/kv"
-import type { Booking, BlockedDate, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView, NewsletterSubscriber, ContactMessage, Nouveaute } from "./types"
+import type { Booking, BlockedDate, BlockEntry, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView, NewsletterSubscriber, ContactMessage, Nouveaute } from "./types"
+import { CART_BLOCK_TTL_MS } from "./types"
 
 // ─── Media Library ───
 export interface MediaItem {
@@ -152,37 +153,67 @@ export async function saveBooking(booking: Booking) {
   }
 }
 
-// ─── Blocked Dates ───
-// Stored as: blocked:product:{productId} = { [date]: bookingId }
+// ─── Blocked Dates (Proportional) ───
+// Stored as: blocked:product:{productId} = { [date]: { [blockId]: BlockEntry } }
+// BlockEntry: { qty, expiresAt, type: "cart" | "booking" }
+
 export async function getBlockedDates(): Promise<BlockedDate[]> {
   const keys = await kv.keys("blocked:product:*")
   if (keys.length === 0) return []
-  const values = await kv.mget<Record<string, string>[]>(...keys)
+  const values = await kv.mget<Record<string, Record<string, BlockEntry>>[]>(...keys)
   const result: BlockedDate[] = []
+  const now = Date.now()
   for (let i = 0; i < keys.length; i++) {
     const m = values[i]
     if (!m) continue
     const productId = Number(keys[i].split(":")[2])
-    for (const [date, bookingId] of Object.entries(m)) {
-      result.push({ productId, date, bookingId })
+    for (const [date, blocks] of Object.entries(m)) {
+      for (const [blockId, entry] of Object.entries(blocks)) {
+        if (entry.expiresAt > now) {
+          result.push({ productId, date, bookingId: blockId })
+        }
+      }
     }
   }
   return result
 }
 
 export async function getBlockedDatesForProduct(productId: number): Promise<string[]> {
-  const map = await kv.get<Record<string, string>>(`blocked:product:${productId}`)
+  const map = await kv.get<Record<string, Record<string, BlockEntry>>>(`blocked:product:${productId}`)
   if (!map) return []
-  return Object.keys(map)
+  const now = Date.now()
+  const dates: string[] = []
+  for (const [date, blocks] of Object.entries(map)) {
+    for (const entry of Object.values(blocks)) {
+      if (entry.expiresAt > now) {
+        dates.push(date)
+        break
+      }
+    }
+  }
+  return dates
+}
+
+export async function getBlockedQtyForProduct(productId: number, date: string): Promise<number> {
+  const map = await kv.get<Record<string, Record<string, BlockEntry>>>(`blocked:product:${productId}`)
+  if (!map || !map[date]) return 0
+  const now = Date.now()
+  let total = 0
+  for (const entry of Object.values(map[date])) {
+    if (entry.expiresAt > now) total += entry.qty
+  }
+  return total
 }
 
 export async function blockDates(productId: number, dates: string[], bookingId: string) {
   const key = `blocked:product:${productId}`
-  const map = (await kv.get<Record<string, string>>(key)) || {}
+  const map = (await kv.get<Record<string, Record<string, BlockEntry>>>(key)) || {}
   let changed = false
+  const entry: BlockEntry = { qty: 1, expiresAt: Infinity, type: "booking" }
   for (const d of dates) {
-    if (!map[d]) {
-      map[d] = bookingId
+    if (!map[d]) map[d] = {}
+    if (!map[d][bookingId]) {
+      map[d][bookingId] = entry
       changed = true
     }
   }
@@ -192,17 +223,92 @@ export async function blockDates(productId: number, dates: string[], bookingId: 
 export async function unblockDates(bookingId: string) {
   const keys = await kv.keys("blocked:product:*")
   for (const key of keys) {
-    const map = await kv.get<Record<string, string>>(key)
+    const map = await kv.get<Record<string, Record<string, BlockEntry>>>(key)
     if (!map) continue
     let changed = false
-    for (const [d, bid] of Object.entries(map)) {
-      if (bid === bookingId) {
-        delete map[d]
+    for (const date of Object.keys(map)) {
+      if (map[date][bookingId]) {
+        delete map[date][bookingId]
+        if (Object.keys(map[date]).length === 0) delete map[date]
         changed = true
       }
     }
     if (changed) await kv.set(key, map)
   }
+}
+
+export async function addCartBlock(productId: number, dates: string[], qty: number, sessionId: string) {
+  const key = `blocked:product:${productId}`
+  const map = (await kv.get<Record<string, Record<string, BlockEntry>>>(key)) || {}
+  const blockId = `cart:${sessionId}`
+  const entry: BlockEntry = { qty, expiresAt: Date.now() + CART_BLOCK_TTL_MS, type: "cart" }
+  let changed = false
+  for (const d of dates) {
+    if (!map[d]) map[d] = {}
+    const existing = map[d][blockId]
+    if (!existing || existing.qty !== qty) {
+      map[d][blockId] = entry
+      changed = true
+    }
+  }
+  if (changed) await kv.set(key, map)
+}
+
+export async function removeCartBlock(productId: number, dates: string[], sessionId: string) {
+  const key = `blocked:product:${productId}`
+  const map = await kv.get<Record<string, Record<string, BlockEntry>>>(key)
+  if (!map) return
+  const blockId = `cart:${sessionId}`
+  let changed = false
+  for (const d of dates) {
+    if (map[d] && map[d][blockId]) {
+      delete map[d][blockId]
+      if (Object.keys(map[d]).length === 0) delete map[d]
+      changed = true
+    }
+  }
+  if (changed) await kv.set(key, map)
+}
+
+export async function removeCartBlockBySession(sessionId: string) {
+  const keys = await kv.keys("blocked:product:*")
+  const blockId = `cart:${sessionId}`
+  for (const key of keys) {
+    const map = await kv.get<Record<string, Record<string, BlockEntry>>>(key)
+    if (!map) continue
+    let changed = false
+    for (const date of Object.keys(map)) {
+      if (map[date][blockId]) {
+        delete map[date][blockId]
+        if (Object.keys(map[date]).length === 0) delete map[date]
+        changed = true
+      }
+    }
+    if (changed) await kv.set(key, map)
+  }
+}
+
+export async function cleanupExpiredBlocks() {
+  const keys = await kv.keys("blocked:product:*")
+  const now = Date.now()
+  let cleaned = 0
+  for (const key of keys) {
+    const map = await kv.get<Record<string, Record<string, BlockEntry>>>(key)
+    if (!map) continue
+    let changed = false
+    for (const date of Object.keys(map)) {
+      for (const [blockId, entry] of Object.entries(map[date])) {
+        if (entry.expiresAt <= now) {
+          delete map[date][blockId]
+          changed = true
+          cleaned++
+        }
+      }
+      if (Object.keys(map[date]).length === 0) delete map[date]
+    }
+    if (changed) await kv.set(key, map)
+  }
+  return cleaned
 }
 
 export async function areDatesAvailable(productId: number, dates: string[]): Promise<boolean> {
@@ -214,17 +320,23 @@ export async function getActiveBlockedProductIds(): Promise<Set<number>> {
   const today = new Date().toISOString().split("T")[0]
   const keys = await kv.keys("blocked:product:*")
   if (keys.length === 0) return new Set()
-  const values = await kv.mget<Record<string, string>[]>(...keys)
+  const values = await kv.mget<Record<string, Record<string, BlockEntry>>[]>(...keys)
   const blocked = new Set<number>()
+  const now = Date.now()
   for (let i = 0; i < keys.length; i++) {
     const map = values[i]
     if (!map) continue
     const productId = Number(keys[i].split(":")[2])
-    for (const date of Object.keys(map)) {
+    for (const [date, blocks] of Object.entries(map)) {
       if (date >= today) {
-        blocked.add(productId)
-        break
+        for (const entry of Object.values(blocks)) {
+          if (entry.expiresAt > now) {
+            blocked.add(productId)
+            break
+          }
+        }
       }
+      if (blocked.has(productId)) break
     }
   }
   return blocked

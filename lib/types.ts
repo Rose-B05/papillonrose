@@ -82,6 +82,15 @@ export interface BlockedDate {
   bookingId: string
 }
 
+export interface BlockEntry {
+  qty: number
+  expiresAt: number
+  type: "cart" | "booking"
+}
+
+export const CART_BLOCK_TTL_MS = 3 * 60 * 60 * 1000
+export const BOOKING_BLOCK_TTL_MS = 48 * 60 * 60 * 1000
+
 export interface PaymentRecord {
   id: string
   bookingId: string

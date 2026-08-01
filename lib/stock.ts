@@ -1,5 +1,5 @@
 import { produits } from "@/data/produits"
-import { getBlockedDates, getStockOverride } from "@/lib/db"
+import { getStockOverride, getBlockedQtyForProduct } from "@/lib/db"
 
 function getDatesBetween(start: string, end: string): string[] {
   const dates: string[] = []
@@ -28,15 +28,11 @@ export async function getAvailableStock(productId: number, dateStart: string, da
   if (!totalStock) return 0
 
   const dates = getDatesBetween(dateStart, dateEnd)
-  const allBlocked = (await getBlockedDates()).filter((b) => b.productId === productId)
-
   let minAvailable = totalStock
 
   for (const date of dates) {
-    const bookingsOnDate = new Set(
-      allBlocked.filter((b) => b.date === date).map((b) => b.bookingId)
-    )
-    const available = totalStock - bookingsOnDate.size
+    const blockedQty = await getBlockedQtyForProduct(productId, date)
+    const available = totalStock - blockedQty
     minAvailable = Math.min(minAvailable, available)
   }
 
