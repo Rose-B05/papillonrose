@@ -29,8 +29,10 @@ export default function Header() {
   const { items: cartItems, itemCount: cartCount } = useCart()
   const [scrolled, setScrolled] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const onScroll = () => setScrolled(window.scrollY > 40)
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
@@ -43,11 +45,12 @@ export default function Header() {
   }, [pathname])
 
   const isActive = (href: string) => {
+    if (!pathname) return false
     if (href === "/") return pathname === "/"
     return pathname.startsWith(href)
   }
 
-  const isHome = pathname === "/"
+  const isHome = mounted ? pathname === "/" : false
   const opaque = isHome ? scrolled : true
 
   return (
