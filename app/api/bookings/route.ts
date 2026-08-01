@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
-import { saveBooking, getBooking, blockDates, getBlockedDates } from "@/lib/db"
+import { saveBooking, getBooking, blockDates } from "@/lib/db"
 import { calcTotalHt, calcTtc, calcDeposit, DEPOSIT_RATE } from "@/lib/utils"
 import { calcDeliveryFee } from "@/lib/delivery"
 import { createPaymentIntent } from "@/lib/stripe"
@@ -88,15 +88,24 @@ export async function POST(request: NextRequest) {
 
     const finalItems = validatedItems
 
-    // Verify dates not blocked
-    const blockedAll = await getBlockedDates()
+    // Verify availability with proportional stock check
     for (const item of finalItems) {
-      const dates = getDatesBetween(item.dateStart, item.dateEnd)
-      const blocked = blockedAll.filter((b) => b.productId === item.productId)
-      const conflict = dates.some((d) => blocked.some((b) => b.date === d))
-      if (conflict) {
-        const product = produits.find((p) => p.id === item.productId)
-        return NextResponse.json({ error: `Dates non disponibles pour ${product?.nom}` }, { status: 409 })
+      if (item.dateStart && item.dateEnd) {
+        const available = await getAvailableStock(item.productId, item.dateStart, item.dateEnd)
+        if (available <= 0) {
+          const product = produits.find((p) => p.id === item.productId)
+          return NextResponse.json(
+            { error: `Aucune disponibilité pour ${product.nom} sur la période ${item.dateStart} → ${item.dateEnd}` },
+            { status: 409 }
+          )
+        }
+        if (item.qty > available) {
+          const product = produits.find((p) => p.id === item.productId)
+          return NextResponse.json(
+            { error: `Stock insuffisant pour ${product.nom} : demandé ${item.qty}, disponible ${available} sur cette période` },
+            { status: 409 }
+          )
+        }
       }
     }
 
