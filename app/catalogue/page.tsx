@@ -22,10 +22,14 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default function CataloguePage() {
+export default function CataloguePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>
+}) {
   return (
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900">
-      <CatalogueClient />
+      <CatalogueClient initialCategory={searchParams.category} />
     </div>
   )
 }

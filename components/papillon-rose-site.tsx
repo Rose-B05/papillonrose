@@ -667,10 +667,11 @@ export default function PapillonRoseSite() {
     window.scrollTo(0, 0)
   }
   const goToCatalogue = (cat?: string) => {
-    setPage("catalogue")
-    setShowMenu(false)
-    if (cat) setCategory(cat)
-    window.scrollTo(0, 0)
+    if (cat) {
+      window.location.href = "/catalogue?category=" + encodeURIComponent(cat)
+    } else {
+      window.location.href = "/catalogue"
+    }
   }
   const resetFilters = () => {
     setSearch("")
