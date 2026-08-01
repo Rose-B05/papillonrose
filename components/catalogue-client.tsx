@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect } from "react"
 import { Search, Loader2 } from "lucide-react"
-import { type Produit } from "@/data/produits"
+import { type Produit, hasRealPhoto } from "@/data/produits"
 import { useCart } from "@/components/cart-context"
 import { useFavorites } from "@/components/favorites-context"
 import CatalogGallery from "@/components/catalog-gallery"
@@ -75,7 +75,9 @@ export default function CatalogueClient() {
       .then((res) => res.json())
       .then((data) => {
         if (data.products) {
-          setAllProducts(data.products)
+          setAllProducts(
+            data.products.filter((p: Produit) => hasRealPhoto(p) && p.actif !== false)
+          )
         }
       })
       .catch(() => {})
