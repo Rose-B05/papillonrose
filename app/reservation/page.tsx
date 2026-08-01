@@ -6,6 +6,7 @@ import { useCart } from "@/components/cart-context"
 import { produits } from "@/data/produits"
 import AvailabilityCalendar from "@/components/calendar"
 import { parsePrix, calcTotalHt, calcTtc, calcDeposit, formatDateFr, getPrixForProduct, TVA_RATE } from "@/lib/utils"
+import { isMontantMinimumAtteint, getMontantManquant, getModeReglement, calculerAcompte, isLivraisonDisponible, MONTANT_MINIMUM, SEUIL_LIVRAISON } from "@/lib/pricing"
 import { calcRentalDates, calculateLateFee, getRuleSummary, formatDateLong, type RentalDates } from "@/lib/rental-dates"
 import { calcDeliveryFee, type DeliveryResult } from "@/lib/delivery"
 import { ShoppingBag, ArrowRight, ArrowLeft, Check, X, Trash2, Plus, Minus, Loader2, Package, RotateCcw, AlertTriangle, Truck, LogIn, UserPlus } from "lucide-react"
@@ -158,6 +159,14 @@ export default function ReservationPage() {
       }
     }
   }, [availableStock])
+
+  // Force desactiver livraison si total < 50€
+  useEffect(() => {
+    if (totalTtc < SEUIL_LIVRAISON && client.besoinLivraison) {
+      setClient((c) => ({ ...c, besoinLivraison: false }))
+      setDeliveryResult(null)
+    }
+  }, [totalTtc, client.besoinLivraison])
 
   // Recalcul des frais de livraison quand le code postal change
   useEffect(() => {
@@ -398,9 +407,27 @@ export default function ReservationPage() {
 
                 <Totals totalHt={totalHt} totalTtc={totalTtc} deposit={deposit} deliveryFee={deliveryFee} />
 
+                {!isMontantMinimumAtteint(totalTtc) && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-2xl px-5 py-4 mb-4">
+                    <p className="text-sm text-amber-700 font-medium mb-1">
+                      Il vous manque encore <strong>{getMontantManquant(totalTtc).toFixed(2)} €</strong> pour atteindre le montant minimum de commande ({MONTANT_MINIMUM} €).
+                    </p>
+                    <p className="text-xs text-amber-600">
+                      Ajoutez un article supplémentaire pour continuer votre réservation !
+                    </p>
+                    <a href="/catalogue" className="inline-block mt-2 text-xs font-medium text-[#C9948E] hover:underline">
+                      Voir le catalogue →
+                    </a>
+                  </div>
+                )}
+
                 <div className="flex gap-3">
                   <button onClick={clearCart} className="flex-1 border border-[#C9948E] text-gray-500 dark:text-white/60 py-3 rounded-2xl text-sm font-medium hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition-colors">Vider le panier</button>
-                  <button onClick={() => setStep("dates")} className="flex-1 bg-[#C9948E] dark:bg-[#C9948E] text-white py-3 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => setStep("dates")}
+                    disabled={!isMontantMinimumAtteint(totalTtc)}
+                    className="flex-1 bg-[#C9948E] dark:bg-[#C9948E] text-white py-3 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
                     Choisir les dates <ArrowRight size={14} />
                   </button>
                 </div>
@@ -525,29 +552,31 @@ export default function ReservationPage() {
                   </label>
                 </div>
 
-                {/* Option livraison */}
-                <div className="flex items-center gap-3 bg-white dark:bg-neutral-800 rounded-2xl px-4 sm:px-5 py-3.5 sm:py-4 border border-black/[0.07] dark:border-white/[0.08] shadow-sm">
-                  <div
-                    className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer"
-                    style={{
-                      borderColor: client.besoinLivraison ? "#C9948E" : "#d1d5db",
-                      backgroundColor: client.besoinLivraison ? "#C9948E" : "transparent",
-                      borderRadius: "6px",
-                    }}
-                    onClick={() => setClient((c) => ({ ...c, besoinLivraison: true }))}
-                  >
-                    {client.besoinLivraison && (
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    )}
-                    <input type="radio" checked={client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
+                {/* Option livraison — uniquement si total >= 50€ */}
+                {isLivraisonDisponible(totalTtc) && (
+                  <div className="flex items-center gap-3 bg-white dark:bg-neutral-800 rounded-2xl px-4 sm:px-5 py-3.5 sm:py-4 border border-black/[0.07] dark:border-white/[0.08] shadow-sm">
+                    <div
+                      className="relative w-5 h-5 flex-shrink-0 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer"
+                      style={{
+                        borderColor: client.besoinLivraison ? "#C9948E" : "#d1d5db",
+                        backgroundColor: client.besoinLivraison ? "#C9948E" : "transparent",
+                        borderRadius: "6px",
+                      }}
+                      onClick={() => setClient((c) => ({ ...c, besoinLivraison: true }))}
+                    >
+                      {client.besoinLivraison && (
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
+                      <input type="radio" checked={client.besoinLivraison} onChange={() => {}} className="absolute inset-0 opacity-0 cursor-pointer" />
+                    </div>
+                    <label className="text-sm text-[#2E2E2E] dark:text-neutral-100 cursor-pointer flex items-center gap-2 min-w-0">
+                      <Truck size={16} className="text-[#C9948E] dark:text-[#E8B4AE] flex-shrink-0" />
+                      <span>Livraison</span>
+                    </label>
                   </div>
-                  <label className="text-sm text-[#2E2E2E] dark:text-neutral-100 cursor-pointer flex items-center gap-2 min-w-0">
-                    <Truck size={16} className="text-[#C9948E] dark:text-[#E8B4AE] flex-shrink-0" />
-                    <span>Livraison</span>
-                  </label>
-                </div>
+                )}
 
                 {totalTtc >= 150 && client.besoinLivraison && (
                   <div className="bg-green-50 border border-green-200 rounded-xl p-3 text-sm text-green-700 flex items-center gap-2">
@@ -648,9 +677,27 @@ export default function ReservationPage() {
                     </div>
                   )
                 })}
-                <div className="border-t border-black/[0.1] mt-3 pt-3 flex justify-between font-bold">
-                  <span className="text-[#666]">Acompte 30%</span>
-                  <span className="text-[#C9948E] dark:text-[#E8B4AE]">{Number.isFinite(deposit) ? `${deposit.toFixed(2)} €` : "0,00 €"}</span>
+                <div className="border-t border-black/[0.1] mt-3 pt-3">
+                  <div className="flex justify-between font-bold">
+                    <span className="text-[#666]">Total TTC</span>
+                    <span className="text-[#2E2E2E] dark:text-neutral-100">{fmt(totalTtcWithDelivery)}</span>
+                  </div>
+                  {getModeReglement(totalTtc) === "acompte-30" ? (
+                    <div className="mt-2 space-y-1">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-[#666]">Acompte 30% (à payer en ligne)</span>
+                        <span className="font-semibold text-[#C9948E]">{deposit.toFixed(2)} €</span>
+                      </div>
+                      <div className="flex justify-between text-xs text-gray-400">
+                        <span>Solde restant (à régler au retrait/livraison)</span>
+                        <span>{(totalTtcWithDelivery - deposit).toFixed(2)} €</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-2">
+                      <p className="text-xs text-[#C9948E] font-medium">Paiement intégral à régler sur place lors du retrait du matériel</p>
+                    </div>
+                  )}
                 </div>
                 {client.besoinLivraison && deliveryFee > 0 && (
                   <div className="flex justify-between text-xs text-[#C9948E] dark:text-[#E8B4AE] mt-1">
@@ -1038,6 +1085,7 @@ function fmt(n: number) {
 }
 
 function Totals({ totalHt, totalTtc, deposit, deliveryFee }: { totalHt: number; totalTtc: number; deposit: number; deliveryFee?: number }) {
+  const mode = getModeReglement(totalTtc)
   return (
     <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 shadow-sm border border-black/[0.07] dark:border-white/[0.08] mb-6">
       {typeof deliveryFee === "number" && deliveryFee > 0 && (
@@ -1052,10 +1100,14 @@ function Totals({ totalHt, totalTtc, deposit, deliveryFee }: { totalHt: number; 
         <span>Total TTC</span>
         <span>{typeof deliveryFee === "number" && deliveryFee > 0 ? fmt(totalTtc + deliveryFee) : fmt(totalTtc)}</span>
       </div>
-      <div className="flex justify-between text-sm mt-1 text-[#C9948E] dark:text-[#E8B4AE]">
-        <span>Acompte 30%</span>
-        <span className="font-semibold">{fmt(deposit)}</span>
-      </div>
+      {mode === "acompte-30" ? (
+        <div className="flex justify-between text-sm mt-1 text-[#C9948E] dark:text-[#E8B4AE]">
+          <span>Acompte 30%</span>
+          <span className="font-semibold">{fmt(deposit)}</span>
+        </div>
+      ) : (
+        <p className="text-xs text-[#C9948E] dark:text-[#E8B4AE] mt-1">Paiement intégral au retrait</p>
+      )}
     </div>
   )
 }
