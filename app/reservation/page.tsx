@@ -837,7 +837,9 @@ export default function ReservationPage() {
         {step === "compte" && (
           <div>
             <BackButton onClick={() => { setStep("client"); setBookingAttempted(false); setError("") }} label="Retour aux informations" />
-            <h2 style={DP} className="text-xl sm:text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-6">Créez votre compte</h2>
+            <h2 style={DP} className="text-xl sm:text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-6">
+              {alreadyConnected === true ? "Finalisation de votre devis" : "Créez votre compte"}
+            </h2>
 
             {alreadyConnected === null ? (
               <div className="text-center py-12">
