@@ -9,9 +9,10 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.f
 const QUOTE_EXPIRY_DAYS = Number(process.env.QUOTE_EXPIRY_DAYS) || 15
 const REMINDER_BEFORE_DAYS = Number(process.env.QUOTE_REMINDER_BEFORE_DAYS) || 2
 
-// ─── Booking config (48h from quoteSentAt) ──────────────────────────────────
+// ─── Booking config (48h from quoteSentAt / 1h deposit-pending) ──────────────
 const BOOKING_QUOTE_VALIDITY_HOURS = 48
 const BOOKING_REMINDER_WINDOW_HOURS = 3
+const DEPOSIT_PENDING_EXPIRY_HOURS = 60
 
 // ─── Shared helpers ─────────────────────────────────────────────────────────
 
@@ -73,6 +74,31 @@ export async function processBookingExpiry(): Promise<{
   let expired = 0
 
   for (const booking of bookings) {
+    // ─── deposit-pending: expire after 1 hour without payment ───
+    if (booking.status === "deposit-pending") {
+      const hoursElapsed = hoursSince(booking.createdAt)
+      if (hoursElapsed >= DEPOSIT_PENDING_EXPIRY_HOURS) {
+        try {
+          booking.status = "expired"
+          booking.updatedAt = new Date().toISOString()
+          await saveBooking(booking)
+          await unblockDates(booking.id)
+
+          await logActivity({
+            type: "booking_expired",
+            description: `Réservation #${booking.id} expirée automatiquement (paiement non reçu après ${DEPOSIT_PENDING_EXPIRY_HOURS}h). Dates libérées.`,
+            reference: booking.id,
+          })
+
+          expired++
+          details.push({ quoteNumber: booking.id, client: `${booking.client.prenom} ${booking.client.nom}`, hoursRemaining: 0, action: "expired" })
+        } catch (err: any) {
+          errors.push(`Erreur expiration réservation #${booking.id}: ${err.message}`)
+        }
+      }
+      continue
+    }
+
     if (booking.status !== "quote-sent") continue
     if (!booking.quoteSentAt) continue
 
