@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
 import { saveBooking, getBooking, blockDates } from "@/lib/db"
 import { calcTotalHt, calcTtc, calcDeposit, DEPOSIT_RATE } from "@/lib/utils"
+import { SEUIL_LIVRAISON } from "@/lib/pricing"
 import { calcDeliveryFee } from "@/lib/delivery"
 import { createPaymentIntent } from "@/lib/stripe"
 import { getAvailableStock } from "@/lib/stock"
@@ -84,7 +85,8 @@ export async function POST(request: NextRequest) {
     }
 
     const totalTtcWithDelivery = Math.round((totalTtc + deliveryFee) * 100) / 100
-    const depositAmount = calcDeposit(totalTtcWithDelivery)
+    const needsDeposit = totalTtcWithDelivery >= SEUIL_LIVRAISON
+    const depositAmount = needsDeposit ? calcDeposit(totalTtcWithDelivery) : 0
 
     const booking: Booking = {
       id: uuidv4().slice(0, 8).toUpperCase(),
@@ -94,13 +96,13 @@ export async function POST(request: NextRequest) {
       totalHt,
       totalTtc: totalTtcWithDelivery,
       depositAmount,
-      status: client ? "deposit-pending" : "pending-quote",
+      status: needsDeposit ? "deposit-pending" : "pending-quote",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     }
 
-    // Parallel: save booking + create payment intent
-    const paymentPromise = client ? createPaymentIntent(depositAmount, booking.id) : null
+    // Payment intent only if deposit required (>= 50€)
+    const paymentPromise = needsDeposit && client ? createPaymentIntent(depositAmount, booking.id) : null
     await saveBooking(booking)
 
     // Parallel: block dates for all items
