@@ -50,11 +50,11 @@ function CategoryPills({
   )
 }
 
-export default function CatalogueClient() {
+export default function CatalogueClient({ initialCategory }: { initialCategory?: string }) {
   const { items: cartItems, addItem: addCartItem } = useCart()
   const { favorites, toggleFavorite } = useFavorites()
   const [search, setSearch] = useState("")
-  const [category, setCategory] = useState("Tous")
+  const [category, setCategory] = useState(initialCategory || "Tous")
   const [modalProduct, setModalProduct] = useState<Produit | null>(null)
   const [allProducts, setAllProducts] = useState<Produit[]>([])
   const [loading, setLoading] = useState(true)
