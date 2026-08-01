@@ -10,6 +10,7 @@ import QuoteCountdown from "@/components/QuoteCountdown"
 const STATUT_LABELS: Record<string, string> = {
   "pending-quote": "En attente de devis",
   "quote-sent": "Devis envoyé",
+  signed: "Devis signé",
   "deposit-pending": "En attente de paiement",
   confirmed: "Confirmée",
   cancelled: "Annulée",
@@ -20,6 +21,7 @@ const STATUT_LABELS: Record<string, string> = {
 const STATUT_COLORS: Record<string, string> = {
   "pending-quote": "bg-gray-100 text-gray-600",
   "quote-sent": "bg-purple-50 text-purple-700",
+  signed: "bg-blue-50 text-blue-700",
   "deposit-pending": "bg-amber-50 text-amber-700",
   confirmed: "bg-green-50 text-green-700",
   cancelled: "bg-red-50 text-red-700",
@@ -64,6 +66,11 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
   const [error, setError] = useState("")
   const [cancelling, setCancelling] = useState(false)
   const [cancelMsg, setCancelMsg] = useState("")
+  const [signing, setSigning] = useState(false)
+  const [signError, setSignError] = useState("")
+  const [signSuccess, setSignSuccess] = useState("")
+  const [acceptChecked, setAcceptChecked] = useState(false)
+  const [signatureName, setSignatureName] = useState("")
 
   useEffect(() => {
     fetch(`/api/customer/bookings/${id}`)
@@ -98,6 +105,33 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
       setCancelMsg("Erreur de connexion")
     }
     setCancelling(false)
+  }
+
+  async function handleSign() {
+    if (!acceptChecked || !signatureName.trim()) {
+      setSignError("Veuillez remplir votre nom et accepter les conditions.")
+      return
+    }
+    setSigning(true)
+    setSignError("")
+    try {
+      const signaturePayload = `SIGNED:${signatureName.trim()}:${new Date().toISOString()}`
+      const res = await fetch(`/api/customer/quotes/${id}/sign`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ signature: signaturePayload, signerName: signatureName.trim() }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setQuote((prev) => prev ? { ...prev, status: "signed", signature: data.booking.signature } : prev)
+        setSignSuccess("Votre devis a été signé avec succès. Un admin va finaliser votre réservation.")
+      } else {
+        setSignError(data.error || "Erreur lors de la signature")
+      }
+    } catch {
+      setSignError("Erreur de connexion")
+    }
+    setSigning(false)
   }
 
   if (loading) {
@@ -234,6 +268,99 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
               {quote.balancePaidAt && (
                 <p className="text-green-600 dark:text-green-400 mt-1">Soldé le {formatDateFr(quote.balancePaidAt)}</p>
               )}
+            </div>
+          )}
+
+          {/* Signature section */}
+          {quote.status === "quote-sent" && (
+            <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
+              {signSuccess ? (
+                <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                  <p className="text-blue-700 dark:text-blue-300 font-medium text-sm">{signSuccess}</p>
+                  {quote.signature && (
+                    <p className="text-blue-600 dark:text-blue-400 text-xs mt-2">
+                      Signé le {formatDateFr(quote.signature.signedAt)}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="p-4 bg-[#F8F5F0] dark:bg-neutral-900/60 rounded-xl">
+                    <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">
+                      Récapitulatif avant signature
+                    </h3>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Total TTC</span>
+                        <span className="font-semibold text-[#2E2E2E] dark:text-neutral-100">{quote.totalTtc.toFixed(2)} €</span>
+                      </div>
+                      {quote.depositAmount > 0 && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Acompte à verser (30%)</span>
+                          <span className="font-semibold text-[#C9948E]">{quote.depositAmount.toFixed(2)} €</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-[#F8F5F0] dark:bg-neutral-900/60 rounded-xl space-y-3">
+                    <p className="text-sm text-gray-500 dark:text-white/60">
+                      En signant ce devis, vous confirmez avoir lu et accepté les conditions de location.
+                    </p>
+
+                    <div>
+                      <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">
+                        Nom complet (signature électronique)
+                      </label>
+                      <input
+                        type="text"
+                        value={signatureName}
+                        onChange={(e) => setSignatureName(e.target.value)}
+                        placeholder={`${quote.client.prenom} ${quote.client.nom}`}
+                        className="w-full px-3 py-2 rounded-lg border border-black/[0.1] dark:border-white/[0.15] bg-white dark:bg-neutral-800 text-sm text-[#2E2E2E] dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50"
+                      />
+                    </div>
+
+                    <label className="flex items-start gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={acceptChecked}
+                        onChange={(e) => setAcceptChecked(e.target.checked)}
+                        className="mt-0.5 rounded border-gray-300 text-[#C9948E] focus:ring-[#C9948E]"
+                      />
+                      <span className="text-sm text-gray-500 dark:text-white/60">
+                        Je certifie avoir lu les conditions de location et j&apos;accepte ce devis.
+                      </span>
+                    </label>
+
+                    {signError && (
+                      <p className="text-sm text-red-600 bg-red-50 dark:bg-red-900/20 px-3 py-2 rounded-lg">{signError}</p>
+                    )}
+
+                    <button
+                      onClick={handleSign}
+                      disabled={signing || !acceptChecked || !signatureName.trim()}
+                      className="w-full px-4 py-2.5 bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B9807A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {signing ? "Signature en cours…" : "Signer et valider mon devis"}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Signed info */}
+          {quote.status === "signed" && quote.signature && (
+            <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
+              <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                <p className="text-blue-700 dark:text-blue-300 font-medium text-sm">
+                  Devis signé électroniquement
+                </p>
+                <p className="text-blue-600 dark:text-blue-400 text-xs mt-1">
+                  Signé par {quote.signature.signerName} le {formatDateFr(quote.signature.signedAt)}
+                </p>
+              </div>
             </div>
           )}
 

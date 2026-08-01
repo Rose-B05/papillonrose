@@ -316,9 +316,23 @@ export function devisPdfTemplate(booking: Booking) {
             <Text style={styles.thanksSub}>Cordialement,{"\n"}Rose — {COMPANY.name}</Text>
           </View>
           <View style={styles.signatureBox}>
-            <Text style={styles.signatureBoxLabel}>Bon pour accord</Text>
-            <Text style={styles.sigDateLine}>Date :</Text>
-            <Text style={styles.sigSignLine}>Signature :</Text>
+            {booking.signature ? (
+              <>
+                <Text style={styles.signatureBoxLabel}>Bon pour accord — Signé électroniquement</Text>
+                <Text style={styles.sigDateLine}>
+                  Signé par {booking.signature.signerName}
+                </Text>
+                <Text style={styles.sigSignLine}>
+                  le {formatDateShort(booking.signature.signedAt)}
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text style={styles.signatureBoxLabel}>Bon pour accord</Text>
+                <Text style={styles.sigDateLine}>Date :</Text>
+                <Text style={styles.sigSignLine}>Signature :</Text>
+              </>
+            )}
           </View>
         </View>
 

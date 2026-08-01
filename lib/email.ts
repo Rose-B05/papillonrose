@@ -303,3 +303,29 @@ export async function sendAdminCancellationNotification(quoteNumber: string, cli
     text: `Le devis n°${quoteNumber} de ${clientName} a été annulé par le client.${depositNote}`,
   })
 }
+
+export async function sendQuoteSignedConfirmation(to: string, quoteNumber: string, clientName: string) {
+  const transport = getTransport()
+  await transport.sendMail({
+    from: `"Papillon Rose" <${FROM}>`,
+    to,
+    subject: `Devis n°${quoteNumber} signé ✓ — Papillon Rose`,
+    html: `<div style="font-family:sans-serif;max-width:600px;margin:auto">
+      <h2 style="color:#C9948E">Devis signé avec succès</h2>
+      <p>Bonjour ${clientName},</p>
+      <p>Votre devis <strong>n°${quoteNumber}</strong> a bien été signé électroniquement.</p>
+      <p>Un admin va finaliser votre réservation et vous envoyer les prochaines instructions concernant le paiement de l'acompte.</p>
+      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+    </div>`,
+  })
+}
+
+export async function sendAdminQuoteSignedNotification(quoteNumber: string, clientName: string, depositAmount: number) {
+  const transport = getTransport()
+  await transport.sendMail({
+    from: `"Papillon Rose" <${FROM}>`,
+    to: TO,
+    subject: `✍️ Devis n°${quoteNumber} signé par ${clientName}`,
+    text: `Le devis n°${quoteNumber} a été signé électroniquement par ${clientName}. Acompte à verser : ${depositAmount.toFixed(2)} €. Finalisez la réservation depuis l'admin.`,
+  })
+}

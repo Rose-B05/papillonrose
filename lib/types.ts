@@ -34,7 +34,7 @@ export interface Booking {
   totalHt: number
   totalTtc: number
   depositAmount: number
-  status: "pending-quote" | "quote-sent" | "deposit-pending" | "confirmed" | "cancelled" | "returned" | "expired"
+  status: "pending-quote" | "quote-sent" | "signed" | "deposit-pending" | "confirmed" | "cancelled" | "returned" | "expired"
   quoteNumber?: string
   createdAt: string
   updatedAt: string
@@ -44,6 +44,12 @@ export interface Booking {
   depositPaidAt?: string
   balancePaidAt?: string
   returnedAt?: string
+  signature?: {
+    data: string
+    signedAt: string
+    signerName: string
+    ipAddress?: string
+  }
 }
 
 export interface ClientInfo {
