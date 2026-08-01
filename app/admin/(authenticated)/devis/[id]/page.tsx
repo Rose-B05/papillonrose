@@ -226,6 +226,24 @@ export default function DevisDetailPage() {
           </div>
         </div>
 
+        {booking.signature && (
+          <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
+            <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Signature électronique</h3>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+              <span className="text-gray-400">Signataire</span>
+              <span className="text-[#2E2E2E] dark:text-neutral-100">{booking.signature.signerName}</span>
+              <span className="text-gray-400">Date de signature</span>
+              <span className="text-[#2E2E2E] dark:text-neutral-100">{formatDate(booking.signature.signedAt)}</span>
+              {booking.signature.ipAddress && (
+                <>
+                  <span className="text-gray-400">Adresse IP</span>
+                  <span className="text-[#2E2E2E] dark:text-neutral-100">{booking.signature.ipAddress}</span>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
           <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Articles ({booking.items.length})</h3>
           <div className="overflow-x-auto">
@@ -292,7 +310,7 @@ export default function DevisDetailPage() {
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
           <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Changer le statut</h3>
           <div className="flex flex-wrap gap-2">
-            {(["pending-quote", "quote-sent", "deposit-pending", "confirmed", "cancelled", "returned"] as const).map((s) => (
+            {(["pending-quote", "quote-sent", "signed", "deposit-pending", "confirmed", "cancelled", "returned"] as const).map((s) => (
               <button
                 key={s}
                 onClick={() => handleStatusChange(s)}
@@ -303,7 +321,7 @@ export default function DevisDetailPage() {
                     : "bg-gray-100 dark:bg-neutral-700 text-gray-500 dark:text-white/60 hover:bg-gray-200 dark:hover:bg-neutral-600"
                 }`}
               >
-                {s === "pending-quote" ? "En attente" : s === "quote-sent" ? "Devis envoyé" : s === "deposit-pending" ? "Acompte en attente" : s === "confirmed" ? "Confirmée" : s === "cancelled" ? "Annulée" : "Restituée"}
+                {s === "pending-quote" ? "En attente" : s === "quote-sent" ? "Devis envoyé" : s === "signed" ? "Signé" : s === "deposit-pending" ? "Acompte en attente" : s === "confirmed" ? "Confirmée" : s === "cancelled" ? "Annulée" : "Restituée"}
               </button>
             ))}
           </div>
