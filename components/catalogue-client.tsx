@@ -71,7 +71,7 @@ export default function CatalogueClient() {
   })
 
   useEffect(() => {
-    fetch("/api/products")
+    fetch("/api/products", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.products) {

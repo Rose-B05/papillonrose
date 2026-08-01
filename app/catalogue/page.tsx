@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import { getRobotsMeta } from "@/lib/site-mode"
 import CatalogueClient from "@/components/catalogue-client"
 
+export const dynamic = "force-dynamic"
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
 
 export async function generateMetadata(): Promise<Metadata> {
