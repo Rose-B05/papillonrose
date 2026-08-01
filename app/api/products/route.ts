@@ -3,6 +3,7 @@ import { produits, type Produit } from "@/data/produits"
 import { getAdminProducts, type AdminProduct } from "@/lib/db"
 
 export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
 
 function adminToProduit(admin: AdminProduct): Produit {
   return {
@@ -52,11 +53,24 @@ export async function GET() {
       }
     }
 
-    return NextResponse.json({ products: merged })
+    return NextResponse.json({ products: merged }, {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
+      },
+    })
   } catch (error) {
     console.error("Erreur /api/products:", error)
     return NextResponse.json(
-      { products: produits.filter((p) => p.actif !== false) }
+      { products: produits.filter((p) => p.actif !== false) },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          "Pragma": "no-cache",
+          "Expires": "0",
+        },
+      }
     )
   }
 }
