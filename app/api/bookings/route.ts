@@ -31,12 +31,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Panier vide" }, { status: 400 })
     }
 
-    // Limit cart size
     if (items.length > 50) {
       return NextResponse.json({ error: "Panier trop volumineux (max 50 articles)" }, { status: 400 })
     }
 
-    // Validate each item
     for (const item of items) {
       if (!item.productId || typeof item.productId !== "number") {
         return NextResponse.json({ error: "ID produit invalide" }, { status: 400 })
@@ -49,81 +47,40 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Verify product exists & enforce stock limits per date range
-    const validatedItems: CartItem[] = []
-
-    for (const item of items) {
-      const product = produits.find((p) => p.id === item.productId)
-      if (!product) return NextResponse.json({ error: `Produit ${item.productId} introuvable` }, { status: 400 })
-
-      if (product.badge === "epuise") {
-        return NextResponse.json({ error: `${product.nom} n'est plus disponible` }, { status: 400 })
-      }
-
-      if (item.dateStart && item.dateEnd) {
-        const available = await getAvailableStock(item.productId, item.dateStart, item.dateEnd)
-        if (available <= 0) {
-          return NextResponse.json(
-            { error: `Aucune disponibilité pour ${product.nom} sur la période ${item.dateStart} → ${item.dateEnd}` },
-            { status: 409 }
-          )
+    // Parallel stock check for all items
+    const stockResults = await Promise.all(
+      items.map(async (item) => {
+        const product = produits.find((p) => p.id === item.productId)
+        if (!product) return { error: `Produit ${item.productId} introuvable` }
+        if (product.badge === "epuise") return { error: `${product.nom} n'est plus disponible` }
+        if (item.dateStart && item.dateEnd) {
+          const available = await getAvailableStock(item.productId, item.dateStart, item.dateEnd)
+          if (available <= 0) return { error: `Aucune disponibilité pour ${product.nom} sur la période ${item.dateStart} → ${item.dateEnd}` }
+          if (item.qty > available) return { error: `Stock insuffisant pour ${product.nom} : demandé ${item.qty}, disponible ${available}` }
+        } else {
+          if (product.stock < item.qty) return { error: `Stock insuffisant pour ${product.nom} : demandé ${item.qty}, stock maximum ${product.stock}` }
         }
-        if (item.qty > available) {
-          return NextResponse.json(
-            { error: `Stock insuffisant pour ${product.nom} : demandé ${item.qty}, disponible ${available} sur cette période` },
-            { status: 409 }
-          )
-        }
-        validatedItems.push(item)
-      } else {
-        if (product.stock < item.qty) {
-          return NextResponse.json(
-            { error: `Stock insuffisant pour ${product.nom} : demandé ${item.qty}, stock maximum ${product.stock}` },
-            { status: 409 }
-          )
-        }
-        validatedItems.push(item)
-      }
-    }
+        return { ok: true, item, product }
+      })
+    )
 
-    const finalItems = validatedItems
+    const firstError = stockResults.find((r) => "error" in r)
+    if (firstError) return NextResponse.json({ error: (firstError as any).error }, { status: 409 })
 
-    // Verify availability with proportional stock check
-    for (const item of finalItems) {
-      if (item.dateStart && item.dateEnd) {
-        const available = await getAvailableStock(item.productId, item.dateStart, item.dateEnd)
-        if (available <= 0) {
-          const product = produits.find((p) => p.id === item.productId)
-          return NextResponse.json(
-            { error: `Aucune disponibilité pour ${product.nom} sur la période ${item.dateStart} → ${item.dateEnd}` },
-            { status: 409 }
-          )
-        }
-        if (item.qty > available) {
-          const product = produits.find((p) => p.id === item.productId)
-          return NextResponse.json(
-            { error: `Stock insuffisant pour ${product.nom} : demandé ${item.qty}, disponible ${available} sur cette période` },
-            { status: 409 }
-          )
-        }
-      }
-    }
+    const finalItems = stockResults.map((r) => (r as any).item)
 
     const itemsWithPrix = finalItems.map((item) => {
-      const p = produits.find((p) => p.id === item.productId)!
+      const p = produits.find((pp) => pp.id === item.productId)!
       return { ...item, prix: p.prix }
     })
 
     const totalHt = calcTotalHt(itemsWithPrix)
     const totalTtc = calcTtc(totalHt)
 
-    // Calcul des frais de livraison si applicable
     let deliveryFee = 0
     if (client?.besoinLivraison && client?.codePostalLivraison) {
       const deliveryResult = calcDeliveryFee(client.codePostalLivraison, totalTtc)
-      if (deliveryResult.allowed) {
-        deliveryFee = deliveryResult.totalFee
-      }
+      if (deliveryResult.allowed) deliveryFee = deliveryResult.totalFee
     }
 
     const totalTtcWithDelivery = Math.round((totalTtc + deliveryFee) * 100) / 100
@@ -142,33 +99,33 @@ export async function POST(request: NextRequest) {
       updatedAt: new Date().toISOString(),
     }
 
+    // Parallel: save booking + create payment intent
+    const paymentPromise = client ? createPaymentIntent(depositAmount, booking.id) : null
     await saveBooking(booking)
 
-    // Block dates temporarily (pending payment)
-    for (const item of finalItems) {
-      const dates = getDatesBetween(item.dateStart, item.dateEnd)
-      await blockDates(item.productId, dates, booking.id)
-    }
+    // Parallel: block dates for all items
+    await Promise.all(
+      finalItems.map((item) => {
+        const dates = getDatesBetween(item.dateStart, item.dateEnd)
+        return blockDates(item.productId, dates, booking.id)
+      })
+    )
 
     let paymentIntent = null
-    if (client) {
-      paymentIntent = await createPaymentIntent(depositAmount, booking.id)
+    if (paymentPromise) {
+      paymentIntent = await paymentPromise
       booking.paymentIntentId = paymentIntent.id
       await saveBooking(booking)
     }
 
-    // Send confirmation email (admin + client)
-    let emailStatus = null
-    try {
-      emailStatus = await sendBookingConfirmation(booking)
-    } catch (err) {
+    // Email: fire-and-forget (don't block response)
+    sendBookingConfirmation(booking).catch((err) =>
       console.error("Booking confirmation email error:", err)
-    }
+    )
 
     return NextResponse.json({
       booking,
       paymentIntent: paymentIntent ? { clientSecret: paymentIntent.client_secret } : null,
-      email: emailStatus,
     })
   } catch (err: unknown) {
     return NextResponse.json({ error: sanitizeError(err) }, { status: 500 })
