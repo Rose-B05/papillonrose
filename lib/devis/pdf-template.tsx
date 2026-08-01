@@ -136,6 +136,14 @@ function formatDate(dateStr: string) {
   })
 }
 
+function formatDateShort(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })
+}
+
 function formatEUR(amount: number) {
   return `${amount.toFixed(2).replace(".", ",")} €`
 }
@@ -151,21 +159,28 @@ function resolveProduct(productId: number) {
   return produits.find((p) => p.id === productId)
 }
 
+function getEventLocation(client: Booking["client"]): string {
+  const parts: string[] = []
+  if (client.lieuEvenement) parts.push(client.lieuEvenement)
+  if (client.villeEvenement) parts.push(client.villeEvenement)
+  return parts.join(", ")
+}
+
 export function devisPdfTemplate(booking: Booking) {
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
   const docType = booking.balancePaidAt ? "FACTURE" : "DEVIS"
   const docNumber = booking.quoteNumber || `BK-${booking.id}`
   const clientName = `${booking.client.prenom} ${booking.client.nom}`
-  const eventTitle = clientName
+  const eventLocation = getEventLocation(booking.client)
   const eventType = booking.client.typeEvenement
   const depositAmount = booking.depositAmount
   const remainingAmount = booking.balancePaidAt ? 0 : Math.max(0, booking.totalTtc - depositAmount)
   const totalLabel = booking.balancePaidAt
-    ? `TOTAL — réglé le ${formatDate(booking.balancePaidAt)}`
+    ? `TOTAL — réglé le ${formatDateShort(booking.balancePaidAt)}`
     : "TOTAL à régler"
   const depositDate = booking.depositPaidAt || booking.balancePaidAt
   const soldeLabel = booking.balancePaidAt
-    ? `Solde réglé le ${formatDate(booking.balancePaidAt)}`
+    ? `Solde réglé le ${formatDateShort(booking.balancePaidAt)}`
     : "Solde restant dû"
 
   const items = booking.items.map((item) => {
@@ -222,12 +237,13 @@ export function devisPdfTemplate(booking: Booking) {
         </View>
         <View style={styles.hr} />
 
-        <Text style={styles.eventTitle}>{eventTitle}</Text>
-        {eventType !== "Autre" && eventType !== "" ? (
+        <Text style={styles.eventTitle}>{clientName}</Text>
+        {eventType && eventType !== "Autre" && eventType !== "" ? (
           <Text style={styles.eventType}>{eventType}</Text>
         ) : null}
         <Text style={styles.eventMeta}>
-          {formatDate(booking.client.dateEvenement)} · {booking.client.lieuEvenement}
+          {formatDate(booking.client.dateEvenement)}
+          {eventLocation ? ` · ${eventLocation}` : ""}
           {booking.client.nbInvites ? ` — ${booking.client.nbInvites} invités` : ""}
         </Text>
 
@@ -277,7 +293,7 @@ export function devisPdfTemplate(booking: Booking) {
           <View style={styles.payRow}>
             <Text style={styles.payLabel}>
               {depositDate
-                ? `Acompte réglé le ${formatDate(depositDate)}`
+                ? `Acompte réglé le ${formatDateShort(depositDate)}`
                 : "Acompte à verser (30%)"}
             </Text>
             <Text style={styles.payValue}>{formatEUR(depositAmount)}</Text>
