@@ -48,6 +48,7 @@ export default function ReservationPage() {
   const [accountError, setAccountError] = useState("")
   const [accountLoading, setAccountLoading] = useState(false)
   const [alreadyConnected, setAlreadyConnected] = useState<boolean | null>(null)
+  const [bookingAttempted, setBookingAttempted] = useState(false)
 
   // Restore from sessionStorage after hydration (avoids #418 mismatch)
   const [hydrated, setHydrated] = useState(false)
@@ -241,13 +242,17 @@ export default function ReservationPage() {
       if (missingDates.length > 0) {
         throw new Error("Veuillez choisir des dates de location pour tous les articles avant de confirmer")
       }
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 20000)
       const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: cartItems, client }),
+        signal: controller.signal,
       })
+      clearTimeout(timeoutId)
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error)
+      if (!res.ok) throw new Error(data.error || "Une erreur est survenue lors de la création de votre devis. Veuillez réessayer.")
       if (data.warnings) setServerWarnings(data.warnings)
       if (data.booking.items) {
         for (const bi of data.booking.items) {
@@ -262,7 +267,11 @@ export default function ReservationPage() {
       clearReservationSession()
       setStep("confirmation")
     } catch (err: any) {
-      setError(err.message)
+      if (err.name === "AbortError") {
+        setError("La requête a pris trop de temps. Vérifiez votre connexion et réessayez.")
+      } else {
+        setError(err.message || "Une erreur est survenue. Veuillez réessayer ou contactez le support.")
+      }
     } finally {
       setLoading(false)
     }
@@ -827,7 +836,7 @@ export default function ReservationPage() {
 
         {step === "compte" && (
           <div>
-            <BackButton onClick={() => setStep("client")} label="Retour aux informations" />
+            <BackButton onClick={() => { setStep("client"); setBookingAttempted(false); setError("") }} label="Retour aux informations" />
             <h2 style={DP} className="text-xl sm:text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-6">Créez votre compte</h2>
 
             {alreadyConnected === null ? (
@@ -835,8 +844,23 @@ export default function ReservationPage() {
                 <Loader2 size={24} className="animate-spin mx-auto text-[#C9948E] mb-3" />
                 <p className="text-sm text-gray-400">Vérification de votre session…</p>
               </div>
-            ) : alreadyConnected === true ? (
-              <AccountAutoAdvance onAdvance={handleCreateBooking} />
+            ) : alreadyConnected === true && !bookingAttempted ? (
+              <div className="text-center py-12">
+                <Loader2 size={24} className="animate-spin mx-auto text-[#C9948E] mb-3" />
+                <p className="text-sm text-gray-400">Compte connecté, préparation de votre devis…</p>
+              </div>
+            ) : alreadyConnected === true && bookingAttempted && error ? (
+              <div className="text-center py-12 space-y-4">
+                <div className="bg-red-50 border border-red-200 text-red-500 text-sm rounded-2xl px-5 py-3">
+                  {error || "Une erreur est survenue lors de la création de votre devis."}
+                </div>
+                <button
+                  onClick={() => { setBookingAttempted(false); setError("") }}
+                  className="inline-flex items-center gap-2 bg-[#C9948E] text-white px-6 py-3 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] transition-colors"
+                >
+                  <RotateCcw size={15} /> Réessayer
+                </button>
+              </div>
             ) : (
               <>
                 {/* Toggle register / login */}
@@ -949,14 +973,14 @@ export default function ReservationPage() {
 
 // ─── Sub-components ───
 
-function AccountAutoAdvance({ onAdvance }: { onAdvance: () => void }) {
-  useEffect(() => { onAdvance() }, [])
-  return (
-    <div className="text-center py-12">
-      <Loader2 size={24} className="animate-spin mx-auto text-[#C9948E] mb-3" />
-      <p className="text-sm text-gray-400">Compte connecté, préparation de votre devis…</p>
-    </div>
-  )
+function AccountAutoAdvance({ onAdvance, attempted, onAttempted }: { onAdvance: () => void; attempted: boolean; onAttempted: () => void }) {
+  useEffect(() => {
+    if (!attempted) {
+      onAttempted()
+      onAdvance()
+    }
+  }, [attempted])
+  return null
 }
 
 function BackButton({ onClick, label }: { onClick: () => void; label: string }) {
