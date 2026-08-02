@@ -327,12 +327,20 @@ export default function ReservationPage() {
           <p className="text-gray-500 dark:text-white/60 text-sm mb-6">
             Votre demande de devis a bien été enregistrée. Nous vous enverrons votre devis personnalisé sous <strong className="text-[#C9948E] dark:text-[#E8B4AE]">24h ouvrées</strong>.
           </p>
-          <button
-            onClick={() => router.push("/")}
-            className="bg-[#2E2E2E] dark:bg-neutral-800 text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#C9948E] dark:hover:bg-amber-600 transition-colors"
-          >
-            Retour à l&apos;accueil
-          </button>
+          <div className="flex flex-col gap-3">
+            <button
+              onClick={() => router.push(`/compte/devis/${bookingId}`)}
+              className="bg-[#C9948E] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8807A] transition-colors"
+            >
+              Voir mon devis
+            </button>
+            <button
+              onClick={() => router.push("/")}
+              className="bg-[#2E2E2E] dark:bg-neutral-800 text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#C9948E] dark:hover:bg-amber-600 transition-colors"
+            >
+              Retour à l&apos;accueil
+            </button>
+          </div>
         </div>
       </div>
     )
