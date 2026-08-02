@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { v4 as uuidv4 } from "uuid"
 import { produits } from "@/data/produits"
-import { saveBooking, getBooking, blockDates } from "@/lib/db"
+import { saveBooking, getBooking, blockDates, getBookingsByEmail } from "@/lib/db"
 import { calcTotalHt, calcTtc, calcDeposit, DEPOSIT_RATE } from "@/lib/utils"
 import { SEUIL_LIVRAISON } from "@/lib/pricing"
 import { calcDeliveryFee } from "@/lib/delivery"
@@ -45,6 +45,22 @@ export async function POST(request: NextRequest) {
       }
       if (!item.dateStart || !item.dateEnd) {
         return NextResponse.json({ error: "Dates de location requises pour chaque article" }, { status: 400 })
+      }
+    }
+
+    // Idempotency: if a recent booking exists for this customer with identical items, return it
+    // (prevents double-creation from race condition on retry)
+    const existingBookings = await getBookingsByEmail(customer.email)
+    const itemKey = items.map((i) => `${i.productId}:${i.qty}:${i.dateStart}:${i.dateEnd}:${i.variantLabel || ""}`).sort().join("|")
+    const now = Date.now()
+    for (const existing of existingBookings) {
+      const existingAge = now - new Date(existing.createdAt).getTime()
+      if (existingAge > 30_000) continue // only match bookings from last 30s
+      if (existing.status === "cancelled" || existing.status === "expired") continue
+      const existingKey = existing.items.map((i) => `${i.productId}:${i.qty}:${i.dateStart}:${i.dateEnd}:${i.variantLabel || ""}`).sort().join("|")
+      if (existingKey === itemKey) {
+        // Return existing booking instead of creating a duplicate
+        return NextResponse.json({ booking: existing, paymentIntent: null, duplicate: true })
       }
     }
 

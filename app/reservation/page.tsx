@@ -1,6 +1,6 @@
 ﻿"use client"
 
-import { useState, useMemo, useEffect, useCallback } from "react"
+import { useState, useMemo, useEffect, useCallback, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/components/cart-context"
 import { produits } from "@/data/produits"
@@ -50,6 +50,7 @@ export default function ReservationPage() {
   const [accountLoading, setAccountLoading] = useState(false)
   const [alreadyConnected, setAlreadyConnected] = useState<boolean | null>(null)
   const [bookingAttempted, setBookingAttempted] = useState(false)
+  const bookingControllerRef = useRef<AbortController | null>(null)
 
   // Restore from sessionStorage after hydration (avoids #418 mismatch)
   const [hydrated, setHydrated] = useState(false)
@@ -239,6 +240,11 @@ export default function ReservationPage() {
   }
 
   const handleCreateBooking = async () => {
+    // Abort any previous in-flight request
+    if (bookingControllerRef.current) {
+      bookingControllerRef.current.abort()
+      bookingControllerRef.current = null
+    }
     setLoading(true); setError(""); setServerWarnings([]); setShowErrors(false)
     try {
       const cartItems: CartItem[] = items.map((i) => ({
@@ -252,6 +258,7 @@ export default function ReservationPage() {
         throw new Error("Veuillez choisir des dates de location pour tous les articles avant de confirmer")
       }
       const controller = new AbortController()
+      bookingControllerRef.current = controller
       const timeoutId = setTimeout(() => controller.abort(), 20000)
       const res = await fetch("/api/bookings", {
         method: "POST",
@@ -260,6 +267,8 @@ export default function ReservationPage() {
         signal: controller.signal,
       })
       clearTimeout(timeoutId)
+      // Ignore response if this request was aborted (superseded by a newer one)
+      if (controller.signal.aborted) return
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Une erreur est survenue lors de la création de votre devis. Veuillez réessayer.")
       if (data.warnings) setServerWarnings(data.warnings)
@@ -276,12 +285,15 @@ export default function ReservationPage() {
       clearReservationSession()
       setStep("confirmation")
     } catch (err: any) {
+      // Ignore errors from aborted requests (superseded by newer call)
+      if (err.name === "AbortError" && bookingControllerRef.current !== null) return
       if (err.name === "AbortError") {
         setError("La requête a pris trop de temps. Vérifiez votre connexion et réessayez.")
       } else {
         setError(err.message || "Une erreur est survenue. Veuillez réessayer ou contactez le support.")
       }
     } finally {
+      bookingControllerRef.current = null
       setLoading(false)
     }
   }
@@ -883,7 +895,7 @@ export default function ReservationPage() {
 
         {step === "compte" && (
           <div>
-            <BackButton onClick={() => { setStep("client"); setBookingAttempted(false); setError("") }} label="Retour aux informations" />
+            <BackButton onClick={() => { if (bookingControllerRef.current) { bookingControllerRef.current.abort(); bookingControllerRef.current = null }; setStep("client"); setBookingAttempted(false); setError("") }} label="Retour aux informations" />
             <h2 style={DP} className="text-xl sm:text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-6">
               {alreadyConnected === true ? "Finalisation de votre devis" : "Créez votre compte"}
             </h2>
@@ -906,9 +918,10 @@ export default function ReservationPage() {
                 </div>
                 <button
                   onClick={() => { setBookingAttempted(false); setError("") }}
-                  className="inline-flex items-center gap-2 bg-[#C9948E] text-white px-6 py-3 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] transition-colors"
+                  disabled={loading}
+                  className="inline-flex items-center gap-2 bg-[#C9948E] text-white px-6 py-3 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  <RotateCcw size={15} /> Réessayer
+                  {loading ? <Loader2 size={15} className="animate-spin" /> : <RotateCcw size={15} />} {loading ? "Envoi…" : "Réessayer"}
                 </button>
               </div>
             ) : (
@@ -1024,8 +1037,10 @@ export default function ReservationPage() {
 // ─── Sub-components ───
 
 function AccountAutoAdvance({ onAdvance, attempted, onAttempted }: { onAdvance: () => void; attempted: boolean; onAttempted: () => void }) {
+  const startedRef = useRef(false)
   useEffect(() => {
-    if (!attempted) {
+    if (!attempted && !startedRef.current) {
+      startedRef.current = true
       onAttempted()
       onAdvance()
     }
