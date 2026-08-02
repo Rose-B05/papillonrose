@@ -894,10 +894,11 @@ export default function ReservationPage() {
                 <p className="text-sm text-gray-400">Vérification de votre session…</p>
               </div>
             ) : alreadyConnected === true && !bookingAttempted ? (
-              <div className="text-center py-12">
-                <Loader2 size={24} className="animate-spin mx-auto text-[#C9948E] mb-3" />
-                <p className="text-sm text-gray-400">Compte connecté, préparation de votre devis…</p>
-              </div>
+              <AccountAutoAdvance
+                onAdvance={handleCreateBooking}
+                attempted={bookingAttempted}
+                onAttempted={() => setBookingAttempted(true)}
+              />
             ) : alreadyConnected === true && bookingAttempted && error ? (
               <div className="text-center py-12 space-y-4">
                 <div className="bg-red-50 border border-red-200 text-red-500 text-sm rounded-2xl px-5 py-3">
@@ -1028,8 +1029,13 @@ function AccountAutoAdvance({ onAdvance, attempted, onAttempted }: { onAdvance: 
       onAttempted()
       onAdvance()
     }
-  }, [attempted])
-  return null
+  }, [attempted, onAdvance, onAttempted])
+  return (
+    <div className="text-center py-12">
+      <Loader2 size={24} className="animate-spin mx-auto text-[#C9948E] mb-3" />
+      <p className="text-sm text-gray-400">Compte connecté, préparation de votre devis…</p>
+    </div>
+  )
 }
 
 function BackButton({ onClick, label }: { onClick: () => void; label: string }) {
