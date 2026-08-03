@@ -305,10 +305,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
 
                   <div className="p-4 bg-[#F8F5F0] dark:bg-neutral-900/60 rounded-xl space-y-3">
                     <p className="text-sm text-gray-500 dark:text-white/60">
-                      En signant ce devis, vous confirmez avoir lu et accepté les{" "}
-                      <a href="/conditions-location" target="_blank" rel="noopener noreferrer" className="text-[#C9948E] dark:text-[#E8B4AE] underline font-medium hover:text-[#B9807A]">
-                        conditions de location
-                      </a>.
+                      En signant ce devis, vous confirmez avoir lu et accepté les conditions de location.
                     </p>
 
                     <div>
