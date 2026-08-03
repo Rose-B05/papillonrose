@@ -103,13 +103,20 @@ export function getProductImage(product: Produit): string {
 }
 
 export function getAllProductImages(product: Produit): { src: string; alt: string }[] {
+  const seen = new Set<string>()
   const images: { src: string; alt: string }[] = []
   if (product.image && !product.image.includes("placeholder")) {
-    images.push({ src: BASE + product.image, alt: product.nom })
+    const src = BASE + product.image
+    seen.add(src)
+    images.push({ src, alt: product.nom })
   }
   if (product.gallerie) {
     for (const g of product.gallerie) {
-      images.push({ src: BASE + g, alt: product.nom })
+      const src = BASE + g
+      if (!seen.has(src)) {
+        seen.add(src)
+        images.push({ src, alt: product.nom })
+      }
     }
   }
   if (images.length === 0) {
