@@ -57,6 +57,7 @@ export interface AdminProduct {
   pieceUnique?: boolean
   tagsThemes?: string[]
   tagsCouleurs?: string[]
+  variants?: { label: string; prix: number | string }[]
   status: AdminProductStatus
   dateCreation: string
   dateModification: string

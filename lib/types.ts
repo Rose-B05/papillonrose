@@ -24,6 +24,7 @@ export interface CartItem {
   dateStart: string
   dateEnd: string
   variantLabel?: string
+  prix?: number | string
 }
 
 export interface Booking {

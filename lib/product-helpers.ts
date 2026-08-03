@@ -166,6 +166,7 @@ export function mergeAdminProduct(staticProduct: Produit, adminOverride: AdminPr
     image: adminOverride.image || staticProduct.image,
     gallerie: adminOverride.gallerie?.length ? adminOverride.gallerie : staticProduct.gallerie,
     description: adminOverride.description || staticProduct.description,
+    variants: adminOverride.variants?.length ? adminOverride.variants : staticProduct.variants,
   }
 }
 
