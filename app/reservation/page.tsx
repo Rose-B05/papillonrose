@@ -79,10 +79,10 @@ export default function ReservationPage() {
   }, [])
 
   // Persist to sessionStorage
-  useEffect(() => { sessionStorage.setItem("reservation_step", step) }, [step])
+  useEffect(() => { if (step !== "confirmation") sessionStorage.setItem("reservation_step", step) }, [step])
   useEffect(() => { sessionStorage.setItem("reservation_dateEdits", JSON.stringify(dateEdits)) }, [dateEdits])
   useEffect(() => { sessionStorage.setItem("reservation_client", JSON.stringify(client)) }, [client])
-  useEffect(() => { if (bookingId) sessionStorage.setItem("reservation_bookingId", bookingId) }, [bookingId])
+  useEffect(() => { if (step === "confirmation") sessionStorage.removeItem("reservation_bookingId") }, [step])
 
   // Clear sessionStorage on successful booking creation
   const clearReservationSession = () => {
