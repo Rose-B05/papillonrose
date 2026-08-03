@@ -144,6 +144,7 @@ export async function POST(request: NextRequest) {
       pieceUnique: body.pieceUnique || false,
       tagsThemes: body.tagsThemes || [],
       tagsCouleurs: body.tagsCouleurs || [],
+      variants: body.variants || [],
       status: body.status || "brouillon",
       dateCreation: body.dateCreation || staticProductData?.dateAjout || now,
       dateModification: now,

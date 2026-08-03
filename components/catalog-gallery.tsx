@@ -100,7 +100,10 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                     <p className="text-[10px] text-gray-400 dark:text-white/60 truncate">{p.dimension}</p>
                   )}
                   <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
-                    {prixTtc(p.prix).toFixed(2)} €
+                    {p.variants && p.variants.length > 0 && (
+                      <span className="text-xs font-normal text-gray-400 dark:text-white/60 mr-1">à partir de</span>
+                    )}
+                    {prixTtc(p.variants && p.variants.length > 0 ? p.variants[0].prix : p.prix).toFixed(2)} €
                     <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">TTC / jour</span>
                   </p>
                 </div>

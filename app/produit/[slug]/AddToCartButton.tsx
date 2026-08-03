@@ -10,12 +10,16 @@ export default function AddToCartButton({
   badge,
   productName,
   isBlocked,
+  variantLabel,
+  variantPrix,
 }: {
   productId: number
   stock: number
   badge?: string
   productName: string
   isBlocked?: boolean
+  variantLabel?: string
+  variantPrix?: number | string
 }) {
   const { addItem } = useCart()
   const [showToast, setShowToast] = useState(false)
@@ -23,7 +27,14 @@ export default function AddToCartButton({
 
   const handleClick = () => {
     if (disabled) return
-    const added = addItem({ productId, qty: 1, dateStart: "", dateEnd: "" })
+    const added = addItem({
+      productId,
+      qty: 1,
+      dateStart: "",
+      dateEnd: "",
+      variantLabel,
+      prix: variantPrix,
+    })
     if (added) {
       setShowToast(true)
       setTimeout(() => setShowToast(false), 3000)
@@ -51,7 +62,7 @@ export default function AddToCartButton({
             <Check size={14} className="text-[#C9948E]" />
           </span>
           <span className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
-            {productName} ajouté au panier ✓
+            {productName}{variantLabel ? ` (${variantLabel})` : ""} ajouté au panier ✓
           </span>
         </div>
       )}

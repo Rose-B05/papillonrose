@@ -19,7 +19,7 @@ import { prixTtc } from "@/lib/pricing"
 import ProductImage from "@/components/product-image"
 import ProductGallery from "./ProductGallery"
 import { isNouveauProduit } from "@/lib/utils"
-import AddToCartButton from "./AddToCartButton"
+import ProductInfo from "./ProductInfo"
 import FavoriteButton from "./FavoriteButton"
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
@@ -116,74 +116,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
 
           {/* Info */}
-          <div className="lg:w-[400px] flex flex-col">
-            <p className="text-[#C9948E] dark:text-[#E8B4AE] text-xs tracking-[0.3em] uppercase font-medium mb-2">
-              {product.categorie}
-            </p>
-            <h1 className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
-              {product.nom}
-            </h1>
-
-            {product.dimension && (
-              <p className="text-sm text-gray-500 dark:text-white/70 mt-2">
-                {product.dimension}
-              </p>
-            )}
-
-            <p className="text-2xl font-bold text-[#2E2E2E] dark:text-neutral-100 mt-4">
-              {priceTTC.toFixed(2)} €
-              <span className="text-sm font-normal text-gray-400 dark:text-white/60 ml-1">TTC / jour</span>
-            </p>
-
-            {/* Stock */}
-            <div className="mt-4 flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${product.stock > 0 && !isBlocked ? "bg-green-500" : "bg-red-500"}`} />
-              <span className="text-sm text-gray-500 dark:text-white/70">
-                {isBlocked ? "Indisponible (réservé)" : product.stock > 0 ? `${product.stock} en stock` : "Rupture de stock"}
-              </span>
-            </div>
-
-            {/* Badges */}
-            <div className="mt-3 flex flex-wrap gap-2">
-              {isNouveauProduit(product.dateAjout) && (
-                <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-emerald-100 text-emerald-700">
-                  Nouveau
-                </span>
-              )}
-              {product.badge && (
-                <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-                  product.badge === "stock-limite" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700"
-                }`}>
-                  {product.badge === "stock-limite" ? "Stock limité" : "Épuisé"}
-                </span>
-              )}
-            </div>
-
-            {/* Actions */}
-            <div className="mt-6 flex flex-col gap-3">
-              <AddToCartButton productId={product.id} stock={product.stock} badge={product.badge} productName={product.nom} isBlocked={isBlocked} />
-              <FavoriteButton productId={product.id} />
-            </div>
-
-            {/* Description */}
-            <div className="mt-8 pt-6 border-t border-gray-200 dark:border-neutral-700">
-              <h2 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Détails</h2>
-              <ul className="text-sm text-gray-500 dark:text-white/70 space-y-1.5">
-                <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Catégorie :</span> {product.categorie}</li>
-                {product.dimension && <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Dimensions :</span> {product.dimension}</li>}
-                <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Tarif :</span> {priceTTC.toFixed(2)} € TTC / jour</li>
-                <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Disponibilité :</span> {isBlocked ? "Indisponible (réservé)" : product.stock > 0 ? "Disponible" : "Indisponible"}</li>
-              </ul>
-            </div>
-
-            {/* CTA */}
-            <Link
-              href="/reservation"
-              className="mt-6 inline-flex items-center justify-center gap-2 bg-[#C9948E] text-[#1C1A17] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#D4A09A] transition-colors"
-            >
-              Demander un devis
-            </Link>
-          </div>
+          <ProductInfo product={product} isBlocked={isBlocked} />
         </div>
       </section>
     </div>
