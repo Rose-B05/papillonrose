@@ -306,10 +306,6 @@ export function devisPdfTemplate(booking: Booking) {
           ) : null}
         </View>
 
-        <Text style={styles.conditions}>
-          Les tarifs pourront être modifiés par l'ajout ou le retrait d'éléments décoratifs et/ou de main d'œuvre jusqu'à 10 jours avant l'événement.
-        </Text>
-
         <View style={styles.signRow}>
           <View>
             <Text style={styles.thanks}>Merci de votre confiance.</Text>
