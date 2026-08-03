@@ -107,6 +107,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
           isBlocked={isBlocked}
           variantLabel={selectedVariant?.label}
           variantPrix={selectedVariant?.prix}
+          needsVariant={!!(product.variants && product.variants.length > 0 && !selectedVariant)}
         />
         <FavoriteButton productId={product.id} />
       </div>
