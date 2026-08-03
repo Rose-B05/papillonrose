@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { useCart } from "@/components/cart-context"
 import { prixTtc } from "@/lib/pricing"
 import { isNouveauProduit } from "@/lib/utils"
 import type { ProductVariant } from "@/lib/types"
-import AddToCartButton from "./AddToCartButton"
+import { ShoppingCart, Check } from "lucide-react"
 import FavoriteButton from "./FavoriteButton"
 
 interface Props {
@@ -24,10 +25,43 @@ interface Props {
 }
 
 export default function ProductInfo({ product, isBlocked }: Props) {
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null)
+  const [selectedVariants, setSelectedVariants] = useState<ProductVariant[]>([])
+  const { addItem } = useCart()
+  const [showToast, setShowToast] = useState(false)
 
-  const currentPrix = selectedVariant ? selectedVariant.prix : product.prix
-  const priceTTC = prixTtc(currentPrix)
+  const hasVariants = !!(product.variants && product.variants.length > 0)
+  const disabled = product.stock <= 0 || product.badge === "epuise" || isBlocked || (hasVariants && selectedVariants.length === 0)
+
+  const toggleVariant = (v: ProductVariant) => {
+    setSelectedVariants((prev) =>
+      prev.some((s) => s.label === v.label)
+        ? prev.filter((s) => s.label !== v.label)
+        : [...prev, v]
+    )
+  }
+
+  const totalTtc = selectedVariants.reduce((sum, v) => sum + Number(prixTtc(v.prix)), 0)
+
+  const handleAddAll = () => {
+    if (disabled) return
+    const variantsToAdd = hasVariants ? selectedVariants : [null]
+    let added = false
+    for (const v of variantsToAdd) {
+      const ok = addItem({
+        productId: product.id,
+        qty: 1,
+        dateStart: "",
+        dateEnd: "",
+        variantLabel: v?.label,
+        prix: v?.prix,
+      })
+      if (ok) added = true
+    }
+    if (added) {
+      setShowToast(true)
+      setTimeout(() => setShowToast(false), 3000)
+    }
+  }
 
   return (
     <div className="lg:w-[400px] flex flex-col">
@@ -44,34 +78,46 @@ export default function ProductInfo({ product, isBlocked }: Props) {
         </p>
       )}
 
-      {/* Variant selector */}
-      {product.variants && product.variants.length > 0 ? (
+      {/* Multi-variant selector */}
+      {hasVariants && (
         <div className="mt-4">
           <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-2">
-            Taille :
+            Tailles : <span className="text-gray-400 dark:text-white/50 font-normal">(sélection multiple)</span>
           </p>
           <div className="flex flex-wrap gap-2">
-            {product.variants.map((v) => (
-              <button
-                key={v.label}
-                onClick={() => setSelectedVariant(v)}
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
-                  selectedVariant?.label === v.label
-                    ? "border-[#C9948E] bg-[#C9948E]/10 text-[#C9948E]"
-                    : "border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-white/70 hover:border-[#C9948E]/50"
-                }`}
-              >
-                {v.label} — {prixTtc(v.prix).toFixed(2)} € TTC
-              </button>
-            ))}
+            {product.variants!.map((v) => {
+              const selected = selectedVariants.some((s) => s.label === v.label)
+              return (
+                <button
+                  key={v.label}
+                  onClick={() => toggleVariant(v)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
+                    selected
+                      ? "border-[#C9948E] bg-[#C9948E]/10 text-[#C9948E]"
+                      : "border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-white/70 hover:border-[#C9948E]/50"
+                  }`}
+                >
+                  {selected && <Check size={14} className="inline mr-1 -mt-0.5" />}
+                  {v.label} — {prixTtc(v.prix).toFixed(2)} € TTC
+                </button>
+              )
+            })}
           </div>
+          {selectedVariants.length > 0 && (
+            <p className="text-sm font-semibold text-[#C9948E] dark:text-[#E8B4AE] mt-2">
+              Total : {totalTtc.toFixed(2)} € TTC / jour ({selectedVariants.length} taille{selectedVariants.length > 1 ? "s" : ""})
+            </p>
+          )}
         </div>
-      ) : null}
+      )}
 
-      <p className="text-2xl font-bold text-[#2E2E2E] dark:text-neutral-100 mt-4">
-        {priceTTC.toFixed(2)} €
-        <span className="text-sm font-normal text-gray-400 dark:text-white/60 ml-1">TTC / jour</span>
-      </p>
+      {/* Single price display (no variants) */}
+      {!hasVariants && (
+        <p className="text-2xl font-bold text-[#2E2E2E] dark:text-neutral-100 mt-4">
+          {prixTtc(product.prix).toFixed(2)} €
+          <span className="text-sm font-normal text-gray-400 dark:text-white/60 ml-1">TTC / jour</span>
+        </p>
+      )}
 
       {/* Stock */}
       <div className="mt-4 flex items-center gap-2">
@@ -97,20 +143,38 @@ export default function ProductInfo({ product, isBlocked }: Props) {
         )}
       </div>
 
-      {/* Actions */}
+      {/* Add to cart */}
       <div className="mt-6 flex flex-col gap-3">
-        <AddToCartButton
-          productId={product.id}
-          stock={product.stock}
-          badge={product.badge}
-          productName={product.nom}
-          isBlocked={isBlocked}
-          variantLabel={selectedVariant?.label}
-          variantPrix={selectedVariant?.prix}
-          needsVariant={!!(product.variants && product.variants.length > 0 && !selectedVariant)}
-        />
+        <button
+          onClick={handleAddAll}
+          disabled={disabled}
+          className="flex items-center justify-center gap-2 bg-[#C9948E] text-[#1C1A17] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#D4A09A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <ShoppingCart className="w-4 h-4" />
+          {hasVariants && selectedVariants.length === 0
+            ? "Choisissez une ou plusieurs tailles"
+            : hasVariants
+              ? `Ajouter ${selectedVariants.length} taille${selectedVariants.length > 1 ? "s" : ""} au panier`
+              : disabled ? "Indisponible" : "Ajouter au panier"}
+        </button>
         <FavoriteButton productId={product.id} />
       </div>
+
+      {/* Toast */}
+      {showToast && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-20 left-1/2 -translate-x-1/2 z-[60] bg-white dark:bg-neutral-800 border border-[#C9948E]/30 px-6 py-3.5 rounded-2xl shadow-lg flex items-center gap-2.5 animate-[fade-in-up_0.3s_ease-out]"
+        >
+          <span className="w-6 h-6 rounded-full bg-[#C9948E]/15 flex items-center justify-center flex-shrink-0">
+            <Check size={14} className="text-[#C9948E]" />
+          </span>
+          <span className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
+            {selectedVariants.length} taille{selectedVariants.length > 1 ? "s" : ""} ajoutée{selectedVariants.length > 1 ? "s" : ""} au panier ✓
+          </span>
+        </div>
+      )}
 
       {/* Description */}
       <div className="mt-8 pt-6 border-t border-gray-200 dark:border-neutral-700">
@@ -118,7 +182,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
         <ul className="text-sm text-gray-500 dark:text-white/70 space-y-1.5">
           <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Catégorie :</span> {product.categorie}</li>
           {product.dimension && <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Dimensions :</span> {product.dimension}</li>}
-          <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Tarif :</span> {priceTTC.toFixed(2)} € TTC / jour</li>
+          <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Tarif :</span> {hasVariants ? "à partir de" : ""} {prixTtc(hasVariants ? product.variants![0].prix : product.prix).toFixed(2)} € TTC / jour</li>
           <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Disponibilité :</span> {isBlocked ? "Indisponible (réservé)" : product.stock > 0 ? "Disponible" : "Indisponible"}</li>
         </ul>
       </div>
