@@ -127,7 +127,22 @@ export function getAllProductImages(product: Produit): { src: string; alt: strin
 
 // ─── Category Image (first product with real photo) ─────────────────────────
 
+export const CATEGORY_IMAGES: Record<string, string> = {
+  Mobilier: "/images/PROD005.png",
+  "Figurines & Jeux": "/images/PROD098.png",
+  "Bougeoirs & Lustres": "/images/PROD023.png",
+  Verreries: "/images/PROD088.png",
+  Cadres: "/images/PROD39.png",
+  "Présentoirs & Plateaux": "/images/PROD097.png",
+  "Urnes & Accessoires": "/images/PROD093.png",
+  "Art de la Table": "/images/PROD053.png",
+  "Vases & Pots": "/images/PROD071.png",
+  Décoration: "/images/PROD074.png",
+  "Fleurs & Feuillages": "/images/PROD089.png",
+}
+
 export function getCategoryImage(category: string): string {
+  if (CATEGORY_IMAGES[category]) return BASE + CATEGORY_IMAGES[category]
   const products = getProductsByCategory(category)
   for (const p of products) {
     if (p.image && !p.image.includes("placeholder")) {
