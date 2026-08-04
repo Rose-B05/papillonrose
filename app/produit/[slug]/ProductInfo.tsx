@@ -32,6 +32,10 @@ export default function ProductInfo({ product, isBlocked }: Props) {
   const hasVariants = !!(product.variants && product.variants.length > 0)
   const disabled = product.stock <= 0 || product.badge === "epuise" || isBlocked || (hasVariants && selectedVariants.length === 0)
 
+  const COLOR_WORDS = ["bleu", "jaune", "rose", "rouge", "vert", "noir", "blanc", "or", "argent", "bronze", "bordeaux", "beige", "gris", "marine", "corail", "lavande", "saumon", "taupe", "ecru", "ocre"]
+  const isColor = hasVariants && product.variants!.some((v) => COLOR_WORDS.some((c) => v.label.toLowerCase().includes(c)))
+  const variantLabel = isColor ? "Couleurs" : "Tailles"
+
   const toggleVariant = (v: ProductVariant) => {
     setSelectedVariants((prev) =>
       prev.some((s) => s.label === v.label)
@@ -82,7 +86,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
       {hasVariants && (
         <div className="mt-4">
           <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-2">
-            Tailles : <span className="text-gray-400 dark:text-white/50 font-normal">(sélection multiple)</span>
+            {variantLabel} : <span className="text-gray-400 dark:text-white/50 font-normal">(sélection multiple)</span>
           </p>
           <div className="flex flex-wrap gap-2">
             {product.variants!.map((v) => {
@@ -105,7 +109,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
           </div>
           {selectedVariants.length > 0 && (
             <p className="text-sm font-semibold text-[#C9948E] dark:text-[#E8B4AE] mt-2">
-              Total : {totalTtc.toFixed(2)} € TTC / jour ({selectedVariants.length} taille{selectedVariants.length > 1 ? "s" : ""})
+              Total : {totalTtc.toFixed(2)} € TTC / jour ({selectedVariants.length} {variantLabel.toLowerCase().replace(/s$/, "")}{selectedVariants.length > 1 ? "s" : ""})
             </p>
           )}
         </div>
@@ -152,9 +156,9 @@ export default function ProductInfo({ product, isBlocked }: Props) {
         >
           <ShoppingCart className="w-4 h-4" />
           {hasVariants && selectedVariants.length === 0
-            ? "Choisissez une ou plusieurs tailles"
+            ? `Choisissez une ou plusieurs ${variantLabel.toLowerCase()}`
             : hasVariants
-              ? `Ajouter ${selectedVariants.length} taille${selectedVariants.length > 1 ? "s" : ""} au panier`
+              ? `Ajouter ${selectedVariants.length} ${variantLabel.toLowerCase().replace(/s$/, "")}${selectedVariants.length > 1 ? "s" : ""} au panier`
               : disabled ? "Indisponible" : "Ajouter au panier"}
         </button>
         <FavoriteButton productId={product.id} />
@@ -171,7 +175,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
             <Check size={14} className="text-[#C9948E]" />
           </span>
           <span className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
-            {selectedVariants.length} taille{selectedVariants.length > 1 ? "s" : ""} ajoutée{selectedVariants.length > 1 ? "s" : ""} au panier ✓
+            {selectedVariants.length} {variantLabel.toLowerCase().replace(/s$/, "")}{selectedVariants.length > 1 ? "s" : ""} ajoutée{selectedVariants.length > 1 ? "s" : ""} au panier ✓
           </span>
         </div>
       )}
