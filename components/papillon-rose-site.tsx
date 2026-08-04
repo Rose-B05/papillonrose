@@ -111,16 +111,16 @@ const PRODUCTS = produits
 let BASE_VISIBLE_PRODUCTS = produits.filter((p) => hasRealPhoto(p) && p.actif !== false)
 
 let CATEGORY_IMAGES: Record<string, string> = {
-  Mobilier: "/images/PROD005.png",
+  Mobilier: "/images/PROD087.png",
   "Figurines & Jeux": "/images/PROD098.png",
-  "Bougeoirs & Lustres": "/images/PROD023.png",
+  "Bougeoirs & Lustres": "/images/PROD095.png",
   Verreries: "/images/PROD088.png",
-  Cadres: "/images/PROD39.png",
+  Cadres: "/images/PROD096.png",
   "Présentoirs & Plateaux": "/images/PROD097.png",
   "Urnes & Accessoires": "/images/PROD093.png",
-  "Art de la Table": "/images/PROD053.png",
-  "Vases & Pots": "/images/PROD071.png",
-  Décoration: "/images/PROD074.png",
+  "Art de la Table": "/images/PROD090.png",
+  "Vases & Pots": "/images/PROD091.png",
+  Décoration: "/images/PROD092.png",
   "Fleurs & Feuillages": "/images/PROD089.png",
 }
 
