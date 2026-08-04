@@ -18,6 +18,8 @@ import {
   RotateCcw,
   Star,
   User,
+  Volume2,
+  VolumeX,
 } from "lucide-react"
 import { produits, type Produit, hasRealPhoto, getActiveProductsCount } from "@/data/produits"
 import { useCart } from "@/components/cart-context"
@@ -436,6 +438,8 @@ export default function PapillonRoseSite() {
   const [scrolled, setScrolled] = useState(page !== "home")
   const [showQuoteSent, setShowQuoteSent] = useState(false)
   const [cartToast, setCartToast] = useState<string | null>(null)
+  const [videoMuted, setVideoMuted] = useState(true)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const [tagFilters, setTagFilters] = useState<FilterState>({
     occasions: [],
     styles: [],
@@ -699,14 +703,29 @@ export default function PapillonRoseSite() {
             {/* Hero */}
             <section className="relative h-screen">
               <video
+                ref={videoRef}
                 src="/videos/hero.mp4"
                 autoPlay
                 loop
-                muted
+                muted={videoMuted}
                 playsInline
                 preload="auto"
                 className="absolute inset-0 w-full h-full object-cover"
               />
+              <button
+                onClick={() => {
+                  const next = !videoMuted
+                  setVideoMuted(next)
+                  if (videoRef.current) {
+                    videoRef.current.muted = next
+                    if (!next) videoRef.current.play().catch(() => {})
+                  }
+                }}
+                className="absolute bottom-6 right-6 z-10 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                aria-label={videoMuted ? "Activer le son" : "Couper le son"}
+              >
+                {videoMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              </button>
             </section>
 
             {/* Hero text + Stats */}
