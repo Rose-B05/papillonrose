@@ -94,6 +94,10 @@ export const produits: Produit[] = [
     dimension: "44 x 15 cm",
     prix: 3,
     image: "/images/PROD006.png",
+    variants: [
+      { label: "Totem Bleu", prix: 3 },
+      { label: "Totem Jaune", prix: 3 },
+    ],
     dateAjout: "2025-01-01",
   },
   {
