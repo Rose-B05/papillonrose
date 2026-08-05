@@ -704,7 +704,7 @@ export default function PapillonRoseSite() {
             <section className="relative h-screen">
               {/* Mobile video */}
               <video
-                src="/videos/hero.mp4"
+                src="/videos/hero-mobile.mp4"
                 autoPlay
                 loop
                 muted={videoMuted}
