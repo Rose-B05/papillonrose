@@ -440,6 +440,13 @@ export default function PapillonRoseSite() {
   const [cartToast, setCartToast] = useState<string | null>(null)
   const [videoMuted, setVideoMuted] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
   const [tagFilters, setTagFilters] = useState<FilterState>({
     occasions: [],
     styles: [],
@@ -702,27 +709,29 @@ export default function PapillonRoseSite() {
           <div>
             {/* Hero */}
             <section className="relative h-screen">
-              {/* Mobile video */}
-              <video
-                src="/videos/hero-mobile.mp4"
-                autoPlay
-                loop
-                muted={videoMuted}
-                playsInline
-                preload="auto"
-                className="absolute inset-0 w-full h-full object-cover block md:hidden"
-              />
-              {/* Desktop video */}
-              <video
-                ref={videoRef}
-                src="/videos/hero-desktop.mp4"
-                autoPlay
-                loop
-                muted={videoMuted}
-                playsInline
-                preload="auto"
-                className="absolute inset-0 w-full h-full object-cover hidden md:block"
-              />
+              {isMobile ? (
+                <video
+                  ref={videoRef}
+                  src="/videos/hero-mobile.mp4"
+                  autoPlay
+                  loop
+                  muted={videoMuted}
+                  playsInline
+                  preload="auto"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              ) : (
+                <video
+                  ref={videoRef}
+                  src="/videos/hero-desktop.mp4"
+                  autoPlay
+                  loop
+                  muted={videoMuted}
+                  playsInline
+                  preload="auto"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              )}
               <button
                 onClick={() => {
                   const next = !videoMuted
