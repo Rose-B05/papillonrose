@@ -12,9 +12,10 @@ import {
   getProductImage,
   getAllProductImages,
   mergeAdminProduct,
+  slugify,
 } from "@/lib/product-helpers"
 import { getRobotsMeta } from "@/lib/site-mode"
-import { getAdminProducts, getBlockedDatesForProduct } from "@/lib/db"
+import { getAdminProducts, getBlockedDatesForProduct, type AdminProduct } from "@/lib/db"
 import { prixTtc } from "@/lib/pricing"
 import ProductImage from "@/components/product-image"
 import ProductGallery from "./ProductGallery"
@@ -61,23 +62,49 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params
-  const staticProduct = getProductBySlug(slug)
-  if (!staticProduct) notFound()
 
-  let product = staticProduct
-  let isMasked = false
+  let adminProducts: AdminProduct[] = []
   try {
-    const adminProducts = await getAdminProducts()
-    const adminOverride = adminProducts.find((p) => p.id === staticProduct.id)
-    if (adminOverride) {
-      if (adminOverride.status === "masque") {
-        notFound()
-      }
-      if (adminOverride.status === "publie") {
-        product = mergeAdminProduct(staticProduct, adminOverride)
+    adminProducts = await getAdminProducts()
+  } catch {}
+
+  // 1. Chercher dans les produits statiques
+  let staticProduct = getProductBySlug(slug)
+
+  // 2. Si pas trouvé, chercher dans les produits admin (produits créés via l'admin panel)
+  if (!staticProduct) {
+    const adminOnly = adminProducts.find((ap) => slugify(ap.nom) === slug)
+    if (adminOnly && adminOnly.status !== "masque") {
+      // Créer un produit virtuel à partir des données admin
+      staticProduct = {
+        id: adminOnly.id,
+        nom: adminOnly.nom,
+        categorie: adminOnly.categorie,
+        stock: adminOnly.stock,
+        dimension: adminOnly.dimension || "",
+        prix: adminOnly.prix,
+        image: adminOnly.image || "",
+        gallerie: adminOnly.gallerie || [],
+        description: adminOnly.description || "",
+        dateAjout: adminOnly.dateCreation || "",
+        actif: true,
       }
     }
-  } catch {}
+  }
+
+  if (!staticProduct) notFound()
+
+  // 3. Appliquer les overrides admin (si le produit existe en statique avec un override)
+  let product = staticProduct
+  const adminOverride = adminProducts.find((p) => p.id === staticProduct!.id)
+  if (adminOverride) {
+    if (adminOverride.status === "masque") {
+      notFound()
+    }
+    if (adminOverride.status === "publie") {
+      product = mergeAdminProduct(staticProduct, adminOverride)
+    }
+  }
 
   let isBlocked = false
   if (product.stock === 1) {
