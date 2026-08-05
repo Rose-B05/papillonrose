@@ -78,7 +78,7 @@ export default function FavorisClient() {
                 className="group relative bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col"
               >
                 <Link
-                  href={`/produit/${slug}`}
+                  href={`/produit/${slug}/`}
                   className="relative overflow-hidden aspect-square bg-[#F8F5F0] dark:bg-neutral-900 block"
                 >
                   <ProductImage

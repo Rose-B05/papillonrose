@@ -940,7 +940,7 @@ export default function PapillonRoseSite() {
                       onAddCart={() => addToCartWithToast(p.id)}
                       dynamicStock={dynamicStock}
                       isBooked={p.stock === 1 && blockedIds.has(p.id)}
-                      linkTo={`/produit/${getProductSlug(p)}`}
+                      linkTo={`/produit/${getProductSlug(p)}/`}
                     />
                   ))}
               </div>
@@ -1313,7 +1313,7 @@ export default function PapillonRoseSite() {
                     onAddCart={() => addToCartWithToast(p.id)}
                     dynamicStock={dynamicStock}
                     isBooked={p.stock === 1 && blockedIds.has(p.id)}
-                    linkTo={`/produit/${getProductSlug(p)}`}
+                    linkTo={`/produit/${getProductSlug(p)}/`}
                   />
                 ))}
               </div>
