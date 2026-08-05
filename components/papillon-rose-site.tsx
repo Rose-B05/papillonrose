@@ -702,15 +702,26 @@ export default function PapillonRoseSite() {
           <div>
             {/* Hero */}
             <section className="relative h-screen">
+              {/* Mobile video */}
               <video
-                ref={videoRef}
                 src="/videos/hero.mp4"
                 autoPlay
                 loop
                 muted={videoMuted}
                 playsInline
                 preload="auto"
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover block md:hidden"
+              />
+              {/* Desktop video */}
+              <video
+                ref={videoRef}
+                src="/videos/hero-desktop.mp4"
+                autoPlay
+                loop
+                muted={videoMuted}
+                playsInline
+                preload="auto"
+                className="absolute inset-0 w-full h-full object-cover hidden md:block"
               />
               <button
                 onClick={() => {
