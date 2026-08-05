@@ -24,7 +24,7 @@ import {
 import { produits, type Produit, hasRealPhoto, getActiveProductsCount } from "@/data/produits"
 import { useCart } from "@/components/cart-context"
 import { useFavorites } from "@/components/favorites-context"
-import { getCategorySlug } from "@/lib/product-helpers"
+import { getCategorySlug, getProductSlug } from "@/lib/product-helpers"
 import CatalogGallery from "@/components/catalog-gallery"
 import CatalogFilters from "@/components/catalog-filters"
 import ContactView from "@/components/contact-view"
@@ -141,6 +141,7 @@ function ProductCard({
   onAddCart,
   dynamicStock,
   isBooked,
+  linkTo,
 }: {
   product: Produit
   isFav: boolean
@@ -150,6 +151,7 @@ function ProductCard({
   onAddCart: () => void
   dynamicStock?: Record<number, number>
   isBooked?: boolean
+  linkTo?: string
 }) {
   const getSrc = () => {
     if (product.image && !product.image.includes("placeholder")) return product.image
@@ -159,43 +161,59 @@ function ProductCard({
   const [imgError, setImgError] = useState(false)
   const effectiveStock = dynamicStock?.[product.id] ?? product.stock
   const outOfStock = effectiveStock <= 0 || product.badge === "epuise" || isBooked
+
+  const imageArea = (
+    <>
+      <img
+        src={img(getSrc())}
+        alt={product.nom}
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+        loading="lazy"
+        onError={(e) => { e.currentTarget.style.display = "none"; setImgError(true) }}
+      />
+      {imgError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-[#F0EBE3] dark:bg-neutral-700">
+          <span className="text-xs text-gray-400 dark:text-white/60 text-center px-2">{product.nom}</span>
+        </div>
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      {effectiveStock === 1 && (
+        <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10">
+          Unique
+        </span>
+      )}
+      {isNouveauProduit(product.dateAjout) && (
+        <span className={`absolute left-2.5 bg-emerald-500 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10 ${effectiveStock === 1 ? "top-10" : "top-2.5"}`}>
+          Nouveau
+        </span>
+      )}
+      {outOfStock && (
+        <div className="absolute inset-0 bg-white/70 dark:bg-black/60 flex items-center justify-center z-10">
+          <span className="text-[10px] text-gray-400 dark:text-gray-300 uppercase tracking-widest font-medium">
+            Indisponible
+          </span>
+        </div>
+      )}
+    </>
+  )
+
   return (
     <div className="group relative bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
-      <div
-        className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0] dark:bg-neutral-900"
-        onClick={onView}
-      >
-        <img
-          src={img(getSrc())}
-          alt={product.nom}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-          loading="lazy"
-          onError={(e) => { e.currentTarget.style.display = "none"; setImgError(true) }}
-        />
-        {imgError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-[#F0EBE3] dark:bg-neutral-700">
-            <span className="text-xs text-gray-400 dark:text-white/60 text-center px-2">{product.nom}</span>
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        {effectiveStock === 1 && (
-          <span className="absolute top-2.5 left-2.5 bg-amber-400 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10">
-            Unique
-          </span>
-        )}
-        {isNouveauProduit(product.dateAjout) && (
-          <span className={`absolute left-2.5 bg-emerald-500 text-white text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide z-10 ${effectiveStock === 1 ? "top-10" : "top-2.5"}`}>
-            Nouveau
-          </span>
-        )}
-        {outOfStock && (
-          <div className="absolute inset-0 bg-white/70 dark:bg-black/60 flex items-center justify-center z-10">
-            <span className="text-[10px] text-gray-400 dark:text-gray-300 uppercase tracking-widest font-medium">
-              Indisponible
-            </span>
-          </div>
-        )}
-      </div>
+      {linkTo ? (
+        <Link
+          href={linkTo}
+          className="relative overflow-hidden aspect-square bg-[#F8F5F0] dark:bg-neutral-900 block"
+        >
+          {imageArea}
+        </Link>
+      ) : (
+        <div
+          className="relative overflow-hidden cursor-pointer aspect-square bg-[#F8F5F0] dark:bg-neutral-900"
+          onClick={onView}
+        >
+          {imageArea}
+        </div>
+      )}
       <div className="p-3.5 flex flex-col flex-1">
         <div className="min-w-0">
           <p className="text-[10px] font-medium text-[#C9948E] dark:text-[#E8B4AE] uppercase tracking-wider truncate">
@@ -918,10 +936,11 @@ export default function PapillonRoseSite() {
                       isFav={favorites.has(p.id)}
                       isInCart={cartItems.some((i) => i.productId === p.id)}
                       onFav={() => toggleFav(p.id)}
-                      onView={() => { setModalProduct(p); setModalQty(1); setModalVariant(undefined) }}
+                      onView={() => {}}
                       onAddCart={() => addToCartWithToast(p.id)}
                       dynamicStock={dynamicStock}
                       isBooked={p.stock === 1 && blockedIds.has(p.id)}
+                      linkTo={`/produit/${getProductSlug(p)}`}
                     />
                   ))}
               </div>
@@ -1290,10 +1309,11 @@ export default function PapillonRoseSite() {
                     isFav
                     isInCart={cartItems.some((i) => i.productId === p.id)}
                     onFav={() => toggleFav(p.id)}
-                    onView={() => setModalProduct(p)}
+                    onView={() => {}}
                     onAddCart={() => addToCartWithToast(p.id)}
                     dynamicStock={dynamicStock}
                     isBooked={p.stock === 1 && blockedIds.has(p.id)}
+                    linkTo={`/produit/${getProductSlug(p)}`}
                   />
                 ))}
               </div>
