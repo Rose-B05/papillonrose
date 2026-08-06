@@ -66,6 +66,21 @@ async function sendCancelledAfterEventEmail(
       subject: `Devis n°${quoteNumber} annulé — Papillon Rose`,
       html,
     })
+
+    // Copie admin
+    await transport.sendMail({
+      from: `"Papillon Rose" <${FROM}>`,
+      to: TO_ADMIN,
+      subject: `[Admin] Devis n°${quoteNumber} annulé — ${clientName}`,
+      html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
+        <h2 style="color:#C9948E">Devis annulé — copie admin</h2>
+        <p>Le devis <strong>n°${quoteNumber}</strong> de <strong>${clientName}</strong> (${booking.client.email}) a été annulé.</p>
+        <p>Date d'événement : ${eventDate} (passée)</p>
+        <p>Aucun règlement reçu (acompte ni solde).</p>
+        <p>Dossier clôturé automatiquement par le cron.</p>
+      </div>`,
+    })
+
     return true
   } catch (err) {
     console.error(`[cancelled-emails] Erreur envoi ${booking.id}:`, err)
