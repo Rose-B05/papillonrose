@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { useAdminHeader } from "@/components/admin/AdminHeaderContext"
 import DevisStatutBadge from "@/components/admin/devis/DevisStatutBadge"
@@ -41,7 +41,7 @@ export default function DevisDetailPage() {
   const headerTitle = loading ? "Réservation" : !booking ? "Réservation introuvable" : booking.quoteNumber || booking.id
   const docType = booking?.balancePaidAt ? "Facture" : "Devis"
 
-  const headerAction = booking && !loading ? (
+  const headerAction = useMemo(() => booking && !loading ? (
     <div className="flex items-center gap-2">
       {booking.status === "confirmed" && !booking.balancePaidAt && (
         <button
@@ -84,7 +84,7 @@ export default function DevisDetailPage() {
         Télécharger le {docType} PDF
       </button>
     </div>
-  ) : null
+  ) : null, [booking, loading, sending, docType])
 
   useAdminHeader(headerTitle, headerAction)
 
