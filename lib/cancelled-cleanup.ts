@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer"
-import { getBookings } from "./db"
-import type { Booking } from "./types"
+import { getBookings, saveEmailLog } from "./db"
+import type { Booking, EmailLog } from "./types"
+import { v4 as uuidv4 } from "uuid"
 
 const FROM = process.env.SMTP_FROM || "papillonrosebertha@gmail.com"
 const TO_ADMIN = process.env.CONTACT_EMAIL || "papillonrosebertha@gmail.com"
@@ -67,6 +68,16 @@ async function sendCancelledAfterEventEmail(
       html,
     })
 
+    await saveEmailLog({
+      id: uuidv4().slice(0, 8),
+      to: booking.client.email,
+      type: "cancelled_after_event",
+      subject: `Devis n°${quoteNumber} annulé — Papillon Rose`,
+      status: "sent",
+      bookingId: booking.id,
+      sentAt: new Date().toISOString(),
+    })
+
     // Copie admin
     await transport.sendMail({
       from: `"Papillon Rose" <${FROM}>`,
@@ -79,6 +90,16 @@ async function sendCancelledAfterEventEmail(
         <p>Aucun règlement reçu (acompte ni solde).</p>
         <p>Dossier clôturé automatiquement par le cron.</p>
       </div>`,
+    })
+
+    await saveEmailLog({
+      id: uuidv4().slice(0, 8),
+      to: TO_ADMIN,
+      type: "cancelled_after_event",
+      subject: `[Admin] Devis n°${quoteNumber} annulé — ${clientName}`,
+      status: "sent",
+      bookingId: booking.id,
+      sentAt: new Date().toISOString(),
     })
 
     return true
