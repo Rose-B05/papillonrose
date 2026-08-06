@@ -17,7 +17,7 @@ import { CATEGORIES } from "@/lib/product-helpers"
 import { prixTtc } from "@/lib/pricing"
 
 const THEMES_TAGS = ["Mariage", "Anniversaire", "Événement pro", "Baptême", "Baby shower", "Noël"]
-const COULEURS_TAGS = ["Blanc", "Doré", "Rose", "Naturel", "Rouge", "Noir", "Bleu", "Vert"]
+const COULEURS_TAGS = ["Blanc", "Doré", "Rose", "Naturel", "Rouge", "Noir", "Bleu", "Vert", "Transparent", "Marron", "Crème", "Argent", "Corail", "Taupe", "Turquoise", "Bordeaux"]
 
 type ProductStatus = "brouillon" | "publie" | "masque"
 

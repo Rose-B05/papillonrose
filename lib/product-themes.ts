@@ -68,6 +68,14 @@ export const AMBIANCES = [
   "Transparent",
   "Bois",
   "Cristal",
+  "Marron",
+  "Crème",
+  "Rouge",
+  "Vert",
+  "Corail",
+  "Taupe",
+  "Turquoise",
+  "Bordeaux",
 ] as const
 
 export type OccasionTag = (typeof OCCASIONS)[number]
