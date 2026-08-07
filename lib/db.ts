@@ -186,7 +186,7 @@ export async function getBlockedDatesForProduct(productId: number): Promise<stri
   const dates: string[] = []
   for (const [date, blocks] of Object.entries(map)) {
     for (const entry of Object.values(blocks)) {
-      if (entry.expiresAt > now) {
+      if (entry.type === "booking" && entry.expiresAt > now) {
         dates.push(date)
         break
       }
@@ -201,7 +201,7 @@ export async function getBlockedQtyForProduct(productId: number, date: string): 
   const now = Date.now()
   let total = 0
   for (const entry of Object.values(map[date])) {
-    if (entry.expiresAt > now) total += entry.qty
+    if (entry.type === "booking" && entry.expiresAt > now) total += entry.qty
   }
   return total
 }
@@ -331,7 +331,7 @@ export async function getActiveBlockedProductIds(): Promise<Set<number>> {
     for (const [date, blocks] of Object.entries(map)) {
       if (date >= today) {
         for (const entry of Object.values(blocks)) {
-          if (entry.expiresAt > now) {
+          if (entry.type === "booking" && entry.expiresAt > now) {
             blocked.add(productId)
             break
           }
