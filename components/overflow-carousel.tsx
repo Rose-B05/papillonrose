@@ -8,8 +8,7 @@ import { getCategorySlug } from "@/lib/product-helpers"
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
 
-const COLOR_A = "#E8C4B8"
-const COLOR_B = "#c27a72"
+const CATEGORY_PALETTE = ["#e8b4bc", "#ca917e", "#d9a299", "#b97a6b", "#c98b8b"]
 
 function isLight(bg: string): boolean {
   const hex = bg.replace("#", "")
@@ -154,7 +153,7 @@ export default function OverflowCarousel({
           const offset = getOffset(i)
           const s = getCardStyle(offset)
           const center = offset === 0
-          const bgColor = card.bgColor || (i % 2 === 0 ? COLOR_A : COLOR_B)
+          const bgColor = card.bgColor || CATEGORY_PALETTE[i % CATEGORY_PALETTE.length]
           const light = isLight(bgColor)
           const textColor = light ? "#333" : "#fff"
           const imgHeight = isMobile ? 210 : 340
