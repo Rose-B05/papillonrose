@@ -81,7 +81,7 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                 )}
                 {(getEffectiveStock(p) === 0 || p.badge === "epuise") && (
                   <div className="absolute inset-0 bg-white/70 dark:bg-black/60 flex items-center justify-center z-10">
-                    <span className="text-[10px] text-gray-400 dark:text-gray-300 uppercase tracking-widest font-medium">
+                    <span className="text-[10px] text-secondary-text dark:text-gray-300 uppercase tracking-widest font-medium">
                       Indisponible
                     </span>
                   </div>
@@ -97,14 +97,14 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                     {p.nom}
                   </h3>
                   {p.dimension && (
-                    <p className="text-[10px] text-gray-400 dark:text-white/60 truncate">{p.dimension}</p>
+                    <p className="text-[10px] text-secondary-text dark:text-white/60 truncate">{p.dimension}</p>
                   )}
                   <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
                     {p.variants && p.variants.length > 0 && (
-                      <span className="text-xs font-normal text-gray-400 dark:text-white/60 mr-1">à partir de</span>
+                      <span className="text-xs font-normal text-secondary-text dark:text-white/60 mr-1">à partir de</span>
                     )}
                     {prixTtc(p.variants && p.variants.length > 0 ? p.variants[0].prix : p.prix).toFixed(2)} €
-                    <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">TTC / jour</span>
+                    <span className="text-xs font-normal text-secondary-text dark:text-white/60 ml-0.5">TTC / jour</span>
                   </p>
                 </div>
 
@@ -115,7 +115,7 @@ export default function CatalogGallery({ produits, favorites, cartItems, onFav, 
                     aria-label={inCart ? "Déjà dans le panier" : outOfStock ? "Indisponible" : "Ajouter au panier"}
                     className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
                       inCart || outOfStock
-                        ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-white/60 cursor-not-allowed"
+                        ? "bg-gray-100 dark:bg-neutral-800 text-secondary-text dark:text-white/60 cursor-not-allowed"
                         : "bg-[#c27a72] dark:bg-[#c27a72] text-white hover:bg-[#a86660] dark:hover:bg-[#a86660]"
                     }`}
                   >

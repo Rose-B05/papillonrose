@@ -27,7 +27,7 @@ export async function sendQuoteConfirmation(to: string, quoteNumber: string, rec
       <p>Nous avons bien reçu votre demande de devis <strong>n°${quoteNumber}</strong>.</p>
       ${recapHtml}
       <p>Vous recevrez votre devis personnalisé sous <strong>24h ouvrées</strong>.</p>
-      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 }
@@ -55,7 +55,7 @@ export async function sendQuoteStockConfirmed(to: string, quoteNumber: string, r
       ${recapHtml}
       <p><strong>Acompte à verser :</strong> ${depositAmount.toFixed(2)} € (30%)</p>
       <p>Pour confirmer votre réservation, veuillez vous acquitter de l'acompte via le lien de paiement qui vous sera envoyé prochainement, ou contactez-nous à <a href="mailto:papillonrosebertha@gmail.com">papillonrosebertha@gmail.com</a>.</p>
-      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 }
@@ -76,7 +76,7 @@ export async function sendQuoteStockRefused(to: string, quoteNumber: string, una
       <ul style="background:#fef2f2;padding:12px 20px;border-radius:8px;color:#b91c1c">${productList}</ul>
       <p>Nous vous invitons à nous contacter pour étudier des dates alternatives ou des articles de remplacement.</p>
       <p>Email : <a href="mailto:papillonrosebertha@gmail.com">papillonrosebertha@gmail.com</a></p>
-      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 
@@ -100,7 +100,7 @@ export async function sendPaymentConfirmation(to: string, bookingId: string, rec
       <p>Votre acompte a bien été reçu.</p>
       ${recapHtml}
       <p>Le solde restant (70%) vous sera rappelé 7 jours avant votre événement.</p>
-      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 }
@@ -136,7 +136,7 @@ export async function sendQuoteBalancePaid(to: string, quoteNumber: string, tota
       </table>
       <p>Votre réservation est maintenant <strong>entièrement soldée</p>
       <p>Pour toute question, contactez-nous à <a href="mailto:papillonrosebertha@gmail.com">papillonrosebertha@gmail.com</a>.</p>
-      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 
@@ -164,8 +164,8 @@ export async function sendBalancePaymentLink(to: string, quoteNumber: string, pa
       <p style="text-align:center;margin:24px 0">
         <a href="${paymentUrl}" style="background:#c27a72;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Payer le solde — ${amount.toFixed(2)} €</a>
       </p>
-      <p style="color:#888;font-size:12px">Ce lien est valable 24h. En cas de problème, contactez-nous à <a href="mailto:papillonrosebertha@gmail.com">papillonrosebertha@gmail.com</a>.</p>
-      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="color:#544f4f;font-size:12px">Ce lien est valable 24h. En cas de problème, contactez-nous à <a href="mailto:papillonrosebertha@gmail.com">papillonrosebertha@gmail.com</a>.</p>
+      <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 }
@@ -189,7 +189,7 @@ export async function sendWelcomeEmail(to: string, prenom: string) {
       <p style="text-align:center;margin:24px 0">
         <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"}/catalogue" style="background:#c27a72;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Découvrir le catalogue</a>
       </p>
-      <p style="color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 }
@@ -202,12 +202,12 @@ export async function sendPasswordResetEmail(to: string, resetUrl: string) {
     subject: "Réinitialisation de votre mot de passe - Papillon Rose",
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px;text-align:center">
       <h2 style="color:#c27a72;margin-bottom:8px">Réinitialisation de mot de passe</h2>
-      <p style="color:#555;font-size:14px">Vous avez demandé la réinitialisation de votre mot de passe.</p>
+      <p style="color:#544f4f;font-size:14px">Vous avez demandé la réinitialisation de votre mot de passe.</p>
       <p style="text-align:center;margin:24px 0">
         <a href="${resetUrl}" style="background:#c27a72;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Réinitialiser mon mot de passe</a>
       </p>
-      <p style="color:#888;font-size:12px">Ce lien expire dans 15 minutes.</p>
-      <p style="color:#888;font-size:12px">Si vous n'avez pas demandé cette réinitialisation, ignorez cet email.</p>
+      <p style="color:#544f4f;font-size:12px">Ce lien expire dans 15 minutes.</p>
+      <p style="color:#544f4f;font-size:12px">Si vous n'avez pas demandé cette réinitialisation, ignorez cet email.</p>
     </div>`,
   })
 }
@@ -230,9 +230,9 @@ export async function sendQuoteExpiryReminder(to: string, quoteNumber: string, c
       <p style="text-align:center;margin:24px 0">
         <a href="${lienDevis}" style="background:#c27a72;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Voir mon devis</a>
       </p>
-      <p style="color:#888;font-size:12px">Passé ce délai, les disponibilités pourraient ne plus être garanties.</p>
+      <p style="color:#544f4f;font-size:12px">Passé ce délai, les disponibilités pourraient ne plus être garanties.</p>
       <p>Pour toute question, contactez-nous à <a href="mailto:papillonrosebertha@gmail.com">papillonrosebertha@gmail.com</a>.</p>
-      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 }
@@ -269,7 +269,7 @@ export async function sendChatbotLead(data: {
       </table>
       <h3 style="margin-top:20px;color:#2E2E2E">Notes</h3>
       <p style="background:#f8f5f0;padding:12px;border-radius:8px">${data.notes || "—"}</p>
-      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 }
@@ -286,7 +286,7 @@ export async function sendCancellationConfirmation(to: string, quoteNumber: stri
       <p>Votre devis <strong>n°${quoteNumber}</strong> a bien été annulé.</p>
       <p>Les dates associées à cette réservation ont été libérées et sont de nouveau disponibles.</p>
       <p>Si vous souhaitez créer une nouvelle demande de devis, n'hésitez pas à revenir vers nous.</p>
-      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 }
@@ -315,7 +315,7 @@ export async function sendQuoteSignedConfirmation(to: string, quoteNumber: strin
       <p>Bonjour ${clientName},</p>
       <p>Votre devis <strong>n°${quoteNumber}</strong> a bien été signé électroniquement.</p>
       <p>Un admin va finaliser votre réservation et vous envoyer les prochaines instructions concernant le paiement de l'acompte.</p>
-      <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+      <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
   })
 }

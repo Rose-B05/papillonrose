@@ -112,7 +112,7 @@ export default function ProductsListPage() {
             <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">
               Produits
             </h1>
-            <p className="text-sm text-gray-500 dark:text-white/60 mt-1">
+            <p className="text-sm text-secondary-text dark:text-white/60 mt-1">
               {counts.tous} produit{counts.tous !== 1 ? "s" : ""} au total
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function ProductsListPage() {
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary-text" />
             <input
               type="text"
               value={search}
@@ -145,7 +145,7 @@ export default function ProductsListPage() {
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   statusFilter === f
                     ? "bg-[#c27a72] dark:bg-[#c27a72] text-white"
-                    : "text-gray-500 dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700"
+                    : "text-secondary-text dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700"
                 }`}
               >
                 {f === "tous" ? "Tous" : f === "brouillon" ? "Brouillons" : f === "publie" ? "Publiés" : "Masqués"}
@@ -157,9 +157,9 @@ export default function ProductsListPage() {
 
         {/* Products Table */}
         {loading ? (
-          <div className="text-center py-16 text-gray-400">Chargement…</div>
+          <div className="text-center py-16 text-secondary-text">Chargement…</div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">
+          <div className="text-center py-16 text-secondary-text">
             {products.length === 0
               ? "Aucun produit. Créez votre premier produit !"
               : "Aucun produit ne correspond aux filtres."}
@@ -169,19 +169,19 @@ export default function ProductsListPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-black/[0.07] dark:border-white/[0.08]">
-                  <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
+                  <th className="text-left px-5 py-3 text-xs text-secondary-text dark:text-white/60 uppercase tracking-wider font-medium">
                     Produit
                   </th>
-                  <th className="text-left px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium hidden md:table-cell">
+                  <th className="text-left px-5 py-3 text-xs text-secondary-text dark:text-white/60 uppercase tracking-wider font-medium hidden md:table-cell">
                     Catégorie
                   </th>
-                  <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
+                  <th className="text-right px-5 py-3 text-xs text-secondary-text dark:text-white/60 uppercase tracking-wider font-medium">
                     Prix
                   </th>
-                  <th className="text-center px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
+                  <th className="text-center px-5 py-3 text-xs text-secondary-text dark:text-white/60 uppercase tracking-wider font-medium">
                     Statut
                   </th>
-                  <th className="text-right px-5 py-3 text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider font-medium">
+                  <th className="text-right px-5 py-3 text-xs text-secondary-text dark:text-white/60 uppercase tracking-wider font-medium">
                     Actions
                   </th>
                 </tr>
@@ -218,14 +218,14 @@ export default function ProductsListPage() {
                           <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
                             {p.nom}
                           </p>
-                          <p className="text-[10px] text-gray-400 dark:text-white/60 md:hidden">
+                          <p className="text-[10px] text-secondary-text dark:text-white/60 md:hidden">
                             {p.categorie}
                           </p>
                         </div>
                       </div>
                     </td>
                     <td className="px-5 py-3 hidden md:table-cell">
-                      <span className="text-sm text-gray-500 dark:text-white/70">
+                      <span className="text-sm text-secondary-text dark:text-white/70">
                         {p.categorie}
                       </span>
                     </td>
@@ -233,9 +233,9 @@ export default function ProductsListPage() {
                       <span className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
                         {typeof p.prix === "number" ? `${p.prix} €` : p.prix}
                       </span>
-                      <span className="text-xs text-gray-400 dark:text-white/60"> HT/jour</span>
+                      <span className="text-xs text-secondary-text dark:text-white/60"> HT/jour</span>
                       {typeof p.prix === "number" && (
-                        <div className="text-[11px] text-gray-400 dark:text-white/50">
+                        <div className="text-[11px] text-secondary-text dark:text-white/50">
                           {prixTtc(p.prix).toFixed(2)} € TTC
                         </div>
                       )}
@@ -247,7 +247,7 @@ export default function ProductsListPage() {
                             ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
                             : p.status === "masque"
                             ? "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400"
-                            : "bg-gray-100 text-gray-500 dark:bg-neutral-700 dark:text-white/70"
+                            : "bg-gray-100 text-secondary-text dark:bg-neutral-700 dark:text-white/70"
                         }`}
                       >
                         {p.status === "publie" ? (
@@ -274,14 +274,14 @@ export default function ProductsListPage() {
                         </button>
                         <Link
                           href={`/admin/contenu/produits/${p.id}`}
-                          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-white/60 hover:text-[#c27a72] transition-colors"
+                          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-secondary-text dark:text-white/60 hover:text-[#c27a72] transition-colors"
                           title={p.isStatic ? "Modifier (créera une copie admin)" : "Modifier"}
                         >
                           <Edit className="w-4 h-4" />
                         </Link>
                         <button
                             onClick={() => handleDelete(p.id, p.nom, p.isStatic)}
-                            className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-white/60 hover:text-red-500 transition-colors"
+                            className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-secondary-text dark:text-white/60 hover:text-red-500 transition-colors"
                             title={p.isStatic ? "Masquer du catalogue" : "Supprimer"}
                           >
                             <Trash2 className="w-4 h-4" />

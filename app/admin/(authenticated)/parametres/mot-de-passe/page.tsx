@@ -41,13 +41,13 @@ function PasswordField({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-gray-400"
+          className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-secondary-text"
           style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
         />
         <button
           type="button"
           onClick={onToggle}
-          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-secondary-text hover:text-secondary-text dark:hover:text-gray-300 transition-colors"
           tabIndex={-1}
         >
           {show ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -115,7 +115,7 @@ export default function MotDePassePage() {
             <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">
               Changer le mot de passe
             </h2>
-            <p className="text-xs text-gray-400 dark:text-white/60">
+            <p className="text-xs text-secondary-text dark:text-white/60">
               Modifiez votre mot de passe de connexion admin
             </p>
           </div>
@@ -141,7 +141,7 @@ export default function MotDePassePage() {
           />
 
           <div className="space-y-1.5">
-            <p className="text-xs text-gray-400 dark:text-white/60 font-medium">Règles de sécurité :</p>
+            <p className="text-xs text-secondary-text dark:text-white/60 font-medium">Règles de sécurité :</p>
             <ul className="space-y-1">
               {PASSWORD_RULES.map((rule) => (
                 <li key={rule.label} className="flex items-center gap-2 text-xs">
@@ -150,7 +150,7 @@ export default function MotDePassePage() {
                   ) : (
                     <div className="w-[13px] h-[13px] rounded-full border border-gray-300 dark:border-neutral-600" />
                   )}
-                  <span className={rule.test(newPassword) ? "text-green-600 dark:text-green-400" : "text-gray-400 dark:text-white/60"}>
+                  <span className={rule.test(newPassword) ? "text-green-600 dark:text-green-400" : "text-secondary-text dark:text-white/60"}>
                     {rule.label}
                   </span>
                 </li>

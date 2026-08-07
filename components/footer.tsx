@@ -346,7 +346,7 @@ export default function Footer() {
               alt="Papillon Rose"
               className="h-10 md:h-12 w-auto brightness-0 invert opacity-90 mb-4"
             />
-            <p className="text-[#A89090] text-sm leading-relaxed mb-6">
+            <p className="text-secondary-text text-sm leading-relaxed mb-6">
               Location de mobilier et décoration pour événements, mariages et
               réceptions.
             </p>
@@ -402,7 +402,7 @@ export default function Footer() {
               alt="Papillon Rose"
               className="h-10 md:h-12 w-auto brightness-0 invert opacity-90 mb-4"
             />
-            <p className="text-[#A89090] text-sm leading-relaxed mb-6">
+            <p className="text-secondary-text text-sm leading-relaxed mb-6">
               Location de mobilier et décoration pour événements, mariages et
               réceptions.
             </p>
@@ -486,20 +486,20 @@ export default function Footer() {
       {/* Barre copyright */}
       <div className="max-w-[1600px] mx-auto px-5 md:px-10 lg:px-[70px] relative z-10 pt-6 border-t border-white/10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-[#A89090]/60 text-xs">
+          <p className="text-secondary-text/60 text-xs">
             © 2026 Papillon Rose — Location décoration événements · Tous droits
             réservés
           </p>
           <div className="flex items-center gap-4 text-xs">
             <a
               href="/conditions-location"
-              className="text-[#A89090]/60 hover:text-[#ddb5ae] transition-colors"
+              className="text-secondary-text/60 hover:text-[#ddb5ae] transition-colors"
             >
               Conditions de location
             </a>
             <a
               href="/mentions-legales"
-              className="text-[#A89090]/60 hover:text-[#ddb5ae] transition-colors"
+              className="text-secondary-text/60 hover:text-[#ddb5ae] transition-colors"
             >
               Mentions légales
             </a>

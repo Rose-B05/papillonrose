@@ -32,12 +32,12 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
             <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">
               Alertes
             </h3>
-            <p className="text-xs text-gray-500 dark:text-white/70">
+            <p className="text-xs text-secondary-text dark:text-white/70">
               {errors} erreur(s), {warnings} avertissement(s)
             </p>
           </div>
         </div>
-        {expanded ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
+        {expanded ? <ChevronUp size={16} className="text-secondary-text" /> : <ChevronDown size={16} className="text-secondary-text" />}
       </button>
 
       {expanded && (
@@ -50,7 +50,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
                 className={`text-xs px-2.5 py-1 rounded-full transition-colors ${
                   filter === f
                     ? "bg-[#c27a72] text-white"
-                    : "bg-gray-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-300 hover:bg-gray-200 dark:hover:bg-neutral-600"
+                    : "bg-gray-100 dark:bg-neutral-700 text-secondary-text dark:text-neutral-300 hover:bg-gray-200 dark:hover:bg-neutral-600"
                 }`}
               >
                 {f === "all" ? "Toutes" : f === "error" ? "Erreurs" : f === "warning" ? "Avertissements" : "Infos"}
@@ -59,7 +59,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
           </div>
 
           {filtered.length === 0 ? (
-            <p className="text-sm text-gray-400 dark:text-white/60 text-center py-4">
+            <p className="text-sm text-secondary-text dark:text-white/60 text-center py-4">
               Aucune alerte
             </p>
           ) : (
@@ -87,7 +87,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
                       {alert.message}
                     </p>
                     {alert.page && (
-                      <p className="text-xs text-gray-500 dark:text-white/70 mt-0.5">
+                      <p className="text-xs text-secondary-text dark:text-white/70 mt-0.5">
                         {alert.page}
                       </p>
                     )}

@@ -322,9 +322,9 @@ export default function ReservationPage() {
             <Check size={32} className="text-green-500" />
           </div>
           <h1 style={DP} className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Demande envoyée</h1>
-          <p className="text-gray-500 dark:text-white/60 text-sm mb-1">Votre numéro de demande :</p>
+          <p className="text-secondary-text dark:text-white/60 text-sm mb-1">Votre numéro de demande :</p>
           <p className="text-[#c27a72] dark:text-[#d4968e] font-bold text-2xl mb-6">#{bookingId}</p>
-          <p className="text-gray-500 dark:text-white/60 text-sm mb-6">
+          <p className="text-secondary-text dark:text-white/60 text-sm mb-6">
             Votre demande de devis a bien été enregistrée. Nous vous enverrons votre devis personnalisé sous <strong className="text-[#c27a72] dark:text-[#d4968e]">24h ouvrées</strong>.
           </p>
           <div className="flex flex-col gap-3">
@@ -350,7 +350,7 @@ export default function ReservationPage() {
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 pt-16 md:pt-20">
       <div className="bg-white dark:bg-neutral-800 shadow-sm">
         <div className="max-w-4xl mx-auto px-5 py-4 flex items-center justify-between">
-          <button onClick={handleBack} className="text-sm text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors">← Retour</button>
+          <button onClick={handleBack} className="text-sm text-secondary-text dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors">← Retour</button>
           <h1 style={DP} className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100">Réservation</h1>
           <div className="w-16" />
         </div>
@@ -362,7 +362,7 @@ export default function ReservationPage() {
           </div>
           <div className="flex justify-between text-[10px] uppercase tracking-wider">
             {stepLabels.map((label, i) => (
-                            <span key={label} className={i <= stepIndex ? "text-[#c27a72] dark:text-[#d4968e] font-semibold" : "text-[#999]"}>        {label}</span>
+                            <span key={label} className={i <= stepIndex ? "text-[#c27a72] dark:text-[#d4968e] font-semibold" : "text-secondary-text"}>        {label}</span>
             ))}
           </div>
         </div>
@@ -386,7 +386,7 @@ export default function ReservationPage() {
                 <div className="w-16 h-16 bg-[#c27a72]/10 dark:bg-[#c27a72]/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <ShoppingBag size={24} className="text-[#c27a72]/40" />
                 </div>
-                <p className="text-gray-400 dark:text-white/60 mb-5">Votre panier est vide</p>
+                <p className="text-secondary-text dark:text-white/60 mb-5">Votre panier est vide</p>
                 <a href="/catalogue" className="bg-[#c27a72] dark:bg-[#c27a72] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#a86660] dark:hover:bg-[#a86660] transition-colors inline-block">
                   Découvrir le catalogue
                 </a>
@@ -405,7 +405,7 @@ export default function ReservationPage() {
                         <div className="flex-1 min-w-0">
                           <p className="font-medium text-sm text-[#2E2E2E] dark:text-neutral-100">{p?.nom}</p>
                           {item.variantLabel && <p className="text-[11px] text-[#c27a72] dark:text-[#d4968e] font-medium">{item.variantLabel}</p>}
-                          <p className="text-[11px] text-gray-400 dark:text-white/60 mt-0.5">{Math.round(parsePrix(itemPrix) * (1 + TVA_RATE) * 100) / 100} € TTC / jour</p>
+                          <p className="text-[11px] text-secondary-text dark:text-white/60 mt-0.5">{Math.round(parsePrix(itemPrix) * (1 + TVA_RATE) * 100) / 100} € TTC / jour</p>
                           <div className="flex items-center gap-2 mt-2">
                             <button onClick={() => updateItem(item.productId, { qty: Math.max(1, item.qty - 1) }, item.variantLabel)} className="w-6 h-6 bg-[#c27a72] dark:bg-[#c27a72] text-white rounded-full flex items-center justify-center hover:bg-[#a86660] dark:hover:bg-[#a86660] transition-colors shadow-sm"><Minus size={10} /></button>
                             <span className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 w-7 text-center">{item.qty}</span>
@@ -442,7 +442,7 @@ export default function ReservationPage() {
                 )}
 
                 <div className="flex gap-3">
-                  <button onClick={clearCart} className="flex-1 border border-[#c27a72] text-gray-500 dark:text-white/60 py-3 rounded-2xl text-sm font-medium hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition-colors">Vider le panier</button>
+                  <button onClick={clearCart} className="flex-1 border border-[#c27a72] text-secondary-text dark:text-white/60 py-3 rounded-2xl text-sm font-medium hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition-colors">Vider le panier</button>
                   <button
                     onClick={() => setStep("dates")}
                     disabled={!isMontantMinimumAtteint(totalTtc)}
@@ -611,7 +611,7 @@ export default function ReservationPage() {
                 {client.besoinLivraison && (
                   <div className="bg-white dark:bg-neutral-800 rounded-2xl p-4 sm:p-5 border border-black/[0.07] dark:border-white/[0.08] shadow-sm space-y-4">
                     <div>
-                      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">Code postal de livraison</label>
+                      <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">Code postal de livraison</label>
                       <input
                         type="text"
                         value={client.codePostalLivraison || ""}
@@ -641,14 +641,14 @@ export default function ReservationPage() {
                         {deliveryResult.freeDelivery ? (
                           <div className="text-center py-2">
                             <p className="text-sm font-semibold text-green-600 mb-1">Livraison gratuite</p>
-                            <p className="text-xs text-gray-400 dark:text-white/60">Commande &ge; 150&euro; — frais offerts</p>
-                            <p className="text-[10px] text-gray-400 dark:text-white/60 mt-1">
+                            <p className="text-xs text-secondary-text dark:text-white/60">Commande &ge; 150&euro; — frais offerts</p>
+                            <p className="text-[10px] text-secondary-text dark:text-white/60 mt-1">
                               📍 Depuis Créteil (94) — {deliveryResult.zoneLabel} ({deliveryResult.distanceKm} km)
                             </p>
                           </div>
                         ) : (
                           <>
-                            <p className="text-xs text-gray-400 dark:text-white/60 mb-2">Frais de livraison estimés</p>
+                            <p className="text-xs text-secondary-text dark:text-white/60 mb-2">Frais de livraison estimés</p>
                             <div className="space-y-1.5 text-sm">
                               <div className="flex justify-between">
                                 <span className="text-[#2E2E2E] dark:text-neutral-100">Forfait de base</span>
@@ -663,7 +663,7 @@ export default function ReservationPage() {
                                 <span>{deliveryResult.totalFee.toFixed(2)} €</span>
                               </div>
                             </div>
-                            <p className="text-[10px] text-gray-400 dark:text-white/60 mt-2">
+                            <p className="text-[10px] text-secondary-text dark:text-white/60 mt-2">
                               📍 Depuis Créteil (94) — {deliveryResult.zoneLabel}
                             </p>
                           </>
@@ -680,35 +680,35 @@ export default function ReservationPage() {
                 )}
               </div>
               <div>
-                <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">Message (optionnel)</label>
+                <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">Message (optionnel)</label>
                 <textarea value={client.message || ""} onChange={(e) => setClient((c) => ({ ...c, message: e.target.value }))} rows={3} placeholder="Optionnel" className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors resize-none shadow-sm" style={{ WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
               </div>
 
               {/* Recap */}
               <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-2xl p-5">
-                <p className="text-xs text-gray-400 dark:text-white/60 mb-2">Récapitulatif</p>
+                <p className="text-xs text-secondary-text dark:text-white/60 mb-2">Récapitulatif</p>
                 {items.map((i) => {
                   const p = getProduct(i.productId)
                   const eds = dateEdits[i.productId]
                   return (
                     <div key={`${i.productId}:${i.variantLabel || ""}`} className="flex justify-between text-sm text-[#2E2E2E] dark:text-neutral-100">
                       <span>{p?.nom}{i.variantLabel ? ` (${i.variantLabel})` : ""} × {i.qty}</span>
-                      <span className="text-gray-500 dark:text-white/60">{eds?.start ? formatDateFr(eds.start) : "..."} → {eds?.end ? formatDateFr(eds.end) : "..."}</span>
+                      <span className="text-secondary-text dark:text-white/60">{eds?.start ? formatDateFr(eds.start) : "..."} → {eds?.end ? formatDateFr(eds.end) : "..."}</span>
                     </div>
                   )
                 })}
                 <div className="border-t border-black/[0.1] mt-3 pt-3">
                   <div className="flex justify-between font-bold">
-                    <span className="text-[#666]">Total TTC</span>
+                    <span className="text-secondary-text">Total TTC</span>
                     <span className="text-[#2E2E2E] dark:text-neutral-100">{fmt(totalTtcWithDelivery)}</span>
                   </div>
                   {getModeReglement(totalTtc) === "acompte-30" ? (
                     <div className="mt-2 space-y-1">
                       <div className="flex justify-between text-sm">
-                        <span className="text-[#666]">Acompte 30% (à payer en ligne)</span>
+                        <span className="text-secondary-text">Acompte 30% (à payer en ligne)</span>
                         <span className="font-semibold text-[#c27a72]">{deposit.toFixed(2)} €</span>
                       </div>
-                      <div className="flex justify-between text-xs text-gray-400">
+                      <div className="flex justify-between text-xs text-secondary-text">
                         <span>Solde restant (à régler au retrait/livraison)</span>
                         <span>{(totalTtcWithDelivery - deposit).toFixed(2)} €</span>
                       </div>
@@ -752,7 +752,7 @@ export default function ReservationPage() {
                     isDark={isDark}
                   />
                   <div className="flex items-center justify-between mt-2">
-                    <p className="text-[10px] text-gray-400 dark:text-white/60">
+                    <p className="text-[10px] text-secondary-text dark:text-white/60">
                       {deliveryResult?.distanceKm ? `${deliveryResult.distanceKm} km` : ""}
                     </p>
                     <a
@@ -780,19 +780,19 @@ export default function ReservationPage() {
                       return (
                         <div key={productId} className="flex items-start gap-3 text-sm">
                           <div className="flex-1">
-                            {prod && <p className="text-[10px] text-gray-400 dark:text-white/60 mb-0.5">{prod.nom}</p>}
+                            {prod && <p className="text-[10px] text-secondary-text dark:text-white/60 mb-0.5">{prod.nom}</p>}
                             <div className="flex items-center gap-2 mb-1">
                               <RotateCcw size={12} className="text-[#c27a72] dark:text-[#d4968e]" />
                               <span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Retrait</span>
                             </div>
-                            <p className="text-xs text-gray-500 dark:text-white/60 ml-5">{formatDateLong(rd.pickupDate)}</p>
+                            <p className="text-xs text-secondary-text dark:text-white/60 ml-5">{formatDateLong(rd.pickupDate)}</p>
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
                               <RotateCcw size={12} className="text-red-400" />
                               <span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Restitution</span>
                             </div>
-                            <p className="text-xs text-gray-500 dark:text-white/60 ml-5">Avant 12h le {formatDateLong(rd.returnDeadline)}</p>
+                            <p className="text-xs text-secondary-text dark:text-white/60 ml-5">Avant 12h le {formatDateLong(rd.returnDeadline)}</p>
                           </div>
                         </div>
                       )
@@ -832,7 +832,7 @@ export default function ReservationPage() {
                 </div>
               )}
 
-              <p className="text-xs text-gray-400 dark:text-white/60 text-center">
+              <p className="text-xs text-secondary-text dark:text-white/60 text-center">
                 Vous recevrez votre devis sous <strong className="text-[#c27a72] dark:text-[#d4968e]">24h ouvrées</strong>
               </p>
 
@@ -911,7 +911,7 @@ export default function ReservationPage() {
             {alreadyConnected === null ? (
               <div className="text-center py-12">
                 <Loader2 size={24} className="animate-spin mx-auto text-[#c27a72] mb-3" />
-                <p className="text-sm text-gray-400">Vérification de votre session…</p>
+                <p className="text-sm text-secondary-text">Vérification de votre session…</p>
               </div>
             ) : alreadyConnected === true && !bookingAttempted ? (
               <AccountAutoAdvance
@@ -939,7 +939,7 @@ export default function ReservationPage() {
                   <button
                     type="button"
                     onClick={() => { setAccountMode("register"); setAccountError("") }}
-                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${accountMode === "register" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-gray-400 dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}
+                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${accountMode === "register" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-secondary-text dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}
                   >
                     <UserPlus size={15} />
                     Créer un compte
@@ -947,7 +947,7 @@ export default function ReservationPage() {
                   <button
                     type="button"
                     onClick={() => { setAccountMode("login"); setAccountError("") }}
-                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${accountMode === "login" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-gray-400 dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}
+                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${accountMode === "login" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-secondary-text dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}
                   >
                     <LogIn size={15} />
                     Se connecter
@@ -991,15 +991,15 @@ export default function ReservationPage() {
                   {/* Pré-remplissage : champs en lecture seule */}
                   <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl p-4 space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Prénom</span>
+                      <span className="text-secondary-text">Prénom</span>
                       <span className="text-[#2E2E2E] dark:text-neutral-100 font-medium">{client.prenom}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Nom</span>
+                      <span className="text-secondary-text">Nom</span>
                       <span className="text-[#2E2E2E] dark:text-neutral-100 font-medium">{client.nom}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Email</span>
+                      <span className="text-secondary-text">Email</span>
                       <span className="text-[#2E2E2E] dark:text-neutral-100 font-medium">{client.email}</span>
                     </div>
                   </div>
@@ -1029,7 +1029,7 @@ export default function ReservationPage() {
                   </button>
                 </form>
 
-                <p className="text-center text-xs text-gray-400 dark:text-white/60 mt-4">
+                <p className="text-center text-xs text-secondary-text dark:text-white/60 mt-4">
                   En créant un compte, vous pourrez suivre vos devis et vos réservations depuis votre espace client.
                 </p>
               </>
@@ -1056,14 +1056,14 @@ function AccountAutoAdvance({ onAdvance, attempted, onAttempted }: { onAdvance: 
   return (
     <div className="text-center py-12">
       <Loader2 size={24} className="animate-spin mx-auto text-[#c27a72] mb-3" />
-      <p className="text-sm text-gray-400">Compte connecté, préparation de votre devis…</p>
+      <p className="text-sm text-secondary-text">Compte connecté, préparation de votre devis…</p>
     </div>
   )
 }
 
 function BackButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (
-    <button onClick={onClick} className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors mb-6">
+    <button onClick={onClick} className="flex items-center gap-1.5 text-sm text-secondary-text dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors mb-6">
       <ArrowLeft size={14} /> {label}
     </button>
   )
@@ -1083,7 +1083,7 @@ function InputField({ label, type = "text", value, onChange, required, error, fi
 }) {
   return (
     <div>
-      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
+      <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
       <input id={fieldId} type={type} value={value} onChange={(e) => onChange(e.target.value)} onBlur={onBlur} required={required}
         className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'}`}
         style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E", caretColor: "#2E2E2E" } as React.CSSProperties} />
@@ -1097,9 +1097,9 @@ function SelectField({ label, value, onChange, options, required, error, fieldId
 }) {
   return (
     <div>
-      <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
+      <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">{label}{required && <span className="text-red-400 dark:text-red-500 ml-0.5">*</span>}</label>
       <select id={fieldId} value={value} onChange={(e) => onChange(e.target.value)} onBlur={onBlur} required={required}
-        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'} ${value ? 'text-[#2E2E2E] dark:text-neutral-100' : 'text-gray-400 dark:text-white/50'}`}
+        className={`w-full bg-white dark:bg-neutral-800 border rounded-2xl px-4 py-3 text-sm outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm ${error ? 'border-red-400 dark:border-red-500' : 'border-black/[0.08] dark:border-white/[0.08]'} ${value ? 'text-[#2E2E2E] dark:text-neutral-100' : 'text-secondary-text dark:text-white/50'}`}
         style={{ color: value ? "#2E2E2E" : "#9ca3af", WebkitTextFillColor: value ? "#2E2E2E" : "#9ca3af" } as React.CSSProperties}>
         <option value="">Sélectionner</option>
         {options.map((o) => <option key={o} value={o} className="text-[#2E2E2E] dark:text-neutral-100">{o}</option>)}
@@ -1119,7 +1119,7 @@ function Totals({ totalHt, totalTtc, deposit, deliveryFee }: { totalHt: number; 
     <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 shadow-sm border border-black/[0.07] dark:border-white/[0.08] mb-6">
       {typeof deliveryFee === "number" && deliveryFee > 0 && (
         <div className="flex justify-between text-sm mb-2">
-          <span className="text-gray-400 dark:text-white/60 flex items-center gap-1.5">
+          <span className="text-secondary-text dark:text-white/60 flex items-center gap-1.5">
             <Truck size={12} /> Livraison
           </span>
           <span className="font-semibold text-[#c27a72] dark:text-[#d4968e]">{fmt(deliveryFee)}</span>
@@ -1152,15 +1152,15 @@ function RentalDatesCard({ rd, montantTotal }: { rd: RentalDates; montantTotal: 
       <p className="text-[10px] uppercase tracking-wider text-[#c27a72] dark:text-[#d4968e] font-semibold mb-2">{rd.ruleLabel}</p>
       <div className="grid grid-cols-2 gap-3 text-xs">
         <div>
-          <p className="text-gray-400 dark:text-white/60 mb-0.5">Retrait</p>
+          <p className="text-secondary-text dark:text-white/60 mb-0.5">Retrait</p>
           <p className="font-medium text-[#2E2E2E] dark:text-neutral-100">{formatDateLong(rd.pickupDate)}</p>
         </div>
         <div>
-          <p className="text-gray-400 dark:text-white/60 mb-0.5">Restitution avant 12h</p>
+          <p className="text-secondary-text dark:text-white/60 mb-0.5">Restitution avant 12h</p>
           <p className="font-medium text-[#2E2E2E] dark:text-neutral-100">{formatDateLong(rd.returnDeadline)}</p>
         </div>
       </div>
-      <div className="mt-2 pt-2 border-t border-black/[0.05] text-[10px] text-gray-400 dark:text-white/60">
+      <div className="mt-2 pt-2 border-t border-black/[0.05] text-[10px] text-secondary-text dark:text-white/60">
         <span className="text-amber-600 font-medium">Retard :</span> +{fee1.taux * 100}%jour 1 ({fee1.montant.toFixed(2)}€) → +{fee2.taux * 100}%jour 2 ({fee2.montant.toFixed(2)}€) → plafond {feeMax.taux * 100}% ({feeMax.montant.toFixed(2)}€)
       </div>
     </div>

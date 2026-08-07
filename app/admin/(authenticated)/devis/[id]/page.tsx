@@ -70,7 +70,7 @@ export default function DevisDetailPage() {
       {booking.status !== "cancelled" && (
         <button
           onClick={handleCancel}
-          className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"
+          className="p-1.5 text-secondary-text hover:text-red-500 transition-colors"
           title="Annuler"
         >
           <XCircle size={15} />
@@ -176,14 +176,14 @@ export default function DevisDetailPage() {
 
   if (loading) {
     return (
-        <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
+        <div className="text-center py-16 text-secondary-text dark:text-white/60">Chargement…</div>
     )
   }
 
   if (!booking) {
     return (
         <div className="text-center py-16">
-          <p className="text-gray-400 dark:text-white/60 mb-4">Cette réservation n&apos;existe pas.</p>
+          <p className="text-secondary-text dark:text-white/60 mb-4">Cette réservation n&apos;existe pas.</p>
           <button onClick={() => router.push("/admin/devis")} className="text-[#c27a72] hover:underline">
             ← Retour à la liste
           </button>
@@ -197,11 +197,11 @@ export default function DevisDetailPage() {
           <div className="flex items-center gap-3 mb-4">
             <DevisStatutBadge statut={booking.status} />
             <QuoteCountdown booking={booking} />
-            <span className="text-xs text-gray-400 dark:text-white/50">
+            <span className="text-xs text-secondary-text dark:text-white/50">
               Créé le {formatDate(booking.createdAt)}
             </span>
             {booking.customerEmail && (
-              <span className="text-xs text-gray-400 dark:text-white/50">
+              <span className="text-xs text-secondary-text dark:text-white/50">
                 · {booking.customerEmail}
               </span>
             )}
@@ -211,17 +211,17 @@ export default function DevisDetailPage() {
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
           <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Client</h3>
           <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
-            <span className="text-gray-400">Nom</span>
+            <span className="text-secondary-text">Nom</span>
             <span className="text-[#2E2E2E] dark:text-neutral-100">{booking.client.prenom} {booking.client.nom}</span>
-            <span className="text-gray-400">Email</span>
+            <span className="text-secondary-text">Email</span>
             <span className="text-[#2E2E2E] dark:text-neutral-100">{booking.client.email}</span>
-            <span className="text-gray-400">Téléphone</span>
+            <span className="text-secondary-text">Téléphone</span>
             <span className="text-[#2E2E2E] dark:text-neutral-100">{booking.client.telephone || "—"}</span>
-            <span className="text-gray-400">Événement</span>
+            <span className="text-secondary-text">Événement</span>
             <span className="text-[#2E2E2E] dark:text-neutral-100">{booking.client.typeEvenement || "—"}</span>
-            <span className="text-gray-400">Date événement</span>
+            <span className="text-secondary-text">Date événement</span>
             <span className="text-[#2E2E2E] dark:text-neutral-100">{booking.client.dateEvenement ? formatDate(booking.client.dateEvenement) : "—"}</span>
-            <span className="text-gray-400">Lieu</span>
+            <span className="text-secondary-text">Lieu</span>
             <span className="text-[#2E2E2E] dark:text-neutral-100">{booking.client.lieuEvenement || "—"}</span>
           </div>
         </div>
@@ -230,13 +230,13 @@ export default function DevisDetailPage() {
           <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
             <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Signature électronique</h3>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
-              <span className="text-gray-400">Signataire</span>
+              <span className="text-secondary-text">Signataire</span>
               <span className="text-[#2E2E2E] dark:text-neutral-100">{booking.signature.signerName}</span>
-              <span className="text-gray-400">Date de signature</span>
+              <span className="text-secondary-text">Date de signature</span>
               <span className="text-[#2E2E2E] dark:text-neutral-100">{formatDate(booking.signature.signedAt)}</span>
               {booking.signature.ipAddress && (
                 <>
-                  <span className="text-gray-400">Adresse IP</span>
+                  <span className="text-secondary-text">Adresse IP</span>
                   <span className="text-[#2E2E2E] dark:text-neutral-100">{booking.signature.ipAddress}</span>
                 </>
               )}
@@ -250,10 +250,10 @@ export default function DevisDetailPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-black/[0.06] dark:border-white/[0.08]">
-                  <th className="text-left py-2 text-xs text-gray-500 dark:text-white/60">Article</th>
-                  <th className="text-center py-2 text-xs text-gray-500 dark:text-white/60">Qté</th>
-                  <th className="text-left py-2 text-xs text-gray-500 dark:text-white/60 hidden sm:table-cell">Dates</th>
-                  <th className="text-right py-2 text-xs text-gray-500 dark:text-white/60">Total</th>
+                  <th className="text-left py-2 text-xs text-secondary-text dark:text-white/60">Article</th>
+                  <th className="text-center py-2 text-xs text-secondary-text dark:text-white/60">Qté</th>
+                  <th className="text-left py-2 text-xs text-secondary-text dark:text-white/60 hidden sm:table-cell">Dates</th>
+                  <th className="text-right py-2 text-xs text-secondary-text dark:text-white/60">Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -271,7 +271,7 @@ export default function DevisDetailPage() {
                         </span>
                       </td>
                       <td className="py-2 text-center">{item.qty}</td>
-                      <td className="py-2 hidden sm:table-cell text-xs text-gray-500 dark:text-white/60">
+                      <td className="py-2 hidden sm:table-cell text-xs text-secondary-text dark:text-white/60">
                         {item.dateStart ? `${formatDate(item.dateStart)} → ${formatDate(item.dateEnd)}` : "—"}
                       </td>
                       <td className="py-2 text-right font-medium text-[#c27a72] dark:text-[#d4968e]">
@@ -289,18 +289,18 @@ export default function DevisDetailPage() {
           <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Totaux</h3>
           <div className="space-y-2 text-sm max-w-xs">
             <div className="flex justify-between">
-              <span className="text-gray-500 dark:text-white/60">Total HT</span>
+              <span className="text-secondary-text dark:text-white/60">Total HT</span>
               <span>{booking.totalHt.toFixed(2)} €</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500 dark:text-white/60">TVA (20%)</span>
+              <span className="text-secondary-text dark:text-white/60">TVA (20%)</span>
               <span>{(booking.totalTtc - booking.totalHt).toFixed(2)} €</span>
             </div>
             <div className="flex justify-between pt-2 border-t border-black/[0.06] dark:border-white/[0.08] font-semibold text-[#c27a72] dark:text-[#d4968e]">
               <span>Total TTC</span>
               <span>{booking.totalTtc.toFixed(2)} €</span>
             </div>
-            <div className="flex justify-between text-xs text-gray-400 dark:text-white/50">
+            <div className="flex justify-between text-xs text-secondary-text dark:text-white/50">
               <span>Acompte 30%</span>
               <span>{booking.depositAmount.toFixed(2)} €</span>
             </div>
@@ -318,7 +318,7 @@ export default function DevisDetailPage() {
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   booking.status === s
                     ? "bg-[#c27a72] text-white"
-                    : "bg-gray-100 dark:bg-neutral-700 text-gray-500 dark:text-white/60 hover:bg-gray-200 dark:hover:bg-neutral-600"
+                    : "bg-gray-100 dark:bg-neutral-700 text-secondary-text dark:text-white/60 hover:bg-gray-200 dark:hover:bg-neutral-600"
                 }`}
               >
                 {s === "pending-quote" ? "En attente" : s === "quote-sent" ? "Devis envoyé" : s === "signed" ? "Signé" : s === "deposit-pending" ? "Acompte en attente" : s === "confirmed" ? "Confirmée" : s === "cancelled" ? "Annulée" : "Restituée"}

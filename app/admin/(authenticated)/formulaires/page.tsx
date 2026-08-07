@@ -49,7 +49,7 @@ export default function FormulairesPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Formulaires</h1>
-          <p className="text-sm text-gray-400 dark:text-white/60 mt-1">
+          <p className="text-sm text-secondary-text dark:text-white/60 mt-1">
             {messages.length} message{messages.length !== 1 ? "s" : ""}
             {unreadCount > 0 && (
               <span className="ml-2 text-[#c27a72] dark:text-[#d4968e] font-medium">
@@ -62,23 +62,23 @@ export default function FormulairesPage() {
           onClick={fetchMessages}
           className="p-2 rounded-xl bg-gray-100 dark:bg-neutral-800 hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors"
         >
-          <RefreshCcw size={16} className="text-gray-400" />
+          <RefreshCcw size={16} className="text-secondary-text" />
         </button>
       </div>
 
       {loading ? (
         <div className="py-24 text-center">
-          <p className="text-gray-400 dark:text-white/60 text-sm">Chargementâ€¦</p>
+          <p className="text-secondary-text dark:text-white/60 text-sm">Chargementâ€¦</p>
         </div>
       ) : messages.length === 0 ? (
         <div className="py-24 text-center">
           <div className="w-20 h-20 bg-[#c27a72]/10 rounded-full flex items-center justify-center mx-auto mb-5">
             <Inbox size={32} className="text-[#c27a72]/40" />
           </div>
-          <p className="text-gray-400 dark:text-white/60 text-base mb-2">
+          <p className="text-secondary-text dark:text-white/60 text-base mb-2">
             Aucun message pour l&apos;instant
           </p>
-          <p className="text-gray-400 dark:text-white/60 text-xs">
+          <p className="text-secondary-text dark:text-white/60 text-xs">
             Les messages envoyÃ©s via le formulaire de contact apparaÃ®tront ici.
           </p>
         </div>
@@ -111,12 +111,12 @@ export default function FormulairesPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <p className={`text-sm font-medium truncate ${msg.read ? "text-gray-500 dark:text-white/70" : "text-[#2E2E2E] dark:text-neutral-100"}`}>
+                      <p className={`text-sm font-medium truncate ${msg.read ? "text-secondary-text dark:text-white/70" : "text-[#2E2E2E] dark:text-neutral-100"}`}>
                         {msg.name}
                       </p>
                       {!msg.read && <span className="w-2 h-2 rounded-full bg-[#c27a72] flex-shrink-0" />}
                     </div>
-                    <p className="text-xs text-gray-400 dark:text-white/60 truncate mt-0.5">
+                    <p className="text-xs text-secondary-text dark:text-white/60 truncate mt-0.5">
                       {msg.message}
                     </p>
                     <p className="text-[10px] text-gray-300 dark:text-neutral-600 mt-1">
@@ -137,7 +137,7 @@ export default function FormulairesPage() {
                 </h2>
                 <button
                   onClick={() => deleteMessage(selected.id)}
-                  className="p-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-400 hover:text-red-500 transition-colors"
+                  className="p-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 text-secondary-text hover:text-red-500 transition-colors"
                 >
                   <Trash2 size={16} />
                 </button>
@@ -145,22 +145,22 @@ export default function FormulairesPage() {
 
               <div className="space-y-3 mb-6">
                 <div className="flex items-center gap-2 text-sm">
-                  <Mail size={14} className="text-gray-400" />
+                  <Mail size={14} className="text-secondary-text" />
                   <a href={`mailto:${selected.email}`} className="text-[#c27a72] dark:text-[#d4968e] hover:underline">
                     {selected.email}
                   </a>
                 </div>
                 {selected.date && (
                   <div className="flex items-center gap-2 text-sm">
-                    <Calendar size={14} className="text-gray-400" />
-                    <span className="text-gray-500 dark:text-white/70">
+                    <Calendar size={14} className="text-secondary-text" />
+                    <span className="text-secondary-text dark:text-white/70">
                       Ã‰vÃ©nement le {new Date(selected.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
                     </span>
                   </div>
                 )}
                 <div className="flex items-center gap-2 text-sm">
-                  <User size={14} className="text-gray-400" />
-                  <span className="text-gray-500 dark:text-white/70">
+                  <User size={14} className="text-secondary-text" />
+                  <span className="text-secondary-text dark:text-white/70">
                     ReÃ§u le {new Date(selected.createdAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })}
                   </span>
                 </div>
@@ -185,7 +185,7 @@ export default function FormulairesPage() {
             <div className="flex-1 flex items-center justify-center bg-white dark:bg-neutral-800 rounded-2xl border border-gray-100 dark:border-neutral-700">
               <div className="text-center">
                 <Inbox size={40} className="text-gray-200 dark:text-neutral-700 mx-auto mb-3" />
-                <p className="text-sm text-gray-400 dark:text-white/60">SÃ©lectionnez un message</p>
+                <p className="text-sm text-secondary-text dark:text-white/60">SÃ©lectionnez un message</p>
               </div>
             </div>
           )}

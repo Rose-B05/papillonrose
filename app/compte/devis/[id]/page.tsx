@@ -19,7 +19,7 @@ const STATUT_LABELS: Record<string, string> = {
 }
 
 const STATUT_COLORS: Record<string, string> = {
-  "pending-quote": "bg-gray-100 text-gray-600",
+  "pending-quote": "bg-gray-100 text-secondary-text",
   "quote-sent": "bg-purple-50 text-purple-700",
   signed: "bg-blue-50 text-blue-700",
   "deposit-pending": "bg-amber-50 text-amber-700",
@@ -137,7 +137,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-950 flex items-center justify-center">
-        <p className="text-gray-400">Chargement…</p>
+        <p className="text-secondary-text">Chargement…</p>
       </div>
     )
   }
@@ -145,7 +145,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
   if (error || !quote) {
     return (
       <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-950 flex flex-col items-center justify-center gap-4">
-        <p className="text-gray-500">{error || "Devis introuvable"}</p>
+        <p className="text-secondary-text">{error || "Devis introuvable"}</p>
         <Link href="/compte" className="text-[#c27a72] hover:underline text-sm">← Retour à mon compte</Link>
       </div>
     )
@@ -157,7 +157,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-950">
       <div className="max-w-3xl mx-auto px-5 py-10">
         {/* Header */}
-        <Link href="/compte" className="text-sm text-gray-400 hover:text-[#c27a72] transition-colors mb-6 inline-block">
+        <Link href="/compte" className="text-sm text-secondary-text hover:text-[#c27a72] transition-colors mb-6 inline-block">
           ← Retour à mon compte
         </Link>
 
@@ -165,11 +165,11 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
             <div>
               <h1 className="text-xl font-bold text-[#2E2E2E] dark:text-neutral-100">{quote.quoteNumber || `#${quote.id}`}</h1>
-              <p className="text-sm text-gray-400 dark:text-white/60 mt-1">
+              <p className="text-sm text-secondary-text dark:text-white/60 mt-1">
                 Créé le {formatDateFr(quote.createdAt)}
               </p>
             </div>
-            <span className={`inline-block text-sm px-3 py-1.5 rounded-full font-medium w-fit ${STATUT_COLORS[quote.status] || "bg-gray-100 text-gray-600"}`}>
+            <span className={`inline-block text-sm px-3 py-1.5 rounded-full font-medium w-fit ${STATUT_COLORS[quote.status] || "bg-gray-100 text-secondary-text"}`}>
               {STATUT_LABELS[quote.status] || quote.status}
             </span>
           </div>
@@ -178,35 +178,35 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
 
           {/* Client info */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm mb-6 p-4 bg-[#F8F5F0] dark:bg-neutral-900/60 rounded-xl">
-            <span className="text-gray-400">Client</span>
+            <span className="text-secondary-text">Client</span>
             <span className="text-[#2E2E2E] dark:text-neutral-100 text-right">{client.prenom} {client.nom}</span>
-            <span className="text-gray-400">Email</span>
+            <span className="text-secondary-text">Email</span>
             <span className="text-[#2E2E2E] dark:text-neutral-100 text-right">{client.email}</span>
             {client.telephone && (
               <>
-                <span className="text-gray-400">Téléphone</span>
+                <span className="text-secondary-text">Téléphone</span>
                 <span className="text-[#2E2E2E] dark:text-neutral-100 text-right">{client.telephone}</span>
               </>
             )}
-            <span className="text-gray-400">Type d'événement</span>
+            <span className="text-secondary-text">Type d'événement</span>
             <span className="text-[#2E2E2E] dark:text-neutral-100 text-right">{client.typeEvenement}</span>
-            <span className="text-gray-400">Date de l'événement</span>
+            <span className="text-secondary-text">Date de l'événement</span>
             <span className="text-[#2E2E2E] dark:text-neutral-100 text-right">{formatDateFr(client.dateEvenement)}</span>
             {client.lieuEvenement && (
               <>
-                <span className="text-gray-400">Lieu</span>
+                <span className="text-secondary-text">Lieu</span>
                 <span className="text-[#2E2E2E] dark:text-neutral-100 text-right">{client.lieuEvenement}</span>
               </>
             )}
             {client.nbInvites > 0 && (
               <>
-                <span className="text-gray-400">Nombre d'invités</span>
+                <span className="text-secondary-text">Nombre d'invités</span>
                 <span className="text-[#2E2E2E] dark:text-neutral-100 text-right">{client.nbInvites}</span>
               </>
             )}
             {client.besoinLivraison && (
               <>
-                <span className="text-gray-400">Livraison</span>
+                <span className="text-secondary-text">Livraison</span>
                 <span className="text-[#2E2E2E] dark:text-neutral-100 text-right">
                   {client.adresseLivraison || "Oui"}{client.fraisLivraison ? ` (${client.fraisLivraison.toFixed(2)} €)` : ""}
                 </span>
@@ -214,7 +214,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
             )}
             {client.message && (
               <>
-                <span className="text-gray-400">Message</span>
+                <span className="text-secondary-text">Message</span>
                 <span className="text-[#2E2E2E] dark:text-neutral-100 text-right">{client.message}</span>
               </>
             )}
@@ -246,11 +246,11 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                       {product.nom}
                       {item.variantLabel ? ` — ${item.variantLabel}` : ""}
                     </p>
-                    <p className="text-xs text-gray-400 dark:text-white/60 mt-0.5">
+                    <p className="text-xs text-secondary-text dark:text-white/60 mt-0.5">
                       {formatDateFr(item.dateStart)} → {formatDateFr(item.dateEnd)}
                       {nbJours > 0 && <><br />× {item.qty} &middot; {prixUnitaire.toFixed(2)} € / jour</>}
                     </p>
-                    <p className={`text-sm font-semibold mt-1 ${isNaN(totalLigne) ? "text-gray-400" : "text-[#c27a72] dark:text-[#d4968e]"}`}>
+                    <p className={`text-sm font-semibold mt-1 ${isNaN(totalLigne) ? "text-secondary-text" : "text-[#c27a72] dark:text-[#d4968e]"}`}>
                       {isNaN(totalLigne) ? "Prix sur devis" : `${totalLigne.toFixed(2)} €`}
                     </p>
                   </div>
@@ -291,12 +291,12 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                     </h3>
                     <div className="space-y-1 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Total TTC</span>
+                        <span className="text-secondary-text">Total TTC</span>
                         <span className="font-semibold text-[#2E2E2E] dark:text-neutral-100">{quote.totalTtc.toFixed(2)} €</span>
                       </div>
                       {quote.depositAmount > 0 && (
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Acompte à verser (30%)</span>
+                          <span className="text-secondary-text">Acompte à verser (30%)</span>
                           <span className="font-semibold text-[#c27a72]">{quote.depositAmount.toFixed(2)} €</span>
                         </div>
                       )}
@@ -304,7 +304,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                   </div>
 
                   <div className="p-4 bg-[#F8F5F0] dark:bg-neutral-900/60 rounded-xl space-y-3">
-                    <p className="text-sm text-gray-500 dark:text-white/60">
+                    <p className="text-sm text-secondary-text dark:text-white/60">
                       En signant ce devis, vous confirmez avoir lu et accepté les conditions de location.
                     </p>
 
@@ -328,7 +328,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                         onChange={(e) => setAcceptChecked(e.target.checked)}
                         className="mt-0.5 rounded border-gray-300 text-[#c27a72] focus:ring-[#c27a72]"
                       />
-                      <span className="text-sm text-gray-500 dark:text-white/60">
+                      <span className="text-sm text-secondary-text dark:text-white/60">
                         Je certifie avoir lu les{" "}
                         <a href="/conditions-location" target="_blank" rel="noopener noreferrer" className="text-[#c27a72] dark:text-[#d4968e] underline font-medium hover:text-[#B9807A]">
                           conditions de location
@@ -370,11 +370,11 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
 
           {/* Totals */}
           <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08] space-y-1 text-sm">
-            <div className="flex justify-between text-gray-400">
+            <div className="flex justify-between text-secondary-text">
               <span>Total HT</span>
               <span>{quote.totalHt.toFixed(2)} €</span>
             </div>
-            <div className="flex justify-between text-gray-400">
+            <div className="flex justify-between text-secondary-text">
               <span>TVA (20 %)</span>
               <span>{(quote.totalTtc - quote.totalHt).toFixed(2)} €</span>
             </div>
@@ -412,7 +412,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
             if (daysLeft <= 0) {
               return (
                 <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
-                  <p className="text-sm text-gray-500 dark:text-white/60 bg-[#F8F5F0] dark:bg-neutral-900/60 px-4 py-3 rounded-xl">
+                  <p className="text-sm text-secondary-text dark:text-white/60 bg-[#F8F5F0] dark:bg-neutral-900/60 px-4 py-3 rounded-xl">
                     Votre événement du <strong>{formatDateFr(dateEvenement)}</strong> est passé. L&apos;annulation en ligne n&apos;est plus disponible.
                   </p>
                 </div>
@@ -425,7 +425,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
 
             return (
               <div className="mt-6 pt-4 border-t border-black/[0.07] dark:border-white/[0.08]">
-                <p className="text-sm text-gray-500 dark:text-white/60 bg-[#F8F5F0] dark:bg-neutral-900/60 px-4 py-3 rounded-xl">
+                <p className="text-sm text-secondary-text dark:text-white/60 bg-[#F8F5F0] dark:bg-neutral-900/60 px-4 py-3 rounded-xl">
                   Votre événement a lieu le <strong>{formatDateFr(dateEvenement)}</strong>, dans <strong>{daysLeft} jour(s)</strong>. L&apos;annulation en ligne n&apos;est plus possible depuis le <strong>{deadlineStr}</strong>. Contactez-nous directement si besoin. Conformément à nos CGV, l&apos;acompte n&apos;est plus remboursable.
                 </p>
               </div>
@@ -433,7 +433,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
           })()}
         </div>
 
-        <p className="text-center text-xs text-gray-400 dark:text-white/60">
+        <p className="text-center text-xs text-secondary-text dark:text-white/60">
           <Link href="/compte" className="hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors">← Retour à mon compte</Link>
         </p>
       </div>

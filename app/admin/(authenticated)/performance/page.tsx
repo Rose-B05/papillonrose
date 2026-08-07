@@ -39,7 +39,7 @@ function scoreBg(score: number): string {
 }
 
 function vitalsColor(metric: string, value: number | null): string {
-  if (value == null) return "text-gray-400"
+  if (value == null) return "text-secondary-text"
   const thresholds: Record<string, [number, number]> = {
     lcp: [2500, 4000],
     fcp: [1800, 3000],
@@ -80,10 +80,10 @@ function formatDate(iso: string): string {
 function ScoreCard({ label, score }: { label: string; score: number }) {
   return (
     <div className={`rounded-2xl border p-4 ${scoreBg(score)}`}>
-      <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-white/60 mb-2">{label}</p>
+      <p className="text-[10px] uppercase tracking-wider text-secondary-text dark:text-white/60 mb-2">{label}</p>
       <div className="flex items-baseline gap-2">
         <span className={`text-3xl font-bold ${scoreColor(score)}`}>{score}</span>
-        <span className="text-xs text-gray-400 dark:text-white/60">/ 100</span>
+        <span className="text-xs text-secondary-text dark:text-white/60">/ 100</span>
       </div>
     </div>
   )
@@ -92,7 +92,7 @@ function ScoreCard({ label, score }: { label: string; score: number }) {
 function VitalCard({ label, value, unit, metric }: { label: string; value: number | null; unit: string; metric: string }) {
   return (
     <div className="bg-white dark:bg-neutral-800 rounded-xl p-3 border border-black/[0.07] dark:border-white/[0.08]">
-      <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-white/60 mb-1">{label}</p>
+      <p className="text-[10px] uppercase tracking-wider text-secondary-text dark:text-white/60 mb-1">{label}</p>
       <p className={`text-lg font-semibold ${vitalsColor(metric, value)}`}>
         {value != null ? (metric === "cls" ? value.toFixed(3) : formatMs(value)) : "—"}
       </p>
@@ -123,7 +123,7 @@ function UrlSection({ results }: { results: PageSpeedResult[] }) {
       </div>
 
       {/* Core Web Vitals */}
-      <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-white/60 font-medium mb-2">Core Web Vitals</p>
+      <p className="text-[10px] uppercase tracking-wider text-secondary-text dark:text-white/60 font-medium mb-2">Core Web Vitals</p>
       <div className="grid grid-cols-5 gap-2 mb-4">
         <VitalCard label="LCP" value={mobile?.lcp ?? desktop?.lcp} unit="ms" metric="lcp" />
         <VitalCard label="FCP" value={mobile?.fcp ?? desktop?.fcp} unit="ms" metric="fcp" />
@@ -135,7 +135,7 @@ function UrlSection({ results }: { results: PageSpeedResult[] }) {
       {/* Weight */}
       {(mobile?.totalWeight != null || desktop?.totalWeight != null) && (
         <div className="mb-4">
-          <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-white/60 font-medium mb-2">Poids de la page</p>
+          <p className="text-[10px] uppercase tracking-wider text-secondary-text dark:text-white/60 font-medium mb-2">Poids de la page</p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-[#c27a72]/10 flex items-center justify-center">
@@ -145,7 +145,7 @@ function UrlSection({ results }: { results: PageSpeedResult[] }) {
                 <p className="text-xs font-medium text-[#2E2E2E] dark:text-neutral-100">
                   {formatBytes(mobile?.totalWeight ?? desktop?.totalWeight)}
                 </p>
-                <p className="text-[10px] text-gray-400 dark:text-white/60">Total</p>
+                <p className="text-[10px] text-secondary-text dark:text-white/60">Total</p>
               </div>
             </div>
             {(mobile?.imageWeight != null || desktop?.imageWeight != null) && (
@@ -157,7 +157,7 @@ function UrlSection({ results }: { results: PageSpeedResult[] }) {
                   <p className="text-xs font-medium text-[#2E2E2E] dark:text-neutral-100">
                     {formatBytes(mobile?.imageWeight ?? desktop?.imageWeight)}
                   </p>
-                  <p className="text-[10px] text-gray-400 dark:text-white/60">Images</p>
+                  <p className="text-[10px] text-secondary-text dark:text-white/60">Images</p>
                 </div>
               </div>
             )}
@@ -168,7 +168,7 @@ function UrlSection({ results }: { results: PageSpeedResult[] }) {
       {/* Opportunities */}
       {mobile?.opportunities && mobile.opportunities.length > 0 && (
         <div>
-          <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-white/60 font-medium mb-2">
+          <p className="text-[10px] uppercase tracking-wider text-secondary-text dark:text-white/60 font-medium mb-2">
             Actions prioritaires ({mobile.opportunities.length})
           </p>
           <div className="space-y-1.5">
@@ -176,7 +176,7 @@ function UrlSection({ results }: { results: PageSpeedResult[] }) {
               <div key={opp.id} className="flex items-center justify-between bg-[#F8F5F0] dark:bg-neutral-700/50 rounded-lg px-3 py-2">
                 <div className="flex-1 min-w-0 mr-3">
                   <p className="text-xs font-medium text-[#2E2E2E] dark:text-neutral-100 truncate">{opp.title}</p>
-                  <p className="text-[10px] text-gray-400 dark:text-white/60 truncate">{opp.description}</p>
+                  <p className="text-[10px] text-secondary-text dark:text-white/60 truncate">{opp.description}</p>
                 </div>
                 <span className="text-[10px] font-medium text-[#c27a72] dark:text-[#d4968e] whitespace-nowrap flex-shrink-0">
                   {opp.savings}
@@ -247,7 +247,7 @@ export default function PerformancePage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Performance</h1>
-          <p className="text-sm text-gray-400 dark:text-white/60 mt-1">
+          <p className="text-sm text-secondary-text dark:text-white/60 mt-1">
             Core Web Vitals et vitesse du site
           </p>
         </div>
@@ -263,7 +263,7 @@ export default function PerformancePage() {
 
       {/* Last analysis timestamp */}
       {data?.timestamp && (
-        <p className="text-xs text-gray-400 dark:text-white/60 mb-4 flex items-center gap-1.5">
+        <p className="text-xs text-secondary-text dark:text-white/60 mb-4 flex items-center gap-1.5">
           <Clock size={12} />
           Dernière analyse : {formatDate(data.timestamp)}
           {data.cached && <span className="text-[#c27a72] dark:text-[#d4968e] ml-1">(cache)</span>}
@@ -274,7 +274,7 @@ export default function PerformancePage() {
       {loading && !refreshing && (
         <div className="text-center py-20">
           <RefreshCcw size={24} className="animate-spin text-[#c27a72] mx-auto mb-3" />
-          <p className="text-sm text-gray-400 dark:text-white/60">Chargement des données…</p>
+          <p className="text-sm text-secondary-text dark:text-white/60">Chargement des données…</p>
         </div>
       )}
 
@@ -285,7 +285,7 @@ export default function PerformancePage() {
           <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">
             Analyse en cours…
           </p>
-          <p className="text-xs text-gray-400 dark:text-white/60">
+          <p className="text-xs text-secondary-text dark:text-white/60">
             Cela peut prendre 10-30 secondes par URL. Merci de patienter.
           </p>
         </div>
@@ -312,7 +312,7 @@ export default function PerformancePage() {
           {data.results.length === 0 && !error && (
             <div className="text-center py-16">
               <Zap size={24} className="text-gray-300 dark:text-neutral-600 mx-auto mb-3" />
-              <p className="text-sm text-gray-400 dark:text-white/60">
+              <p className="text-sm text-secondary-text dark:text-white/60">
                 Aucune donnée disponible. Cliquez sur &quot;Actualiser l&apos;analyse&quot; pour lancer un test.
               </p>
             </div>

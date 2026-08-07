@@ -43,7 +43,7 @@ const STATUT_LABELS: Record<string, string> = {
 }
 
 const STATUT_COLORS: Record<string, string> = {
-  recu: "bg-gray-100 dark:bg-neutral-800 text-gray-600",
+  recu: "bg-gray-100 dark:bg-neutral-800 text-secondary-text",
   en_traitement: "bg-blue-50 text-blue-700",
   confirme_stock: "bg-green-50 text-green-700",
   refuse_stock: "bg-red-50 text-red-700",
@@ -111,15 +111,15 @@ export default function AdminPage() {
       <div className="max-w-5xl mx-auto">
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Devis</h1>
-          <p className="text-sm text-gray-500 dark:text-white/60 mt-1">
+          <p className="text-sm text-secondary-text dark:text-white/60 mt-1">
             {quotes.length} devis au total
           </p>
         </div>
 
         {loading ? (
-          <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
+          <div className="text-center py-16 text-secondary-text dark:text-white/60">Chargement…</div>
         ) : quotes.length === 0 ? (
-          <div className="text-center py-16 text-gray-400 dark:text-white/60">Aucun devis</div>
+          <div className="text-center py-16 text-secondary-text dark:text-white/60">Aucun devis</div>
         ) : (
           <div className="space-y-3">
             {quotes.map((q) => (
@@ -135,18 +135,18 @@ export default function AdminPage() {
                       </span>
                       <span
                         className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                          STATUT_COLORS[q.statut] || "bg-gray-100 dark:bg-neutral-800 text-gray-600"
+                          STATUT_COLORS[q.statut] || "bg-gray-100 dark:bg-neutral-800 text-secondary-text"
                         }`}
                       >
                         {STATUT_LABELS[q.statut] || q.statut}
                       </span>
                     </div>
 
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-secondary-text">
                       {q.client.prenom} {q.client.nom} — {q.client.email}
                     </p>
 
-                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-400 dark:text-white/60">
+                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-secondary-text dark:text-white/60">
                       <span>
                         {q.client.typeEvenement} — {q.client.lieuEvenement}
                       </span>
@@ -154,7 +154,7 @@ export default function AdminPage() {
                       <span>{formatDate(q.createdAt)}</span>
                     </div>
 
-                    <div className="mt-2 text-xs text-gray-500 dark:text-white/60">
+                    <div className="mt-2 text-xs text-secondary-text dark:text-white/60">
                       {q.items.map((item, i) => (
                         <span key={i}>
                           {getProductName(item.productId)} ×{item.qty}

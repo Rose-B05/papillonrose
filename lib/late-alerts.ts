@@ -108,7 +108,7 @@ async function sendLateAlertEmail(
   <p style="color:#e74c3c;font-weight:600">⚠️ La pénalité augmente de +30% par jour supplémentaire de retard (plafond 50% du montant de la location).</p>
   <p>Merci de restituer le matériel dans les plus brefs délais.</p>
 
-  <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+  <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
 </div>`
 
   await transport.sendMail({

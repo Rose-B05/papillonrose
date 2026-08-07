@@ -50,7 +50,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
   }, [id])
 
   if (loading) {
-    return <div className="text-center py-16 text-gray-400">Chargement…</div>
+    return <div className="text-center py-16 text-secondary-text">Chargement…</div>
   }
 
   if (error || !product) {

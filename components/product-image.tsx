@@ -14,7 +14,7 @@ export default function ProductImage({ src, alt, className }: ProductImageProps)
   if (error) {
     return (
       <div className={`${className} flex items-center justify-center bg-[#F0EBE3] dark:bg-neutral-700`}>
-        <span className="text-xs text-gray-400 dark:text-white/60 text-center px-2">{alt}</span>
+        <span className="text-xs text-secondary-text dark:text-white/60 text-center px-2">{alt}</span>
       </div>
     )
   }

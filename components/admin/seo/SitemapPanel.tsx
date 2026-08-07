@@ -28,11 +28,11 @@ export default function SitemapPanel({ info }: { info: SitemapInfo }) {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-neutral-700">
-            <Globe size={16} className="text-gray-600 dark:text-neutral-300" />
+            <Globe size={16} className="text-secondary-text dark:text-neutral-300" />
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">sitemap.xml</h3>
-            <p className="text-xs text-gray-500 dark:text-white/70">
+            <p className="text-xs text-secondary-text dark:text-white/70">
               {info.urlCount} URLs • {(info.sizeBytes / 1024).toFixed(1)} Ko
             </p>
           </div>
@@ -52,11 +52,11 @@ export default function SitemapPanel({ info }: { info: SitemapInfo }) {
 
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg p-3">
-          <p className="text-xs text-gray-500 dark:text-white/70">URLs</p>
+          <p className="text-xs text-secondary-text dark:text-white/70">URLs</p>
           <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100">{info.urlCount}</p>
         </div>
         <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg p-3">
-          <p className="text-xs text-gray-500 dark:text-white/70">Dernière génération</p>
+          <p className="text-xs text-secondary-text dark:text-white/70">Dernière génération</p>
           <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
             {new Date(info.lastGenerated).toLocaleDateString("fr-FR")}
           </p>

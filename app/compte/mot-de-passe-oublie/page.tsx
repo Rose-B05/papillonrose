@@ -39,7 +39,7 @@ export default function MotDePasseOubliePage() {
           <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 text-center mb-1">
             Mot de passe oublié
           </h1>
-          <p className="text-sm text-gray-400 dark:text-white/60 text-center mb-6">
+          <p className="text-sm text-secondary-text dark:text-white/60 text-center mb-6">
             Recevez un lien de réinitialisation par email
           </p>
 
@@ -79,7 +79,7 @@ export default function MotDePasseOubliePage() {
               <p className="text-center">
                 <Link
                   href="/compte"
-                  className="text-xs text-gray-400 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors"
+                  className="text-xs text-secondary-text hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors"
                 >
                   ← Retour à la connexion
                 </Link>

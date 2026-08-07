@@ -83,14 +83,14 @@ function buildReminderEmail(
 <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;max-width:650px;margin:auto;padding:20px;background:#fff;color:#2E2E2E">
   <div style="text-align:center;padding:20px 0;border-bottom:2px solid #c27a72">
     <h1 style="color:#c27a72;font-size:24px;margin:0"><img src="https://www.papillonrose.fr/papillon-rose-logo.png" alt="Papillon Rose" height="40" style="vertical-align:middle"></h1>
-    <p style="color:#999;font-size:12px;margin:4px 0 0">Location mobilier & décoration événements</p>
+    <p style="color:#544f4f;font-size:12px;margin:4px 0 0">Location mobilier & décoration événements</p>
   </div>
 
   <div style="background:#fdf8f0;border-radius:12px;padding:24px;margin:20px 0;text-align:center">
     <h2 style="color:#2E2E2E;font-size:20px;margin:0 0 8px">
       ${greeting} consulté
     </h2>
-    <p style="color:#555;font-size:14px;margin:0">un produit qui vous a intéressé(e)…</p>
+    <p style="color:#544f4f;font-size:14px;margin:0">un produit qui vous a intéressé(e)…</p>
   </div>
 
   <div style="text-align:center;margin:20px 0">
@@ -111,7 +111,7 @@ function buildReminderEmail(
     </p>
   </div>
 
-  <p style="color:#555;font-size:14px;line-height:1.6;text-align:center;margin:20px 0">
+  <p style="color:#544f4f;font-size:14px;line-height:1.6;text-align:center;margin:20px 0">
     Ce produit est toujours disponible à la location pour votre événement.<br />
     N'hésitez pas à nous contacter pour réserver ou poser vos questions.
   </p>
@@ -125,7 +125,7 @@ function buildReminderEmail(
   </div>
 
   <div style="text-align:center;padding:20px 0;border-top:1px solid #eee;margin-top:20px">
-    <p style="color:#999;font-size:11px;margin:0">Cet email a été envoyé automatiquement.</p>
+    <p style="color:#544f4f;font-size:11px;margin:0">Cet email a été envoyé automatiquement.</p>
     <p style="color:#c27a72;font-size:12px;margin:4px 0 0">papillonrosebertha@gmail.com · Île-de-France</p>
   </div>
 </div>`

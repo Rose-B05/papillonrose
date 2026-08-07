@@ -77,7 +77,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
       </h1>
 
       {product.dimension && (
-        <p className="text-sm text-gray-500 dark:text-white/70 mt-2">
+        <p className="text-sm text-secondary-text dark:text-white/70 mt-2">
           {product.dimension}
         </p>
       )}
@@ -86,7 +86,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
       {hasVariants && (
         <div className="mt-4">
           <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-2">
-            {variantLabel} : <span className="text-gray-400 dark:text-white/50 font-normal">(sélection multiple)</span>
+            {variantLabel} : <span className="text-secondary-text dark:text-white/50 font-normal">(sélection multiple)</span>
           </p>
           <div className="flex flex-wrap gap-2">
             {product.variants!.map((v) => {
@@ -98,7 +98,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
                   className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
                     selected
                       ? "border-[#c27a72] bg-[#c27a72]/10 text-[#c27a72]"
-                      : "border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-white/70 hover:border-[#c27a72]/50"
+                      : "border-gray-200 dark:border-neutral-700 text-secondary-text dark:text-white/70 hover:border-[#c27a72]/50"
                   }`}
                 >
                   {selected && <Check size={14} className="inline mr-1 -mt-0.5" />}
@@ -119,14 +119,14 @@ export default function ProductInfo({ product, isBlocked }: Props) {
       {!hasVariants && (
         <p className="text-2xl font-bold text-[#2E2E2E] dark:text-neutral-100 mt-4">
           {prixTtc(product.prix).toFixed(2)} €
-          <span className="text-sm font-normal text-gray-400 dark:text-white/60 ml-1">TTC / jour</span>
+          <span className="text-sm font-normal text-secondary-text dark:text-white/60 ml-1">TTC / jour</span>
         </p>
       )}
 
       {/* Stock */}
       <div className="mt-4 flex items-center gap-2">
         <span className={`w-2 h-2 rounded-full ${product.stock > 0 && !isBlocked ? "bg-green-500" : "bg-red-500"}`} />
-        <span className="text-sm text-gray-500 dark:text-white/70">
+        <span className="text-sm text-secondary-text dark:text-white/70">
           {isBlocked ? "Indisponible (réservé)" : product.stock > 0 ? `${product.stock} en stock` : "Rupture de stock"}
         </span>
       </div>
@@ -183,7 +183,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
       {/* Description */}
       <div className="mt-8 pt-6 border-t border-gray-200 dark:border-neutral-700">
         <h2 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Détails</h2>
-        <ul className="text-sm text-gray-500 dark:text-white/70 space-y-1.5">
+        <ul className="text-sm text-secondary-text dark:text-white/70 space-y-1.5">
           <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Catégorie :</span> {product.categorie}</li>
           {product.dimension && <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Dimensions :</span> {product.dimension}</li>}
           <li><span className="font-medium text-[#2E2E2E] dark:text-neutral-100">Tarif :</span> {hasVariants ? "à partir de" : ""} {prixTtc(hasVariants ? product.variants![0].prix : product.prix).toFixed(2)} € TTC / jour</li>

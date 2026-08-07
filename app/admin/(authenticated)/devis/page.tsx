@@ -122,7 +122,7 @@ export default function DevisListePage() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <p className="text-sm text-gray-500 dark:text-white/60">
+            <p className="text-sm text-secondary-text dark:text-white/60">
               {filtered.length} réservation{filtered.length > 1 ? "s" : ""}{filter !== "all" ? ` (filtré)` : ""}
             </p>
           </div>
@@ -150,7 +150,7 @@ export default function DevisListePage() {
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   filter === f.value
                     ? "bg-[#c27a72] text-white"
-                    : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-white/60 hover:bg-gray-100 dark:hover:bg-neutral-700"
+                    : "bg-white dark:bg-neutral-800 text-secondary-text dark:text-white/60 hover:bg-gray-100 dark:hover:bg-neutral-700"
                 }`}
               >
                 {f.label}
@@ -160,7 +160,7 @@ export default function DevisListePage() {
         </div>
 
         {loading ? (
-          <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
+          <div className="text-center py-16 text-secondary-text dark:text-white/60">Chargement…</div>
         ) : (
           <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] overflow-hidden">
             <DevisTable

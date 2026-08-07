@@ -205,7 +205,7 @@ export default function Chatbot() {
               </p>
             )}
             {remaining <= 0 ? (
-              <p className="text-xs text-gray-400 dark:text-white/60 text-center py-2">
+              <p className="text-xs text-secondary-text dark:text-white/60 text-center py-2">
                 Session terminée. Contactez-nous par email ou Instagram
               </p>
             ) : (
@@ -217,7 +217,7 @@ export default function Chatbot() {
                   onKeyDown={handleKeyDown}
                   placeholder="Votre message..."
                   disabled={loading}
-                  className="flex-1 bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[#c27a72]/30 transition-all placeholder:text-gray-400"
+                  className="flex-1 bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[#c27a72]/30 transition-all placeholder:text-secondary-text"
                 />
                 <button
                   onClick={send}

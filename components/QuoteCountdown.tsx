@@ -42,14 +42,14 @@ export default function QuoteCountdown({ booking, variant = "admin" }: QuoteCoun
   } else if (totalMin < 720) {
     colorClass = "bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400"
   } else {
-    colorClass = "bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-white/70"
+    colorClass = "bg-gray-100 text-secondary-text dark:bg-neutral-700 dark:text-white/70"
   }
 
   const timeStr = formatTime(hoursRemaining, minutesRemaining)
 
   if (variant === "client") {
     return (
-      <p className={`text-sm font-medium mt-2 ${totalMin < 180 ? "text-red-600" : totalMin < 720 ? "text-orange-600" : "text-gray-500"}`}>
+      <p className={`text-sm font-medium mt-2 ${totalMin < 180 ? "text-red-600" : totalMin < 720 ? "text-orange-600" : "text-secondary-text"}`}>
         {totalMin < 180
           ? `Votre devis expire dans ${timeStr} — validez-le dès maintenant pour ne pas perdre votre réservation.`
           : `Votre devis expire dans ${timeStr}.`}

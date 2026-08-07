@@ -23,7 +23,7 @@ const COLORS = {
   gold: "#B98A4E",
   sage: "#7C9473",
   ink: "#2E2A2A",
-  grey: "#6B6560",
+  grey: "#544f4f",
   lineGrey: "#E4DCD2",
   white: "#FFFFFF",
   rowAlt: "#FCF8F4",

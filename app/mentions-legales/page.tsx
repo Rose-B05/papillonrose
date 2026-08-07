@@ -16,7 +16,7 @@ export default function MentionsLegalesPage() {
       <div className="max-w-3xl mx-auto px-5 md:px-10 pt-24 pb-16">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-secondary-text dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors mb-8"
         >
           <ArrowLeft size={14} /> Retour à l&apos;accueil
         </Link>
@@ -28,7 +28,7 @@ export default function MentionsLegalesPage() {
           Mentions légales
         </h1>
 
-        <div className="space-y-8 text-sm text-[#2E2E2E]/70 dark:text-neutral-300 leading-relaxed">
+        <div className="space-y-8 text-sm text-secondary-text dark:text-neutral-300 leading-relaxed">
           <section>
             <h2 style={DP} className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-3">
               Éditeur du site
@@ -77,7 +77,7 @@ export default function MentionsLegalesPage() {
           </section>
         </div>
 
-        <p className="text-xs text-gray-400 dark:text-white/60 pt-8 mt-8 border-t border-black/[0.07] dark:border-white/[0.08]">
+        <p className="text-xs text-secondary-text dark:text-white/60 pt-8 mt-8 border-t border-black/[0.07] dark:border-white/[0.08]">
           Dernière mise à jour : janvier 2026
         </p>
       </div>

@@ -27,11 +27,11 @@ export default function RobotsEditor({ info }: { info: RobotsInfo }) {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-neutral-700">
-            <FileText size={16} className="text-gray-600 dark:text-neutral-300" />
+            <FileText size={16} className="text-secondary-text dark:text-neutral-300" />
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">robots.txt</h3>
-            <p className="text-xs text-gray-500 dark:text-white/70">
+            <p className="text-xs text-secondary-text dark:text-white/70">
               Modifié le {new Date(info.lastModified).toLocaleDateString("fr-FR")}
             </p>
           </div>

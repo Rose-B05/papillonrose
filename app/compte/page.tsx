@@ -36,7 +36,7 @@ const STATUT_LABELS: Record<string, string> = {
 }
 
 const STATUT_COLORS: Record<string, string> = {
-  "pending-quote": "bg-gray-100 dark:bg-neutral-800 text-gray-600",
+  "pending-quote": "bg-gray-100 dark:bg-neutral-800 text-secondary-text",
   "quote-sent": "bg-purple-50 text-purple-700",
   "deposit-pending": "bg-amber-50 text-amber-700",
   confirmed: "bg-green-50 text-green-700",
@@ -85,7 +85,7 @@ function NewsletterToggle({ customerEmail }: { customerEmail: string }) {
   }
 
   if (status === "loading") {
-    return <p className="text-sm text-gray-400 dark:text-white/60">Vérification…</p>
+    return <p className="text-sm text-secondary-text dark:text-white/60">Vérification…</p>
   }
 
   return (
@@ -95,7 +95,7 @@ function NewsletterToggle({ customerEmail }: { customerEmail: string }) {
           <span className="text-sm text-green-600 dark:text-green-400 font-medium">Inscrit à la newsletter</span>
           <a
             href={`/api/newsletter/unsubscribe?email=${encodeURIComponent(customerEmail)}`}
-            className="text-xs text-gray-400 dark:text-white/60 hover:text-red-500 dark:hover:text-red-400 transition-colors underline"
+            className="text-xs text-secondary-text dark:text-white/60 hover:text-red-500 dark:hover:text-red-400 transition-colors underline"
           >
             Se désinscrire
           </a>
@@ -109,7 +109,7 @@ function NewsletterToggle({ customerEmail }: { customerEmail: string }) {
           {loading ? "Inscription…" : "S'inscrire à la newsletter"}
         </button>
       )}
-      {message && <p className="text-sm text-gray-500 dark:text-white/70 mt-2">{message}</p>}
+      {message && <p className="text-sm text-secondary-text dark:text-white/70 mt-2">{message}</p>}
     </div>
   )
 }
@@ -321,7 +321,7 @@ export default function ComptePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 flex items-center justify-center">
-        <p className="text-gray-400 dark:text-white/60">Chargement…</p>
+        <p className="text-secondary-text dark:text-white/60">Chargement…</p>
       </div>
     )
   }
@@ -335,13 +335,13 @@ export default function ComptePage() {
             <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 text-center mb-1">
               {mode === "login" ? "Connexion" : "Créer un compte"}
             </h1>
-            <p className="text-sm text-gray-400 dark:text-white/60 text-center mb-6">Papillon Rose</p>
+            <p className="text-sm text-secondary-text dark:text-white/60 text-center mb-6">Papillon Rose</p>
 
             <div className="flex bg-[#F8F5F0] dark:bg-neutral-900 rounded-lg p-0.5 mb-6">
-              <button onClick={() => { setMode("login"); setLoginError(""); setRegError("") }} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "login" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-gray-400 dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}>
+              <button onClick={() => { setMode("login"); setLoginError(""); setRegError("") }} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "login" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-secondary-text dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}>
                 Se connecter
               </button>
-              <button onClick={() => { setMode("register"); setLoginError(""); setRegError("") }} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "register" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-gray-400 dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}>
+              <button onClick={() => { setMode("register"); setLoginError(""); setRegError("") }} className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === "register" ? "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm" : "text-secondary-text dark:text-white/60 hover:text-[#2E2E2E] dark:hover:text-neutral-100"}`}>
                 S&apos;inscrire
               </button>
             </div>
@@ -356,13 +356,13 @@ export default function ComptePage() {
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Mot de passe</label>
                   <div className="relative">
                     <input type={showLoginPassword ? "text" : "password"} required value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
-                    <button type="button" onClick={() => setShowLoginPassword(!showLoginPassword)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
+                    <button type="button" onClick={() => setShowLoginPassword(!showLoginPassword)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-secondary-text hover:text-secondary-text dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
                       {showLoginPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
                 </div>
                 <div className="text-right -mt-2">
-                  <Link href="/compte/mot-de-passe-oublie" className="text-xs text-gray-400 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors">
+                  <Link href="/compte/mot-de-passe-oublie" className="text-xs text-secondary-text hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors">
                     Mot de passe oublié ?
                   </Link>
                 </div>
@@ -393,7 +393,7 @@ export default function ComptePage() {
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Mot de passe</label>
                   <div className="relative">
                     <input type={showRegPassword ? "text" : "password"} required minLength={6} value={regPassword} onChange={(e) => setRegPassword(e.target.value)} className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
-                    <button type="button" onClick={() => setShowRegPassword(!showRegPassword)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
+                    <button type="button" onClick={() => setShowRegPassword(!showRegPassword)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-secondary-text hover:text-secondary-text dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
                       {showRegPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
@@ -402,7 +402,7 @@ export default function ComptePage() {
                   <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Confirmer le mot de passe</label>
                   <div className="relative">
                     <input type={showRegPassword2 ? "text" : "password"} required minLength={6} value={regPassword2} onChange={(e) => setRegPassword2(e.target.value)} className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
-                    <button type="button" onClick={() => setShowRegPassword2(!showRegPassword2)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
+                    <button type="button" onClick={() => setShowRegPassword2(!showRegPassword2)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-secondary-text hover:text-secondary-text dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
                       {showRegPassword2 ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
@@ -414,7 +414,7 @@ export default function ComptePage() {
                     onChange={(e) => setRegNewsletter(e.target.checked)}
                     className="mt-0.5 rounded border-gray-300 text-[#c27a72] focus:ring-[#c27a72]/50"
                   />
-                  <span className="text-xs text-gray-500 dark:text-white/70 leading-relaxed">
+                  <span className="text-xs text-secondary-text dark:text-white/70 leading-relaxed">
                     Je souhaite recevoir la newsletter Papillon Rose (nouveautés, offres exclusives)
                   </span>
                 </label>
@@ -425,7 +425,7 @@ export default function ComptePage() {
               </form>
             )}
           </div>
-          <p className="text-center text-xs text-gray-400 dark:text-white/60 mt-4">
+          <p className="text-center text-xs text-secondary-text dark:text-white/60 mt-4">
             <Link href="/" className="hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors">← Retour au site</Link>
           </p>
         </div>
@@ -441,11 +441,11 @@ export default function ComptePage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Mon compte</h1>
-            <p className="text-sm text-gray-500 dark:text-white/60 mt-1">{customer.prenom} {customer.nom}</p>
+            <p className="text-sm text-secondary-text dark:text-white/60 mt-1">{customer.prenom} {customer.nom}</p>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-sm text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors">Site</Link>
-            <button onClick={handleLogout} className="text-sm text-gray-400 dark:text-white/60 hover:text-red-500 transition-colors">
+            <Link href="/" className="text-sm text-secondary-text dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors">Site</Link>
+            <button onClick={handleLogout} className="text-sm text-secondary-text dark:text-white/60 hover:text-red-500 transition-colors">
               Déconnexion
             </button>
           </div>
@@ -471,20 +471,20 @@ export default function ComptePage() {
           {!profileEditing ? (
             <div className="space-y-3">
               <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3">
-                <p className="text-xs text-gray-400 dark:text-white/60 mb-0.5">Nom complet</p>
+                <p className="text-xs text-secondary-text dark:text-white/60 mb-0.5">Nom complet</p>
                 <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">{profile?.prenom} {profile?.nom}</p>
               </div>
               <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3">
-                <p className="text-xs text-gray-400 dark:text-white/60 mb-0.5">Email</p>
+                <p className="text-xs text-secondary-text dark:text-white/60 mb-0.5">Email</p>
                 <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">{profile?.email}</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3">
-                  <p className="text-xs text-gray-400 dark:text-white/60 mb-0.5">Téléphone</p>
+                  <p className="text-xs text-secondary-text dark:text-white/60 mb-0.5">Téléphone</p>
                   <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">{profile?.telephone || "—"}</p>
                 </div>
                 <div className="bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-3">
-                  <p className="text-xs text-gray-400 dark:text-white/60 mb-0.5">Adresse</p>
+                  <p className="text-xs text-secondary-text dark:text-white/60 mb-0.5">Adresse</p>
                   <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">{profile?.adresse || "—"}</p>
                 </div>
               </div>
@@ -503,7 +503,7 @@ export default function ComptePage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Email</label>
-                <input type="email" value={profile?.email} disabled className="w-full px-3 py-2 bg-gray-50 border border-gray-200 dark:border-neutral-700 rounded-lg text-sm text-gray-400 dark:text-white/60 cursor-not-allowed" />
+                <input type="email" value={profile?.email} disabled className="w-full px-3 py-2 bg-gray-50 border border-gray-200 dark:border-neutral-700 rounded-lg text-sm text-secondary-text dark:text-white/60 cursor-not-allowed" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Téléphone</label>
@@ -517,7 +517,7 @@ export default function ComptePage() {
                 <button onClick={handleSaveProfile} disabled={profileSaving} className="px-5 py-2 bg-[#c27a72] dark:bg-[#c27a72] text-white text-sm font-medium rounded-lg hover:bg-[#a86660] transition-colors disabled:opacity-50">
                   {profileSaving ? "Enregistrement…" : "Enregistrer"}
                 </button>
-                <button onClick={() => { setProfileEditing(false); if (profile) setProfileForm({ prenom: profile.prenom, nom: profile.nom, telephone: profile.telephone || "", adresse: profile.adresse || "" }) }} className="px-5 py-2 border border-gray-200 dark:border-neutral-700 text-gray-500 dark:text-white/60 text-sm font-medium rounded-lg hover:border-gray-300 transition-colors">
+                <button onClick={() => { setProfileEditing(false); if (profile) setProfileForm({ prenom: profile.prenom, nom: profile.nom, telephone: profile.telephone || "", adresse: profile.adresse || "" }) }} className="px-5 py-2 border border-gray-200 dark:border-neutral-700 text-secondary-text dark:text-white/60 text-sm font-medium rounded-lg hover:border-gray-300 transition-colors">
                   Annuler
                 </button>
               </div>
@@ -529,10 +529,10 @@ export default function ComptePage() {
         <section className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6 mb-6">
           <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Mes devis</h2>
           {quotesLoading ? (
-            <p className="text-sm text-gray-400 dark:text-white/60">Chargement…</p>
+            <p className="text-sm text-secondary-text dark:text-white/60">Chargement…</p>
           ) : quotes.length === 0 ? (
             <>
-              <p className="text-sm text-gray-400 dark:text-white/60 mb-4">Aucun devis pour le moment.</p>
+              <p className="text-sm text-secondary-text dark:text-white/60 mb-4">Aucun devis pour le moment.</p>
               <Link
                 href="/catalogue"
                 className="inline-flex items-center gap-2 bg-[#c27a72] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#a86660] transition-colors w-fit"
@@ -551,10 +551,10 @@ export default function ComptePage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">{q.quoteNumber}</p>
-                      <p className="text-xs text-gray-400 dark:text-white/60">{formatDate(q.createdAt)} — {q.itemCount} article{q.itemCount > 1 ? "s" : ""}</p>
+                      <p className="text-xs text-secondary-text dark:text-white/60">{formatDate(q.createdAt)} — {q.itemCount} article{q.itemCount > 1 ? "s" : ""}</p>
                     </div>
                     <div className="text-right">
-                      <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-medium ${STATUT_COLORS[q.status] || "bg-gray-100 dark:bg-neutral-800 text-gray-600"}`}>
+                      <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-medium ${STATUT_COLORS[q.status] || "bg-gray-100 dark:bg-neutral-800 text-secondary-text"}`}>
                         {STATUT_LABELS[q.status] || q.status}
                       </span>
                       <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mt-1">{q.totalTtc.toFixed(2)} €</p>
@@ -575,9 +575,9 @@ export default function ComptePage() {
         <section className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
           <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Mes favoris</h2>
           {favLoading ? (
-            <p className="text-sm text-gray-400 dark:text-white/60">Chargement…</p>
+            <p className="text-sm text-secondary-text dark:text-white/60">Chargement…</p>
           ) : favorites.length === 0 ? (
-            <p className="text-sm text-gray-400 dark:text-white/60">Aucun produit en favori.</p>
+            <p className="text-sm text-secondary-text dark:text-white/60">Aucun produit en favori.</p>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {favorites.map((id) => {
@@ -604,13 +604,13 @@ export default function ComptePage() {
         {/* ─── Newsletter ─── */}
         <section className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6 mt-6">
           <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Newsletter</h2>
-          <p className="text-sm text-gray-400 dark:text-white/60 mb-4">
+          <p className="text-sm text-secondary-text dark:text-white/60 mb-4">
             Recevez nos nouveautés et offres exclusives directement dans votre boîte mail.
           </p>
           <NewsletterToggle customerEmail={customer.email} />
         </section>
 
-        <p className="text-center text-xs text-gray-400 dark:text-white/60 mt-6">
+        <p className="text-center text-xs text-secondary-text dark:text-white/60 mt-6">
           <Link href="/" className="hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors">← Retour au site</Link>
         </p>
       </div>

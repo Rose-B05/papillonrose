@@ -71,7 +71,7 @@ export default async function CategoryPage({ params }: Props) {
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 pt-16 md:pt-20">
       {/* Breadcrumb */}
       <nav className="max-w-7xl mx-auto px-5 md:px-10 pt-6 pb-2">
-        <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-white/60">
+        <ol className="flex items-center gap-2 text-xs text-secondary-text dark:text-white/60">
           <li><Link href="/" className="hover:text-[#c27a72] transition-colors">Accueil</Link></li>
           <li>/</li>
           <li><Link href="/catalogue" className="hover:text-[#c27a72] transition-colors">Catalogue</Link></li>
@@ -93,7 +93,7 @@ export default async function CategoryPage({ params }: Props) {
             <h1 className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
               {category}
             </h1>
-            <p className="text-gray-500 dark:text-white/70 mt-3 text-sm max-w-lg">{description}</p>
+            <p className="text-secondary-text dark:text-white/70 mt-3 text-sm max-w-lg">{description}</p>
             <p className="text-xs text-[#c27a72] dark:text-[#d4968e] mt-3 font-medium">
               {products.length} produit{products.length !== 1 ? "s" : ""}
             </p>
@@ -125,10 +125,10 @@ export default async function CategoryPage({ params }: Props) {
               <div className="p-3.5 flex flex-col flex-1">
                 <p className="text-[10px] font-medium text-[#c27a72] dark:text-[#d4968e] uppercase tracking-wider truncate">{p.categorie}</p>
                 <h3 className="text-[13px] font-semibold text-[#2E2E2E] dark:text-neutral-100 leading-snug truncate">{p.nom}</h3>
-                {p.dimension && <p className="text-[10px] text-gray-400 dark:text-white/60 truncate">{p.dimension}</p>}
+                {p.dimension && <p className="text-[10px] text-secondary-text dark:text-white/60 truncate">{p.dimension}</p>}
                 <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
                   {prixTtc(p.prix).toFixed(2)} €
-                  <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">TTC / jour</span>
+                  <span className="text-xs font-normal text-secondary-text dark:text-white/60 ml-0.5">TTC / jour</span>
                 </p>
               </div>
             </Link>

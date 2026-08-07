@@ -40,7 +40,7 @@ function CategoryPills({
           className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
             active === cat
               ? "bg-[#c27a72] dark:bg-[#c27a72] text-white shadow-sm"
-              : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 hover:bg-[#c27a72]/20 dark:hover:bg-[#a86660]/20 hover:text-[#c27a72] dark:hover:text-[#d4968e]"
+              : "bg-[#F0EBE3] dark:bg-neutral-800 text-secondary-text dark:text-white/70 hover:bg-[#c27a72]/20 dark:hover:bg-[#a86660]/20 hover:text-[#c27a72] dark:hover:text-[#d4968e]"
           }`}
         >
           {cat}
@@ -175,14 +175,14 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
         <div className="relative flex-1">
           <Search
             size={15}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white/60"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary-text dark:text-white/60"
           />
           <input
             type="text"
             placeholder="Rechercher un article…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white dark:bg-neutral-800 pl-11 pr-4 py-3 rounded-2xl text-sm outline-none border border-black/[0.07] dark:border-white/[0.08] focus:border-[#c27a72]/50 transition-colors placeholder:text-gray-400 shadow-sm"
+            className="w-full bg-white dark:bg-neutral-800 pl-11 pr-4 py-3 rounded-2xl text-sm outline-none border border-black/[0.07] dark:border-white/[0.08] focus:border-[#c27a72]/50 transition-colors placeholder:text-secondary-text shadow-sm"
           />
         </div>
       </div>
@@ -201,7 +201,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-4 mt-2 md:mb-5 md:mt-3">
-            <p className="text-sm text-gray-400 dark:text-white/60">
+            <p className="text-sm text-secondary-text dark:text-white/60">
               <span className="text-[#2E2E2E] dark:text-neutral-100 font-semibold">
                 {filtered.length}
               </span>{" "}
@@ -223,7 +223,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
               tagFilters.dateDebut) && (
               <button
                 onClick={resetFilters}
-                className="text-xs text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors underline"
+                className="text-xs text-secondary-text dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors underline"
               >
                 Réinitialiser
               </button>
@@ -233,7 +233,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
           {loading ? (
             <div className="py-24 text-center">
               <Loader2 className="animate-spin mx-auto mb-4 text-[#c27a72]" size={32} />
-              <p className="text-gray-400 dark:text-white/60 text-sm">Chargement du catalogue…</p>
+              <p className="text-secondary-text dark:text-white/60 text-sm">Chargement du catalogue…</p>
             </div>
           ) : filtered.length > 0 ? (
             <CatalogGallery
@@ -247,7 +247,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
             />
           ) : (
             <div className="py-24 text-center">
-              <p className="text-gray-400 dark:text-white/60 text-base mb-5">
+              <p className="text-secondary-text dark:text-white/60 text-base mb-5">
                 Aucun produit ne correspond à votre sélection.
               </p>
               <button
@@ -273,12 +273,12 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
             <h2 className="text-lg font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">
               {modalProduct.nom}
             </h2>
-            <p className="text-sm text-gray-500 dark:text-white/70 mb-1">{modalProduct.categorie}</p>
+            <p className="text-sm text-secondary-text dark:text-white/70 mb-1">{modalProduct.categorie}</p>
             {modalProduct.dimension && (
-              <p className="text-xs text-gray-400 dark:text-white/60 mb-3">{modalProduct.dimension}</p>
+              <p className="text-xs text-secondary-text dark:text-white/60 mb-3">{modalProduct.dimension}</p>
             )}
             <p className="text-xl font-bold text-[#2E2E2E] dark:text-neutral-100 mb-4">
-              {prixTtc(modalProduct.prix).toFixed(2)} €<span className="text-xs font-normal text-gray-400 ml-1">TTC / jour</span>
+              {prixTtc(modalProduct.prix).toFixed(2)} €<span className="text-xs font-normal text-secondary-text ml-1">TTC / jour</span>
             </p>
             <div className="flex gap-3">
               <button
@@ -295,7 +295,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
                 className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-colors ${
                   favorites.has(modalProduct.id)
                     ? "border-[#c27a72] bg-[#c27a72]/10 text-[#c27a72]"
-                    : "border-gray-200 text-gray-400 hover:border-[#c27a72]/30"
+                    : "border-gray-200 text-secondary-text hover:border-[#c27a72]/30"
                 }`}
               >
                 {favorites.has(modalProduct.id) ? "♥" : "♡"}
@@ -303,7 +303,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
             </div>
             <button
               onClick={() => setModalProduct(null)}
-              className="mt-3 w-full text-center text-xs text-gray-400 hover:text-[#c27a72] transition-colors"
+              className="mt-3 w-full text-center text-xs text-secondary-text hover:text-[#c27a72] transition-colors"
             >
               Fermer
             </button>

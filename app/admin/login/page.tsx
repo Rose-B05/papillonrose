@@ -187,7 +187,7 @@ function LoginForm() {
               <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 text-center mb-1">
                 Administration
               </h1>
-              <p className="text-sm text-gray-400 dark:text-white/60 text-center mb-6">
+              <p className="text-sm text-secondary-text dark:text-white/60 text-center mb-6">
                 Papillon Rose
               </p>
 
@@ -202,7 +202,7 @@ function LoginForm() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-gray-400"
+                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-secondary-text"
                     style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                   />
                 </div>
@@ -218,13 +218,13 @@ function LoginForm() {
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-gray-400"
+                      className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-secondary-text"
                       style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-secondary-text hover:text-secondary-text dark:hover:text-gray-300 transition-colors"
                       tabIndex={-1}
                     >
                       {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -262,7 +262,7 @@ function LoginForm() {
           {/* ── FORGOT: EMAIL ────────────────────────── */}
           {view === "forgot-email" && (
             <>
-              <button onClick={resetAll} className="flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 mb-4 transition-colors">
+              <button onClick={resetAll} className="flex items-center gap-1 text-sm text-secondary-text hover:text-secondary-text dark:hover:text-gray-300 mb-4 transition-colors">
                 <ArrowLeft size={14} />
                 Retour
               </button>
@@ -270,7 +270,7 @@ function LoginForm() {
               <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                 Mot de passe oublié
               </h1>
-              <p className="text-sm text-gray-400 dark:text-white/60 mb-6">
+              <p className="text-sm text-secondary-text dark:text-white/60 mb-6">
                 Un code de vérification sera envoyé à votre email.
               </p>
 
@@ -286,7 +286,7 @@ function LoginForm() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="papillonrosebertha@gmail.com"
-                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-gray-400"
+                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-secondary-text"
                     style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                   />
                 </div>
@@ -319,7 +319,7 @@ function LoginForm() {
           {/* ── FORGOT: OTP CODE ─────────────────────── */}
           {view === "forgot-otp" && (
             <>
-              <button onClick={() => { setView("forgot-email"); setError(""); setOtpCode(["", "", "", "", "", ""]); }} className="flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 mb-4 transition-colors">
+              <button onClick={() => { setView("forgot-email"); setError(""); setOtpCode(["", "", "", "", "", ""]); }} className="flex items-center gap-1 text-sm text-secondary-text hover:text-secondary-text dark:hover:text-gray-300 mb-4 transition-colors">
                 <ArrowLeft size={14} />
                 Retour
               </button>
@@ -327,7 +327,7 @@ function LoginForm() {
               <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                 Vérification
               </h1>
-              <p className="text-sm text-gray-400 dark:text-white/60 mb-6">
+              <p className="text-sm text-secondary-text dark:text-white/60 mb-6">
                 Entrez le code à 6 chiffres envoyé à <strong>{email}</strong>
               </p>
 
@@ -385,7 +385,7 @@ function LoginForm() {
           {/* ── FORGOT: NEW PASSWORD ─────────────────── */}
           {view === "forgot-reset" && (
             <>
-              <button onClick={() => { setView("forgot-otp"); setError(""); }} className="flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 mb-4 transition-colors">
+              <button onClick={() => { setView("forgot-otp"); setError(""); }} className="flex items-center gap-1 text-sm text-secondary-text hover:text-secondary-text dark:hover:text-gray-300 mb-4 transition-colors">
                 <ArrowLeft size={14} />
                 Retour
               </button>
@@ -393,7 +393,7 @@ function LoginForm() {
               <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                 Nouveau mot de passe
               </h1>
-              <p className="text-sm text-gray-400 dark:text-white/60 mb-6">
+              <p className="text-sm text-secondary-text dark:text-white/60 mb-6">
                 Choisissez un mot de passe sécurisé.
               </p>
 
@@ -409,19 +409,19 @@ function LoginForm() {
                       required
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-gray-400"
+                      className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-secondary-text"
                       style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                     />
                     <button
                       type="button"
                       onClick={() => setShowNewPassword(!showNewPassword)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-secondary-text hover:text-secondary-text dark:hover:text-gray-300 transition-colors"
                       tabIndex={-1}
                     >
                       {showNewPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
-                  <p className="text-[11px] text-gray-400 mt-1">
+                  <p className="text-[11px] text-secondary-text mt-1">
                     Min. 12 caractères, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial
                   </p>
                 </div>
@@ -436,7 +436,7 @@ function LoginForm() {
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-gray-400"
+                    className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72] placeholder:text-secondary-text"
                     style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                   />
                 </div>
@@ -475,7 +475,7 @@ function LoginForm() {
               <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">
                 Mot de passe réinitialisé
               </h1>
-              <p className="text-sm text-gray-400 dark:text-white/60 mb-6">
+              <p className="text-sm text-secondary-text dark:text-white/60 mb-6">
                 Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.
               </p>
               <button
@@ -494,7 +494,7 @@ function LoginForm() {
 
 export default function AdminLoginPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 flex items-center justify-center text-gray-400 dark:text-white/60">Chargement…</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 flex items-center justify-center text-secondary-text dark:text-white/60">Chargement…</div>}>
       <LoginForm />
     </Suspense>
   )

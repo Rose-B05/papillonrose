@@ -43,7 +43,7 @@ export default function AProposPage() {
       <div className="max-w-4xl mx-auto px-5 md:px-10 pt-24 pb-16">
         {/* Breadcrumb */}
         <nav className="pt-6 pb-2">
-          <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-white/60">
+          <ol className="flex items-center gap-2 text-xs text-secondary-text dark:text-white/60">
             <li><Link href="/" className="hover:text-[#c27a72] transition-colors">Accueil</Link></li>
             <li>/</li>
             <li className="text-[#2E2E2E] dark:text-neutral-100 font-medium">À propos</li>
@@ -63,7 +63,7 @@ export default function AProposPage() {
               >
                 L&apos;histoire de Papillon Rose
               </h2>
-              <div className="space-y-4 text-sm text-[#2E2E2E]/70 dark:text-neutral-300 leading-relaxed">
+              <div className="space-y-4 text-sm text-secondary-text dark:text-neutral-300 leading-relaxed">
                 <p>
                   Papillon Rose est avant tout une histoire de passion.
                 </p>
@@ -153,7 +153,7 @@ export default function AProposPage() {
                 >
                   {title}
                 </h3>
-                <p className="text-xs text-[#2E2E2E]/60 dark:text-white/70 leading-relaxed">
+                <p className="text-xs text-secondary-text dark:text-white/70 leading-relaxed">
                   {text}
                 </p>
               </div>
@@ -173,7 +173,7 @@ export default function AProposPage() {
                   >
                     {s.val}
                   </p>
-                  <p className="text-[10px] md:text-xs text-[#2E2E2E]/45 uppercase tracking-wider">
+                  <p className="text-[10px] md:text-xs text-secondary-text uppercase tracking-wider">
                     {s.label}
                   </p>
                 </div>
@@ -184,7 +184,7 @@ export default function AProposPage() {
 
         {/* CTA */}
         <section className="text-center">
-          <p className="text-[#2E2E2E]/60 dark:text-white/70 text-base mb-6">
+          <p className="text-secondary-text dark:text-white/70 text-base mb-6">
             Prêt(e) à sublimer votre événement ?
           </p>
           <Link

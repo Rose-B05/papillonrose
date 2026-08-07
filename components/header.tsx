@@ -86,7 +86,7 @@ export default function Header() {
                         ? "text-[#c27a72] dark:text-[#d4968e]"
                         : "text-white")
                     : opaque
-                      ? "text-[#2E2E2E]/60 dark:text-white/70 hover:text-[#c27a72] dark:hover:text-[#d4968e]"
+                      ? "text-secondary-text dark:text-white/70 hover:text-[#c27a72] dark:hover:text-[#d4968e]"
                       : "text-white/70 hover:text-white"
                 }`}
               >
@@ -166,7 +166,7 @@ export default function Header() {
               aria-label="Menu"
               className={`md:hidden p-2 ${
                 opaque
-                  ? "text-[#2E2E2E]/60 dark:text-white/70"
+                  ? "text-secondary-text dark:text-white/70"
                   : "text-white/80"
               }`}
             >
@@ -210,7 +210,7 @@ export default function Header() {
                   className={`text-left transition-colors text-lg ${
                     isActive(item.href)
                       ? "font-bold text-[#c27a72] dark:text-[#d4968e]"
-                      : "text-[#2E2E2E]/70 dark:text-neutral-300 hover:text-[#c27a72] dark:hover:text-[#d4968e]"
+                      : "text-secondary-text dark:text-neutral-300 hover:text-[#c27a72] dark:hover:text-[#d4968e]"
                   }`}
                   style={DP}
                 >

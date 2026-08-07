@@ -88,7 +88,7 @@ export default function NewDevisPage() {
     <div className="max-w-4xl mx-auto space-y-6">
         <button
           onClick={() => router.push("/admin/devis")}
-          className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-white/60 hover:text-[#c27a72] transition-colors"
+          className="flex items-center gap-1.5 text-sm text-secondary-text dark:text-white/60 hover:text-[#c27a72] transition-colors"
         >
           <ArrowLeft size={15} /> Retour à la liste
         </button>
@@ -97,7 +97,7 @@ export default function NewDevisPage() {
           <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Informations client</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs text-gray-500 dark:text-white/60 mb-1">Prénom *</label>
+              <label className="block text-xs text-secondary-text dark:text-white/60 mb-1">Prénom *</label>
               <input
                 value={client.prenom}
                 onChange={(e) => setClient((p) => ({ ...p, prenom: e.target.value }))}
@@ -105,7 +105,7 @@ export default function NewDevisPage() {
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 dark:text-white/60 mb-1">Nom *</label>
+              <label className="block text-xs text-secondary-text dark:text-white/60 mb-1">Nom *</label>
               <input
                 value={client.nom}
                 onChange={(e) => setClient((p) => ({ ...p, nom: e.target.value }))}
@@ -113,7 +113,7 @@ export default function NewDevisPage() {
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 dark:text-white/60 mb-1">Email *</label>
+              <label className="block text-xs text-secondary-text dark:text-white/60 mb-1">Email *</label>
               <input
                 type="email"
                 value={client.email}
@@ -122,7 +122,7 @@ export default function NewDevisPage() {
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 dark:text-white/60 mb-1">Téléphone</label>
+              <label className="block text-xs text-secondary-text dark:text-white/60 mb-1">Téléphone</label>
               <input
                 value={client.telephone}
                 onChange={(e) => setClient((p) => ({ ...p, telephone: e.target.value }))}
@@ -168,7 +168,7 @@ export default function NewDevisPage() {
                   {(ligne.prixUnitaire * ligne.quantite).toFixed(2)} €
                 </span>
                 {lignes.length > 1 && (
-                  <button onClick={() => removeLigne(i)} className="text-gray-400 hover:text-red-500 py-2">
+                  <button onClick={() => removeLigne(i)} className="text-secondary-text hover:text-red-500 py-2">
                     <X size={14} />
                   </button>
                 )}
@@ -181,11 +181,11 @@ export default function NewDevisPage() {
           <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-4">Totaux</h3>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-500 dark:text-white/60">Total HT</span>
+              <span className="text-secondary-text dark:text-white/60">Total HT</span>
               <span>{totalHt.toFixed(2)} €</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500 dark:text-white/60">TVA (20%)</span>
+              <span className="text-secondary-text dark:text-white/60">TVA (20%)</span>
               <span>{tva.toFixed(2)} €</span>
             </div>
             <div className="flex justify-between pt-2 border-t border-black/[0.06] dark:border-white/[0.08] font-semibold text-[#c27a72] dark:text-[#d4968e]">

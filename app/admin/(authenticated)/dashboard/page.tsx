@@ -112,9 +112,9 @@ export default function DashboardPage() {
   return (
       <div className="max-w-6xl mx-auto">
         {loading ? (
-          <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
+          <div className="text-center py-16 text-secondary-text dark:text-white/60">Chargement…</div>
         ) : !data ? (
-          <div className="text-center py-16 text-gray-400 dark:text-white/60">Erreur de chargement</div>
+          <div className="text-center py-16 text-secondary-text dark:text-white/60">Erreur de chargement</div>
         ) : (
           <>
             {/* KPI Cards */}
@@ -133,7 +133,7 @@ export default function DashboardPage() {
                 <p className="text-3xl font-bold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
                   {data.devisEnAttente}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-white/60 mt-1">Devis en attente</p>
+                <p className="text-xs text-secondary-text dark:text-white/60 mt-1">Devis en attente</p>
               </Link>
 
               {/* Produits en rupture */}
@@ -150,7 +150,7 @@ export default function DashboardPage() {
                 <p className="text-3xl font-bold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
                   {data.outOfStock}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-white/60 mt-1">Produits en rupture</p>
+                <p className="text-xs text-secondary-text dark:text-white/60 mt-1">Produits en rupture</p>
               </Link>
 
               {/* Chiffre d'affaires */}
@@ -172,7 +172,7 @@ export default function DashboardPage() {
                 <p className="text-3xl font-bold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
                   {data.revenueThisMonth.toLocaleString("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: 0 })} €
                 </p>
-                <p className="text-xs text-gray-500 dark:text-white/60 mt-1">CA du mois en cours</p>
+                <p className="text-xs text-secondary-text dark:text-white/60 mt-1">CA du mois en cours</p>
               </div>
             </div>
 
@@ -183,14 +183,14 @@ export default function DashboardPage() {
                 <h2 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">Activité récente</h2>
               </div>
               {data.activity.length === 0 ? (
-                <div className="px-5 py-10 text-center text-sm text-gray-400 dark:text-white/50">
+                <div className="px-5 py-10 text-center text-sm text-secondary-text dark:text-white/50">
                   Aucune activité pour le moment
                 </div>
               ) : (
                 <div className="divide-y divide-black/[0.04] dark:divide-white/[0.05]">
                   {data.activity.map((event) => {
                     const Icon = ACTIVITY_ICONS[event.type] || Activity
-                    const colorClass = ACTIVITY_COLORS[event.type] || "bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-white/70"
+                    const colorClass = ACTIVITY_COLORS[event.type] || "bg-gray-100 text-secondary-text dark:bg-neutral-700 dark:text-white/70"
                     return (
                       <div key={event.id} className="px-5 py-3 flex items-center gap-3 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${colorClass}`}>
@@ -199,7 +199,7 @@ export default function DashboardPage() {
                         <div className="flex-1 min-w-0">
                           <p className="text-sm text-[#2E2E2E] dark:text-neutral-100 truncate">{event.description}</p>
                         </div>
-                        <span className="text-xs text-gray-400 dark:text-white/50 whitespace-nowrap flex-shrink-0">
+                        <span className="text-xs text-secondary-text dark:text-white/50 whitespace-nowrap flex-shrink-0">
                           {relativeTime(event.createdAt)}
                         </span>
                       </div>

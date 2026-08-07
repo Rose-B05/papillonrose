@@ -53,8 +53,8 @@ export async function subscribeToNewsletter(email: string): Promise<{ success: b
           <p style="text-align:center;margin:24px 0">
             <a href="${SITE_URL}/api/newsletter/confirm?token=${existing.confirmToken}" style="background:#c27a72;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Confirmer mon inscription</a>
           </p>
-          <p style="color:#888;font-size:12px">Ce lien est valable 48h. Si vous n'avez pas demandé cette inscription, vous pouvez ignorer cet email.</p>
-          <p style="margin-top:16px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+          <p style="color:#544f4f;font-size:12px">Ce lien est valable 48h. Si vous n'avez pas demandé cette inscription, vous pouvez ignorer cet email.</p>
+          <p style="margin-top:16px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
         </div>`,
       })
     } catch (err) {
@@ -93,8 +93,8 @@ export async function subscribeToNewsletter(email: string): Promise<{ success: b
         <p style="text-align:center;margin:24px 0">
           <a href="${SITE_URL}/api/newsletter/confirm?token=${token}" style="background:#c27a72;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Confirmer mon inscription</a>
         </p>
-        <p style="color:#888;font-size:12px">Ce lien est valable 48h. Si vous n'avez pas demandé cette inscription, vous pouvez ignorer cet email.</p>
-        <p style="margin-top:16px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+        <p style="color:#544f4f;font-size:12px">Ce lien est valable 48h. Si vous n'avez pas demandé cette inscription, vous pouvez ignorer cet email.</p>
+        <p style="margin-top:16px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
       </div>`,
     })
   } catch (err) {

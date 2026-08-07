@@ -57,7 +57,7 @@ async function sendCancelledAfterEventEmail(
     <p>La date de votre événement (${eventDate}) étant désormais passée et aucun règlement n'ayant été reçu, nous avons clôturé ce dossier.</p>
     <p>Si vous souhaitez organiser un nouvel événement, nous reste disponible pour vous accompagné.</p>
     <p>Nous vous souhaitons une excellente journée.</p>
-    <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
+    <p style="margin-top:24px;color:#544f4f;font-size:12px">Papillon Rose — Location décoration événements</p>
   </div>`
 
   try {

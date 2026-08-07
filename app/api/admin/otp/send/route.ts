@@ -58,12 +58,12 @@ export async function POST(request: NextRequest) {
       subject: "Code de vérification — Administration Papillon Rose",
       html: `<div style="font-family:sans-serif;max-width:400px;margin:auto;padding:20px;text-align:center">
         <h2 style="color:#c27a72;margin-bottom:8px">Code de vérification</h2>
-        <p style="color:#555;font-size:14px">Voici votre code de connexion :</p>
+        <p style="color:#544f4f;font-size:14px">Voici votre code de connexion :</p>
         <div style="background:#f8f5f0;border-radius:12px;padding:20px;margin:20px 0">
           <span style="font-size:32px;font-weight:700;letter-spacing:8px;color:#2E2E2E">${otp}</span>
         </div>
-        <p style="color:#888;font-size:12px">Ce code expire dans <strong>10 minutes</strong>.</p>
-        <p style="color:#888;font-size:12px">Si vous n'avez pas demandé ce code, ignorez cet email.</p>
+        <p style="color:#544f4f;font-size:12px">Ce code expire dans <strong>10 minutes</strong>.</p>
+        <p style="color:#544f4f;font-size:12px">Si vous n'avez pas demandé ce code, ignorez cet email.</p>
       </div>`,
     })
 

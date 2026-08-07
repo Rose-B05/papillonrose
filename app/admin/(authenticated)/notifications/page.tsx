@@ -97,13 +97,13 @@ export default function NotificationsPage() {
           <h1 className="text-xl font-semibold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
             Notifications
           </h1>
-          <p className="text-sm text-gray-400 dark:text-white/60 mt-1">
+          <p className="text-sm text-secondary-text dark:text-white/60 mt-1">
             Historique des emails envoyés par le système
           </p>
         </div>
         <button
           onClick={fetchLogs}
-          className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-gray-500 dark:text-white/70 bg-white dark:bg-neutral-800 rounded-xl border border-black/[0.07] dark:border-white/[0.08] hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors"
+          className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-secondary-text dark:text-white/70 bg-white dark:bg-neutral-800 rounded-xl border border-black/[0.07] dark:border-white/[0.08] hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors"
         >
           <RefreshCcw size={13} />
           Actualiser
@@ -113,15 +113,15 @@ export default function NotificationsPage() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3">
         <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 border border-black/[0.07] dark:border-white/[0.08]">
-          <p className="text-xs text-gray-400 dark:text-white/60 mb-1">Total emails</p>
+          <p className="text-xs text-secondary-text dark:text-white/60 mb-1">Total emails</p>
           <p className="text-2xl font-bold text-[#2E2E2E] dark:text-neutral-100">{logs.length}</p>
         </div>
         <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 border border-black/[0.07] dark:border-white/[0.08]">
-          <p className="text-xs text-gray-400 dark:text-white/60 mb-1">Envoyés</p>
+          <p className="text-xs text-secondary-text dark:text-white/60 mb-1">Envoyés</p>
           <p className="text-2xl font-bold text-green-600">{sentCount}</p>
         </div>
         <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 border border-black/[0.07] dark:border-white/[0.08]">
-          <p className="text-xs text-gray-400 dark:text-white/60 mb-1">Échoués</p>
+          <p className="text-xs text-secondary-text dark:text-white/60 mb-1">Échoués</p>
           <p className="text-2xl font-bold text-red-500">{failedCount}</p>
         </div>
       </div>
@@ -129,7 +129,7 @@ export default function NotificationsPage() {
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-text" />
           <input
             type="text"
             placeholder="Rechercher un email..."
@@ -139,7 +139,7 @@ export default function NotificationsPage() {
           />
         </div>
         <div className="relative">
-          <Filter size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Filter size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-text" />
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
@@ -155,11 +155,11 @@ export default function NotificationsPage() {
 
       {/* List */}
       {loading ? (
-        <div className="text-center py-16 text-gray-400 dark:text-white/60">Chargement…</div>
+        <div className="text-center py-16 text-secondary-text dark:text-white/60">Chargement…</div>
       ) : filtered.length === 0 ? (
         <div className="text-center py-16">
           <Bell size={40} className="mx-auto text-gray-300 dark:text-neutral-600 mb-4" />
-          <p className="text-gray-400 dark:text-white/60">
+          <p className="text-secondary-text dark:text-white/60">
             {logs.length === 0 ? "Aucun email envoyé pour l'instant" : "Aucun résultat pour cette recherche"}
           </p>
         </div>
@@ -177,11 +177,11 @@ export default function NotificationsPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${TYPE_COLORS[log.type] || "bg-gray-100 text-gray-600"}`}>
+                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${TYPE_COLORS[log.type] || "bg-gray-100 text-secondary-text"}`}>
                       {TYPE_LABELS[log.type] || log.type}
                     </span>
                     {log.bookingId && (
-                      <span className="text-[10px] text-gray-400 dark:text-white/50">
+                      <span className="text-[10px] text-secondary-text dark:text-white/50">
                         #{log.bookingId.slice(0, 8)}
                       </span>
                     )}
@@ -189,7 +189,7 @@ export default function NotificationsPage() {
                   <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 truncate">
                     {log.subject}
                   </p>
-                  <p className="text-xs text-gray-400 dark:text-white/50 mt-0.5">
+                  <p className="text-xs text-secondary-text dark:text-white/50 mt-0.5">
                     <Mail size={10} className="inline mr-1" />
                     {log.to}
                   </p>
@@ -197,7 +197,7 @@ export default function NotificationsPage() {
                     <p className="text-xs text-red-500 mt-1">Erreur : {log.error}</p>
                   )}
                 </div>
-                <span className="text-[11px] text-gray-400 dark:text-white/50 whitespace-nowrap">
+                <span className="text-[11px] text-secondary-text dark:text-white/50 whitespace-nowrap">
                   {formatDate(log.sentAt)}
                 </span>
               </div>

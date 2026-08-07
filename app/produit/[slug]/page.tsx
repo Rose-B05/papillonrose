@@ -123,7 +123,7 @@ export default async function ProductPage({ params }: Props) {
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 pt-16 md:pt-20">
       {/* Breadcrumb */}
       <nav className="max-w-7xl mx-auto px-5 md:px-10 pt-6 pb-2">
-        <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-white/60 flex-wrap">
+        <ol className="flex items-center gap-2 text-xs text-secondary-text dark:text-white/60 flex-wrap">
           <li><Link href="/" className="hover:text-[#c27a72] transition-colors">Accueil</Link></li>
           <li>/</li>
           <li><Link href="/catalogue" className="hover:text-[#c27a72] transition-colors">Catalogue</Link></li>

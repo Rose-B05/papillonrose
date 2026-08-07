@@ -16,7 +16,7 @@ export default function ConditionsLocationPage() {
       <div className="max-w-3xl mx-auto px-5 md:px-10 pt-24 pb-16">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-secondary-text dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors mb-8"
         >
           <ArrowLeft size={14} /> Retour a l&apos;accueil
         </Link>
@@ -90,7 +90,7 @@ export default function ConditionsLocationPage() {
             <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-black/[0.07] dark:border-white/[0.08] overflow-hidden mb-4">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-[#F8F5F0] dark:bg-neutral-900 text-[10px] uppercase tracking-wider text-gray-400 dark:text-white/60">
+                  <tr className="bg-[#F8F5F0] dark:bg-neutral-900 text-[10px] uppercase tracking-wider text-secondary-text dark:text-white/60">
                     <th className="text-left px-5 py-3 font-semibold">Type de dommage</th>
                     <th className="text-left px-5 py-3 font-semibold">Penalite</th>
                   </tr>
@@ -162,7 +162,7 @@ export default function ConditionsLocationPage() {
               <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                 Attention &mdash; Modification ou annulation tardive
               </p>
-              <p className="text-xs text-[#2E2E2E]/70 dark:text-neutral-300 leading-relaxed">
+              <p className="text-xs text-secondary-text dark:text-neutral-300 leading-relaxed">
                 Aucune annulation ni modification n est possible a moins de
                 7 jours avant l evenement. Pass ce delai, aucun
                 remboursement ne sera effectue, quelle que soit la raison.
@@ -189,14 +189,14 @@ export default function ConditionsLocationPage() {
               <p className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-1">
                 Livraison offerte a partir de 150&euro; de location
               </p>
-              <p className="text-xs text-[#2E2E2E]/70 dark:text-neutral-300 leading-relaxed">
+              <p className="text-xs text-secondary-text dark:text-neutral-300 leading-relaxed">
                 Pour toute commande dont le montant de location atteint
                 150&euro; ou plus, les frais de livraison et reprise
                 emballage sont offerts. En dessous de ce seuil, les frais
                 calcules s appliquent.
               </p>
             </div>
-            <p className="text-xs text-[#2E2E2E]/60 dark:text-white/70">
+            <p className="text-xs text-secondary-text dark:text-white/70">
               Hors Ile-de-France : le retrait sur place reste disponible
               gratuitement. Contactez-nous pour toute demande particuliere.
             </p>
@@ -211,7 +211,7 @@ export default function ConditionsLocationPage() {
             </p>
           </Section>
 
-          <div className="text-xs text-gray-400 dark:text-white/60 pt-6 border-t border-black/[0.07] dark:border-white/[0.08]">
+          <div className="text-xs text-secondary-text dark:text-white/60 pt-6 border-t border-black/[0.07] dark:border-white/[0.08]">
             Derniere mise a jour : juillet 2026
           </div>
         </div>
@@ -254,7 +254,7 @@ function RiskCard({
         <span className="text-base">{icon}</span>
         <span className="font-semibold text-[#2E2E2E] dark:text-neutral-100 text-sm">{label}</span>
       </div>
-      <p className="text-xs text-[#2E2E2E]/60 dark:text-white/70 leading-relaxed">{desc}</p>
+      <p className="text-xs text-secondary-text dark:text-white/70 leading-relaxed">{desc}</p>
     </div>
   )
 }
@@ -269,7 +269,7 @@ function TableRow({
   return (
     <tr>
       <td className="px-5 py-3 text-[#2E2E2E] dark:text-neutral-100 font-medium">{damage}</td>
-      <td className="px-5 py-3 text-[#2E2E2E]/60 dark:text-white/70">{penalty}</td>
+      <td className="px-5 py-3 text-secondary-text dark:text-white/70">{penalty}</td>
     </tr>
   )
 }

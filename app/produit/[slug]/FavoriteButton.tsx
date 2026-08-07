@@ -13,7 +13,7 @@ export default function FavoriteButton({ productId }: { productId: number }) {
       className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-colors border ${
         isFavorite
           ? "bg-red-50 border-red-200 text-red-600 hover:bg-red-100"
-          : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+          : "bg-white border-gray-200 text-secondary-text hover:bg-gray-50"
       }`}
     >
       <Heart className={`w-4 h-4 ${isFavorite ? "fill-red-500" : ""}`} />

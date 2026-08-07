@@ -409,7 +409,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                     ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
                     : form.status === "masque"
                     ? "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400"
-                    : "bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-white/70"
+                    : "bg-gray-100 text-secondary-text dark:bg-neutral-700 dark:text-white/70"
                 }`}
               >
                 {form.status === "publie" ? "Publié" : form.status === "masque" ? "Masqué" : "Brouillon"}
@@ -426,7 +426,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
           <button
             onClick={() => handleSave("brouillon")}
             disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-600 dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-secondary-text dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             Enregistrer brouillon
@@ -511,7 +511,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                 className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#c27a72]/50 transition-colors"
               />
               {form.prix !== "" && form.prix !== undefined && (
-                <p className="text-xs text-gray-400 dark:text-white/60 mt-1.5">
+                <p className="text-xs text-secondary-text dark:text-white/60 mt-1.5">
                   Soit <span className="font-medium text-[#2E2E2E] dark:text-neutral-100">{prixTtc(Number(form.prix)).toFixed(2)} € TTC</span> affiché au client
                 </p>
               )}
@@ -604,7 +604,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                     form.tagsThemes.includes(tag)
                       ? "bg-[#c27a72] dark:bg-[#c27a72] text-white"
-                      : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-white/70 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#c27a72]/50"
+                      : "bg-white dark:bg-neutral-800 text-secondary-text dark:text-white/70 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#c27a72]/50"
                   }`}
                 >
                   {tag}
@@ -627,7 +627,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                     form.tagsCouleurs.includes(tag)
                       ? "bg-[#c27a72] dark:bg-[#c27a72] text-white"
-                      : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-white/70 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#c27a72]/50"
+                      : "bg-white dark:bg-neutral-800 text-secondary-text dark:text-white/70 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#c27a72]/50"
                   }`}
                 >
                   {tag}
@@ -657,11 +657,11 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                   : "border-gray-200 dark:border-neutral-700 hover:border-[#c27a72]/50"
               }`}
             >
-              <Upload className="w-6 h-6 text-gray-400 mx-auto mb-2" />
-              <p className="text-xs text-gray-500 dark:text-white/70">
+              <Upload className="w-6 h-6 text-secondary-text mx-auto mb-2" />
+              <p className="text-xs text-secondary-text dark:text-white/70">
                 Glisser-déposer ou cliquer pour upload
               </p>
-              <p className="text-[10px] text-gray-400 dark:text-white/60 mt-1">
+              <p className="text-[10px] text-secondary-text dark:text-white/60 mt-1">
                 JPEG, PNG, WebP • Max 10 Mo
               </p>
             </div>
@@ -689,7 +689,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             <button
               type="button"
               onClick={openMediaLibrary}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-500 dark:text-white/70 hover:border-[#c27a72]/50 transition-colors mb-4"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-secondary-text dark:text-white/70 hover:border-[#c27a72]/50 transition-colors mb-4"
             >
               <Library className="w-3.5 h-3.5" />
               Parcourir la bibliothèque
@@ -706,7 +706,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                       className="relative group aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-neutral-700"
                     >
                       {imageErrors.has(url) ? (
-                        <div className="w-full h-full flex items-center justify-center text-[10px] text-gray-400 p-1 text-center">
+                        <div className="w-full h-full flex items-center justify-center text-[10px] text-secondary-text p-1 text-center">
                           Image non disponible
                         </div>
                       ) : (
@@ -817,7 +817,7 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
             </div>
             <div className="flex-1 overflow-y-auto p-4">
               {mediaLibrary.length === 0 ? (
-                <p className="text-center text-gray-400 py-8">
+                <p className="text-center text-secondary-text py-8">
                   Aucune image dans la bibliothèque
                 </p>
               ) : (
@@ -850,13 +850,13 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
               )}
             </div>
             <div className="flex items-center justify-between p-4 border-t border-black/[0.07] dark:border-white/[0.08]">
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-secondary-text">
                 {selectedMedia.size} image(s) sélectionnée(s)
               </span>
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowMediaLibrary(false)}
-                  className="px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-500 dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors"
+                  className="px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-secondary-text dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors"
                 >
                   Annuler
                 </button>

@@ -45,14 +45,14 @@ export default function FavorisClient() {
       {loading ? (
         <div className="py-24 text-center">
           <Loader2 className="animate-spin mx-auto mb-4 text-[#c27a72]" size={32} />
-          <p className="text-gray-400 dark:text-white/60 text-sm">Chargement…</p>
+          <p className="text-secondary-text dark:text-white/60 text-sm">Chargement…</p>
         </div>
       ) : favProducts.length === 0 ? (
         <div className="py-24 text-center">
           <div className="w-20 h-20 bg-[#c27a72]/10 dark:bg-[#c27a72]/10 rounded-full flex items-center justify-center mx-auto mb-5">
             <Heart size={32} className="text-[#c27a72]/40" />
           </div>
-          <p className="text-gray-400 dark:text-white/60 text-base mb-6">
+          <p className="text-secondary-text dark:text-white/60 text-base mb-6">
             Vous n&apos;avez pas encore de favoris.
           </p>
           <Link
@@ -103,7 +103,7 @@ export default function FavorisClient() {
                     </h3>
                     <p className="text-lg font-bold text-[#2E2E2E] dark:text-neutral-100 mt-0.5">
                       {prixTtc(p.prix).toFixed(2)} €
-                      <span className="text-xs font-normal text-gray-400 dark:text-white/60 ml-0.5">TTC / jour</span>
+                      <span className="text-xs font-normal text-secondary-text dark:text-white/60 ml-0.5">TTC / jour</span>
                     </p>
                   </div>
                   <div className="mt-auto pt-2.5 flex items-center gap-2">
@@ -112,7 +112,7 @@ export default function FavorisClient() {
                       disabled={isInCart}
                       className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
                         isInCart
-                          ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-white/60 cursor-not-allowed"
+                          ? "bg-gray-100 dark:bg-neutral-800 text-secondary-text dark:text-white/60 cursor-not-allowed"
                           : "bg-[#c27a72] dark:bg-[#c27a72] text-white hover:bg-[#a86660] dark:hover:bg-[#a86660]"
                       }`}
                     >

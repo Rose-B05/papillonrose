@@ -106,7 +106,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
     <div className="p-6 max-w-2xl mx-auto">
       <button
         onClick={() => router.back()}
-        className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors mb-6"
+        className="flex items-center gap-1.5 text-sm text-secondary-text dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors mb-6"
       >
         <ArrowLeft size={14} /> Retour
       </button>
@@ -118,7 +118,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
       <div className="space-y-5">
         {/* Titre */}
         <div>
-          <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
+          <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">
             Titre *
           </label>
           <input
@@ -132,7 +132,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
 
         {/* Description */}
         <div>
-          <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
+          <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">
             Description
           </label>
           <textarea
@@ -146,7 +146,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
 
         {/* Type */}
         <div>
-          <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
+          <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">
             Type de contenu *
           </label>
           <div className="flex gap-2">
@@ -157,7 +157,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                   form.type === value
                     ? "bg-[#c27a72] text-white"
-                    : "bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] text-gray-500 dark:text-white/60 hover:border-[#c27a72]/40"
+                    : "bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] text-secondary-text dark:text-white/60 hover:border-[#c27a72]/40"
                 }`}
               >
                 <Icon size={14} /> {label}
@@ -168,11 +168,11 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
 
         {/* Media */}
         <div>
-          <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
+          <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">
             {form.type === "document" ? "Document" : "Média"} *
           </label>
           <div className="flex items-center gap-3">
-            <label className="flex-1 flex items-center justify-center gap-2 bg-white dark:bg-neutral-800 border border-dashed border-black/[0.12] dark:border-white/[0.12] rounded-2xl px-4 py-6 text-sm text-gray-400 dark:text-white/60 hover:border-[#c27a72]/40 transition-colors cursor-pointer">
+            <label className="flex-1 flex items-center justify-center gap-2 bg-white dark:bg-neutral-800 border border-dashed border-black/[0.12] dark:border-white/[0.12] rounded-2xl px-4 py-6 text-sm text-secondary-text dark:text-white/60 hover:border-[#c27a72]/40 transition-colors cursor-pointer">
               {uploading ? (
                 <><Loader2 size={16} className="animate-spin" /> Upload en cours…</>
               ) : (
@@ -181,7 +181,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
               <input type="file" accept="image/*,video/*" className="hidden" onChange={handleUpload} disabled={uploading} />
             </label>
           </div>
-          <p className="text-[10px] text-gray-400 dark:text-white/60 mt-1.5">
+          <p className="text-[10px] text-secondary-text dark:text-white/60 mt-1.5">
             Formats acceptés : images (JPEG, PNG, WebP, GIF) · vidéos (MP4, WebM, MOV). Max 50 Mo pour les vidéos, 10 Mo pour les images.
           </p>
           {uploadError && (
@@ -222,7 +222,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
 
         {/* Ordre */}
         <div>
-          <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
+          <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">
             Ordre d&apos;affichage
           </label>
           <input
@@ -237,7 +237,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
         {form.type === "document" && (
           <>
             <div>
-              <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
+              <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">
                 Lien d&apos;action
               </label>
               <input
@@ -249,7 +249,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
               />
             </div>
             <div>
-              <label className="block text-[10px] uppercase tracking-widest text-gray-400 dark:text-white/60 mb-1.5">
+              <label className="block text-[10px] uppercase tracking-widest text-secondary-text dark:text-white/60 mb-1.5">
                 Texte du bouton
               </label>
               <input

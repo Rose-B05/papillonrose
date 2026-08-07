@@ -125,14 +125,14 @@ function buildDeliverySection(client: any): string {
     return `
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 16px;margin:12px 0">
         <p style="margin:0;font-weight:600;color:#166534">📦 Livraison</p>
-        <p style="margin:4px 0 0;font-size:13px;color:#555">${client.adresseLivraison}${client.codePostalLivraison ? ` (${client.codePostalLivraison})` : ""}</p>
+        <p style="margin:4px 0 0;font-size:13px;color:#544f4f">${client.adresseLivraison}${client.codePostalLivraison ? ` (${client.codePostalLivraison})` : ""}</p>
       </div>`
   }
 
   return `
     <div style="background:#f8f5f0;border-radius:8px;padding:12px 16px;margin:12px 0">
       <p style="margin:0;font-weight:600;color:#2E2E2E">📍 Retrait sur place</p>
-      <p style="margin:4px 0 0;font-size:13px;color:#555">Retrait à convenir — Île-de-France</p>
+      <p style="margin:4px 0 0;font-size:13px;color:#544f4f">Retrait à convenir — Île-de-France</p>
     </div>`
 }
 
@@ -148,7 +148,7 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
   <!-- Header -->
   <div style="text-align:center;padding:20px 0;border-bottom:2px solid #c27a72">
     <h1 style="color:#c27a72;font-size:24px;margin:0"><img src="https://www.papillonrose.fr/papillon-rose-logo.png" alt="Papillon Rose" height="40" style="vertical-align:middle"></h1>
-    <p style="color:#999;font-size:12px;margin:4px 0 0">Location mobilier & décoration événements</p>
+    <p style="color:#544f4f;font-size:12px;margin:4px 0 0">Location mobilier & décoration événements</p>
   </div>
 
   <!-- Greeting -->
@@ -157,7 +157,7 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
       ${prenom ? `Merci ${prenom} !` : "Merci pour votre commande !"}
     </h2>
     <p style="color:#c27a72;font-size:14px;margin:0">Réservation #${booking.id}</p>
-    <p style="color:#999;font-size:12px;margin:4px 0 0">Reçue le ${formatDateFr(now.toISOString())}</p>
+    <p style="color:#544f4f;font-size:12px;margin:4px 0 0">Reçue le ${formatDateFr(now.toISOString())}</p>
   </div>
 
   <!-- Items -->
@@ -208,7 +208,7 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
 
   <!-- Contact -->
   <div style="text-align:center;padding:16px;margin:16px 0;background:#fdf8f0;border-radius:8px">
-    <p style="margin:0;font-size:13px;color:#555">Une question sur votre réservation ?</p>
+    <p style="margin:0;font-size:13px;color:#544f4f">Une question sur votre réservation ?</p>
     <a href="mailto:papillonrosebertha@gmail.com" style="display:inline-block;margin-top:8px;background:#c27a72;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">
       ✉️ Nous contacter
     </a>
@@ -216,7 +216,7 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
 
   <!-- Footer -->
   <div style="text-align:center;padding:20px 0;border-top:1px solid #eee;margin-top:20px">
-    <p style="color:#999;font-size:11px;margin:0">Cet email a été envoyé automatiquement.</p>
+    <p style="color:#544f4f;font-size:11px;margin:0">Cet email a été envoyé automatiquement.</p>
     <p style="color:#c27a72;font-size:12px;margin:4px 0 0">papillonrosebertha@gmail.com · Île-de-France</p>
   </div>
 </div>`

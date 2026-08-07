@@ -55,7 +55,7 @@ export default function NouveautesAdminPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100">Nouveautés</h1>
-          <p className="text-sm text-gray-400 dark:text-white/60 mt-1">
+          <p className="text-sm text-secondary-text dark:text-white/60 mt-1">
             {items.length} élément{items.length !== 1 ? "s" : ""}
             {publieCount > 0 && (
               <span className="ml-2 text-[#c27a72] dark:text-[#d4968e] font-medium">
@@ -73,13 +73,13 @@ export default function NouveautesAdminPage() {
       </div>
 
       {loading ? (
-        <div className="text-center py-16 text-gray-400 dark:text-white/60 text-sm">Chargement…</div>
+        <div className="text-center py-16 text-secondary-text dark:text-white/60 text-sm">Chargement…</div>
       ) : items.length === 0 ? (
         <div className="text-center py-16">
           <div className="w-16 h-16 bg-[#c27a72]/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <Image size={24} className="text-[#c27a72]/40" />
           </div>
-          <p className="text-gray-400 dark:text-white/60 mb-4">Aucune nouveauté</p>
+          <p className="text-secondary-text dark:text-white/60 mb-4">Aucune nouveauté</p>
           <Link
             href="/admin/nouveautes/nouveau"
             className="text-[#c27a72] dark:text-[#d4968e] text-sm font-medium hover:underline"
@@ -108,7 +108,7 @@ export default function NouveautesAdminPage() {
                 <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 truncate">
                   {item.titre || "Sans titre"}
                 </p>
-                <p className="text-[11px] text-gray-400 dark:text-white/60 truncate">
+                <p className="text-[11px] text-secondary-text dark:text-white/60 truncate">
                   {item.description || "Pas de description"}
                 </p>
               </div>
@@ -116,14 +116,14 @@ export default function NouveautesAdminPage() {
               <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
                 item.statut === "publie"
                   ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
-                  : "bg-gray-100 text-gray-500 dark:bg-neutral-700 dark:text-neutral-400"
+                  : "bg-gray-100 text-secondary-text dark:bg-neutral-700 dark:text-neutral-400"
               }`}>
                 {item.statut === "publie" ? "Publié" : "Brouillon"}
               </span>
 
               <button
                 onClick={() => toggleStatut(item)}
-                className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors text-gray-400 dark:text-white/60"
+                className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors text-secondary-text dark:text-white/60"
                 title={item.statut === "publie" ? "Masquer" : "Publier"}
               >
                 {item.statut === "publie" ? <Eye size={14} /> : <EyeOff size={14} />}
@@ -131,7 +131,7 @@ export default function NouveautesAdminPage() {
 
               <Link
                 href={`/admin/nouveautes/${item.id}`}
-                className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors text-gray-400 dark:text-white/60"
+                className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors text-secondary-text dark:text-white/60"
               >
                 <Pencil size={14} />
               </Link>
