@@ -19,6 +19,7 @@ interface Props {
     image: string
     badge?: string
     dateAjout?: string
+    description?: string
     variants?: ProductVariant[]
   }
   isBlocked: boolean
@@ -181,6 +182,14 @@ export default function ProductInfo({ product, isBlocked }: Props) {
       )}
 
       {/* Description */}
+      {product.description && (
+        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-neutral-700">
+          <h2 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Description</h2>
+          <p className="text-sm text-secondary-text dark:text-white/70 whitespace-pre-line">{product.description}</p>
+        </div>
+      )}
+
+      {/* Détails */}
       <div className="mt-8 pt-6 border-t border-gray-200 dark:border-neutral-700">
         <h2 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">Détails</h2>
         <ul className="text-sm text-secondary-text dark:text-white/70 space-y-1.5">

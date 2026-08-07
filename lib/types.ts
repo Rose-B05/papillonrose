@@ -16,6 +16,7 @@ export interface Product {
   variants?: ProductVariant[]
   dateAjout?: string
   actif?: boolean
+  description?: string
 }
 
 export interface CartItem {
