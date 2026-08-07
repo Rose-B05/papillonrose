@@ -8,6 +8,9 @@ import { getCategorySlug } from "@/lib/product-helpers"
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
 
+const COLOR_A = "#E8C4B8"
+const COLOR_B = "#c27a72"
+
 function isLight(bg: string): boolean {
   const hex = bg.replace("#", "")
   const r = parseInt(hex.slice(0, 2), 16)
@@ -20,7 +23,7 @@ interface OverflowCard {
   nom: string
   categorie: string
   image: string
-  bgColor: string
+  bgColor?: string
   count?: number
   largeImage?: boolean
 }
@@ -151,7 +154,8 @@ export default function OverflowCarousel({
           const offset = getOffset(i)
           const s = getCardStyle(offset)
           const center = offset === 0
-          const light = isLight(card.bgColor)
+          const bgColor = card.bgColor || (i % 2 === 0 ? COLOR_A : COLOR_B)
+          const light = isLight(bgColor)
           const textColor = light ? "#333" : "#fff"
           const imgHeight = isMobile ? 210 : 340
           const cardHeight = isMobile ? 185 : 310
@@ -188,7 +192,7 @@ export default function OverflowCarousel({
               {/* Card */}
               <div
                 style={{
-                  background: card.bgColor,
+                  background: bgColor,
                   borderRadius: "20px",
                   height: `${cardHeight}px`,
                   display: "flex",
@@ -205,7 +209,7 @@ export default function OverflowCarousel({
                 <div
                   className="absolute inset-0 pointer-events-none"
                   style={{
-                    background: `linear-gradient(to top, ${card.bgColor}dd, ${card.bgColor}00 50%)`,
+                    background: `linear-gradient(to top, ${bgColor}dd, ${bgColor}00 50%)`,
                     borderRadius: "20px",
                   }}
                 />
