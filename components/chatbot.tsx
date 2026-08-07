@@ -1,7 +1,7 @@
 ﻿"use client"
 
-import { useState, useRef, useEffect } from "react"
-import { MessageCircle, X, Send, Loader2 } from "lucide-react"
+import { useState, useRef, useEffect, useCallback } from "react"
+import { MessageCircle, X, Send, Loader2, Mic, MicOff, Volume2, VolumeX } from "lucide-react"
 
 interface ChatMessage {
   role: "user" | "assistant"
@@ -23,9 +23,88 @@ export default function Chatbot() {
   const [loading, setLoading] = useState(false)
   const endRef = useRef<HTMLDivElement>(null)
 
+  // Voice state
+  const [listening, setListening] = useState(false)
+  const [speakingIdx, setSpeakingIdx] = useState<number | null>(null)
+  const recognitionRef = useRef<any>(null)
+  const synthRef = useRef<SpeechSynthesis | null>(null)
+
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
+
+  // Init speech synthesis
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      synthRef.current = window.speechSynthesis
+    }
+  }, [])
+
+  // Cleanup speech on unmount
+  useEffect(() => {
+    return () => {
+      synthRef.current?.cancel()
+      recognitionRef.current?.stop()
+    }
+  }, [])
+
+  const toggleListening = useCallback(() => {
+    if (listening) {
+      recognitionRef.current?.stop()
+      setListening(false)
+      return
+    }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    if (!SpeechRecognition) {
+      alert("La reconnaissance vocale n'est pas supportée par votre navigateur.")
+      return
+    }
+
+    const recognition = new SpeechRecognition()
+    recognition.lang = "fr-FR"
+    recognition.continuous = false
+    recognition.interimResults = true
+
+    recognition.onresult = (event: any) => {
+      let transcript = ""
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript
+      }
+      setInput(transcript)
+      if (event.results[event.results.length - 1].isFinal) {
+        setListening(false)
+      }
+    }
+
+    recognition.onerror = () => setListening(false)
+    recognition.onend = () => setListening(false)
+
+    recognitionRef.current = recognition
+    recognition.start()
+    setListening(true)
+  }, [listening])
+
+  const speak = useCallback((text: string, idx: number) => {
+    const synth = synthRef.current
+    if (!synth) return
+
+    if (speakingIdx === idx) {
+      synth.cancel()
+      setSpeakingIdx(null)
+      return
+    }
+
+    synth.cancel()
+    const clean = text.replace(/\*\*/g, "").replace(/[🦋✅🌸]/g, "")
+    const utterance = new SpeechSynthesisUtterance(clean)
+    utterance.lang = "fr-FR"
+    utterance.rate = 1
+    utterance.onend = () => setSpeakingIdx(null)
+    utterance.onerror = () => setSpeakingIdx(null)
+    synth.speak(utterance)
+    setSpeakingIdx(idx)
+  }, [speakingIdx])
 
   const send = async () => {
     const text = input.trim()
@@ -172,14 +251,25 @@ export default function Chatbot() {
                 key={i}
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
-                <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
-                    msg.role === "user"
-                      ? "bg-[#c27a72] dark:bg-[#c27a72] text-white rounded-br-md"
-                      : "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm rounded-bl-md"
-                  }`}
-                >
-                  <RenderContent text={msg.content} />
+                <div className="max-w-[80%] flex items-end gap-1.5">
+                  {msg.role === "assistant" && (
+                    <button
+                      onClick={() => speak(msg.content, i)}
+                      aria-label={speakingIdx === i ? "Arrêter la lecture" : "Écouter la réponse"}
+                      className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-secondary-text hover:text-[#c27a72] hover:bg-[#c27a72]/10 transition-colors mb-1"
+                    >
+                      {speakingIdx === i ? <VolumeX size={12} /> : <Volume2 size={12} />}
+                    </button>
+                  )}
+                  <div
+                    className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
+                      msg.role === "user"
+                        ? "bg-[#c27a72] dark:bg-[#c27a72] text-white rounded-br-md"
+                        : "bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 shadow-sm rounded-bl-md"
+                    }`}
+                  >
+                    <RenderContent text={msg.content} />
+                  </div>
                 </div>
               </div>
             ))}
@@ -210,12 +300,23 @@ export default function Chatbot() {
               </p>
             ) : (
               <div className="flex items-center gap-2">
+                <button
+                  onClick={toggleListening}
+                  aria-label={listening ? "Arrouter l'écoute" : "Parler"}
+                  className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors flex-shrink-0 ${
+                    listening
+                      ? "bg-red-500 text-white animate-pulse"
+                      : "bg-[#F8F5F0] dark:bg-neutral-900 text-secondary-text hover:text-[#c27a72]"
+                  }`}
+                >
+                  {listening ? <MicOff size={15} /> : <Mic size={15} />}
+                </button>
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Votre message..."
+                  placeholder={listening ? "Écoute en cours..." : "Votre message..."}
                   disabled={loading}
                   className="flex-1 bg-[#F8F5F0] dark:bg-neutral-900 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[#c27a72]/30 transition-all placeholder:text-secondary-text"
                 />
