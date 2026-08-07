@@ -1,6 +1,5 @@
 import { kv } from "@vercel/kv"
 import type { Booking, BlockedDate, BlockEntry, QuoteRequest, PaymentRecord, LateAlert, EmailLog, ProductView, NewsletterSubscriber, ContactMessage, Nouveaute } from "./types"
-import { CART_BLOCK_TTL_MS } from "./types"
 
 // ─── Media Library ───
 export interface MediaItem {
@@ -242,7 +241,7 @@ export async function addCartBlock(productId: number, dates: string[], qty: numb
   const key = `blocked:product:${productId}`
   const map = (await kv.get<Record<string, Record<string, BlockEntry>>>(key)) || {}
   const blockId = `cart:${sessionId}`
-  const entry: BlockEntry = { qty, expiresAt: Date.now() + CART_BLOCK_TTL_MS, type: "cart" }
+  const entry: BlockEntry = { qty, expiresAt: Infinity, type: "cart" }
   let changed = false
   for (const d of dates) {
     if (!map[d]) map[d] = {}
@@ -287,29 +286,6 @@ export async function removeCartBlockBySession(sessionId: string) {
     }
     if (changed) await kv.set(key, map)
   }
-}
-
-export async function cleanupExpiredBlocks() {
-  const keys = await kv.keys("blocked:product:*")
-  const now = Date.now()
-  let cleaned = 0
-  for (const key of keys) {
-    const map = await kv.get<Record<string, Record<string, BlockEntry>>>(key)
-    if (!map) continue
-    let changed = false
-    for (const date of Object.keys(map)) {
-      for (const [blockId, entry] of Object.entries(map[date])) {
-        if (entry.expiresAt <= now) {
-          delete map[date][blockId]
-          changed = true
-          cleaned++
-        }
-      }
-      if (Object.keys(map[date]).length === 0) delete map[date]
-    }
-    if (changed) await kv.set(key, map)
-  }
-  return cleaned
 }
 
 export async function areDatesAvailable(productId: number, dates: string[]): Promise<boolean> {

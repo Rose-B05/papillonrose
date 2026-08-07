@@ -1,4 +1,4 @@
-import { getQuotes, getBookings, saveBooking, saveEmailLog, unblockDates, logActivity, cleanupExpiredBlocks } from "./db"
+import { getQuotes, getBookings, saveBooking, saveEmailLog, unblockDates, logActivity } from "./db"
 import { sendQuoteExpiryReminder } from "./email"
 import type { QuoteRequest, Booking, EmailLog } from "./types"
 import { v4 as uuidv4 } from "uuid"
@@ -179,9 +179,6 @@ export async function processQuoteExpiry(): Promise<{
   errors: string[]
   details: { quoteNumber: string; client: string; joursRestants: number }[]
 }> {
-  // Clean up expired cart blocks first
-  await cleanupExpiredBlocks()
-
   const expiring = await findExpiringQuotes()
   const details: { quoteNumber: string; client: string; joursRestants: number }[] = []
   const errors: string[] = []

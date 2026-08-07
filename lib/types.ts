@@ -96,7 +96,6 @@ export interface BlockEntry {
   type: "cart" | "booking"
 }
 
-export const CART_BLOCK_TTL_MS = 3 * 60 * 60 * 1000
 export const BOOKING_BLOCK_TTL_MS = 48 * 60 * 60 * 1000
 
 export interface PaymentRecord {
