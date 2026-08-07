@@ -57,7 +57,7 @@ export default function StatistiquesPage() {
                 <p className="text-xs text-gray-400 dark:text-white/60 uppercase tracking-wider mb-1">
                   Revenu total
                 </p>
-                <p className="text-2xl font-bold text-[#C9948E] dark:text-[#E8B4AE]">
+                <p className="text-2xl font-bold text-[#c27a72] dark:text-[#d4968e]">
                   {totalRevenu.toFixed(2)} €
                 </p>
               </div>
@@ -120,7 +120,7 @@ export default function StatistiquesPage() {
                         <td className="px-5 py-3 text-right text-gray-500 dark:text-white/60">
                           {s.stock}
                         </td>
-                        <td className="px-5 py-3 text-right font-semibold text-[#C9948E] dark:text-[#E8B4AE]">
+                        <td className="px-5 py-3 text-right font-semibold text-[#c27a72] dark:text-[#d4968e]">
                           {s.nbLocations}
                         </td>
                         <td className="px-5 py-3 text-right font-medium text-[#2E2E2E] dark:text-neutral-100">

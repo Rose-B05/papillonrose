@@ -146,7 +146,7 @@ export default function RestitutionsPage() {
                   <button
                     onClick={() => handleReturn(booking.id)}
                     disabled={returningId === booking.id}
-                    className="px-4 py-2 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-xl hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors disabled:opacity-50"
+                    className="px-4 py-2 bg-[#c27a72] dark:bg-[#c27a72] text-white text-sm font-medium rounded-xl hover:bg-[#a86660] dark:hover:bg-[#a86660] transition-colors disabled:opacity-50"
                   >
                     {returningId === booking.id ? "Restitution…" : "Valider la restitution"}
                   </button>

@@ -103,7 +103,7 @@ export default function AccessibilityPanel() {
         aria-label="Options d'accessibilité"
         aria-expanded={open}
         aria-controls="a11y-panel"
-        className="fixed bottom-6 left-6 z-50 w-12 h-12 bg-white dark:bg-[#2A2420] border border-[#C9948E]/40 text-[#C9948E] rounded-full shadow-lg flex items-center justify-center hover:bg-[#C9948E]/10 hover:border-[#C9948E] transition-all"
+        className="fixed bottom-6 left-6 z-50 w-12 h-12 bg-white dark:bg-[#2A2420] border border-[#c27a72]/40 text-[#c27a72] rounded-full shadow-lg flex items-center justify-center hover:bg-[#c27a72]/10 hover:border-[#c27a72] transition-all"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="4.5" r="2.5" />
@@ -146,7 +146,7 @@ export default function AccessibilityPanel() {
                 role="switch"
                 aria-checked={theme === "dark"}
                 onClick={toggleTheme}
-                className={`relative w-10 h-5 rounded-full transition-colors ${theme === "dark" ? "bg-[#C9948E]" : "bg-gray-200 dark:bg-white/20"}`}
+                className={`relative w-10 h-5 rounded-full transition-colors ${theme === "dark" ? "bg-[#c27a72]" : "bg-gray-200 dark:bg-white/20"}`}
               >
                 <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${theme === "dark" ? "translate-x-5" : ""}`} />
               </button>
@@ -183,7 +183,7 @@ export default function AccessibilityPanel() {
                 role="switch"
                 aria-checked={settings.highContrast}
                 onClick={() => update({ highContrast: !settings.highContrast })}
-                className={`relative w-10 h-5 rounded-full transition-colors ${settings.highContrast ? "bg-[#C9948E]" : "bg-gray-200 dark:bg-white/20"}`}
+                className={`relative w-10 h-5 rounded-full transition-colors ${settings.highContrast ? "bg-[#c27a72]" : "bg-gray-200 dark:bg-white/20"}`}
               >
                 <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${settings.highContrast ? "translate-x-5" : ""}`} />
               </button>
@@ -196,7 +196,7 @@ export default function AccessibilityPanel() {
                 role="switch"
                 aria-checked={settings.reduceAnimations}
                 onClick={() => update({ reduceAnimations: !settings.reduceAnimations })}
-                className={`relative w-10 h-5 rounded-full transition-colors ${settings.reduceAnimations ? "bg-[#C9948E]" : "bg-gray-200 dark:bg-white/20"}`}
+                className={`relative w-10 h-5 rounded-full transition-colors ${settings.reduceAnimations ? "bg-[#c27a72]" : "bg-gray-200 dark:bg-white/20"}`}
               >
                 <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${settings.reduceAnimations ? "translate-x-5" : ""}`} />
               </button>
@@ -209,7 +209,7 @@ export default function AccessibilityPanel() {
                 role="switch"
                 aria-checked={settings.dyslexiaFont}
                 onClick={() => update({ dyslexiaFont: !settings.dyslexiaFont })}
-                className={`relative w-10 h-5 rounded-full transition-colors ${settings.dyslexiaFont ? "bg-[#C9948E]" : "bg-gray-200 dark:bg-white/20"}`}
+                className={`relative w-10 h-5 rounded-full transition-colors ${settings.dyslexiaFont ? "bg-[#c27a72]" : "bg-gray-200 dark:bg-white/20"}`}
               >
                 <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${settings.dyslexiaFont ? "translate-x-5" : ""}`} />
               </button>

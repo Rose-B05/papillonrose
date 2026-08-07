@@ -39,8 +39,8 @@ function CategoryPills({
           onClick={() => onChange(cat)}
           className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
             active === cat
-              ? "bg-[#C9948E] dark:bg-[#C9948E] text-white shadow-sm"
-              : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 hover:bg-[#C9948E]/20 dark:hover:bg-[#B8807A]/20 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+              ? "bg-[#c27a72] dark:bg-[#c27a72] text-white shadow-sm"
+              : "bg-[#F0EBE3] dark:bg-neutral-800 text-[#2E2E2E]/60 dark:text-white/70 hover:bg-[#c27a72]/20 dark:hover:bg-[#a86660]/20 hover:text-[#c27a72] dark:hover:text-[#d4968e]"
           }`}
         >
           {cat}
@@ -160,7 +160,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
   return (
     <div className="max-w-7xl mx-auto px-5 md:px-10 pt-20 md:pt-24 pb-8">
       <div className="mb-5 md:mb-7">
-        <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+        <p className="text-[#c27a72] dark:text-[#d4968e] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
           Explorer
         </p>
         <h1
@@ -182,7 +182,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
             placeholder="Rechercher un article…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white dark:bg-neutral-800 pl-11 pr-4 py-3 rounded-2xl text-sm outline-none border border-black/[0.07] dark:border-white/[0.08] focus:border-[#C9948E]/50 transition-colors placeholder:text-gray-400 shadow-sm"
+            className="w-full bg-white dark:bg-neutral-800 pl-11 pr-4 py-3 rounded-2xl text-sm outline-none border border-black/[0.07] dark:border-white/[0.08] focus:border-[#c27a72]/50 transition-colors placeholder:text-gray-400 shadow-sm"
           />
         </div>
       </div>
@@ -209,7 +209,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
               {category !== "Tous" && (
                 <span>
                   {" "}
-                  — <span className="text-[#C9948E] dark:text-[#E8B4AE]">{category}</span>
+                  — <span className="text-[#c27a72] dark:text-[#d4968e]">{category}</span>
                 </span>
               )}
             </p>
@@ -223,7 +223,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
               tagFilters.dateDebut) && (
               <button
                 onClick={resetFilters}
-                className="text-xs text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors underline"
+                className="text-xs text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors underline"
               >
                 Réinitialiser
               </button>
@@ -232,7 +232,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
 
           {loading ? (
             <div className="py-24 text-center">
-              <Loader2 className="animate-spin mx-auto mb-4 text-[#C9948E]" size={32} />
+              <Loader2 className="animate-spin mx-auto mb-4 text-[#c27a72]" size={32} />
               <p className="text-gray-400 dark:text-white/60 text-sm">Chargement du catalogue…</p>
             </div>
           ) : filtered.length > 0 ? (
@@ -252,7 +252,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
               </p>
               <button
                 onClick={resetFilters}
-                className="bg-[#C9948E] dark:bg-[#C9948E] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors"
+                className="bg-[#c27a72] dark:bg-[#c27a72] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-[#a86660] dark:hover:bg-[#a86660] transition-colors"
               >
                 Réinitialiser les filtres
               </button>
@@ -286,7 +286,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
                   addToCartWithToast(modalProduct.id)
                   setModalProduct(null)
                 }}
-                className="flex-1 bg-[#C9948E] text-white py-2.5 rounded-xl text-sm font-medium hover:bg-[#B8807A] transition-colors"
+                className="flex-1 bg-[#c27a72] text-white py-2.5 rounded-xl text-sm font-medium hover:bg-[#a86660] transition-colors"
               >
                 Ajouter au panier
               </button>
@@ -294,8 +294,8 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
                 onClick={() => toggleFavorite(modalProduct.id)}
                 className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-colors ${
                   favorites.has(modalProduct.id)
-                    ? "border-[#C9948E] bg-[#C9948E]/10 text-[#C9948E]"
-                    : "border-gray-200 text-gray-400 hover:border-[#C9948E]/30"
+                    ? "border-[#c27a72] bg-[#c27a72]/10 text-[#c27a72]"
+                    : "border-gray-200 text-gray-400 hover:border-[#c27a72]/30"
                 }`}
               >
                 {favorites.has(modalProduct.id) ? "♥" : "♡"}
@@ -303,7 +303,7 @@ export default function CatalogueClient({ initialCategory }: { initialCategory?:
             </div>
             <button
               onClick={() => setModalProduct(null)}
-              className="mt-3 w-full text-center text-xs text-gray-400 hover:text-[#C9948E] transition-colors"
+              className="mt-3 w-full text-center text-xs text-gray-400 hover:text-[#c27a72] transition-colors"
             >
               Fermer
             </button>

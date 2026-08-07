@@ -106,7 +106,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
     <div className="p-6 max-w-2xl mx-auto">
       <button
         onClick={() => router.back()}
-        className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors mb-6"
+        className="flex items-center gap-1.5 text-sm text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors mb-6"
       >
         <ArrowLeft size={14} /> Retour
       </button>
@@ -125,7 +125,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
             type="text"
             value={form.titre}
             onChange={(e) => setForm((f) => ({ ...f, titre: e.target.value }))}
-            className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm"
+            className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm"
             placeholder="Ex: Nouveau Photobooth"
           />
         </div>
@@ -139,7 +139,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
             value={form.description}
             onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
             rows={3}
-            className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm resize-none"
+            className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm resize-none"
             placeholder="Description de la nouveauté…"
           />
         </div>
@@ -156,8 +156,8 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
                 onClick={() => setForm((f) => ({ ...f, type: value }))}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                   form.type === value
-                    ? "bg-[#C9948E] text-white"
-                    : "bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] text-gray-500 dark:text-white/60 hover:border-[#C9948E]/40"
+                    ? "bg-[#c27a72] text-white"
+                    : "bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] text-gray-500 dark:text-white/60 hover:border-[#c27a72]/40"
                 }`}
               >
                 <Icon size={14} /> {label}
@@ -172,7 +172,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
             {form.type === "document" ? "Document" : "Média"} *
           </label>
           <div className="flex items-center gap-3">
-            <label className="flex-1 flex items-center justify-center gap-2 bg-white dark:bg-neutral-800 border border-dashed border-black/[0.12] dark:border-white/[0.12] rounded-2xl px-4 py-6 text-sm text-gray-400 dark:text-white/60 hover:border-[#C9948E]/40 transition-colors cursor-pointer">
+            <label className="flex-1 flex items-center justify-center gap-2 bg-white dark:bg-neutral-800 border border-dashed border-black/[0.12] dark:border-white/[0.12] rounded-2xl px-4 py-6 text-sm text-gray-400 dark:text-white/60 hover:border-[#c27a72]/40 transition-colors cursor-pointer">
               {uploading ? (
                 <><Loader2 size={16} className="animate-spin" /> Upload en cours…</>
               ) : (
@@ -204,7 +204,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
                 </div>
               ) : (
                 <div className="w-40 h-40 bg-[#F8F5F0] dark:bg-neutral-700 rounded-xl flex items-center justify-center">
-                  <FileText size={32} className="text-[#C9948E]/40" />
+                  <FileText size={32} className="text-[#c27a72]/40" />
                 </div>
               )}
             </div>
@@ -214,7 +214,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
               type="url"
               value={form.mediaUrl}
               onChange={(e) => setForm((f) => ({ ...f, mediaUrl: e.target.value }))}
-              className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-xl px-3 py-2 text-xs text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors"
+              className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-xl px-3 py-2 text-xs text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors"
               placeholder="Ou coller une URL directe…"
             />
           </div>
@@ -229,7 +229,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
             type="number"
             value={form.ordre}
             onChange={(e) => setForm((f) => ({ ...f, ordre: Number(e.target.value) }))}
-            className="w-24 bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-xl px-3 py-2 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm"
+            className="w-24 bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-xl px-3 py-2 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm"
           />
         </div>
 
@@ -244,7 +244,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
                 type="url"
                 value={form.lienAction}
                 onChange={(e) => setForm((f) => ({ ...f, lienAction: e.target.value }))}
-                className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm"
+                className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm"
                 placeholder="https://…"
               />
             </div>
@@ -256,7 +256,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
                 type="text"
                 value={form.labelAction}
                 onChange={(e) => setForm((f) => ({ ...f, labelAction: e.target.value }))}
-                className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm"
+                className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm"
                 placeholder="Découvrir"
               />
             </div>
@@ -276,7 +276,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
           <button
             onClick={() => handleSave("brouillon")}
             disabled={saving || !form.titre || !form.mediaUrl}
-            className="flex-1 border border-[#C9948E]/30 text-[#C9948E] dark:text-[#E8B4AE] py-3 rounded-2xl text-sm font-medium hover:bg-[#C9948E]/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="flex-1 border border-[#c27a72]/30 text-[#c27a72] dark:text-[#d4968e] py-3 rounded-2xl text-sm font-medium hover:bg-[#c27a72]/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {saving ? <Loader2 size={14} className="animate-spin" /> : null}
             Enregistrer brouillon
@@ -284,7 +284,7 @@ export default function NouveauteForm({ editId }: NouveauteFormProps) {
           <button
             onClick={() => handleSave("publie")}
             disabled={saving || !form.titre || !form.mediaUrl}
-            className="flex-1 bg-[#C9948E] hover:bg-[#B8807A] text-white py-3 rounded-2xl text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="flex-1 bg-[#c27a72] hover:bg-[#a86660] text-white py-3 rounded-2xl text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {saving ? <Loader2 size={14} className="animate-spin" /> : null}
             Publier

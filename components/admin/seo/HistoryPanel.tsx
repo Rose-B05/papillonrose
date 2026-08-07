@@ -51,7 +51,7 @@ export default function HistoryPanel({ history }: { history: SeoHistoryEntry[] }
                     </div>
                   </div>
                   {entry.rollbackAvailable && (
-                    <button className="text-gray-400 hover:text-[#C9948E] transition-colors ml-2">
+                    <button className="text-gray-400 hover:text-[#c27a72] transition-colors ml-2">
                       <RotateCcw size={12} />
                     </button>
                   )}

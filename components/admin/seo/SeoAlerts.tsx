@@ -23,7 +23,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
             {errors > 0 ? (
               <AlertTriangle size={16} className="text-red-600 dark:text-red-400" />
             ) : warnings > 0 ? (
-              <AlertTriangle size={16} className="text-amber-600 dark:text-[#E8B4AE]" />
+              <AlertTriangle size={16} className="text-amber-600 dark:text-[#d4968e]" />
             ) : (
               <CheckCircle size={16} className="text-green-600 dark:text-green-400" />
             )}
@@ -49,7 +49,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
                 onClick={() => setFilter(f)}
                 className={`text-xs px-2.5 py-1 rounded-full transition-colors ${
                   filter === f
-                    ? "bg-[#C9948E] text-white"
+                    ? "bg-[#c27a72] text-white"
                     : "bg-gray-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-300 hover:bg-gray-200 dark:hover:bg-neutral-600"
                 }`}
               >
@@ -92,7 +92,7 @@ export default function SeoAlerts({ alerts }: { alerts: SeoAlert[] }) {
                       </p>
                     )}
                     {alert.action && (
-                      <p className="text-xs text-[#C9948E] mt-1">
+                      <p className="text-xs text-[#c27a72] mt-1">
                         {alert.action}
                       </p>
                     )}

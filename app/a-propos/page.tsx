@@ -44,7 +44,7 @@ export default function AProposPage() {
         {/* Breadcrumb */}
         <nav className="pt-6 pb-2">
           <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-white/60">
-            <li><Link href="/" className="hover:text-[#C9948E] transition-colors">Accueil</Link></li>
+            <li><Link href="/" className="hover:text-[#c27a72] transition-colors">Accueil</Link></li>
             <li>/</li>
             <li className="text-[#2E2E2E] dark:text-neutral-100 font-medium">À propos</li>
           </ol>
@@ -54,7 +54,7 @@ export default function AProposPage() {
         <section className="mt-8 mb-16 -mx-5 md:-mx-10 px-5 md:px-10">
           <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_380px] gap-8 md:gap-12 items-center">
             <div>
-              <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
+              <p className="text-[#c27a72] dark:text-[#d4968e] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
                 Notre histoire
               </p>
               <h2
@@ -89,7 +89,7 @@ export default function AProposPage() {
                 </p>
                 <p>
                   Très rapidement, une même question revenait après chaque prestation :{" "}
-                  <em className="text-[#C9948E] dark:text-[#E8B4AE] not-italic font-medium">
+                  <em className="text-[#c27a72] dark:text-[#d4968e] not-italic font-medium">
                     &laquo;&nbsp;Est-ce que vous louez aussi votre décoration ?&nbsp;&raquo;
                   </em>
                 </p>
@@ -129,7 +129,7 @@ export default function AProposPage() {
 
         {/* Nos valeurs */}
         <section className="mb-16">
-          <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
+          <p className="text-[#c27a72] dark:text-[#d4968e] text-[10px] tracking-[0.4em] uppercase font-medium mb-3">
             Nos valeurs
           </p>
           <h2
@@ -144,8 +144,8 @@ export default function AProposPage() {
                 key={title}
                 className="bg-white dark:bg-neutral-800 rounded-2xl p-6 border border-black/[0.07] dark:border-white/[0.08] shadow-sm text-center"
               >
-                <div className="w-12 h-12 bg-[#C9948E]/10 dark:bg-[#C9948E]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Icon size={20} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+                <div className="w-12 h-12 bg-[#c27a72]/10 dark:bg-[#c27a72]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Icon size={20} className="text-[#c27a72] dark:text-[#d4968e]" />
                 </div>
                 <h3
                   style={DP}
@@ -169,7 +169,7 @@ export default function AProposPage() {
                 <div key={s.val} className="text-center">
                   <p
                     style={DP}
-                    className="text-3xl md:text-4xl font-bold text-[#C9948E] dark:text-[#E8B4AE] mb-1"
+                    className="text-3xl md:text-4xl font-bold text-[#c27a72] dark:text-[#d4968e] mb-1"
                   >
                     {s.val}
                   </p>
@@ -189,7 +189,7 @@ export default function AProposPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 bg-[#C9948E] dark:bg-[#C9948E] text-white px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors"
+            className="inline-flex items-center gap-2 bg-[#c27a72] dark:bg-[#c27a72] text-white px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-[#a86660] dark:hover:bg-[#a86660] transition-colors"
           >
             Parcourir le catalogue <ArrowRight size={15} />
           </Link>

@@ -59,7 +59,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         <p className="text-red-500 mb-4">{error || "Produit introuvable"}</p>
         <button
           onClick={() => router.push("/admin/contenu/produits")}
-          className="text-sm text-[#C9948E] hover:underline"
+          className="text-sm text-[#c27a72] hover:underline"
         >
           Retour à la liste
         </button>

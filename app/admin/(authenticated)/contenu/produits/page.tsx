@@ -118,7 +118,7 @@ export default function ProductsListPage() {
           </div>
           <Link
             href="/admin/contenu/produits/nouveau"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#C9948E] transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#c27a72] dark:bg-[#c27a72] text-white hover:bg-[#a86660] dark:hover:bg-[#c27a72] transition-colors"
           >
             <Plus className="w-4 h-4" />
             Nouveau produit
@@ -134,7 +134,7 @@ export default function ProductsListPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Rechercher un produit..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#C9948E]/50 transition-colors"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#c27a72]/50 transition-colors"
             />
           </div>
           <div className="flex gap-1 bg-white dark:bg-neutral-800 rounded-xl border border-black/[0.07] dark:border-white/[0.08] p-1">
@@ -144,7 +144,7 @@ export default function ProductsListPage() {
                 onClick={() => setStatusFilter(f)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   statusFilter === f
-                    ? "bg-[#C9948E] dark:bg-[#C9948E] text-white"
+                    ? "bg-[#c27a72] dark:bg-[#c27a72] text-white"
                     : "text-gray-500 dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700"
                 }`}
               >
@@ -274,7 +274,7 @@ export default function ProductsListPage() {
                         </button>
                         <Link
                           href={`/admin/contenu/produits/${p.id}`}
-                          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-white/60 hover:text-[#C9948E] transition-colors"
+                          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 text-gray-400 dark:text-white/60 hover:text-[#c27a72] transition-colors"
                           title={p.isStatic ? "Modifier (créera une copie admin)" : "Modifier"}
                         >
                           <Edit className="w-4 h-4" />

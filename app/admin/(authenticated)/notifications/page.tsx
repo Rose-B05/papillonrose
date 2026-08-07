@@ -135,7 +135,7 @@ export default function NotificationsPage() {
             placeholder="Rechercher un email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 text-sm bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] rounded-xl outline-none focus:border-[#C9948E]/50 transition-colors"
+            className="w-full pl-9 pr-4 py-2.5 text-sm bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] rounded-xl outline-none focus:border-[#c27a72]/50 transition-colors"
           />
         </div>
         <div className="relative">
@@ -143,7 +143,7 @@ export default function NotificationsPage() {
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="pl-9 pr-8 py-2.5 text-sm bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] rounded-xl outline-none focus:border-[#C9948E]/50 transition-colors appearance-none cursor-pointer"
+            className="pl-9 pr-8 py-2.5 text-sm bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] rounded-xl outline-none focus:border-[#c27a72]/50 transition-colors appearance-none cursor-pointer"
           >
             <option value="">Tous les types</option>
             {types.map((t) => (

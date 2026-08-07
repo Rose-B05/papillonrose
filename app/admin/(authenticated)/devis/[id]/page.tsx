@@ -78,7 +78,7 @@ export default function DevisDetailPage() {
       )}
       <button
         onClick={handleDownloadPdf}
-        className="px-3 py-1.5 text-xs bg-[#C9948E] text-white rounded-lg hover:bg-[#B9807A] transition-colors"
+        className="px-3 py-1.5 text-xs bg-[#c27a72] text-white rounded-lg hover:bg-[#B9807A] transition-colors"
       >
         <Download size={13} className="inline mr-1" />
         Télécharger le {docType} PDF
@@ -184,7 +184,7 @@ export default function DevisDetailPage() {
     return (
         <div className="text-center py-16">
           <p className="text-gray-400 dark:text-white/60 mb-4">Cette réservation n&apos;existe pas.</p>
-          <button onClick={() => router.push("/admin/devis")} className="text-[#C9948E] hover:underline">
+          <button onClick={() => router.push("/admin/devis")} className="text-[#c27a72] hover:underline">
             ← Retour à la liste
           </button>
         </div>
@@ -267,14 +267,14 @@ export default function DevisDetailPage() {
                       <td className="py-2">
                         <span className="text-[#2E2E2E] dark:text-neutral-100">
                           {getProductName(item.productId)}
-                          {item.variantLabel && <span className="text-[#C9948E]"> — {item.variantLabel}</span>}
+                          {item.variantLabel && <span className="text-[#c27a72]"> — {item.variantLabel}</span>}
                         </span>
                       </td>
                       <td className="py-2 text-center">{item.qty}</td>
                       <td className="py-2 hidden sm:table-cell text-xs text-gray-500 dark:text-white/60">
                         {item.dateStart ? `${formatDate(item.dateStart)} → ${formatDate(item.dateEnd)}` : "—"}
                       </td>
-                      <td className="py-2 text-right font-medium text-[#C9948E] dark:text-[#E8B4AE]">
+                      <td className="py-2 text-right font-medium text-[#c27a72] dark:text-[#d4968e]">
                         {(prix * item.qty * nbJours).toFixed(2)} €
                       </td>
                     </tr>
@@ -296,7 +296,7 @@ export default function DevisDetailPage() {
               <span className="text-gray-500 dark:text-white/60">TVA (20%)</span>
               <span>{(booking.totalTtc - booking.totalHt).toFixed(2)} €</span>
             </div>
-            <div className="flex justify-between pt-2 border-t border-black/[0.06] dark:border-white/[0.08] font-semibold text-[#C9948E] dark:text-[#E8B4AE]">
+            <div className="flex justify-between pt-2 border-t border-black/[0.06] dark:border-white/[0.08] font-semibold text-[#c27a72] dark:text-[#d4968e]">
               <span>Total TTC</span>
               <span>{booking.totalTtc.toFixed(2)} €</span>
             </div>
@@ -317,7 +317,7 @@ export default function DevisDetailPage() {
                 disabled={booking.status === s}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   booking.status === s
-                    ? "bg-[#C9948E] text-white"
+                    ? "bg-[#c27a72] text-white"
                     : "bg-gray-100 dark:bg-neutral-700 text-gray-500 dark:text-white/60 hover:bg-gray-200 dark:hover:bg-neutral-600"
                 }`}
               >

@@ -37,7 +37,7 @@ export default function ScoreDisplay({ score }: { score: SeoScore }) {
         }`}>
           <TrendingUp size={16} className={
             score.total >= 80 ? "text-green-600 dark:text-green-400" :
-            score.total >= 50 ? "text-amber-600 dark:text-[#E8B4AE]" :
+            score.total >= 50 ? "text-amber-600 dark:text-[#d4968e]" :
             "text-red-600 dark:text-red-400"
           } />
         </div>
@@ -79,7 +79,7 @@ export default function ScoreDisplay({ score }: { score: SeoScore }) {
         <div>
           <div className="flex items-center gap-2 mb-2">
             <Lightbulb size={14} className="text-amber-500" />
-            <span className="text-xs font-semibold text-amber-600 dark:text-[#E8B4AE] uppercase tracking-wide">Recommandations</span>
+            <span className="text-xs font-semibold text-amber-600 dark:text-[#d4968e] uppercase tracking-wide">Recommandations</span>
           </div>
           <div className="space-y-1">
             {score.recommendations.map((rec, i) => (

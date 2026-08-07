@@ -52,7 +52,7 @@ function ResetForm() {
     return (
       <div className="text-center">
         <p className="text-sm text-red-600 bg-red-50 px-4 py-3 rounded-lg mb-4">Lien de réinitialisation invalide.</p>
-        <Link href="/compte/mot-de-passe-oublie" className="text-sm text-[#C9948E] dark:text-[#E8B4AE] hover:text-[#B8807A] transition-colors">
+        <Link href="/compte/mot-de-passe-oublie" className="text-sm text-[#c27a72] dark:text-[#d4968e] hover:text-[#a86660] transition-colors">
           Demander un nouveau lien
         </Link>
       </div>
@@ -65,7 +65,7 @@ function ResetForm() {
         <div className="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm px-4 py-3 rounded-lg mb-4">
           Mot de passe mis à jour avec succès.
         </div>
-        <Link href="/compte" className="text-sm text-[#C9948E] dark:text-[#E8B4AE] hover:text-[#B8807A] transition-colors">
+        <Link href="/compte" className="text-sm text-[#c27a72] dark:text-[#d4968e] hover:text-[#a86660] transition-colors">
           ← Se connecter
         </Link>
       </div>
@@ -77,7 +77,7 @@ function ResetForm() {
       <div>
         <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Nouveau mot de passe</label>
         <div className="relative">
-          <input type={showPassword ? "text" : "password"} required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+          <input type={showPassword ? "text" : "password"} required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
           <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
             {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
@@ -86,14 +86,14 @@ function ResetForm() {
       <div>
         <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">Confirmer le mot de passe</label>
         <div className="relative">
-          <input type={showPassword2 ? "text" : "password"} required minLength={6} value={password2} onChange={(e) => setPassword2(e.target.value)} className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
+          <input type={showPassword2 ? "text" : "password"} required minLength={6} value={password2} onChange={(e) => setPassword2(e.target.value)} className="w-full px-3 py-2 pr-10 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72]" style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }} />
           <button type="button" onClick={() => setShowPassword2(!showPassword2)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" tabIndex={-1}>
             {showPassword2 ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
       </div>
       {error && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
-      <button type="submit" disabled={loading} className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50">
+      <button type="submit" disabled={loading} className="w-full py-2.5 bg-[#c27a72] dark:bg-[#c27a72] text-white text-sm font-medium rounded-lg hover:bg-[#a86660] transition-colors disabled:opacity-50">
         {loading ? "Réinitialisation…" : "Réinitialiser le mot de passe"}
       </button>
     </form>

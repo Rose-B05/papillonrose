@@ -128,7 +128,7 @@ export default function DevisListePage() {
           </div>
           <button
             onClick={() => router.push("/admin/devis/new")}
-            className="px-4 py-2 bg-[#C9948E] text-white rounded-xl text-sm font-medium hover:bg-[#B8807A] transition-colors"
+            className="px-4 py-2 bg-[#c27a72] text-white rounded-xl text-sm font-medium hover:bg-[#a86660] transition-colors"
           >
             + Nouvelle réservation
           </button>
@@ -140,7 +140,7 @@ export default function DevisListePage() {
             placeholder="Rechercher une réservation..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 px-4 py-2.5 bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.1] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/30"
+            className="flex-1 px-4 py-2.5 bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.1] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/30"
           />
           <div className="flex gap-1 flex-wrap">
             {STATUT_FILTERS.map((f) => (
@@ -149,7 +149,7 @@ export default function DevisListePage() {
                 onClick={() => setFilter(f.value)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   filter === f.value
-                    ? "bg-[#C9948E] text-white"
+                    ? "bg-[#c27a72] text-white"
                     : "bg-white dark:bg-neutral-800 text-gray-500 dark:text-white/60 hover:bg-gray-100 dark:hover:bg-neutral-700"
                 }`}
               >

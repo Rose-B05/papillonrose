@@ -34,7 +34,7 @@ export default function FavorisClient() {
   return (
     <div className="max-w-7xl mx-auto px-5 md:px-10 pt-24 pb-8 min-h-[60vh]">
       <div className="mb-8">
-        <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+        <p className="text-[#c27a72] dark:text-[#d4968e] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
           Mes préférences
         </p>
         <h1 className="text-3xl md:text-4xl font-semibold text-[#2E2E2E] dark:text-neutral-100">
@@ -44,20 +44,20 @@ export default function FavorisClient() {
 
       {loading ? (
         <div className="py-24 text-center">
-          <Loader2 className="animate-spin mx-auto mb-4 text-[#C9948E]" size={32} />
+          <Loader2 className="animate-spin mx-auto mb-4 text-[#c27a72]" size={32} />
           <p className="text-gray-400 dark:text-white/60 text-sm">Chargement…</p>
         </div>
       ) : favProducts.length === 0 ? (
         <div className="py-24 text-center">
-          <div className="w-20 h-20 bg-[#C9948E]/10 dark:bg-[#C9948E]/10 rounded-full flex items-center justify-center mx-auto mb-5">
-            <Heart size={32} className="text-[#C9948E]/40" />
+          <div className="w-20 h-20 bg-[#c27a72]/10 dark:bg-[#c27a72]/10 rounded-full flex items-center justify-center mx-auto mb-5">
+            <Heart size={32} className="text-[#c27a72]/40" />
           </div>
           <p className="text-gray-400 dark:text-white/60 text-base mb-6">
             Vous n&apos;avez pas encore de favoris.
           </p>
           <Link
             href="/catalogue"
-            className="inline-block bg-[#C9948E] dark:bg-[#C9948E] text-white px-10 py-3.5 rounded-full text-sm font-medium hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors"
+            className="inline-block bg-[#c27a72] dark:bg-[#c27a72] text-white px-10 py-3.5 rounded-full text-sm font-medium hover:bg-[#a86660] dark:hover:bg-[#a86660] transition-colors"
           >
             Parcourir le catalogue
           </Link>
@@ -95,7 +95,7 @@ export default function FavorisClient() {
                 </Link>
                 <div className="p-3.5 flex flex-col flex-1">
                   <div className="min-w-0">
-                    <p className="text-[10px] font-medium text-[#C9948E] dark:text-[#E8B4AE] uppercase tracking-wider truncate">
+                    <p className="text-[10px] font-medium text-[#c27a72] dark:text-[#d4968e] uppercase tracking-wider truncate">
                       {p.categorie}
                     </p>
                     <h3 className="text-[13px] font-semibold text-[#2E2E2E] dark:text-neutral-100 leading-snug truncate">
@@ -113,7 +113,7 @@ export default function FavorisClient() {
                       className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
                         isInCart
                           ? "bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-white/60 cursor-not-allowed"
-                          : "bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#B8807A]"
+                          : "bg-[#c27a72] dark:bg-[#c27a72] text-white hover:bg-[#a86660] dark:hover:bg-[#a86660]"
                       }`}
                     >
                       <ShoppingBag size={13} />
@@ -124,7 +124,7 @@ export default function FavorisClient() {
                       aria-label="Retirer des favoris"
                       className="p-2 rounded-xl bg-gray-100 dark:bg-neutral-700 hover:bg-gray-200 dark:hover:bg-neutral-600 transition-colors"
                     >
-                      <Heart size={14} fill="#C9948E" className="text-[#C9948E]" />
+                      <Heart size={14} fill="#c27a72" className="text-[#c27a72]" />
                     </button>
                   </div>
                 </div>

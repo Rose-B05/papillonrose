@@ -91,8 +91,8 @@ export default function QuickActions({ mode, onToggleMode }: QuickActionsProps) 
   return (
     <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-5">
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#C9948E]/10">
-          <Zap size={16} className="text-[#C9948E]" />
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#c27a72]/10">
+          <Zap size={16} className="text-[#c27a72]" />
         </div>
         <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">Actions rapides</h3>
       </div>

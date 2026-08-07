@@ -69,7 +69,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
 
   return (
     <div className="lg:w-[400px] flex flex-col">
-      <p className="text-[#C9948E] dark:text-[#E8B4AE] text-xs tracking-[0.3em] uppercase font-medium mb-2">
+      <p className="text-[#c27a72] dark:text-[#d4968e] text-xs tracking-[0.3em] uppercase font-medium mb-2">
         {product.categorie}
       </p>
       <h1 className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
@@ -97,8 +97,8 @@ export default function ProductInfo({ product, isBlocked }: Props) {
                   onClick={() => toggleVariant(v)}
                   className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
                     selected
-                      ? "border-[#C9948E] bg-[#C9948E]/10 text-[#C9948E]"
-                      : "border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-white/70 hover:border-[#C9948E]/50"
+                      ? "border-[#c27a72] bg-[#c27a72]/10 text-[#c27a72]"
+                      : "border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-white/70 hover:border-[#c27a72]/50"
                   }`}
                 >
                   {selected && <Check size={14} className="inline mr-1 -mt-0.5" />}
@@ -108,7 +108,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
             })}
           </div>
           {selectedVariants.length > 0 && (
-            <p className="text-sm font-semibold text-[#C9948E] dark:text-[#E8B4AE] mt-2">
+            <p className="text-sm font-semibold text-[#c27a72] dark:text-[#d4968e] mt-2">
               Total : {totalTtc.toFixed(2)} € TTC / jour ({selectedVariants.length} {variantLabel.toLowerCase().replace(/s$/, "")}{selectedVariants.length > 1 ? "s" : ""})
             </p>
           )}
@@ -152,7 +152,7 @@ export default function ProductInfo({ product, isBlocked }: Props) {
         <button
           onClick={handleAddAll}
           disabled={disabled}
-          className="flex items-center justify-center gap-2 bg-[#C9948E] text-[#1C1A17] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#D4A09A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-2 bg-[#c27a72] text-[#1C1A17] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#c27a72] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ShoppingCart className="w-4 h-4" />
           {hasVariants && selectedVariants.length === 0
@@ -169,10 +169,10 @@ export default function ProductInfo({ product, isBlocked }: Props) {
         <div
           role="status"
           aria-live="polite"
-          className="fixed bottom-20 left-1/2 -translate-x-1/2 z-[60] bg-white dark:bg-neutral-800 border border-[#C9948E]/30 px-6 py-3.5 rounded-2xl shadow-lg flex items-center gap-2.5 animate-[fade-in-up_0.3s_ease-out]"
+          className="fixed bottom-20 left-1/2 -translate-x-1/2 z-[60] bg-white dark:bg-neutral-800 border border-[#c27a72]/30 px-6 py-3.5 rounded-2xl shadow-lg flex items-center gap-2.5 animate-[fade-in-up_0.3s_ease-out]"
         >
-          <span className="w-6 h-6 rounded-full bg-[#C9948E]/15 flex items-center justify-center flex-shrink-0">
-            <Check size={14} className="text-[#C9948E]" />
+          <span className="w-6 h-6 rounded-full bg-[#c27a72]/15 flex items-center justify-center flex-shrink-0">
+            <Check size={14} className="text-[#c27a72]" />
           </span>
           <span className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100">
             {selectedVariants.length} {variantLabel.toLowerCase().replace(/s$/, "")}{selectedVariants.length > 1 ? "s" : ""} ajoutée{selectedVariants.length > 1 ? "s" : ""} au panier ✓

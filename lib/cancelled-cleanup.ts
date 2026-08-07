@@ -51,7 +51,7 @@ async function sendCancelledAfterEventEmail(
   const eventDate = booking.client.dateEvenement
 
   const html = `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
-    <h2 style="color:#C9948E">Devis annulé — information</h2>
+    <h2 style="color:#c27a72">Devis annulé — information</h2>
     <p>Bonjour ${clientName},</p>
     <p>Nous vous informons que votre devis <strong>n°${quoteNumber}</strong> a été annulé.</p>
     <p>La date de votre événement (${eventDate}) étant désormais passée et aucun règlement n'ayant été reçu, nous avons clôturé ce dossier.</p>
@@ -84,7 +84,7 @@ async function sendCancelledAfterEventEmail(
       to: TO_ADMIN,
       subject: `[Admin] Devis n°${quoteNumber} annulé — ${clientName}`,
       html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
-        <h2 style="color:#C9948E">Devis annulé — copie admin</h2>
+        <h2 style="color:#c27a72">Devis annulé — copie admin</h2>
         <p>Le devis <strong>n°${quoteNumber}</strong> de <strong>${clientName}</strong> (${booking.client.email}) a été annulé.</p>
         <p>Date d'événement : ${eventDate} (passée)</p>
         <p>Aucun règlement reçu (acompte ni solde).</p>

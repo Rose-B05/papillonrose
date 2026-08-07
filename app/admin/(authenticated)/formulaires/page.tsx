@@ -52,7 +52,7 @@ export default function FormulairesPage() {
           <p className="text-sm text-gray-400 dark:text-white/60 mt-1">
             {messages.length} message{messages.length !== 1 ? "s" : ""}
             {unreadCount > 0 && (
-              <span className="ml-2 text-[#C9948E] dark:text-[#E8B4AE] font-medium">
+              <span className="ml-2 text-[#c27a72] dark:text-[#d4968e] font-medium">
                 Â· {unreadCount} non lu{unreadCount !== 1 ? "s" : ""}
               </span>
             )}
@@ -72,8 +72,8 @@ export default function FormulairesPage() {
         </div>
       ) : messages.length === 0 ? (
         <div className="py-24 text-center">
-          <div className="w-20 h-20 bg-[#C9948E]/10 rounded-full flex items-center justify-center mx-auto mb-5">
-            <Inbox size={32} className="text-[#C9948E]/40" />
+          <div className="w-20 h-20 bg-[#c27a72]/10 rounded-full flex items-center justify-center mx-auto mb-5">
+            <Inbox size={32} className="text-[#c27a72]/40" />
           </div>
           <p className="text-gray-400 dark:text-white/60 text-base mb-2">
             Aucun message pour l&apos;instant
@@ -95,10 +95,10 @@ export default function FormulairesPage() {
                 }}
                 className={`p-4 rounded-2xl cursor-pointer transition-all border ${
                   selected?.id === msg.id
-                    ? "bg-[#C9948E]/10 border-[#C9948E]/30"
+                    ? "bg-[#c27a72]/10 border-[#c27a72]/30"
                     : msg.read
                     ? "bg-white dark:bg-neutral-800 border-transparent hover:bg-gray-50 dark:hover:bg-neutral-700"
-                    : "bg-white dark:bg-neutral-800 border-[#C9948E]/20 shadow-sm"
+                    : "bg-white dark:bg-neutral-800 border-[#c27a72]/20 shadow-sm"
                 }`}
               >
                 <div className="flex items-start gap-3">
@@ -106,7 +106,7 @@ export default function FormulairesPage() {
                     {msg.read ? (
                       <MailOpen size={16} className="text-gray-300 dark:text-neutral-600" />
                     ) : (
-                      <Mail size={16} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+                      <Mail size={16} className="text-[#c27a72] dark:text-[#d4968e]" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -114,7 +114,7 @@ export default function FormulairesPage() {
                       <p className={`text-sm font-medium truncate ${msg.read ? "text-gray-500 dark:text-white/70" : "text-[#2E2E2E] dark:text-neutral-100"}`}>
                         {msg.name}
                       </p>
-                      {!msg.read && <span className="w-2 h-2 rounded-full bg-[#C9948E] flex-shrink-0" />}
+                      {!msg.read && <span className="w-2 h-2 rounded-full bg-[#c27a72] flex-shrink-0" />}
                     </div>
                     <p className="text-xs text-gray-400 dark:text-white/60 truncate mt-0.5">
                       {msg.message}
@@ -146,7 +146,7 @@ export default function FormulairesPage() {
               <div className="space-y-3 mb-6">
                 <div className="flex items-center gap-2 text-sm">
                   <Mail size={14} className="text-gray-400" />
-                  <a href={`mailto:${selected.email}`} className="text-[#C9948E] dark:text-[#E8B4AE] hover:underline">
+                  <a href={`mailto:${selected.email}`} className="text-[#c27a72] dark:text-[#d4968e] hover:underline">
                     {selected.email}
                   </a>
                 </div>
@@ -175,7 +175,7 @@ export default function FormulairesPage() {
               <div className="mt-6 flex gap-3">
                 <a
                   href={`mailto:${selected.email}?subject=${encodeURIComponent(`Re: Votre demande â€” ${selected.name}`)}&body=${encodeURIComponent(`Bonjour ${selected.name},\n\nMerci pour votre message.\n\n`)}`}
-                  className="flex-1 bg-[#C9948E] text-white py-2.5 rounded-xl text-sm font-medium hover:bg-[#B8807A] transition-colors text-center"
+                  className="flex-1 bg-[#c27a72] text-white py-2.5 rounded-xl text-sm font-medium hover:bg-[#a86660] transition-colors text-center"
                 >
                   RÃ©pondre par email
                 </a>

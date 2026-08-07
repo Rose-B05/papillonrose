@@ -32,7 +32,7 @@ function BarHorizontal({ label, value, max }: { label: string; value: number; ma
     <div className="flex items-center gap-3 text-sm">
       <span className="w-32 md:w-48 truncate text-gray-600 dark:text-white/70 text-xs">{label || "—"}</span>
       <div className="flex-1 h-5 bg-gray-100 dark:bg-neutral-700 rounded-full overflow-hidden">
-        <div className="h-full bg-[#C9948E] dark:bg-[#C9948E] rounded-full transition-all" style={{ width: `${pct}%` }} />
+        <div className="h-full bg-[#c27a72] dark:bg-[#c27a72] rounded-full transition-all" style={{ width: `${pct}%` }} />
       </div>
       <span className="w-16 text-right text-xs font-medium text-[#2E2E2E] dark:text-neutral-100">{value.toLocaleString()}</span>
     </div>
@@ -138,7 +138,7 @@ export default function AnalyticsPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-semibold text-[#2E2E2E] dark:text-neutral-100 flex items-center gap-2">
-              <BarChart3 className="w-6 h-6 text-[#C9948E] dark:text-[#E8B4AE]" />
+              <BarChart3 className="w-6 h-6 text-[#c27a72] dark:text-[#d4968e]" />
               Analytics
             </h1>
             <p className="text-sm text-gray-500 dark:text-white/60 mt-1">
@@ -149,7 +149,7 @@ export default function AnalyticsPage() {
             <button
               onClick={fetchData}
               disabled={loading}
-              className="p-2 rounded-xl bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-400 hover:text-[#C9948E] transition-colors disabled:opacity-50"
+              className="p-2 rounded-xl bg-white dark:bg-neutral-800 border border-black/[0.07] dark:border-white/[0.08] text-gray-400 hover:text-[#c27a72] transition-colors disabled:opacity-50"
               title="Rafraîchir"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
@@ -166,7 +166,7 @@ export default function AnalyticsPage() {
               href={VERCEL_ANALYTICS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#C9948E] dark:bg-[#C9948E] text-white hover:bg-[#B8807A] dark:hover:bg-[#C9948E] transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-[#c27a72] dark:bg-[#c27a72] text-white hover:bg-[#a86660] dark:hover:bg-[#c27a72] transition-colors"
             >
               Dashboard Vercel
               <ExternalLink className="w-4 h-4" />
@@ -182,7 +182,7 @@ export default function AnalyticsPage() {
               onClick={() => setPeriod(p)}
               className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 period === p
-                  ? "bg-[#C9948E] dark:bg-[#C9948E] text-white"
+                  ? "bg-[#c27a72] dark:bg-[#c27a72] text-white"
                   : "text-gray-500 dark:text-white/70 hover:bg-gray-50 dark:hover:bg-neutral-700"
               }`}
             >
@@ -224,8 +224,8 @@ export default function AnalyticsPage() {
                     const h = maxDay > 0 ? ((d.pageviews || 0) / maxDay) * 100 : 0
                     return (
                       <div key={i} className="flex-1 flex flex-col items-center gap-1" title={`${d.timestamp?.split("T")[0]}: ${d.pageviews || 0} vues`}>
-                        <div className="w-full bg-[#C9948E]/20 dark:bg-[#C9948E]/20 rounded-t relative" style={{ height: `${Math.max(h, 2)}%` }}>
-                          <div className="absolute bottom-0 w-full bg-[#C9948E] dark:bg-[#C9948E] rounded-t transition-all" style={{ height: `${h}%` }} />
+                        <div className="w-full bg-[#c27a72]/20 dark:bg-[#c27a72]/20 rounded-t relative" style={{ height: `${Math.max(h, 2)}%` }}>
+                          <div className="absolute bottom-0 w-full bg-[#c27a72] dark:bg-[#c27a72] rounded-t transition-all" style={{ height: `${h}%` }} />
                         </div>
                       </div>
                     )
@@ -288,7 +288,7 @@ export default function AnalyticsPage() {
                         <span className="text-xs text-gray-600 dark:text-white/70 w-20">{d.deviceType || "Inconnu"}</span>
                         <div className="flex-1 h-5 bg-gray-100 dark:bg-neutral-700 rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-[#C9948E] dark:bg-[#C9948E] rounded-full transition-all"
+                            className="h-full bg-[#c27a72] dark:bg-[#c27a72] rounded-full transition-all"
                             style={{ width: `${totals.pageviews > 0 ? ((d.pageviews || 0) / totals.pageviews) * 100 : 0}%` }}
                           />
                         </div>

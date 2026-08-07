@@ -77,7 +77,7 @@ export default function ProductGallery({ images }: Props) {
               onClick={() => goTo(i)}
               className={`w-2 h-2 rounded-full transition-all ${
                 i === idx
-                  ? "bg-[#C9948E] dark:bg-[#E8B4AE] w-4"
+                  ? "bg-[#c27a72] dark:bg-[#d4968e] w-4"
                   : "bg-[#2E2E2E]/20 dark:bg-white/30 hover:bg-[#2E2E2E]/40 dark:hover:bg-white/50"
               }`}
               aria-label={`Image ${i + 1}`}
@@ -94,7 +94,7 @@ export default function ProductGallery({ images }: Props) {
             onClick={() => setIdx(i)}
             className={`w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
               i === idx
-                ? "border-[#C9948E] dark:border-[#E8B4AE]"
+                ? "border-[#c27a72] dark:border-[#d4968e]"
                 : "border-gray-200 dark:border-neutral-700 hover:border-gray-300 dark:hover:border-neutral-600"
             }`}
           >

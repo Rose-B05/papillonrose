@@ -58,7 +58,7 @@ export default function NouveautesAdminPage() {
           <p className="text-sm text-gray-400 dark:text-white/60 mt-1">
             {items.length} élément{items.length !== 1 ? "s" : ""}
             {publieCount > 0 && (
-              <span className="ml-2 text-[#C9948E] dark:text-[#E8B4AE] font-medium">
+              <span className="ml-2 text-[#c27a72] dark:text-[#d4968e] font-medium">
                 · {publieCount} publié{publieCount !== 1 ? "s" : ""}
               </span>
             )}
@@ -66,7 +66,7 @@ export default function NouveautesAdminPage() {
         </div>
         <Link
           href="/admin/nouveautes/nouveau"
-          className="flex items-center gap-2 bg-[#C9948E] hover:bg-[#B8807A] text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors"
+          className="flex items-center gap-2 bg-[#c27a72] hover:bg-[#a86660] text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors"
         >
           <Plus size={16} /> Nouvelle
         </Link>
@@ -76,13 +76,13 @@ export default function NouveautesAdminPage() {
         <div className="text-center py-16 text-gray-400 dark:text-white/60 text-sm">Chargement…</div>
       ) : items.length === 0 ? (
         <div className="text-center py-16">
-          <div className="w-16 h-16 bg-[#C9948E]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Image size={24} className="text-[#C9948E]/40" />
+          <div className="w-16 h-16 bg-[#c27a72]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Image size={24} className="text-[#c27a72]/40" />
           </div>
           <p className="text-gray-400 dark:text-white/60 mb-4">Aucune nouveauté</p>
           <Link
             href="/admin/nouveautes/nouveau"
-            className="text-[#C9948E] dark:text-[#E8B4AE] text-sm font-medium hover:underline"
+            className="text-[#c27a72] dark:text-[#d4968e] text-sm font-medium hover:underline"
           >
             Créer la première
           </Link>

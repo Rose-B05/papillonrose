@@ -146,7 +146,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
     return (
       <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-950 flex flex-col items-center justify-center gap-4">
         <p className="text-gray-500">{error || "Devis introuvable"}</p>
-        <Link href="/compte" className="text-[#C9948E] hover:underline text-sm">← Retour à mon compte</Link>
+        <Link href="/compte" className="text-[#c27a72] hover:underline text-sm">← Retour à mon compte</Link>
       </div>
     )
   }
@@ -157,7 +157,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-950">
       <div className="max-w-3xl mx-auto px-5 py-10">
         {/* Header */}
-        <Link href="/compte" className="text-sm text-gray-400 hover:text-[#C9948E] transition-colors mb-6 inline-block">
+        <Link href="/compte" className="text-sm text-gray-400 hover:text-[#c27a72] transition-colors mb-6 inline-block">
           ← Retour à mon compte
         </Link>
 
@@ -250,7 +250,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                       {formatDateFr(item.dateStart)} → {formatDateFr(item.dateEnd)}
                       {nbJours > 0 && <><br />× {item.qty} &middot; {prixUnitaire.toFixed(2)} € / jour</>}
                     </p>
-                    <p className={`text-sm font-semibold mt-1 ${isNaN(totalLigne) ? "text-gray-400" : "text-[#C9948E] dark:text-[#E8B4AE]"}`}>
+                    <p className={`text-sm font-semibold mt-1 ${isNaN(totalLigne) ? "text-gray-400" : "text-[#c27a72] dark:text-[#d4968e]"}`}>
                       {isNaN(totalLigne) ? "Prix sur devis" : `${totalLigne.toFixed(2)} €`}
                     </p>
                   </div>
@@ -297,7 +297,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                       {quote.depositAmount > 0 && (
                         <div className="flex justify-between">
                           <span className="text-gray-400">Acompte à verser (30%)</span>
-                          <span className="font-semibold text-[#C9948E]">{quote.depositAmount.toFixed(2)} €</span>
+                          <span className="font-semibold text-[#c27a72]">{quote.depositAmount.toFixed(2)} €</span>
                         </div>
                       )}
                     </div>
@@ -317,7 +317,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                         value={signatureName}
                         onChange={(e) => setSignatureName(e.target.value)}
                         placeholder={`${quote.client.prenom} ${quote.client.nom}`}
-                        className="w-full px-3 py-2 rounded-lg border border-black/[0.1] dark:border-white/[0.15] bg-white dark:bg-neutral-800 text-sm text-[#2E2E2E] dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50"
+                        className="w-full px-3 py-2 rounded-lg border border-black/[0.1] dark:border-white/[0.15] bg-white dark:bg-neutral-800 text-sm text-[#2E2E2E] dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50"
                       />
                     </div>
 
@@ -326,11 +326,11 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                         type="checkbox"
                         checked={acceptChecked}
                         onChange={(e) => setAcceptChecked(e.target.checked)}
-                        className="mt-0.5 rounded border-gray-300 text-[#C9948E] focus:ring-[#C9948E]"
+                        className="mt-0.5 rounded border-gray-300 text-[#c27a72] focus:ring-[#c27a72]"
                       />
                       <span className="text-sm text-gray-500 dark:text-white/60">
                         Je certifie avoir lu les{" "}
-                        <a href="/conditions-location" target="_blank" rel="noopener noreferrer" className="text-[#C9948E] dark:text-[#E8B4AE] underline font-medium hover:text-[#B9807A]">
+                        <a href="/conditions-location" target="_blank" rel="noopener noreferrer" className="text-[#c27a72] dark:text-[#d4968e] underline font-medium hover:text-[#B9807A]">
                           conditions de location
                         </a>{" "}
                         et j&apos;accepte ce devis.
@@ -344,7 +344,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                     <button
                       onClick={handleSign}
                       disabled={signing || !acceptChecked || !signatureName.trim()}
-                      className="w-full px-4 py-2.5 bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B9807A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full px-4 py-2.5 bg-[#c27a72] text-white text-sm font-medium rounded-lg hover:bg-[#B9807A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {signing ? "Signature en cours…" : "Signer et valider mon devis"}
                     </button>
@@ -434,7 +434,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
         </div>
 
         <p className="text-center text-xs text-gray-400 dark:text-white/60">
-          <Link href="/compte" className="hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors">← Retour à mon compte</Link>
+          <Link href="/compte" className="hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors">← Retour à mon compte</Link>
         </p>
       </div>
     </div>

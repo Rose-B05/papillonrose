@@ -88,7 +88,7 @@ export default function NewDevisPage() {
     <div className="max-w-4xl mx-auto space-y-6">
         <button
           onClick={() => router.push("/admin/devis")}
-          className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-white/60 hover:text-[#C9948E] transition-colors"
+          className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-white/60 hover:text-[#c27a72] transition-colors"
         >
           <ArrowLeft size={15} /> Retour à la liste
         </button>
@@ -135,7 +135,7 @@ export default function NewDevisPage() {
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-black/[0.07] dark:border-white/[0.08] p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">Articles</h3>
-            <button onClick={addLigne} className="text-xs text-[#C9948E] hover:underline flex items-center gap-1">
+            <button onClick={addLigne} className="text-xs text-[#c27a72] hover:underline flex items-center gap-1">
               <Plus size={13} /> Ajouter un article
             </button>
           </div>
@@ -164,7 +164,7 @@ export default function NewDevisPage() {
                   placeholder="Prix unitaire"
                   className="w-28 px-3 py-2 bg-white dark:bg-neutral-700 border border-black/[0.08] dark:border-white/[0.1] rounded-lg text-sm text-right"
                 />
-                <span className="w-24 text-right text-sm font-medium text-[#C9948E] dark:text-[#E8B4AE] py-2">
+                <span className="w-24 text-right text-sm font-medium text-[#c27a72] dark:text-[#d4968e] py-2">
                   {(ligne.prixUnitaire * ligne.quantite).toFixed(2)} €
                 </span>
                 {lignes.length > 1 && (
@@ -188,7 +188,7 @@ export default function NewDevisPage() {
               <span className="text-gray-500 dark:text-white/60">TVA (20%)</span>
               <span>{tva.toFixed(2)} €</span>
             </div>
-            <div className="flex justify-between pt-2 border-t border-black/[0.06] dark:border-white/[0.08] font-semibold text-[#C9948E] dark:text-[#E8B4AE]">
+            <div className="flex justify-between pt-2 border-t border-black/[0.06] dark:border-white/[0.08] font-semibold text-[#c27a72] dark:text-[#d4968e]">
               <span>Total TTC</span>
               <span>{totalTtc.toFixed(2)} €</span>
             </div>
@@ -205,7 +205,7 @@ export default function NewDevisPage() {
           <button
             onClick={handleCreate}
             disabled={saving}
-            className="px-5 py-2.5 text-sm bg-[#C9948E] text-white rounded-xl hover:bg-[#B8807A] transition-colors disabled:opacity-50"
+            className="px-5 py-2.5 text-sm bg-[#c27a72] text-white rounded-xl hover:bg-[#a86660] transition-colors disabled:opacity-50"
           >
             {saving ? "Création…" : "Créer la réservation"}
           </button>

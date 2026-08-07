@@ -50,7 +50,7 @@ export default function MotDePasseOubliePage() {
               </div>
               <Link
                 href="/compte"
-                className="text-sm text-[#C9948E] dark:text-[#E8B4AE] hover:text-[#B8807A] transition-colors"
+                className="text-sm text-[#c27a72] dark:text-[#d4968e] hover:text-[#a86660] transition-colors"
               >
                 ← Retour à la connexion
               </Link>
@@ -64,7 +64,7 @@ export default function MotDePasseOubliePage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C9948E]/50 focus:border-[#C9948E]"
+                  className="w-full px-3 py-2 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c27a72]/50 focus:border-[#c27a72]"
                   style={{ color: "#1a1a1a", WebkitTextFillColor: "#1a1a1a" }}
                 />
               </div>
@@ -72,14 +72,14 @@ export default function MotDePasseOubliePage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-sm font-medium rounded-lg hover:bg-[#B8807A] transition-colors disabled:opacity-50"
+                className="w-full py-2.5 bg-[#c27a72] dark:bg-[#c27a72] text-white text-sm font-medium rounded-lg hover:bg-[#a86660] transition-colors disabled:opacity-50"
               >
                 {loading ? "Envoi…" : "Envoyer le lien"}
               </button>
               <p className="text-center">
                 <Link
                   href="/compte"
-                  className="text-xs text-gray-400 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors"
+                  className="text-xs text-gray-400 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors"
                 >
                   ← Retour à la connexion
                 </Link>

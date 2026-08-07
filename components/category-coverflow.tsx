@@ -224,10 +224,10 @@ export default function CategoryCoverflow({
                       {cat.name}
                     </p>
                     <div className="flex items-center justify-center gap-1 mt-1">
-                      <span className="text-[#C9948E] dark:text-[#E8B4AE] text-[11px] md:text-xs">
+                      <span className="text-[#c27a72] dark:text-[#d4968e] text-[11px] md:text-xs">
                         {cat.count} article{cat.count > 1 ? "s" : ""}
                       </span>
-                      <ArrowRight size={11} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+                      <ArrowRight size={11} className="text-[#c27a72] dark:text-[#d4968e]" />
                     </div>
                   </>
                 )}

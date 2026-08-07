@@ -1,0 +1,52 @@
+HFS+ for Windows by Paragon Software 11.4.298
+
+[1785866921][0x5148] CBO4Manager uses OLS_SERVER_UC_PRODUCTION
+[1785866921][0x5148] VsmlClient uses OLS_SERVER_UC_PRODUCTION
+[1785866921][0x5148] Automatic activation file is empty
+[1785866921][0x5148] #####ERROR 2 ( src\ServiceLayer.cpp 727 ) 
+[1785866921][0x5148] lsl::Client::GetCustomerData
+[1785866921][0x5148] #####ERROR -2113929214 ( E:\BuildAgent\work\12dcfda619f53b86\lsl\activation\src\bo4\Client.cpp 218 ) Authorization is denied
+[1785866921][0x5148] Try to get License status using cache mode: 2
+[1785866921][0x5148] #####ERROR -2113929214 ( E:\BuildAgent\work\12dcfda619f53b86\lsl\activation\src\bo4\Client.cpp 1095 ) Authorization is denied
+[1785866922][0x5148] Failed to connect to the pipe, Error = 0x2
+[1785866922][0x5148] #####ERROR 14 ( src\ServiceLayer.cpp 1913 ) 
+[1785866922][0x4ECC] "Session analytics" request:
+	XmlHttp parameters: 
+	url: https://my.paragon-software.com/rest/rs/customer/session?agree=true
+	headers:
+		Cache-Control : no-cache
+		client-id : 2afa3e45-496a-49fe-9d64-fa09e8c4b828
+		loginOrEmail : feedback@paragon-software.com
+		pwd-hash : 779588f5a08562e33fac74534240e2afbfc80edefd7dc0a665904d4b878c52570bb9df1ecfcbbde9c2d43e782076d832fa251e904f8be0467f4e2d80a7936725
+	body: 
+
+[1785866922][0x4ECC] "Send analytics" request:
+	XmlHttp parameters: 
+	url: https://my.paragon-software.com/rest/rs/analytics
+	headers:
+		Cache-Control : no-cache
+		Content-Type : application/json;charset=UTF-8
+		session-id : 4d83c4f3-1e77-4514-984d-39b03b9cbe38
+	body: {
+    "actor": {
+        "email": "",
+        "login": "",
+        "guid": "MAC-08-8E-90-63-C2-DE"
+    },
+    "activityType": "Event.AppLaunched",
+    "object": "HFS+ for Windows by Paragon Software",
+    "details": {
+        "sku": "PSG-3607-PEU",
+        "productName": "HFS+ for Windows by Paragon Software",
+        "additionalParams": {
+            "StartType": "shortcut",
+            "License": "INVALID",
+            "OperationSystem": "Windows 10",
+            "Locale": "fr_FR"
+        }
+    }
+}
+
+[1785866922][0x5148] Try to get License status using cache mode: 1
+[1785866922][0x4AA8] Failed to connect to the pipe, Error = 0x2
+[1785866922][0x4AA8] #####ERROR 14 ( src\ServiceLayer.cpp 1273 ) 

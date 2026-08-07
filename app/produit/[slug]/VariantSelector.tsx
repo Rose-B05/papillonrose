@@ -32,8 +32,8 @@ export default function VariantSelector({ variants, defaultPrix, onSelect }: Pro
             onClick={() => handleSelect(v)}
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
               selected?.label === v.label
-                ? "border-[#C9948E] bg-[#C9948E]/10 text-[#C9948E]"
-                : "border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-white/70 hover:border-[#C9948E]/50"
+                ? "border-[#c27a72] bg-[#c27a72]/10 text-[#c27a72]"
+                : "border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-white/70 hover:border-[#c27a72]/50"
             }`}
           >
             {v.label}

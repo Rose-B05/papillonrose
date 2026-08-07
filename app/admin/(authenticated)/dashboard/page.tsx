@@ -54,7 +54,7 @@ const ACTIVITY_COLORS: Record<string, string> = {
   product_created: "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-300",
   product_updated: "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-300",
   product_deleted: "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-300",
-  contact_received: "bg-[#C9948E]/15 text-[#C9948E]",
+  contact_received: "bg-[#c27a72]/15 text-[#c27a72]",
   quote_created: "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300",
   quote_sent: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-300",
 }
@@ -128,7 +128,7 @@ export default function DashboardPage() {
                   <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center">
                     <Clock size={18} className="text-amber-600 dark:text-amber-300" />
                   </div>
-                  <ArrowRight size={14} className="text-gray-300 dark:text-white/30 group-hover:text-[#C9948E] transition-colors" />
+                  <ArrowRight size={14} className="text-gray-300 dark:text-white/30 group-hover:text-[#c27a72] transition-colors" />
                 </div>
                 <p className="text-3xl font-bold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
                   {data.devisEnAttente}
@@ -145,7 +145,7 @@ export default function DashboardPage() {
                   <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
                     <Package size={18} className="text-red-600 dark:text-red-300" />
                   </div>
-                  <ArrowRight size={14} className="text-gray-300 dark:text-white/30 group-hover:text-[#C9948E] transition-colors" />
+                  <ArrowRight size={14} className="text-gray-300 dark:text-white/30 group-hover:text-[#c27a72] transition-colors" />
                 </div>
                 <p className="text-3xl font-bold text-[#2E2E2E] dark:text-neutral-100" style={{ fontFamily: "var(--font-playfair), serif" }}>
                   {data.outOfStock}
@@ -156,8 +156,8 @@ export default function DashboardPage() {
               {/* Chiffre d'affaires */}
               <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 border border-black/[0.07] dark:border-white/[0.08] shadow-sm sm:col-span-2 lg:col-span-1">
                 <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-[#C9948E]/15 dark:bg-[#C9948E]/15 rounded-xl flex items-center justify-center">
-                    <Euro size={18} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+                  <div className="w-10 h-10 bg-[#c27a72]/15 dark:bg-[#c27a72]/15 rounded-xl flex items-center justify-center">
+                    <Euro size={18} className="text-[#c27a72] dark:text-[#d4968e]" />
                   </div>
                   {revenueVariation !== null && (
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
@@ -179,7 +179,7 @@ export default function DashboardPage() {
             {/* Activity Feed */}
             <div className="bg-white dark:bg-neutral-800 rounded-2xl border border-black/[0.07] dark:border-white/[0.08] shadow-sm">
               <div className="px-5 py-4 border-b border-black/[0.05] dark:border-white/[0.06] flex items-center gap-2">
-                <Activity size={16} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+                <Activity size={16} className="text-[#c27a72] dark:text-[#d4968e]" />
                 <h2 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">Activité récente</h2>
               </div>
               {data.activity.length === 0 ? (

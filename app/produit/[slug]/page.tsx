@@ -124,11 +124,11 @@ export default async function ProductPage({ params }: Props) {
       {/* Breadcrumb */}
       <nav className="max-w-7xl mx-auto px-5 md:px-10 pt-6 pb-2">
         <ol className="flex items-center gap-2 text-xs text-gray-400 dark:text-white/60 flex-wrap">
-          <li><Link href="/" className="hover:text-[#C9948E] transition-colors">Accueil</Link></li>
+          <li><Link href="/" className="hover:text-[#c27a72] transition-colors">Accueil</Link></li>
           <li>/</li>
-          <li><Link href="/catalogue" className="hover:text-[#C9948E] transition-colors">Catalogue</Link></li>
+          <li><Link href="/catalogue" className="hover:text-[#c27a72] transition-colors">Catalogue</Link></li>
           <li>/</li>
-          <li><Link href={`/categorie/${categorySlug}`} className="hover:text-[#C9948E] transition-colors">{product.categorie}</Link></li>
+          <li><Link href={`/categorie/${categorySlug}`} className="hover:text-[#c27a72] transition-colors">{product.categorie}</Link></li>
           <li>/</li>
           <li className="text-[#2E2E2E] dark:text-neutral-100 font-medium truncate max-w-[200px]">{product.nom}</li>
         </ol>

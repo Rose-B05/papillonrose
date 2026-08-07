@@ -67,7 +67,7 @@ export default function DevisTable({ devis, onStatusChange, onDelete, onSend, on
               className="border-b border-black/[0.04] dark:border-white/[0.05] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors"
             >
               <td className="py-3 px-4">
-                <Link href={`/admin/devis/${d.id}`} className="font-mono text-xs text-[#C9948E] hover:underline">
+                <Link href={`/admin/devis/${d.id}`} className="font-mono text-xs text-[#c27a72] hover:underline">
                   {d.quoteNumber}
                 </Link>
               </td>
@@ -86,7 +86,7 @@ export default function DevisTable({ devis, onStatusChange, onDelete, onSend, on
                   {d.itemCount} article{d.itemCount > 1 ? "s" : ""}
                 </p>
               </td>
-              <td className="py-3 px-4 text-right font-semibold text-[#C9948E] dark:text-[#E8B4AE] whitespace-nowrap">
+              <td className="py-3 px-4 text-right font-semibold text-[#c27a72] dark:text-[#d4968e] whitespace-nowrap">
                 {d.totalTtc.toFixed(2)} €
               </td>
               <td className="py-3 px-4">
@@ -101,7 +101,7 @@ export default function DevisTable({ devis, onStatusChange, onDelete, onSend, on
                 <div className="flex items-center justify-end gap-1">
                   <Link
                     href={`/admin/devis/${d.id}`}
-                    className="p-1.5 rounded-lg hover:bg-black/[0.05] dark:hover:bg-white/[0.08] text-gray-400 hover:text-[#C9948E] transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-black/[0.05] dark:hover:bg-white/[0.08] text-gray-400 hover:text-[#c27a72] transition-colors"
                     title="Voir"
                   >
                     <Eye size={15} />

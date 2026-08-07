@@ -124,14 +124,14 @@ export default function OverflowCarousel({
         <>
           <button
             onClick={(e) => { e.stopPropagation(); goPrev(); resetAuto() }}
-            className="absolute -left-1 md:left-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 dark:bg-neutral-900/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] shadow-md transition-all"
+            className="absolute -left-1 md:left-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 dark:bg-neutral-900/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] shadow-md transition-all"
             aria-label="Précédent"
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); goNext(); resetAuto() }}
-            className="absolute -right-1 md:right-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 dark:bg-neutral-900/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 dark:text-white/60 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] shadow-md transition-all"
+            className="absolute -right-1 md:right-0 top-[42%] -translate-y-1/2 z-20 w-10 h-10 md:w-11 md:h-11 bg-white/80 dark:bg-neutral-900/80 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 dark:text-white/60 hover:text-[#c27a72] dark:hover:text-[#d4968e] shadow-md transition-all"
             aria-label="Suivant"
           >
             <ChevronRight size={20} />
@@ -218,7 +218,7 @@ export default function OverflowCarousel({
                     {card.categorie}
                   </p>
                   {card.count != null && (
-                    <p className="text-xs mt-1 font-medium" style={{ color: "#C9948E" }}>
+                    <p className="text-xs mt-1 font-medium" style={{ color: "#c27a72" }}>
                       {card.count} produit{card.count > 1 ? "s" : ""}
                     </p>
                   )}
@@ -227,15 +227,15 @@ export default function OverflowCarousel({
                       className="inline-flex items-center gap-1.5 text-xs font-bold px-5 py-2 rounded-[50px] transition-all duration-300"
                       style={{
                         background: "#fff",
-                        color: "#C9948E",
+                        color: "#c27a72",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "#C9948E"
+                        e.currentTarget.style.background = "#c27a72"
                         e.currentTarget.style.color = "#fff"
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.background = "#fff"
-                        e.currentTarget.style.color = "#C9948E"
+                        e.currentTarget.style.color = "#c27a72"
                       }}
                     >
                       Découvrir <ArrowRight size={13} />

@@ -22,7 +22,7 @@ export async function sendQuoteConfirmation(to: string, quoteNumber: string, rec
     to,
     subject: `Votre demande de devis n°${quoteNumber} - Papillon Rose`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto">
-      <h2 style="color:#C9948E">Demande de devis reçue</h2>
+      <h2 style="color:#c27a72">Demande de devis reçue</h2>
       <p>Bonjour,</p>
       <p>Nous avons bien reçu votre demande de devis <strong>n°${quoteNumber}</strong>.</p>
       ${recapHtml}
@@ -49,7 +49,7 @@ export async function sendQuoteStockConfirmed(to: string, quoteNumber: string, r
     to,
     subject: `Devis n°${quoteNumber} — Stock confirmé ✓ - Papillon Rose`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto">
-      <h2 style="color:#C9948E">Stock confirmé</h2>
+      <h2 style="color:#c27a72">Stock confirmé</h2>
       <p>Bonjour,</p>
       <p>Bonne nouvelle : le stock pour votre demande de devis <strong>n°${quoteNumber}</strong> est entièrement disponible pour les dates demandées.</p>
       ${recapHtml}
@@ -70,7 +70,7 @@ export async function sendQuoteStockRefused(to: string, quoteNumber: string, una
     to,
     subject: `Devis n°${quoteNumber} — Indisponibilité de stock - Papillon Rose`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto">
-      <h2 style="color:#C9948E">Indisponibilité de stock</h2>
+      <h2 style="color:#c27a72">Indisponibilité de stock</h2>
       <p>Bonjour,</p>
       <p>Nous avons le regret de vous informer que certains articles de votre demande de devis <strong>n°${quoteNumber}</strong> ne sont pas disponibles pour les dates demandées :</p>
       <ul style="background:#fef2f2;padding:12px 20px;border-radius:8px;color:#b91c1c">${productList}</ul>
@@ -96,7 +96,7 @@ export async function sendPaymentConfirmation(to: string, bookingId: string, rec
     to,
     subject: `Confirmation de votre réservation n°${bookingId} - Papillon Rose`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto">
-      <h2 style="color:#C9948E">Réservation confirmée</h2>
+      <h2 style="color:#c27a72">Réservation confirmée</h2>
       <p>Votre acompte a bien été reçu.</p>
       ${recapHtml}
       <p>Le solde restant (70%) vous sera rappelé 7 jours avant votre événement.</p>
@@ -125,14 +125,14 @@ export async function sendQuoteBalancePaid(to: string, quoteNumber: string, tota
     to,
     subject: `Devis n°${quoteNumber} — Solde payé ✓ - Papillon Rose`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto">
-      <h2 style="color:#C9948E">Paiement confirmé</h2>
+      <h2 style="color:#c27a72">Paiement confirmé</h2>
       <p>Bonjour,</p>
       <p>Nous avons bien reçu le règlement du solde pour votre devis <strong>n°${quoteNumber}</strong>.</p>
       <table style="width:100%;border-collapse:collapse;margin:16px 0">
         <tr><td style="padding:8px;border-bottom:1px solid #eee">Total TTC</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:right;font-weight:600">${totalTtc.toFixed(2)} €</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee">Acompte (30%)</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:right">${deposit.toFixed(2)} €</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee">Solde (70%)</td><td style="padding:8px;border-bottom:1px solid #eee;text-align:right">${balance.toFixed(2)} €</td></tr>
-        <tr><td style="padding:8px;font-weight:700">Montant réglé</td><td style="padding:8px;text-align:right;font-weight:700;color:#C9948E">${totalTtc.toFixed(2)} €</td></tr>
+        <tr><td style="padding:8px;font-weight:700">Montant réglé</td><td style="padding:8px;text-align:right;font-weight:700;color:#c27a72">${totalTtc.toFixed(2)} €</td></tr>
       </table>
       <p>Votre réservation est maintenant <strong>entièrement soldée</p>
       <p>Pour toute question, contactez-nous à <a href="mailto:papillonrosebertha@gmail.com">papillonrosebertha@gmail.com</a>.</p>
@@ -156,13 +156,13 @@ export async function sendBalancePaymentLink(to: string, quoteNumber: string, pa
     to,
     subject: `Devis n°${quoteNumber} — Lien de paiement du solde - Papillon Rose`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto">
-      <h2 style="color:#C9948E">Paiement du solde</h2>
+      <h2 style="color:#c27a72">Paiement du solde</h2>
       <p>Bonjour,</p>
       <p>Votre acompte pour le devis <strong>n°${quoteNumber}</strong> a bien été reçu. Il ne reste plus qu'à régler le solde.</p>
       <p><strong>Montant du solde :</strong> ${amount.toFixed(2)} € TTC</p>
       <p>Pour régler, cliquez sur le bouton ci-dessous :</p>
       <p style="text-align:center;margin:24px 0">
-        <a href="${paymentUrl}" style="background:#C9948E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Payer le solde — ${amount.toFixed(2)} €</a>
+        <a href="${paymentUrl}" style="background:#c27a72;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Payer le solde — ${amount.toFixed(2)} €</a>
       </p>
       <p style="color:#888;font-size:12px">Ce lien est valable 24h. En cas de problème, contactez-nous à <a href="mailto:papillonrosebertha@gmail.com">papillonrosebertha@gmail.com</a>.</p>
       <p style="margin-top:24px;color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
@@ -177,7 +177,7 @@ export async function sendWelcomeEmail(to: string, prenom: string) {
     to,
     subject: "Bienvenue chez Papillon Rose 🦋",
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
-      <h2 style="color:#C9948E">Bienvenue ${prenom} !</h2>
+      <h2 style="color:#c27a72">Bienvenue ${prenom} !</h2>
       <p>Bonjour ${prenom},</p>
       <p>Merci pour votre inscription sur <strong>Papillon Rose</strong>.</p>
       <p>Votre compte est maintenant actif. Vous pouvez :</p>
@@ -187,7 +187,7 @@ export async function sendWelcomeEmail(to: string, prenom: string) {
         <li style="padding:4px 0">Suivre l&apos;état de vos devis en temps réel</li>
       </ul>
       <p style="text-align:center;margin:24px 0">
-        <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"}/catalogue" style="background:#C9948E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Découvrir le catalogue</a>
+        <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"}/catalogue" style="background:#c27a72;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Découvrir le catalogue</a>
       </p>
       <p style="color:#888;font-size:12px">Papillon Rose — Location décoration événements</p>
     </div>`,
@@ -201,10 +201,10 @@ export async function sendPasswordResetEmail(to: string, resetUrl: string) {
     to,
     subject: "Réinitialisation de votre mot de passe - Papillon Rose",
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px;text-align:center">
-      <h2 style="color:#C9948E;margin-bottom:8px">Réinitialisation de mot de passe</h2>
+      <h2 style="color:#c27a72;margin-bottom:8px">Réinitialisation de mot de passe</h2>
       <p style="color:#555;font-size:14px">Vous avez demandé la réinitialisation de votre mot de passe.</p>
       <p style="text-align:center;margin:24px 0">
-        <a href="${resetUrl}" style="background:#C9948E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Réinitialiser mon mot de passe</a>
+        <a href="${resetUrl}" style="background:#c27a72;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Réinitialiser mon mot de passe</a>
       </p>
       <p style="color:#888;font-size:12px">Ce lien expire dans 15 minutes.</p>
       <p style="color:#888;font-size:12px">Si vous n'avez pas demandé cette réinitialisation, ignorez cet email.</p>
@@ -220,7 +220,7 @@ export async function sendQuoteExpiryReminder(to: string, quoteNumber: string, c
     bcc: TO,
     subject: `Votre devis n°${quoteNumber} expire bientôt - Papillon Rose`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
-      <h2 style="color:#C9948E">Votre devis expire bientôt</h2>
+      <h2 style="color:#c27a72">Votre devis expire bientôt</h2>
       <p>Bonjour ${clientPrenom},</p>
       <p>Votre devis <strong>n°${quoteNumber}</strong> arrive bientôt à expiration.</p>
       <p style="background:#fef3c7;padding:12px 16px;border-radius:8px;margin:16px 0">
@@ -228,7 +228,7 @@ export async function sendQuoteExpiryReminder(to: string, quoteNumber: string, c
       </p>
       <p>Si vous souhaitez réserver ces articles pour vos dates, nous vous invitons à finaliser votre commande dès maintenant.</p>
       <p style="text-align:center;margin:24px 0">
-        <a href="${lienDevis}" style="background:#C9948E;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Voir mon devis</a>
+        <a href="${lienDevis}" style="background:#c27a72;color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Voir mon devis</a>
       </p>
       <p style="color:#888;font-size:12px">Passé ce délai, les disponibilités pourraient ne plus être garanties.</p>
       <p>Pour toute question, contactez-nous à <a href="mailto:papillonrosebertha@gmail.com">papillonrosebertha@gmail.com</a>.</p>
@@ -255,7 +255,7 @@ export async function sendChatbotLead(data: {
     to: TO,
     subject: `💬 Nouveau lead chatbot - ${data.prenom} ${data.nom}`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px">
-      <h2 style="color:#C9948E">Nouveau lead depuis le chatbot</h2>
+      <h2 style="color:#c27a72">Nouveau lead depuis le chatbot</h2>
       <table style="width:100%;border-collapse:collapse;margin-top:16px">
         <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:600">Prénom</td><td style="padding:8px;border-bottom:1px solid #eee">${data.prenom}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:600">Nom</td><td style="padding:8px;border-bottom:1px solid #eee">${data.nom}</td></tr>
@@ -281,7 +281,7 @@ export async function sendCancellationConfirmation(to: string, quoteNumber: stri
     to,
     subject: `Annulation de votre devis n°${quoteNumber} — Papillon Rose`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto">
-      <h2 style="color:#C9948E">Confirmation d'annulation</h2>
+      <h2 style="color:#c27a72">Confirmation d'annulation</h2>
       <p>Bonjour ${clientName},</p>
       <p>Votre devis <strong>n°${quoteNumber}</strong> a bien été annulé.</p>
       <p>Les dates associées à cette réservation ont été libérées et sont de nouveau disponibles.</p>
@@ -311,7 +311,7 @@ export async function sendQuoteSignedConfirmation(to: string, quoteNumber: strin
     to,
     subject: `Devis n°${quoteNumber} signé ✓ — Papillon Rose`,
     html: `<div style="font-family:sans-serif;max-width:600px;margin:auto">
-      <h2 style="color:#C9948E">Devis signé avec succès</h2>
+      <h2 style="color:#c27a72">Devis signé avec succès</h2>
       <p>Bonjour ${clientName},</p>
       <p>Votre devis <strong>n°${quoteNumber}</strong> a bien été signé électroniquement.</p>
       <p>Un admin va finaliser votre réservation et vous envoyer les prochaines instructions concernant le paiement de l'acompte.</p>

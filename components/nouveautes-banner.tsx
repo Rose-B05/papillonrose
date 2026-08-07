@@ -46,7 +46,7 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
     <section className={`max-w-7xl mx-auto px-5 md:px-10 mt-10 md:mt-8 ${className}`}>
       <div className="flex items-end justify-between mb-4 md:mb-5">
         <div>
-          <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
+          <p className="text-[#c27a72] dark:text-[#d4968e] text-[10px] tracking-[0.4em] uppercase font-medium mb-1">
             Dernières arrivals
           </p>
           <h2
@@ -60,14 +60,14 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
           <div className="flex items-center gap-2">
             <button
               onClick={prev}
-              className="w-9 h-9 rounded-full border border-[#C9948E]/30 dark:border-[#E8B4AE]/30 flex items-center justify-center text-[#C9948E] dark:text-[#E8B4AE] hover:bg-[#C9948E]/10 transition-colors"
+              className="w-9 h-9 rounded-full border border-[#c27a72]/30 dark:border-[#d4968e]/30 flex items-center justify-center text-[#c27a72] dark:text-[#d4968e] hover:bg-[#c27a72]/10 transition-colors"
               aria-label="Précédent"
             >
               <ChevronLeft size={16} />
             </button>
             <button
               onClick={next}
-              className="w-9 h-9 rounded-full border border-[#C9948E]/30 dark:border-[#E8B4AE]/30 flex items-center justify-center text-[#C9948E] dark:text-[#E8B4AE] hover:bg-[#C9948E]/10 transition-colors"
+              className="w-9 h-9 rounded-full border border-[#c27a72]/30 dark:border-[#d4968e]/30 flex items-center justify-center text-[#c27a72] dark:text-[#d4968e] hover:bg-[#c27a72]/10 transition-colors"
               aria-label="Suivant"
             >
               <ChevronRight size={16} />
@@ -109,10 +109,10 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
         )}
 
         {item.type === "document" && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#C9948E]/20 via-[#E8C4BE]/30 to-[#C9948E]/10 dark:from-[#C9948E]/10 dark:via-neutral-800 dark:to-[#C9948E]/5">
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#c27a72]/20 via-[#ddb5ae]/30 to-[#c27a72]/10 dark:from-[#c27a72]/10 dark:via-neutral-800 dark:to-[#c27a72]/5">
             <div className="flex flex-col items-center gap-4 p-8">
-              <div className="w-20 h-20 rounded-2xl bg-[#C9948E]/15 dark:bg-[#C9948E]/10 flex items-center justify-center">
-                <FileText size={36} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+              <div className="w-20 h-20 rounded-2xl bg-[#c27a72]/15 dark:bg-[#c27a72]/10 flex items-center justify-center">
+                <FileText size={36} className="text-[#c27a72] dark:text-[#d4968e]" />
               </div>
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function NouveautesBanner({ className = "" }: NouveautesBannerPro
                 href={item.lienAction}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#C9948E] hover:bg-[#B8807A] text-white px-6 py-2.5 rounded-full text-sm font-medium transition-colors"
+                className="inline-flex items-center gap-2 bg-[#c27a72] hover:bg-[#a86660] text-white px-6 py-2.5 rounded-full text-sm font-medium transition-colors"
               >
                 {item.labelAction || "Découvrir"}
               </a>

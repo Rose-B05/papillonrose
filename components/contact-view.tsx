@@ -88,7 +88,7 @@ export default function ContactView() {
   return (
     <div className="max-w-4xl mx-auto px-5 md:px-10 pt-24 pb-12">
       <div className="text-center mb-14">
-        <p className="text-[#C9948E] dark:text-[#E8B4AE] text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
+        <p className="text-[#c27a72] dark:text-[#d4968e] text-[10px] tracking-[0.5em] uppercase font-medium mb-3">
           Parlons de votre projet
         </p>
         <h1
@@ -105,8 +105,8 @@ export default function ContactView() {
           <div className="space-y-7">
             {CONTACT_ITEMS.map(({ Icon, label, val, link, note }) => (
               <div key={label} className="flex items-start gap-4">
-                <div className="w-11 h-11 bg-[#C9948E]/12 dark:bg-[#C9948E]/12 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Icon size={17} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+                <div className="w-11 h-11 bg-[#c27a72]/12 dark:bg-[#c27a72]/12 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Icon size={17} className="text-[#c27a72] dark:text-[#d4968e]" />
                 </div>
                 <div>
                   <p className="text-[10px] text-gray-400 dark:text-white/60 uppercase tracking-widest mb-0.5">
@@ -117,7 +117,7 @@ export default function ContactView() {
                       href={link}
                       target={link.startsWith("http") ? "_blank" : undefined}
                       rel={link.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="font-medium text-sm text-[#2E2E2E] dark:text-neutral-100 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors"
+                      className="font-medium text-sm text-[#2E2E2E] dark:text-neutral-100 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors"
                     >
                       {val}
                     </a>
@@ -177,7 +177,7 @@ export default function ContactView() {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               required
-              className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm"
+              className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm"
               style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
             />
           </div>
@@ -191,7 +191,7 @@ export default function ContactView() {
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               required
-              className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm"
+              className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm"
               style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
             />
           </div>
@@ -203,7 +203,7 @@ export default function ContactView() {
               type="date"
               value={form.date}
               onChange={(e) => setForm({ ...form, date: e.target.value })}
-              className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors shadow-sm"
+              className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors shadow-sm"
               style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
             />
           </div>
@@ -217,14 +217,14 @@ export default function ContactView() {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               required
-              className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#C9948E]/60 transition-colors resize-none shadow-sm"
+              className="w-full bg-white dark:bg-neutral-800 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-[#2E2E2E] dark:text-neutral-100 outline-none focus:border-[#c27a72]/60 transition-colors resize-none shadow-sm"
               style={{ color: "#2E2E2E", WebkitTextFillColor: "#2E2E2E" } as React.CSSProperties}
             />
           </div>
           <button
             type="submit"
             disabled={sending}
-            className="w-full bg-[#C9948E] dark:bg-[#C9948E] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#B8807A] dark:hover:bg-[#B8807A] transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#c27a72] dark:bg-[#c27a72] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#a86660] dark:hover:bg-[#a86660] transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {sending ? "Envoi en cours…" : "Envoyer ma demande"}
           </button>

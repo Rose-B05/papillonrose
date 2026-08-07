@@ -109,9 +109,9 @@ function UrlSection({ results }: { results: PageSpeedResult[] }) {
   return (
     <div className="bg-white dark:bg-neutral-800 rounded-2xl p-5 border border-black/[0.07] dark:border-white/[0.08] shadow-sm mb-4">
       <div className="flex items-center gap-2 mb-4">
-        <ExternalLink size={14} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+        <ExternalLink size={14} className="text-[#c27a72] dark:text-[#d4968e]" />
         <h3 className="text-sm font-semibold text-[#2E2E2E] dark:text-neutral-100">{displayLabel}</h3>
-        <a href={results[0]?.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-[#C9948E] dark:text-[#E8B4AE] hover:underline">
+        <a href={results[0]?.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-[#c27a72] dark:text-[#d4968e] hover:underline">
           Ouvrir
         </a>
       </div>
@@ -138,8 +138,8 @@ function UrlSection({ results }: { results: PageSpeedResult[] }) {
           <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-white/60 font-medium mb-2">Poids de la page</p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#C9948E]/10 flex items-center justify-center">
-                <ArrowDown size={14} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+              <div className="w-8 h-8 rounded-lg bg-[#c27a72]/10 flex items-center justify-center">
+                <ArrowDown size={14} className="text-[#c27a72] dark:text-[#d4968e]" />
               </div>
               <div>
                 <p className="text-xs font-medium text-[#2E2E2E] dark:text-neutral-100">
@@ -150,8 +150,8 @@ function UrlSection({ results }: { results: PageSpeedResult[] }) {
             </div>
             {(mobile?.imageWeight != null || desktop?.imageWeight != null) && (
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[#C9948E]/10 flex items-center justify-center">
-                  <Image size={14} className="text-[#C9948E] dark:text-[#E8B4AE]" />
+                <div className="w-8 h-8 rounded-lg bg-[#c27a72]/10 flex items-center justify-center">
+                  <Image size={14} className="text-[#c27a72] dark:text-[#d4968e]" />
                 </div>
                 <div>
                   <p className="text-xs font-medium text-[#2E2E2E] dark:text-neutral-100">
@@ -178,7 +178,7 @@ function UrlSection({ results }: { results: PageSpeedResult[] }) {
                   <p className="text-xs font-medium text-[#2E2E2E] dark:text-neutral-100 truncate">{opp.title}</p>
                   <p className="text-[10px] text-gray-400 dark:text-white/60 truncate">{opp.description}</p>
                 </div>
-                <span className="text-[10px] font-medium text-[#C9948E] dark:text-[#E8B4AE] whitespace-nowrap flex-shrink-0">
+                <span className="text-[10px] font-medium text-[#c27a72] dark:text-[#d4968e] whitespace-nowrap flex-shrink-0">
                   {opp.savings}
                 </span>
               </div>
@@ -254,7 +254,7 @@ export default function PerformancePage() {
         <button
           onClick={() => fetchData(true)}
           disabled={refreshing}
-          className="flex items-center gap-2 bg-[#C9948E] hover:bg-[#B8807A] text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 bg-[#c27a72] hover:bg-[#a86660] text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors disabled:opacity-50"
         >
           <RefreshCcw size={14} className={refreshing ? "animate-spin" : ""} />
           {refreshing ? "Analyse en cours…" : "Actualiser l'analyse"}
@@ -266,22 +266,22 @@ export default function PerformancePage() {
         <p className="text-xs text-gray-400 dark:text-white/60 mb-4 flex items-center gap-1.5">
           <Clock size={12} />
           Dernière analyse : {formatDate(data.timestamp)}
-          {data.cached && <span className="text-[#C9948E] dark:text-[#E8B4AE] ml-1">(cache)</span>}
+          {data.cached && <span className="text-[#c27a72] dark:text-[#d4968e] ml-1">(cache)</span>}
         </p>
       )}
 
       {/* Loading state */}
       {loading && !refreshing && (
         <div className="text-center py-20">
-          <RefreshCcw size={24} className="animate-spin text-[#C9948E] mx-auto mb-3" />
+          <RefreshCcw size={24} className="animate-spin text-[#c27a72] mx-auto mb-3" />
           <p className="text-sm text-gray-400 dark:text-white/60">Chargement des données…</p>
         </div>
       )}
 
       {/* Refreshing overlay */}
       {refreshing && (
-        <div className="bg-[#F8F5F0] dark:bg-neutral-900/50 rounded-2xl p-8 mb-6 text-center border border-[#C9948E]/20">
-          <RefreshCcw size={28} className="animate-spin text-[#C9948E] mx-auto mb-3" />
+        <div className="bg-[#F8F5F0] dark:bg-neutral-900/50 rounded-2xl p-8 mb-6 text-center border border-[#c27a72]/20">
+          <RefreshCcw size={28} className="animate-spin text-[#c27a72] mx-auto mb-3" />
           <p className="text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1">
             Analyse en cours…
           </p>

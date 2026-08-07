@@ -105,7 +105,7 @@ function FooterNewsletterForm() {
 
   if (status === "success" && message) {
     return (
-      <div className="bg-white/10 rounded-xl px-4 py-3 text-sm text-[#C9948E]">
+      <div className="bg-white/10 rounded-xl px-4 py-3 text-sm text-[#c27a72]">
         {message}
       </div>
     )
@@ -124,12 +124,12 @@ function FooterNewsletterForm() {
             setStatus("idle")
             setMessage("")
           }}
-          className="flex-1 bg-white/10 border border-white/15 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#C9948E]/50"
+          className="flex-1 bg-white/10 border border-white/15 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#c27a72]/50"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="bg-[#C9948E] text-[#1C1A17] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#D4A09A] transition-colors disabled:opacity-50 whitespace-nowrap shrink-0"
+          className="bg-[#c27a72] text-[#1C1A17] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#c27a72] transition-colors disabled:opacity-50 whitespace-nowrap shrink-0"
         >
           {status === "loading" ? "…" : "Je m'inscris"}
         </button>
@@ -153,7 +153,7 @@ function FooterNavAccordion({
     <div>
       <button
         onClick={onToggle}
-        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9948E]/30 pb-2"
+        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#c27a72]/30 pb-2"
       >
         Navigation
         <svg
@@ -180,7 +180,7 @@ function FooterNavAccordion({
               <Link
                 href={item.href}
                 prefetch={false}
-                className="text-[#E8C4BE] hover:text-white transition-colors"
+                className="text-[#ddb5ae] hover:text-white transition-colors"
               >
                 {item.label}
               </Link>
@@ -191,7 +191,7 @@ function FooterNavAccordion({
               <Link
                 href={item.href}
                 prefetch={false}
-                className="text-[#E8C4BE] hover:text-white transition-colors"
+                className="text-[#ddb5ae] hover:text-white transition-colors"
               >
                 {item.label}
               </Link>
@@ -215,7 +215,7 @@ function FooterCategoriesAccordion({
     <div>
       <button
         onClick={onToggle}
-        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9948E]/30 pb-2"
+        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#c27a72]/30 pb-2"
       >
         Catégories
         <svg
@@ -242,7 +242,7 @@ function FooterCategoriesAccordion({
               <Link
                 href={`/categorie/${getCategorySlug(cat)}`}
                 prefetch={false}
-                className="text-[#E8C4BE] hover:text-white transition-colors"
+                className="text-[#ddb5ae] hover:text-white transition-colors"
               >
                 {cat}
               </Link>
@@ -266,7 +266,7 @@ function FooterContactAccordion({
     <div>
       <button
         onClick={onToggle}
-        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9948E]/30 pb-2"
+        className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#c27a72]/30 pb-2"
       >
         Contact
         <svg
@@ -291,11 +291,11 @@ function FooterContactAccordion({
           <li className="flex items-start gap-2.5">
             <Mail
               size={13}
-              className="text-[#C9948E] mt-0.5 flex-shrink-0"
+              className="text-[#c27a72] mt-0.5 flex-shrink-0"
             />
             <a
               href="mailto:papillonrosebertha@gmail.com"
-              className="text-[#E8C4BE] hover:text-white transition-colors"
+              className="text-[#ddb5ae] hover:text-white transition-colors"
             >
               papillonrosebertha@gmail.com
             </a>
@@ -303,9 +303,9 @@ function FooterContactAccordion({
           <li className="flex items-start gap-2.5">
             <MapPin
               size={13}
-              className="text-[#C9948E] mt-0.5 flex-shrink-0"
+              className="text-[#c27a72] mt-0.5 flex-shrink-0"
             />
-            <span className="text-[#E8C4BE]">
+            <span className="text-[#ddb5ae]">
               Île-de-France
               <br />
               Créteil (94)
@@ -316,7 +316,7 @@ function FooterContactAccordion({
               href="https://www.instagram.com/papillonrose.g"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-[#E8C4BE] hover:text-white transition-colors"
+              className="flex items-center gap-2 text-[#ddb5ae] hover:text-white transition-colors"
             >
               <InstagramIcon size={18} />
               @papillonrose.g
@@ -370,10 +370,10 @@ export default function Footer() {
 
           {/* Colonne 3 — Newsletter */}
           <div>
-            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#C9948E]/30 pb-2">
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#c27a72]/30 pb-2">
               Newsletter
             </p>
-            <p className="text-[#E8C4BE]/70 text-sm mb-4 leading-relaxed">
+            <p className="text-[#ddb5ae]/70 text-sm mb-4 leading-relaxed">
               Recevez nos nouveautés et offres exclusives.
             </p>
             <FooterNewsletterForm />
@@ -417,7 +417,7 @@ export default function Footer() {
             <div>
               <button
                 onClick={() => setShowCategories(!showCategories)}
-                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#C9948E]/30 pb-2"
+                className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium flex items-center gap-2 hover:text-white transition-colors border-b border-[#c27a72]/30 pb-2"
               >
                 Catégories
                 <svg
@@ -444,7 +444,7 @@ export default function Footer() {
                       <Link
                         href={`/categorie/${getCategorySlug(cat)}`}
                         prefetch={false}
-                        className="text-[#E8C4BE] hover:text-white transition-colors"
+                        className="text-[#ddb5ae] hover:text-white transition-colors"
                       >
                         {cat}
                       </Link>
@@ -461,10 +461,10 @@ export default function Footer() {
 
           {/* Colonne 3 — Newsletter */}
           <div>
-            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#C9948E]/30 pb-2">
+            <p className="text-[#F5F0E8] text-xs tracking-[0.3em] uppercase mb-5 font-medium border-b border-[#c27a72]/30 pb-2">
               Newsletter
             </p>
-            <p className="text-[#E8C4BE]/70 text-sm mb-4 leading-relaxed">
+            <p className="text-[#ddb5ae]/70 text-sm mb-4 leading-relaxed">
               Recevez nos nouveautés et offres exclusives.
             </p>
             <FooterNewsletterForm />
@@ -493,13 +493,13 @@ export default function Footer() {
           <div className="flex items-center gap-4 text-xs">
             <a
               href="/conditions-location"
-              className="text-[#A89090]/60 hover:text-[#E8C4BE] transition-colors"
+              className="text-[#A89090]/60 hover:text-[#ddb5ae] transition-colors"
             >
               Conditions de location
             </a>
             <a
               href="/mentions-legales"
-              className="text-[#A89090]/60 hover:text-[#E8C4BE] transition-colors"
+              className="text-[#A89090]/60 hover:text-[#ddb5ae] transition-colors"
             >
               Mentions légales
             </a>

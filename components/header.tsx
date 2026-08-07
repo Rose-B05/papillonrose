@@ -11,7 +11,7 @@ const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ""
 const img = (path: string) => BASE + path
 const PLACEHOLDER = img("/placeholder.svg")
 const LOGO = img("/papillon-rose-logo.png")
-const GOLD = "#C9948E"
+const GOLD = "#c27a72"
 const DP = { fontFamily: "var(--font-playfair), serif" } as const
 
 const NAV_ITEMS = [
@@ -83,10 +83,10 @@ export default function Header() {
                   isActive(item.href)
                     ? "font-bold " +
                       (opaque
-                        ? "text-[#C9948E] dark:text-[#E8B4AE]"
+                        ? "text-[#c27a72] dark:text-[#d4968e]"
                         : "text-white")
                     : opaque
-                      ? "text-[#2E2E2E]/60 dark:text-white/70 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+                      ? "text-[#2E2E2E]/60 dark:text-white/70 hover:text-[#c27a72] dark:hover:text-[#d4968e]"
                       : "text-white/70 hover:text-white"
                 }`}
               >
@@ -101,7 +101,7 @@ export default function Header() {
               aria-label="Favoris"
               className={`relative p-2 transition-colors ${
                 opaque
-                  ? "hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+                  ? "hover:text-[#c27a72] dark:hover:text-[#d4968e]"
                   : "hover:text-white"
               }`}
             >
@@ -110,35 +110,35 @@ export default function Header() {
                 fill={favorites.size > 0 ? GOLD : "none"}
                 className={
                   favorites.size > 0
-                    ? "text-[#C9948E] dark:text-[#E8B4AE]"
+                    ? "text-[#c27a72] dark:text-[#d4968e]"
                     : opaque
                       ? "text-[#2E2E2E]/40 dark:text-white/60"
                       : "text-white/80"
                 }
               />
               {favorites.size > 0 && (
-                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-[9px] rounded-full flex items-center justify-center font-bold">
+                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-[#c27a72] dark:bg-[#c27a72] text-white text-[9px] rounded-full flex items-center justify-center font-bold">
                   {favorites.size}
                 </span>
               )}
             </Link>
             <Link
               href="/reservation"
-              className="relative p-2 hover:text-[#C9948E] dark:hover:text-[#E8B4AE] transition-colors"
+              className="relative p-2 hover:text-[#c27a72] dark:hover:text-[#d4968e] transition-colors"
               aria-label="Panier"
             >
               <ShoppingBag
                 size={19}
                 className={
                   cartCount > 0
-                    ? "text-[#C9948E] dark:text-[#E8B4AE]"
+                    ? "text-[#c27a72] dark:text-[#d4968e]"
                     : opaque
                       ? "text-[#2E2E2E]/40 dark:text-white/60"
                       : "text-white/80"
                 }
               />
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-[#C9948E] dark:bg-[#C9948E] text-white text-[9px] rounded-full flex items-center justify-center font-bold">
+                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-[#c27a72] dark:bg-[#c27a72] text-white text-[9px] rounded-full flex items-center justify-center font-bold">
                   {cartCount}
                 </span>
               )}
@@ -147,7 +147,7 @@ export default function Header() {
               href="/compte"
               className={`relative p-2 transition-colors ${
                 opaque
-                  ? "hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+                  ? "hover:text-[#c27a72] dark:hover:text-[#d4968e]"
                   : "hover:text-white"
               }`}
               aria-label="Mon compte"
@@ -209,8 +209,8 @@ export default function Header() {
                   onClick={() => setShowMenu(false)}
                   className={`text-left transition-colors text-lg ${
                     isActive(item.href)
-                      ? "font-bold text-[#C9948E] dark:text-[#E8B4AE]"
-                      : "text-[#2E2E2E]/70 dark:text-neutral-300 hover:text-[#C9948E] dark:hover:text-[#E8B4AE]"
+                      ? "font-bold text-[#c27a72] dark:text-[#d4968e]"
+                      : "text-[#2E2E2E]/70 dark:text-neutral-300 hover:text-[#c27a72] dark:hover:text-[#d4968e]"
                   }`}
                   style={DP}
                 >

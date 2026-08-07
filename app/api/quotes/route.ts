@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
 
     const recapHtml = `
       <table style="width:100%;border-collapse:collapse;margin:16px 0">
-        <tr><th style="text-align:left;padding:8px;border-bottom:2px solid #C9948E">Article</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C9948E">Qté</th><th style="text-align:left;padding:8px;border-bottom:2px solid #C9948E">Dates</th></tr>
+        <tr><th style="text-align:left;padding:8px;border-bottom:2px solid #c27a72">Article</th><th style="text-align:left;padding:8px;border-bottom:2px solid #c27a72">Qté</th><th style="text-align:left;padding:8px;border-bottom:2px solid #c27a72">Dates</th></tr>
         ${itemsHtml}
       </table>
       <p><strong>Total location :</strong> ${totalTtc.toFixed(2)} € TTC</p>
