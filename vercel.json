@@ -27,6 +27,10 @@
     {
       "path": "/api/cron/quote-expiry",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/rappels-devis-decoration",
+      "schedule": "0 8 * * *"
     }
   ],
   "buildCommand": "npx next build",
