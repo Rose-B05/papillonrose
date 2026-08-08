@@ -27,6 +27,7 @@ import {
 
 const NAV_ITEMS = [
   { label: "Devis", icon: FileText, href: "/admin/devis" },
+  { label: "Devis Décoration", icon: FileText, href: "/admin/devis-decoration" },
   { label: "Restitutions", icon: PackageCheck, href: "/admin/restitutions" },
   { label: "Statistiques", icon: TrendingUp, href: "/admin/statistiques" },
   { label: "Dashboard", icon: LayoutDashboard, href: "/admin/dashboard" },
