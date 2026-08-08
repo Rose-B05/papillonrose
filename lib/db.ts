@@ -458,6 +458,11 @@ export async function getEmailLogsForBooking(bookingId: string): Promise<EmailLo
   return all.filter((l) => l.bookingId === bookingId)
 }
 
+export async function getEmailLog(id: string): Promise<EmailLog | undefined> {
+  const log = await kv.get<EmailLog>(`email_logs:${id}`)
+  return log ?? undefined
+}
+
 // ─── Product Views ───
 const PRODUCT_VIEWS_INDEX = "product_views:index"
 

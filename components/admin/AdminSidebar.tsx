@@ -1,6 +1,6 @@
 ﻿"use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
@@ -48,6 +48,14 @@ const NAV_ITEMS = [
 export default function AdminSidebar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [failedCount, setFailedCount] = useState(0)
+
+  useEffect(() => {
+    fetch("/api/admin/email-logs/failed-count")
+      .then((r) => r.json())
+      .then((data) => setFailedCount(data.failedCount || 0))
+      .catch(() => {})
+  }, [pathname])
 
   const isActive = (href: string) => {
     if (href === "/admin/devis") return pathname === "/admin/devis" || pathname === "/admin"
@@ -130,6 +138,11 @@ export default function AdminSidebar() {
                   >
                     <item.icon size={17} strokeWidth={active ? 2 : 1.5} />
                     <span>{item.label}</span>
+                    {item.label === "Notifications" && failedCount > 0 && (
+                      <span className="ml-auto flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold text-white bg-red-500 rounded-full">
+                        {failedCount > 99 ? "99+" : failedCount}
+                      </span>
+                    )}
                   </Link>
                 </li>
               )
