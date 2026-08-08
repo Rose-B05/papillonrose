@@ -10,7 +10,7 @@ const FROM = process.env.SMTP_FROM || "papillonrosebertha@gmail.com"
 const TO_ADMIN = process.env.CONTACT_EMAIL || "papillonrosebertha@gmail.com"
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.papillonrose.fr"
 
-function getTransport() {
+export function getTransport() {
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST || "smtp.gmail.com",
     port: Number(process.env.SMTP_PORT) || 587,
@@ -20,6 +20,28 @@ function getTransport() {
       pass: process.env.SMTP_PASS,
     },
   } as nodemailer.TransportOptions)
+}
+
+const RETRY_DELAYS_MS = [500, 1500]
+const MAX_ATTEMPTS = 1 + RETRY_DELAYS_MS.length
+
+export async function sendMailWithRetry(
+  transport: nodemailer.Transporter,
+  mailOptions: nodemailer.SendMailOptions
+): Promise<{ ok: boolean; error?: string }> {
+  let lastError: any
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    try {
+      await transport.sendMail(mailOptions)
+      return { ok: true }
+    } catch (err: any) {
+      lastError = err
+      if (attempt < RETRY_DELAYS_MS.length) {
+        await new Promise((r) => setTimeout(r, RETRY_DELAYS_MS[attempt]))
+      }
+    }
+  }
+  return { ok: false, error: lastError?.message || "Unknown error" }
 }
 
 function parsePrix(prix: number | string): number {
@@ -231,14 +253,14 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
   const logs: EmailLog[] = []
 
   // Send to admin
-  try {
-    await transport.sendMail({
-      from: `"Papillon Rose" <${FROM}>`,
-      to: TO_ADMIN,
-      replyTo: booking.client?.email || FROM,
-      subject: `Nouvelle réservation #${booking.id} — ${booking.client?.prenom || ""} ${booking.client?.nom || ""}`.trim(),
-      html,
-    })
+  const adminResult = await sendMailWithRetry(transport, {
+    from: `"Papillon Rose" <${FROM}>`,
+    to: TO_ADMIN,
+    replyTo: booking.client?.email || FROM,
+    subject: `Nouvelle réservation #${booking.id} — ${booking.client?.prenom || ""} ${booking.client?.nom || ""}`.trim(),
+    html,
+  })
+  if (adminResult.ok) {
     adminSent = true
     logs.push({
       id: uuidv4().slice(0, 8).toUpperCase(),
@@ -249,8 +271,8 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
       bookingId: booking.id,
       sentAt: now.toISOString(),
     })
-  } catch (err: any) {
-    console.error("Failed to send admin confirmation email:", err)
+  } else {
+    console.error("Failed to send admin confirmation email (after retries):", adminResult.error)
     logs.push({
       id: uuidv4().slice(0, 8).toUpperCase(),
       to: TO_ADMIN,
@@ -258,20 +280,20 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
       subject: `Nouvelle réservation #${booking.id}`,
       status: "failed",
       bookingId: booking.id,
-      error: err?.message || "Unknown error",
+      error: adminResult.error,
       sentAt: now.toISOString(),
     })
   }
 
   // Send to client if email provided
   if (booking.client?.email) {
-    try {
-      await transport.sendMail({
-        from: `"Papillon Rose" <${FROM}>`,
-        to: booking.client.email,
-        subject,
-        html,
-      })
+    const clientResult = await sendMailWithRetry(transport, {
+      from: `"Papillon Rose" <${FROM}>`,
+      to: booking.client.email,
+      subject,
+      html,
+    })
+    if (clientResult.ok) {
       clientSent = true
       logs.push({
         id: uuidv4().slice(0, 8).toUpperCase(),
@@ -282,8 +304,8 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
         bookingId: booking.id,
         sentAt: now.toISOString(),
       })
-    } catch (err: any) {
-      console.error("Failed to send client confirmation email:", err)
+    } else {
+      console.error("Failed to send client confirmation email (after retries):", clientResult.error)
       logs.push({
         id: uuidv4().slice(0, 8).toUpperCase(),
         to: booking.client.email,
@@ -291,7 +313,7 @@ export async function sendBookingConfirmation(booking: Booking): Promise<{ admin
         subject,
         status: "failed",
         bookingId: booking.id,
-        error: err?.message || "Unknown error",
+        error: clientResult.error,
         sentAt: now.toISOString(),
       })
     }
