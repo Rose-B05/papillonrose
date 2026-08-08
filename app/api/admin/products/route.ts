@@ -202,6 +202,7 @@ export async function PUT(request: NextRequest) {
       pieceUnique: body.pieceUnique || false,
       tagsThemes: body.tagsThemes || [],
       tagsCouleurs: body.tagsCouleurs || [],
+      variants: body.variants ?? existing.variants ?? [],
       status: body.status || existing.status,
       dateModification: now,
     }

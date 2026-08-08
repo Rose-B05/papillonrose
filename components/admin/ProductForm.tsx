@@ -12,6 +12,8 @@ import {
   EyeOff,
   Library,
   RefreshCw,
+  Plus,
+  Trash2,
 } from "lucide-react"
 import { CATEGORIES } from "@/lib/product-helpers"
 import { prixTtc } from "@/lib/pricing"
@@ -34,6 +36,7 @@ interface ProductFormData {
   pieceUnique: boolean
   tagsThemes: string[]
   tagsCouleurs: string[]
+  variants: { label: string; prix: number | string }[]
   status: ProductStatus
 }
 
@@ -62,6 +65,7 @@ const EMPTY_FORM: ProductFormData = {
   pieceUnique: false,
   tagsThemes: [],
   tagsCouleurs: [],
+  variants: [],
   status: "brouillon",
 }
 
@@ -345,6 +349,8 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
     if (!form.nom.trim()) errs.push("Le nom du produit est requis")
     if (form.prix === "" || form.prix === undefined) errs.push("Le prix est requis")
     if (!form.categorie) errs.push("La catégorie est requise")
+    const incompleteVariant = form.variants.find((v) => !v.label.trim() || v.prix === "" || v.prix === undefined)
+    if (incompleteVariant) errs.push("Chaque variante doit avoir un libellé et un prix")
     setErrors(errs)
     return errs.length === 0
   }
@@ -561,6 +567,65 @@ export default function ProductForm({ initialData, onSave }: ProductFormProps) {
                 className="w-full px-4 py-2.5 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#c27a72]/50 transition-colors disabled:opacity-50"
               />
             </div>
+          </div>
+
+          {/* Variantes */}
+          <div>
+            <label className="block text-sm font-medium text-[#2E2E2E] dark:text-neutral-100 mb-1.5">
+              Variantes (tailles, couleurs...)
+            </label>
+            <p className="text-xs text-secondary-text dark:text-white/60 mb-3">
+              Laissez vide si le produit a un prix unique. Si vous ajoutez des variantes, le prix ci-dessus servira uniquement de référence de secours.
+            </p>
+            <div className="space-y-2">
+              {form.variants.map((v, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={v.label}
+                    onChange={(e) => {
+                      const updated = [...form.variants]
+                      updated[idx] = { ...updated[idx], label: e.target.value }
+                      updateField("variants", updated)
+                    }}
+                    placeholder="Libellé (ex: Grand, Petit, Doré...)"
+                    className="flex-1 px-3 py-2 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#c27a72]/50 transition-colors"
+                  />
+                  <input
+                    type="number"
+                    step="0.50"
+                    min="0"
+                    value={v.prix}
+                    onChange={(e) => {
+                      const updated = [...form.variants]
+                      updated[idx] = { ...updated[idx], prix: e.target.value ? Number(e.target.value) : "" }
+                      updateField("variants", updated)
+                    }}
+                    placeholder="Prix HT"
+                    className="w-28 px-3 py-2 rounded-xl border border-black/[0.07] dark:border-white/[0.08] bg-white dark:bg-neutral-800 text-[#2E2E2E] dark:text-neutral-100 text-sm focus:outline-none focus:border-[#c27a72]/50 transition-colors"
+                  />
+                  <span className="text-xs text-secondary-text dark:text-white/60">€</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const updated = form.variants.filter((_, i) => i !== idx)
+                      updateField("variants", updated)
+                    }}
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-secondary-text hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex-shrink-0"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => updateField("variants", [...form.variants, { label: "", prix: "" }])}
+              className="mt-2 flex items-center gap-1.5 text-xs font-medium text-[#c27a72] hover:text-[#a86660] transition-colors"
+            >
+              <Plus size={14} />
+              Ajouter une variante
+            </button>
           </div>
 
           {/* Pièce unique */}
