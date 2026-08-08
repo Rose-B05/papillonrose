@@ -63,6 +63,7 @@ export async function GET(request: NextRequest) {
           pieceUnique: false,
           tagsThemes: [],
           tagsCouleurs: [],
+          variants: staticProduct.variants || [],
           status: "publie" as const,
           isStatic: true,
           dateCreation: staticProduct.dateAjout || "",

@@ -17,6 +17,7 @@ interface AdminProduct {
   pieceUnique?: boolean
   tagsThemes?: string[]
   tagsCouleurs?: string[]
+  variants?: { label: string; prix: number | string }[]
   status: "brouillon" | "publie"
   isStatic?: boolean
   dateCreation: string
@@ -85,6 +86,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         pieceUnique: product.pieceUnique || false,
         tagsThemes: product.tagsThemes || [],
         tagsCouleurs: product.tagsCouleurs || [],
+        variants: product.variants || [],
         status: product.status,
         isStatic: product.isStatic,
       }}
