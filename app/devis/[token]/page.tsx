@@ -11,10 +11,19 @@ interface DecorationLigne {
   prix_unitaire: number
 }
 
+interface Versement {
+  id: string
+  montant: number
+  date_versement: string
+  methode: string | null
+  type: string | null
+}
+
 interface DecorationDevis {
   id: string
   numero: string
   token_public: string
+  type_document: string
   client_nom: string
   client_email: string
   client_telephone?: string
@@ -30,6 +39,8 @@ interface DecorationDevis {
   date_creation: string
   statut: string
   lignes: DecorationLigne[]
+  versements: Versement[]
+  montant_total_verse: number
 }
 
 const DP = { fontFamily: "var(--font-playfair), serif" } as const
@@ -97,7 +108,7 @@ export default function PublicDevisPage({ params }: { params: Promise<{ token: s
       <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900 flex items-center justify-center">
         <div className="text-center">
           <div className="w-10 h-10 border-3 border-[#c27a72] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-sm text-secondary-text">Chargement de votre devis…</p>
+          <p className="text-sm text-secondary-text">Chargement…</p>
         </div>
       </div>
     )
@@ -114,7 +125,7 @@ export default function PublicDevisPage({ params }: { params: Promise<{ token: s
             Devis introuvable
           </h1>
           <p className="text-sm text-secondary-text dark:text-white/60 mb-6">
-            {error || "Ce lien ne correspond à aucun devis."}
+            {error || "Ce lien ne correspond à aucun document."}
           </p>
           <Link
             href="/"
@@ -130,6 +141,13 @@ export default function PublicDevisPage({ params }: { params: Promise<{ token: s
   const isExpired = devis.statut === "expired"
   const isAccepted = devis.statut === "accepte"
   const isSent = devis.statut === "envoye"
+  const isPaid = devis.statut === "solde"
+  const isAcompte = devis.statut === "acompte_verse"
+  const isFacture = devis.type_document === "facture"
+  const docLabel = isFacture ? "Facture" : "Devis"
+  const totalVerse = devis.montant_total_verse
+  const soldeRestant = Math.max(0, devis.total_ht - totalVerse)
+  const pctRegle = devis.total_ht > 0 ? Math.min(100, (totalVerse / devis.total_ht) * 100) : 0
 
   return (
     <div className="min-h-screen bg-[#F8F5F0] dark:bg-neutral-900">
@@ -146,7 +164,7 @@ export default function PublicDevisPage({ params }: { params: Promise<{ token: s
             />
           </Link>
           <p className="text-[10px] tracking-[0.4em] uppercase text-[#c27a72] dark:text-[#d4968e] font-medium mb-3">
-            Devis décoration
+            {docLabel} décoration
           </p>
           <h1 style={DP} className="text-2xl md:text-3xl font-semibold text-[#2E2E2E] dark:text-neutral-100 mb-2">
             {devis.titre_projet}
@@ -161,6 +179,16 @@ export default function PublicDevisPage({ params }: { params: Promise<{ token: s
               <>
                 <Clock size={14} className="text-red-400" />
                 <span className="text-red-500">Expiré</span>
+              </>
+            ) : isPaid ? (
+              <>
+                <CheckCircle size={14} className="text-green-500" />
+                <span className="text-green-600">Entièrement soldé</span>
+              </>
+            ) : isAcompte ? (
+              <>
+                <CheckCircle size={14} className="text-amber-500" />
+                <span className="text-amber-600">Acompte versé</span>
               </>
             ) : isAccepted ? (
               <>
@@ -281,6 +309,27 @@ export default function PublicDevisPage({ params }: { params: Promise<{ token: s
               <p className="font-bold text-[#c27a72]">{formatEUR(devis.montant_solde)}</p>
             </div>
           </div>
+
+          {/* Versements enregistrés */}
+          {totalVerse > 0 && (
+            <div className="mt-4 bg-green-900/20 border border-green-500/20 rounded-xl p-4">
+              <div className="flex items-center justify-between text-sm mb-2">
+                <span className="text-green-400 font-medium">Total versé</span>
+                <span className="text-green-400 font-bold">{formatEUR(totalVerse)}</span>
+              </div>
+              <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden mb-2">
+                <div className="h-full bg-green-400 rounded-full" style={{ width: `${pctRegle}%` }} />
+              </div>
+              {soldeRestant > 0 ? (
+                <div className="flex items-center justify-between text-xs text-white/60">
+                  <span>Solde restant</span>
+                  <span className="text-white font-medium">{formatEUR(soldeRestant)}</span>
+                </div>
+              ) : (
+                <p className="text-center text-xs text-green-400 font-medium mt-1">Entièrement soldé ✓</p>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Download */}
@@ -291,7 +340,7 @@ export default function PublicDevisPage({ params }: { params: Promise<{ token: s
             className="inline-flex items-center gap-2 bg-[#c27a72] text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#a86660] transition-colors disabled:opacity-50"
           >
             <Download size={16} />
-            {downloading ? "Génération du PDF…" : "Télécharger le PDF"}
+            {downloading ? "Génération du PDF…" : `Télécharger le ${docLabel}`}
           </button>
         </div>
 
