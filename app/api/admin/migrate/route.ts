@@ -15,8 +15,13 @@ import { join } from "path"
 
 export const runtime = "nodejs"
 
-const MIGRATION_SQL = readFileSync(
+const MIGRATION_001 = readFileSync(
   join(process.cwd(), "scripts", "migrations", "001_devis_decoration.sql"),
+  "utf-8"
+)
+
+const MIGRATION_002 = readFileSync(
+  join(process.cwd(), "scripts", "migrations", "002_type_document.sql"),
   "utf-8"
 )
 
@@ -33,28 +38,38 @@ export async function POST(request: NextRequest) {
   try {
     const { sql } = await import("@vercel/postgres")
 
-    const statements = MIGRATION_SQL
-      .split(/\n\s*\n/)
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0 && !s.startsWith("--"))
+    const allResults: Record<string, string[]> = {}
+    const migrations = [
+      { name: "001_devis_decoration", raw: MIGRATION_001 },
+      { name: "002_type_document", raw: MIGRATION_002 },
+    ]
 
-    const results: string[] = []
+    for (const migration of migrations) {
+      const statements = migration.raw
+        .split(/\n\s*\n/)
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0 && !s.startsWith("--"))
 
-    for (const stmt of statements) {
-      const lines = stmt.split("\n").filter((l) => !l.trim().startsWith("--"))
-      const clean = lines.join("\n").trim()
-      if (!clean) continue
+      const results: string[] = []
 
-      try {
-        await sql.query(clean)
-        results.push("✓ OK")
-      } catch (err: any) {
-        if (err.message?.includes("already exists")) {
-          results.push("⊘ Déjà existe — ignoré")
-        } else {
-          results.push(`✗ Erreur : ${err.message}`)
+      for (const stmt of statements) {
+        const lines = stmt.split("\n").filter((l) => !l.trim().startsWith("--"))
+        const clean = lines.join("\n").trim()
+        if (!clean) continue
+
+        try {
+          await sql.query(clean)
+          results.push("✓ OK")
+        } catch (err: any) {
+          if (err.message?.includes("already exists")) {
+            results.push("⊘ Déjà existe — ignoré")
+          } else {
+            results.push(`✗ Erreur : ${err.message}`)
+          }
         }
       }
+
+      allResults[migration.name] = results
     }
 
     // Vérification
@@ -68,8 +83,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       ok: true,
-      executed: results.length,
-      results,
+      migrations: allResults,
       tables: rows.map((r: any) => r.table_name),
     })
   } catch (err: any) {

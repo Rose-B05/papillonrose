@@ -18,33 +18,37 @@ async function migrate() {
     process.exit(1)
   }
 
-  const sqlPath = join(process.cwd(), "scripts", "migrations", "001_devis_decoration.sql")
-  const raw = readFileSync(sqlPath, "utf-8")
+  const migrations = [
+    "001_devis_decoration.sql",
+    "002_type_document.sql",
+  ]
 
-  // Séparer les instructions sur les lignes vides pour les exécuter une par une
-  const statements = raw
-    .split(/\n\s*\n/)
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0 && !s.startsWith("--"))
+  for (const file of migrations) {
+    const sqlPath = join(process.cwd(), "scripts", "migrations", file)
+    const raw = readFileSync(sqlPath, "utf-8")
 
-  console.log(`Exécution de ${statements.length} instruction(s) SQL...`)
+    const statements = raw
+      .split(/\n\s*\n/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0 && !s.startsWith("--"))
 
-  for (const stmt of statements) {
-    // Ignorer les commentaires purs
-    const lines = stmt.split("\n").filter((l) => !l.trim().startsWith("--"))
-    const clean = lines.join("\n").trim()
-    if (!clean) continue
+    console.log(`\n--- ${file} : ${statements.length} instruction(s) SQL ---`)
 
-    try {
-      await sql.query(clean)
-      console.log(`  ✓ OK`)
-    } catch (err: any) {
-      // "already exists" n'est pas une erreur pour un script idempotent
-      if (err.message?.includes("already exists")) {
-        console.log(`  ⊘ Déjà existe — ignoré`)
-      } else {
-        console.error(`  ✗ Erreur :`, err.message)
-        process.exit(1)
+    for (const stmt of statements) {
+      const lines = stmt.split("\n").filter((l) => !l.trim().startsWith("--"))
+      const clean = lines.join("\n").trim()
+      if (!clean) continue
+
+      try {
+        await sql.query(clean)
+        console.log(`  ✓ OK`)
+      } catch (err: any) {
+        if (err.message?.includes("already exists")) {
+          console.log(`  ⊘ Déjà existe — ignoré`)
+        } else {
+          console.error(`  ✗ Erreur :`, err.message)
+          process.exit(1)
+        }
       }
     }
   }
