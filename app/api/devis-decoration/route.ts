@@ -135,6 +135,56 @@ async function getNextNumero(): Promise<string> {
   return `E-${num + 1}`
 }
 
+export async function GET(request: NextRequest) {
+  const session = request.cookies.get(COOKIE_NAME)
+  if (!session?.value) {
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+  }
+
+  try {
+    const { rows } = await sql`
+      SELECT
+        d.id, d.numero, d.token_public, d.type_document,
+        d.client_nom, d.client_email, d.client_telephone,
+        d.titre_projet, d.date_evenement_debut, d.date_evenement_fin,
+        d.statut, d.total_ht, d.date_creation, d.date_envoi,
+        d.montant_accompte, d.date_echeance_solde,
+        (SELECT COUNT(*) FROM lignes_devis_decoration WHERE devis_id = d.id) AS article_count,
+        COALESCE(SUM(v.montant), 0) AS total_verse
+      FROM devis_decoration d
+      LEFT JOIN versements_decoration v ON v.devis_id = d.id
+      GROUP BY d.id
+      ORDER BY d.date_evenement_debut ASC NULLS LAST, d.date_creation DESC
+    `
+
+    const devis = rows.map((r: any) => ({
+      id: r.id,
+      numero: r.numero,
+      token_public: r.token_public,
+      type_document: r.type_document || "devis",
+      client_nom: r.client_nom,
+      client_email: r.client_email,
+      client_telephone: r.client_telephone,
+      titre_projet: r.titre_projet,
+      date_evenement_debut: r.date_evenement_debut,
+      date_evenement_fin: r.date_evenement_fin,
+      statut: r.statut,
+      total_ht: Number(r.total_ht),
+      article_count: Number(r.article_count),
+      date_creation: r.date_creation,
+      date_envoi: r.date_envoi,
+      montant_accompte: Number(r.montant_accompte),
+      date_echeance_solde: r.date_echeance_solde,
+      total_verse: Number(r.total_verse),
+    }))
+
+    return NextResponse.json({ devis })
+  } catch (err: any) {
+    console.error("Erreur listing devis décoration:", err?.message || err)
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 })
+  }
+}
+
 export async function POST(request: NextRequest) {
   const session = request.cookies.get(COOKIE_NAME)
   if (!session?.value) {
