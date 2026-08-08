@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
-import { Bell, Mail, CheckCircle, XCircle, RefreshCcw, Search, Filter } from "lucide-react"
+import { Bell, Mail, CheckCircle, XCircle, RefreshCcw, Search, Filter, Send } from "lucide-react"
 import type { EmailLog } from "@/lib/types"
 
 const TYPE_LABELS: Record<string, string> = {
@@ -58,6 +58,8 @@ export default function NotificationsPage() {
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState("")
   const [search, setSearch] = useState("")
+  const [resendingId, setResendingId] = useState<string | null>(null)
+  const [resendResult, setResendResult] = useState<{ id: string; ok: boolean; message: string } | null>(null)
 
   const fetchLogs = async () => {
     setLoading(true)
@@ -71,6 +73,21 @@ export default function NotificationsPage() {
   }
 
   useEffect(() => { fetchLogs() }, [router])
+
+  const handleResend = useCallback(async (logId: string) => {
+    setResendingId(logId)
+    setResendResult(null)
+    try {
+      const res = await fetch(`/api/admin/notifications/${logId}/resend`, { method: "POST" })
+      const data = await res.json()
+      setResendResult({ id: logId, ok: data.ok, message: data.message })
+      if (data.ok) fetchLogs()
+    } catch {
+      setResendResult({ id: logId, ok: false, message: "Erreur réseau" })
+    } finally {
+      setResendingId(null)
+    }
+  }, [fetchLogs])
 
   const filtered = logs.filter((log) => {
     if (filter && log.type !== filter) return false
@@ -200,6 +217,27 @@ export default function NotificationsPage() {
                 <span className="text-[11px] text-secondary-text dark:text-white/50 whitespace-nowrap">
                   {formatDate(log.sentAt)}
                 </span>
+                {log.status === "failed" && (
+                  <div className="flex flex-col items-end gap-1">
+                    <button
+                      onClick={() => handleResend(log.id)}
+                      disabled={resendingId === log.id}
+                      className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-white bg-[#c27a72] hover:bg-[#a86660] disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
+                    >
+                      {resendingId === log.id ? (
+                        <RefreshCcw size={11} className="animate-spin" />
+                      ) : (
+                        <Send size={11} />
+                      )}
+                      Renvoyer
+                    </button>
+                    {resendResult?.id === log.id && (
+                      <span className={`text-[10px] ${resendResult.ok ? "text-green-600" : "text-red-500"}`}>
+                        {resendResult.message}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>
